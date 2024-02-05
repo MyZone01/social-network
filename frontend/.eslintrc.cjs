@@ -7,6 +7,7 @@ module.exports = {
     // Global
     semi: ['error', 'never'],
     quotes: ['error', 'single'],
+    'no-trailing-spaces': "error",
     'quote-props': ['error', 'as-needed'],
     // Vue
     'vue/multi-word-component-names': 0,
