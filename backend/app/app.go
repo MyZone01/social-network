@@ -44,8 +44,6 @@ func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string
 	app.routes = append(app.routes, route)
 }
 
-// ...
-
 func (app *App) Static(path string, dir string) {
 	fileServer := http.FileServer(http.Dir(dir))
 	app.GET(path+"*", func(c *Context) {
