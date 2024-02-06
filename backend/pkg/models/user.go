@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"html"
 	"time"
@@ -129,6 +130,12 @@ func (user *User) Delete(db *sql.DB) error {
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
+	return nil
+}
 
+func (user *User) UnmarshalFormData(formData []byte) error {
+	if err := json.Unmarshal(formData, user); err != nil {
+		return err
+	}
 	return nil
 }
