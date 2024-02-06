@@ -11,7 +11,7 @@ import (
 	// octopus "octopus/context"
 	"time"
 
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 var Notif sync.Map
@@ -151,13 +151,11 @@ func (s *starter) Set(value uuid.UUID) error {
 	db := session.database
 	tmpdata := session.data
 	// get new id for the session
-	id, err := uuid.NewV4()
-	if err != nil {
-		return err
-	}
+	id := uuid.New()
+
 	if db != nil {
 		var user uuid.UUID
-		err = db.QueryRow(fmt.Sprintf("SELECT id FROM %s WHERE user_id = $1", session.SessionName), value).Scan(&user)
+		err := db.QueryRow(fmt.Sprintf("SELECT id FROM %s WHERE user_id = $1", session.SessionName), value).Scan(&user)
 		if err != sql.ErrNoRows {
 
 			// // Préparez une instruction SQL pour supprimer la session
