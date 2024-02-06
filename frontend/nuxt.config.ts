@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   typescript: {
     includeWorkspace: true,
   },
+  css: ['~/assets/css/style.css'],
   modules: [
     '@nuxtjs/color-mode',
     '@unocss/nuxt',
@@ -16,6 +17,16 @@ export default defineNuxtConfig({
   ],
   ui: {
     icons: ['heroicons', 'simple-icons']
+  },
+  nitro: {
+    routeRules: {
+      '/**': {
+        headers: {
+          'Cross-Origin-Embedder-Policy': 'require-corp',
+          'Cross-Origin-Opener-Policy': 'same-origin',
+        },
+      },
+    },
   },
   colorMode: {
     classSuffix: '',
