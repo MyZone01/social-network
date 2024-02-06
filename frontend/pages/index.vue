@@ -3,9 +3,9 @@
     <div class="max-w-[680px] mx-auto">
       <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
         <PostInput />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        <UCarousel v-slot="{ item }" :items="items" :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }" arrows>
+          <EventCard class="mr-5" />
+        </UCarousel>
         <PostCard />
         <PostCard />
       </div>
@@ -14,6 +14,15 @@
   </div>
 </template>
 <script lang="ts" setup>
+const items = [
+  'https://picsum.photos/600/600?random=1',
+  'https://picsum.photos/600/600?random=2',
+  'https://picsum.photos/600/600?random=3',
+  'https://picsum.photos/600/600?random=4',
+  'https://picsum.photos/600/600?random=5',
+  'https://picsum.photos/600/600?random=6'
+]
+
 definePageMeta({
   alias: ["/"],
 });

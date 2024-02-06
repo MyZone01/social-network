@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 dark:bg-gray-950 rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1">
+  <div class="bg-gray-100 dark:bg-gray-950 rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium ">
 
     <div class="flex items-center md:gap-3 gap-1">
       <div class="flex-1 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer bg-gray-200 dark:bg-gray-900">
