@@ -1,6 +1,6 @@
 <template>
   <header
-    class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-white/80 dark:bg-gray-950 sky-50 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
+    class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-gray-100 dark:bg-gray-950 sky-50 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
 
     <div class="flex items-center w-full xl:px-6 px-2 max-lg:gap-10">
 
@@ -28,14 +28,17 @@
       <div class="flex-1 relative">
 
         <div class="max-w-[1220px] mx-auto flex items-center">
-          <UInput size="xl" color="white" placeholder="Search Friends, videos..." class="dark:!bg-white/5 w-1/3">
+          <UInput size="xl" color="white" placeholder="Search friends, posts, videos..." class="dark:!bg-white/5 w-1/3">
             <template #leading>
               <span class="text-sm">🔍</span>
             </template>
           </UInput>
 
+          
           <!-- header icons -->
           <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
+            <ColorSwitch />
+
             <!-- create -->
             <UPopover>
               <UButton variant="solid" color="gray" :ui="{ rounded: 'rounded-full' }" square label="➕"></UButton>
@@ -391,7 +394,6 @@
                         My Account
                       </div>
                     </a>
-                    <ColorSwitch />
                     <hr class="-mx-2 my-2 dark:border-gray-600/60">
                     <a href="form-login.html">
                       <div

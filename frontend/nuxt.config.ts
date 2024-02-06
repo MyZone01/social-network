@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/content',
     'nuxt-og-image',
+    '@nuxtjs/tailwindcss',
   ],
   ui: {
     icons: ['heroicons', 'simple-icons']

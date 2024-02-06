@@ -7,8 +7,6 @@ function toggleMode() {
 </script>
 
 <template>
-  <UButton
-    :icon="colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun'" variant="ghost"
-    @click="toggleMode"
-  />
+  <UButton variant="solid" color="gray" :ui="{ rounded: 'rounded-full' }" square
+    :icon="colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun'" @click="toggleMode" />
 </template>
