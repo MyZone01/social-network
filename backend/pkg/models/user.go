@@ -9,6 +9,8 @@ import (
 	"github.com/google/uuid"
 )
 
+type Users []User
+
 type User struct {
 	ID          uuid.UUID `sql:"type:uuid;primary key"`
 	Email       string    `sql:"type:varchar(100);unique"`
@@ -25,7 +27,13 @@ type User struct {
 	DeletedAt   sql.NullTime
 }
 
+// Create a new user
 func (user *User) Create(db *sql.DB) error {
+	// Define the user default properties
+	user.ID = uuid.New()
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Now()
+
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
@@ -45,8 +53,8 @@ func (user *User) Create(db *sql.DB) error {
 		html.EscapeString(user.Nickname),
 		html.EscapeString(user.AboutMe),
 		user.IsPublic,
-		time.Now(),
-		time.Now(),
+		user.CreatedAt,
+		user.UpdatedAt,
 	)
 
 	if err != nil {
@@ -56,8 +64,9 @@ func (user *User) Create(db *sql.DB) error {
 	return nil
 }
 
+// Get a user by its ID
 func (user *User) Get(db *sql.DB, id uuid.UUID) error {
-	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id = $1`
+	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id = $1 AND deleted_at IS NULL`
 
 	row := db.QueryRow(query, id)
 
@@ -86,6 +95,7 @@ func (user *User) Get(db *sql.DB, id uuid.UUID) error {
 	return nil
 }
 
+// Update a user
 func (user *User) Update(db *sql.DB) error {
 	query := `UPDATE users SET email=$1, password=$2, first_name=$3, last_name=$4, date_of_birth=$5, avatar_image=$6, nickname=$7, about_me=$8, is_public=$9, updated_at=$10 WHERE id=$11`
 
@@ -116,8 +126,9 @@ func (user *User) Update(db *sql.DB) error {
 	return nil
 }
 
+// Delete a user
 func (user *User) Delete(db *sql.DB) error {
-	query := `DELETE FROM users WHERE id=$1`
+	query := `UPDATE users SET deleted_at=$1 WHERE id=$2`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -125,9 +136,44 @@ func (user *User) Delete(db *sql.DB) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.ID)
+	_, err = stmt.Exec(time.Now(), user.ID)
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+
+	return nil
+}
+
+// GetAll users
+func (users *Users) GetAll(db *sql.DB) error {
+	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE deleted_at IS NULL`
+
+	rows, err := db.Query(query)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user User
+		err := rows.Scan(
+			&user.ID,
+			&user.Email,
+			&user.Password,
+			&user.FirstName,
+			&user.LastName,
+			&user.DateOfBirth,
+			&user.AvatarImage,
+			&user.Nickname,
+			&user.AboutMe,
+			&user.IsPublic,
+			&user.CreatedAt,
+			&user.UpdatedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to execute the query. %v", err)
+		}
+		*users = append(*users, user)
 	}
 
 	return nil
