@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"html"
 	"time"
@@ -11,6 +10,7 @@ import (
 )
 
 type PostPrivacy string
+type Posts []Post
 
 const (
 	PrivacyPublic        PostPrivacy = "public"
@@ -31,8 +31,38 @@ type Post struct {
 	DeletedAt sql.NullTime
 }
 
-func (post *Post) Create(db *sql.DB) error {
-	query := `INSERT INTO posts (id, user_id, title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
+// IsPublic returns true if the post is public
+func (p *Post) IsPublic() bool {
+	return p.Privacy == PrivacyPublic
+}
+
+// IsPrivate returns true if the post is private
+func (p *Post) IsPrivate() bool {
+	return p.Privacy == PrivacyPrivate
+}
+
+// IsAlmostPrivate returns true if the post is almost private
+func (p *Post) IsAlmostPrivate() bool {
+	return p.Privacy == PrivacyAlmostPrivate
+}
+
+// IsUnlisted returns true if the post is unlisted
+func (p *Post) IsUnlisted() bool {
+	return p.Privacy == PrivacyUnlisted
+}
+
+// IsDeleted returns true if the post is deleted
+func (p *Post) IsDeleted() bool {
+	return p.DeletedAt.Valid
+}
+
+// Create inserts a new post into the database
+func (p *Post) Create(db *sql.DB) error {
+	// Define the post default properties
+	p.ID = uuid.New()
+	p.CreatedAt = time.Now()
+	p.UpdatedAt = time.Now()
+	query := `INSERT INTO posts (id, user_id, content, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -41,14 +71,14 @@ func (post *Post) Create(db *sql.DB) error {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(
-		post.ID,
-		post.UserID,
-		html.EscapeString(post.Title),
-		html.EscapeString(post.Content),
-		html.EscapeString(post.ImageURL),
-		post.Privacy,
-		time.Now(),
-		time.Now(),
+		p.ID,
+		p.UserID,
+		html.EscapeString(p.Title),
+		html.EscapeString(p.Content),
+		html.EscapeString(p.ImageURL),
+		p.Privacy,
+		p.CreatedAt,
+		p.UpdatedAt,
 	)
 
 	if err != nil {
@@ -58,23 +88,21 @@ func (post *Post) Create(db *sql.DB) error {
 	return nil
 }
 
-func (post *Post) Get(db *sql.DB, id uuid.UUID) error {
-	query := `SELECT id, user_id, title, content, image_url, privacy, created_at, updated_at, deleted_at FROM posts WHERE id = $1`
+// Get retrieves a post from the database
+func (p *Post) Get(db *sql.DB, id uuid.UUID) error {
+	query := `SELECT id, user_id, title, content, image_url, privacy, created_at, updated_at, deleted_at FROM posts WHERE id = $1 AND deleted_at IS NULL`
 
-	row := db.QueryRow(query, id)
-
-	err := row.Scan(
-		&post.ID,
-		&post.UserID,
-		&post.Title,
-		&post.Content,
-		&post.ImageURL,
-		&post.Privacy,
-		&post.CreatedAt,
-		&post.UpdatedAt,
-		&post.DeletedAt,
+	err := db.QueryRow(query, id).Scan(
+		&p.ID,
+		&p.UserID,
+		&p.Title,
+		&p.Content,
+		&p.ImageURL,
+		&p.Privacy,
+		&p.CreatedAt,
+		&p.UpdatedAt,
+		&p.DeletedAt,
 	)
-
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return fmt.Errorf("no post found with id %v", id)
@@ -85,8 +113,9 @@ func (post *Post) Get(db *sql.DB, id uuid.UUID) error {
 	return nil
 }
 
-func (post *Post) Update(db *sql.DB) error {
-	query := `UPDATE posts SET user_id=$1, title=$2, content=$3, image_url=$4, privacy=$5, updated_at=$6 WHERE id=$7`
+// Update modifies a post in the database
+func (p *Post) Update(db *sql.DB) error {
+	query := `UPDATE posts SET title = $1, content = $2, image_url = $3, privacy = $4, updated_at = $5 WHERE id = $6`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -95,13 +124,12 @@ func (post *Post) Update(db *sql.DB) error {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(
-		post.UserID,
-		post.Title,
-		post.Content,
-		post.ImageURL,
-		post.Privacy,
+		html.EscapeString(p.Title),
+		html.EscapeString(p.Content),
+		html.EscapeString(p.ImageURL),
+		p.Privacy,
 		time.Now(),
-		post.ID,
+		p.ID,
 	)
 
 	if err != nil {
@@ -111,8 +139,9 @@ func (post *Post) Update(db *sql.DB) error {
 	return nil
 }
 
-func (post *Post) Delete(db *sql.DB) error {
-	query := `DELETE FROM posts WHERE id=$1`
+// Delete removes a post from the database
+func (p *Post) Delete(db *sql.DB) error {
+	query := `UPDATE posts SET deleted_at = $1 WHERE id = $2`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -120,16 +149,89 @@ func (post *Post) Delete(db *sql.DB) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(post.ID)
+	_, err = stmt.Exec(
+		time.Now(),
+		p.ID,
+	)
+
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
+
 	return nil
 }
 
-func (post *Post) UnmarshalFormData(formData []byte) error {
-	if err := json.Unmarshal(formData, post); err != nil {
-		return err
+// GetUserPosts retrieves all the posts from a user
+func (p *Posts) GetUserPosts(db *sql.DB, userID uuid.UUID) error {
+	query := `SELECT id, user_id, title, content, image_url, privacy, created_at, updated_at, deleted_at FROM posts WHERE user_id = $1 AND deleted_at IS NULL`
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(userID)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(
+			&post.ID,
+			&post.UserID,
+			&post.Title,
+			&post.Content,
+			&post.ImageURL,
+			&post.Privacy,
+			&post.CreatedAt,
+			&post.UpdatedAt,
+			&post.DeletedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to scan the row. %v", err)
+		}
+		*p = append(*p, post)
+	}
+
+	return nil
+}
+
+// GetAll retrieves all the posts from the database
+func (p *Posts) GetAll(db *sql.DB) error {
+	query := `SELECT id, user_id, title, content, image_url, privacy, created_at, updated_at, deleted_at FROM posts WHERE deleted_at IS NULL`
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query()
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(
+			&post.ID,
+			&post.UserID,
+			&post.Title,
+			&post.Content,
+			&post.ImageURL,
+			&post.Privacy,
+			&post.CreatedAt,
+			&post.UpdatedAt,
+			&post.DeletedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to scan the row. %v", err)
+		}
+		*p = append(*p, post)
+	}
+
 	return nil
 }
