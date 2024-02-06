@@ -1,5 +1,5 @@
 <template>
-  <footer class="fixed bottom-0 w-screen flex items-center justify-center text-sm">
+  <footer class="fixed bottom-0 w-screen flex items-center justify-center text-sm shadow-inner">
     Copyright ©️ {{ new Date().getFullYear() }} | Made with <span mx-1 class="heart">❤️</span> and ☕
   </footer>
 </template>
