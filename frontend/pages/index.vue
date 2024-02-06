@@ -2,6 +2,14 @@
   <h1>Home</h1>
 </template>
 <script lang="ts" setup>
+definePageMeta({
+  alias: ["/"],
+});
+
+useHead({
+  title: 'Home',
+})
+
 useSeoMeta({
   titleTemplate: '',
   title: 'Home',

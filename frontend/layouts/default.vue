@@ -1,10 +1,10 @@
 <template>
-  <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
+  <Body class="dark:bg-gray-900 bg-white overflow-hidden">
     <Header />
-    <main class="flex flex-col w-screen h-screen mt-[--m-top]">
+    <Sidebar />
+    <main class="ml-48 flex flex-col w-screen h-screen overflow-y-auto mt-[--m-top] p-4">
       <slot />
     </main>
     <Footer />
-    <Sidebar />
   </Body>
 </template>

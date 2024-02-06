@@ -1,12 +1,9 @@
 <template>
-  <div
-    id="site__sidebar"
-    class="fixed  top-0 left-0 z-[99] pt-[--m-top] overflow-hidden transition-transform xl:duration-500 max-xl:w-full max-xl:-translate-x-full"
-  >
+  <aside
+    class="fixed bg-white/80 dark:bg-gray-950 top-0 left-0 z-[99] pt-[--m-top] overflow-hidden transition-transform xl:duration-500 max-xl:w-full max-xl:-translate-x-full">
     <!-- sidebar inner -->
     <div
-      class="p-2 max-xl:bg-white shadow-sm 2xl:w-72 sm:w-64 w-[80%] h-[calc(100vh-64px)] relative z-30 max-lg:border-r dark:max-xl:!bg-slate-700 dark:border-slate-700"
-    >
+      class="p-2 max-xl:bg-white shadow-sm 2xl:w-72 sm:w-48 w-[80%] h-[calc(100vh-64px)] relative z-30 max-lg:border-r dark:max-xl:!bg-slate-700 dark:border-slate-700">
       <div class="flex items-center pr-4">
         <nav id="side">
           <ul>
@@ -38,81 +35,19 @@
         </nav>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
-<style>
-
-#side > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.125rem * var(--tw-space-y-reverse));
-}
-
+<style scoped>
 #side {
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: capitalize;
-  letter-spacing: 0.025em;
+  @apply text-sm font-medium capitalize tracking-wide text-gray-900 dark:text-white;
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  #side {
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-  }
 }
 
 #side a {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  border-radius: 0.75rem;
-  padding: 0.75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  #side a:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-  }
+  @apply flex items-center gap-4 px-4 p-3 rounded-xl;
 }
 
 #side a:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(var(--color-secondery) / var(--tw-bg-opacity));
+  @apply bg-gray-900 dark:bg-white/10;
 }
-
-#side a svg {
-  height: 1.5rem !important;
-  width: 1.5rem !important;
-}
-
-#side a.active svg ,
-    #side a.uk-active svg ,
-    #side .active  a ,
-    #side a.uk-active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(var(--color-secondery) / var(--tw-bg-opacity));
-  --tw-text-opacity: 1;
-  color: rgb(var(--color-primary) / var(--tw-text-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  #side a.active svg ,
-    #side a.uk-active svg ,
-    #side .active  a ,
-    #side a.uk-active {
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-  }
-}
-
-#site__sidebar .simplebar-scrollbar {
-  width: 7px;
-}
-
 </style>
