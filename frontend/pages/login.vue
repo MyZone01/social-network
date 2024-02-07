@@ -28,14 +28,14 @@
                 <!-- email -->
                 <UFormGroup label="Email" name="email">
                   <div class="mt-2.5">
-                    <UInput id="email" name="email" type="email"  placeholder="Email" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                    <UInput v-model="state.email" id="email" name="email" type="email"  placeholder="Email" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" icon="i-heroicons-envelope">
                     </UInput>
                   </div>
                 </UFormGroup>
                 <!-- password -->
                 <UFormGroup label="Password" name="password">
                   <div class="mt-2.5">
-                    <UInput id="password" name="password" type="password" placeholder="***" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                    <UInput v-model="state.password" id="password" name="password" type="password" placeholder="***" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
                     </UInput>
                   </div>
                 </UFormGroup>
