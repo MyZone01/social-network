@@ -1,6 +1,7 @@
 package octopus
 
 import (
+	"backend/pkg/db/sqlite"
 	"database/sql"
 	"fmt"
 	"log"
@@ -28,9 +29,22 @@ type App struct {
 	onErrorCode ErrorHandlerFunc
 }
 
+// func New() *App {
+// 	return &App{}
+// }
+
 func New() *App {
-	return &App{}
+	app := &App{
+		Db: &db{
+			Conn: sqlite.OpenDB(),
+		},
+		routes: make([]*Route, 0),
+		onErrorCode: nil,
+	}
+
+	return app
 }
+
 func (a *App) UseDb(conn *sql.DB) {
 	d := &db{Conn: conn}
 	a.Db = d
@@ -77,7 +91,8 @@ func (app *App) NotAllowed(c *Context) {
 }
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	c := &Context{ResponseWriter: w, Request: r, Db: app.Db, Values: map[any]any{}}
+
+	c := &Context{ResponseWriter: w, Request: r, Db: app.Db}
 	for _, route := range app.routes {
 		if strings.HasSuffix(route.pattern, "*") {
 			if strings.HasPrefix(r.URL.Path, strings.TrimSuffix(route.pattern, "*")) {
