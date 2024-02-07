@@ -1,5 +1,5 @@
 -- Users Table
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     id INTEGER PRIMARY KEY,
     email TEXT UNIQUE,
     password TEXT,
@@ -16,7 +16,7 @@ CREATE TABLE Users (
 );
 
 -- Followers Table
-CREATE TABLE Followers (
+CREATE TABLE IF NOT EXISTS Followers (
     id INTEGER PRIMARY KEY,
     follower_id INTEGER REFERENCES Users(id),
     followee_id INTEGER REFERENCES Users(id),
@@ -26,7 +26,7 @@ CREATE TABLE Followers (
 );
 
 -- Posts Table
-CREATE TABLE Posts (
+CREATE TABLE IF NOT EXISTS Posts (
     id INTEGER PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
     title TEXT,
@@ -39,7 +39,7 @@ CREATE TABLE Posts (
 );
 
 -- Groups Table
-CREATE TABLE Groups (
+CREATE TABLE IF NOT EXISTS Groups (
     id INTEGER PRIMARY KEY,
     title TEXT,
     description TEXT,
@@ -50,7 +50,7 @@ CREATE TABLE Groups (
 );
 
 -- Group Members Table
-CREATE TABLE GroupMembers (
+CREATE TABLE IF NOT EXISTS GroupMembers (
     id INTEGER PRIMARY KEY,
     group_id INTEGER REFERENCES Groups(id),
     member_id INTEGER REFERENCES Users(id),
@@ -60,7 +60,7 @@ CREATE TABLE GroupMembers (
 );
 
 -- Group Posts Table
-CREATE TABLE GroupPosts (
+CREATE TABLE IF NOT EXISTS GroupPosts (
     id INTEGER PRIMARY KEY,
     group_id INTEGER REFERENCES Groups(id),
     post_id INTEGER REFERENCES Posts(id),
@@ -69,7 +69,7 @@ CREATE TABLE GroupPosts (
 );
 
 -- Events Table
-CREATE TABLE Events (
+CREATE TABLE IF NOT EXISTS Events (
     id INTEGER PRIMARY KEY,
     group_id INTEGER REFERENCES Groups(id),
     title TEXT,
@@ -80,7 +80,7 @@ CREATE TABLE Events (
 );
 
 -- Events Participant Table
-CREATE TABLE EventsParticipants (
+CREATE TABLE IF NOT EXISTS EventsParticipants (
     id INTEGER PRIMARY KEY,
     event_id INTEGER REFERENCES Events(id),
     member_id INTEGER REFERENCES Users(id),
@@ -90,7 +90,7 @@ CREATE TABLE EventsParticipants (
 );
 
 -- Private Messages Table
-CREATE TABLE PrivateMessages (
+CREATE TABLE IF NOT EXISTS PrivateMessages (
     id INTEGER PRIMARY KEY,
     sender_id INTEGER REFERENCES Users(id),
     receiver_id INTEGER REFERENCES Users(id),
@@ -99,7 +99,7 @@ CREATE TABLE PrivateMessages (
 );
 
 -- Group Messages Table
-CREATE TABLE GroupMessages (
+CREATE TABLE IF NOT EXISTS GroupMessages (
     id INTEGER PRIMARY KEY,
     group_id INTEGER REFERENCES Groups(id),
     sender_id INTEGER REFERENCES Users(id),
@@ -108,7 +108,7 @@ CREATE TABLE GroupMessages (
 );
 
 -- Notifications Table
-CREATE TABLE Notifications (
+CREATE TABLE IF NOT EXISTS Notifications (
     id INTEGER PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
     type TEXT CHECK(type IN ('follow_request', 'group_invitation', 'new_message', 'new_event')),
@@ -117,7 +117,7 @@ CREATE TABLE Notifications (
 );
 
 -- Sessions Table
-CREATE TABLE Sessions (
+CREATE TABLE IF NOT EXISTS Sessions (
     id INTEGER PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
     session_token TEXT,
