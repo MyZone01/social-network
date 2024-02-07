@@ -9,7 +9,7 @@ install:
 
 start-backend:
 	# Démarrer le serveur back-end
-	cd backend && go run main.go
+	cd backend && ./watch-run.sh
 
 start-frontend:
 	# Démarrer le serveur front-end
