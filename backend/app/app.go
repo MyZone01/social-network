@@ -76,6 +76,7 @@ func (app *App) NotAllowed(c *Context) {
 }
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	
 	c := &Context{ResponseWriter: w, Request: r, Db: app.Db}
 	for _, route := range app.routes {
 		if strings.HasSuffix(route.pattern, "*") {
