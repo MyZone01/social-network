@@ -4,6 +4,8 @@ import (
 	octopus "backend/app"
 	"backend/pkg/handlers"
 	"fmt"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
