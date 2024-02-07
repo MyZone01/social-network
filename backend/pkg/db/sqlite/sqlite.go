@@ -30,22 +30,30 @@ func OpenDB() *sql.DB {
 			log.Fatal(erp)
 		}
 	}
+	currentDir, err := os.Getwd()
+	fmt.Println(currentDir)
 
-	migrationDir := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/migrations/"
-	databasePath := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/sqlite/social-network.db"
+	// migrationDir := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/migrations/"
+	// databasePath := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/sqlite/social-network.db"
+
+	migrationDir := currentDir + "/pkg/db/migrations/"
+	fmt.Println(migrationDir)
+	databasePath := currentDir + "/pkg/db/sqlite/social-network.db"
 	m, err := migrate.New("file://"+migrationDir, "sqlite://"+databasePath)
 	if err != nil {
 		fmt.Println(err)
 		// log.Fatal(err)
 	}
+	defer m.Close()
 
-	err = m.Up()
-	if err != nil && err != migrate.ErrNoChange {
-		log.Fatal(err)
-	}
+	// Apply migrations (Up)
+	// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+	//     log.Fatal(err)
+	// }
 
-	if err, erro := m.Close(); err != nil || erro != nil {
-		log.Fatal(err, erro)
+	// Rollback one migration (Down)
+	if err := m.Steps(-1); err != nil && err != migrate.ErrNoChange {
+		fmt.Println(err)
 	}
 
 	return DB
