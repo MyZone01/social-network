@@ -1,4 +1,5 @@
 <template>
+ <NuxtLayout>
   <div class="lg:flex 2xl:gap-16 gap-12 max-w-[1065px]">
     <div class="max-w-[680px] mx-auto">
       <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
@@ -18,6 +19,7 @@
     </div>
     <div class="flex-1" />
   </div>
+ </NuxtLayout>
 </template>
 <script lang="ts" setup>
 const items = [
