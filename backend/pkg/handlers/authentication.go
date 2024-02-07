@@ -8,6 +8,7 @@ import (
 
 func handleAuthentication(ctx *octopus.Context) {
 	ctx.WriteString("hello world")
+	ctx.Db.User.Create(ctx.Db.Conn)
 	/* The 'ctx' variable contains the same arguments as a typical handler function with 'r' and 'w'.
 	and it have new methods such as 'ctx.JSON(data interface{})' to send JSON responses and stuff.
 	*** Example usage:
@@ -28,7 +29,7 @@ func handleAuthentication(ctx *octopus.Context) {
 // AuthenticationHandler defines the structure for handling authentication requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
 var authenticationHandler = Handler{
-	path:               "/lolo",
+	path:   "/lolo",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
