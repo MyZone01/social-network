@@ -89,10 +89,10 @@
                 />
               </div>
             </UFormGroup>
-            <UFormGroup label="Confirm Password" name="password">
+            <UFormGroup label="Confirm Password" name="confirmPassword">
               <div class="mt-2.5">
                 <UInput
-                  id="text" v-model="state.password" name="password" type="password" placeholder="***"
+                  id="text" v-model="state.confirmPassword" name="confirmPassword" type="password" placeholder="***"
                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
                 />
               </div>
@@ -100,7 +100,7 @@
             <UFormGroup label="Nickname" name="nickname">
               <div class="mt-2.5">
                 <UInput
-                  id="text" v-model="state.password" name="nickname" type="text" placeholder="Nickname"
+                  id="text" v-model="state.nickname" name="nickname" type="text" placeholder="Nickname"
                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
                 />
               </div>
@@ -224,6 +224,7 @@ import type { FormError, FormSubmitEvent } from '#ui/types'
 const state = reactive({
   email: undefined,
   password: undefined,
+  confirmPassword: undefined,
   firstName: undefined,
   lastName:undefined,
   dateOfBirth:undefined,
@@ -238,6 +239,8 @@ const validate = (state: any): FormError[] => {
   const errors = []
   if (!state.email) errors.push({ path: 'email', message: 'Email is required' })
   if (!state.password) errors.push({ path: 'password', message: 'Password is required' })
+  if (!state.confirmPassword) errors.push({ path: 'confirmPassword', message: 'Confirming password is required' })
+  if (state.password!=state.confirmPassword) errors.push({ path: 'confirmPassword', message: 'Please enter the same passwords' })
   if (!state.firstName) errors.push({ path: 'firstname', message: 'First Name is required' })
   if (!state.lastName) errors.push({ path: 'lastname', message: 'Last Name is required' })
   if (!state.dateOfBirth) errors.push({ path: 'dateOfBirth', message: 'Date of Birth is required' })
@@ -247,6 +250,8 @@ const validate = (state: any): FormError[] => {
 async function onSubmit (event: FormSubmitEvent<any>) {
   // Do something with data
   console.log(event.data)
+  console.log(state);
+  
 }
 // const value = ref('')
 function handleAvatarUpload(event: Event) {
