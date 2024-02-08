@@ -3,6 +3,7 @@ package unittests
 import (
 	octopus "backend/app"
 	"backend/pkg/models"
+	"fmt"
 	"testing"
 
 	"github.com/google/uuid"
@@ -38,6 +39,6 @@ func TestPostObject(t *testing.T) {
 		}
 	}
 
-	// fmt.Println("succes✅:  user created is the same as user cloned")
+	fmt.Println("succes✅: the post created is the same as the post cloned")
 
 }
