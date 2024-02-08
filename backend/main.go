@@ -19,7 +19,7 @@ func main() {
 
 	migrate := sqlite.Migrations{}
 	for _, arg := range args {
-		if arg == "-up" || arg == "-down" || arg[:3] == "-to" /* || arg == "-upALL" || arg == "-downALL" */ {
+		if arg == "-up" || arg == "-down" || arg[:3] == "-to" || arg == "-upall" || arg == "-downall" {
 			migrate.Migration = true
 			if len(strings.Split(arg, "=")) == 2 {
 				version, err := strconv.Atoi(strings.Split(arg, "=")[1])
@@ -28,7 +28,7 @@ func main() {
 				} else {
 					migrate.Target = true
 					migrate.Version = version
-					migrate.Action = arg
+					migrate.Action = strings.Split(arg, "=")[0]
 				}
 			} else {
 				migrate.Target = true
