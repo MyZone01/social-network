@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS Events (
+CREATE TABLE IF NOT EXISTS events (
     id UUID PRIMARY KEY,
-    group_id UUID REFERENCES Groups(id),
+    group_id UUID REFERENCES groups(id),
     title TEXT,
     description TEXT,
     datetime DATETIME,

@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS Followers;
+DROP TABLE IF EXISTS followers;
