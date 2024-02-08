@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS EventsParticipants (
+CREATE TABLE IF NOT EXISTS events_participants (
     id UUID PRIMARY KEY,
-    event_id UUID REFERENCES Events(id),
-    member_id UUID REFERENCES Users(id),
+    event_id UUID REFERENCES events(id),
+    member_id UUID REFERENCES users(id),
     response TEXT CHECK(response IN ('going', 'not_going')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
