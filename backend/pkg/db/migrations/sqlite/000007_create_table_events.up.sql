@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS Events (
+    id INTEGER PRIMARY KEY,
+    group_id INTEGER REFERENCES Groups(id),
+    title TEXT,
+    description TEXT,
+    datetime DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
