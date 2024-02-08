@@ -39,12 +39,13 @@ func (user *User) Create(db *sql.DB) error {
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
+		
 		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
 	defer stmt.Close()
 
 	_, err = stmt.Exec(
-		user.ID,
+		user.ID.String(),
 		html.EscapeString(user.Email),
 		html.EscapeString(user.Password),
 		html.EscapeString(user.FirstName),
@@ -57,8 +58,9 @@ func (user *User) Create(db *sql.DB) error {
 		user.CreatedAt,
 		user.UpdatedAt,
 	)
-
+	fmt.Println()
 	if err != nil {
+		fmt.Println("here")
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
 
@@ -67,9 +69,9 @@ func (user *User) Create(db *sql.DB) error {
 
 // Get a user by its ID
 func (user *User) Get(db *sql.DB, id uuid.UUID) error {
-	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id = $1 AND delete_at IS NULL`
 
-	row := db.QueryRow(query, id)
+	row := db.QueryRow(query, id.String())
 
 	err := row.Scan(
 		&user.ID,
