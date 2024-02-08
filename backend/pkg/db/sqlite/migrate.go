@@ -41,7 +41,6 @@ func Migration(DB *sql.DB, migration Migrations) {
 
 	switch strings.ToLower(migration.Action) {
 	case "-up":
-		fmt.Println(m)
 		// Apply one migration (1 Up)
 		// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		// 	fmt.Println(err)
@@ -59,7 +58,7 @@ func Migration(DB *sql.DB, migration Migrations) {
 		if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
 		}
-	case "downall":
+	case "-downall":
 		// Rollback all migration (Down)
 		if err := m.Down(); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
