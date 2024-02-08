@@ -3,5 +3,7 @@ CREATE TABLE IF NOT EXISTS Notifications (
     user_id UUID REFERENCES Users(id),
     type TEXT CHECK(type IN ('follow_request', 'group_invitation', 'new_message', 'new_event')),
     message TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
