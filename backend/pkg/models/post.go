@@ -56,6 +56,22 @@ func (p *Post) IsDeleted() bool {
 	return p.DeletedAt.Valid
 }
 
+// PostPrivacyFromString returns the post privacy from a string
+func PostPrivacyFromString(s string) (PostPrivacy, error) {
+	switch s {
+	case "public":
+		return PrivacyPublic, nil
+	case "private":
+		return PrivacyPrivate, nil
+	case "almost private":
+		return PrivacyAlmostPrivate, nil
+	case "unlisted":
+		return PrivacyUnlisted, nil
+	default:
+		return "", fmt.Errorf("invalid post privacy")
+	}
+}
+
 // Create inserts a new post into the database
 func (p *Post) Create(db *sql.DB) error {
 	// Define the post default properties
