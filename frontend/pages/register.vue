@@ -70,7 +70,16 @@
                 />
               </div>
             </UFormGroup>
-
+            <UFormGroup label="Date of birth" name="dateOfBirth" class="col-span-2">
+              <div class="mt-2.5">
+                <UInput
+                  id="dateOfBirth"
+                  v-model="state.dateOfBirth"
+                  type="date"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                />
+              </div>
+            </UFormGroup>
             <!-- password -->
             <UFormGroup label="Password" name="password">
               <div class="mt-2.5">
@@ -88,6 +97,14 @@
                 />
               </div>
             </UFormGroup>
+            <UFormGroup label="Nickname" name="nickname">
+              <div class="mt-2.5">
+                <UInput
+                  id="text" v-model="state.password" name="nickname" type="text" placeholder="Nickname"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                />
+              </div>
+            </UFormGroup>
 
             <UFormGroup label="About you" name="aboutMe" class="col-span-2">
               <div class="mt-2.5">
@@ -99,17 +116,15 @@
             </UFormGroup>
             <UFormGroup label="Profile Picture" name="avatar" class="col-span-2">
               <div class="mt-2.5">
-                <input
+                <UInput
                   id="avatar"
                   type="file"
                   accept="image/*"
                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
                   @change="handleAvatarUpload"
-                >
+                />
               </div>
             </UFormGroup>
-
-
             <!-- submit button -->
             <div class="col-span-0">
               <UButton type="submit" class=" button bg-primary text-white w-full">
@@ -240,7 +255,7 @@ function handleAvatarUpload(event: Event) {
   // Check if a file was selected
   if (file) {
     // Check the file extension (e.g., allow only images)
-    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']
+    const allowedExtensions = ['jpg', 'jpeg', 'png','img']
     const fileExtension = file.name.split('.').pop()?.toLowerCase() || ''
 
     if (allowedExtensions.includes(fileExtension)) {
