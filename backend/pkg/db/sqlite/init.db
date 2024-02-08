@@ -1,6 +1,6 @@
 -- Users Table
 CREATE TABLE Users (
-    id INTEGER PRIMARY KEY,
+    id TEXT PRIMARY KEY UNIQUE,
     email TEXT UNIQUE,
     password TEXT,
     first_name TEXT,
@@ -17,9 +17,9 @@ CREATE TABLE Users (
 
 -- Followers Table
 CREATE TABLE Followers (
-    id INTEGER PRIMARY KEY,
-    follower_id INTEGER REFERENCES Users(id),
-    followee_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    follower_id TEXT REFERENCES Users(id),
+    followee_id TEXT REFERENCES Users(id),
     status TEXT CHECK(status IN ('requested', 'accepted', 'declined')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -27,8 +27,8 @@ CREATE TABLE Followers (
 
 -- Posts Table
 CREATE TABLE Posts (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    user_id TEXT REFERENCES Users(id),
     title TEXT,
     content TEXT,
     image_url TEXT,
@@ -40,20 +40,20 @@ CREATE TABLE Posts (
 
 -- Groups Table
 CREATE TABLE Groups (
-    id INTEGER PRIMARY KEY,
+    id TEXT PRIMARY KEY,
     title TEXT,
     description TEXT,
     banner_url TEXT,
-    creator_id INTEGER REFERENCES Users(id),
+    creator_id TEXT REFERENCES Users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Group Members Table
 CREATE TABLE GroupMembers (
-    id INTEGER PRIMARY KEY,
-    group_id INTEGER REFERENCES Groups(id),
-    member_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    group_id TEXT REFERENCES Groups(id),
+    member_id TEXT REFERENCES Users(id),
     status TEXT CHECK(status IN ('invited', 'requesting', 'accepted', 'declined')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -61,17 +61,17 @@ CREATE TABLE GroupMembers (
 
 -- Group Posts Table
 CREATE TABLE GroupPosts (
-    id INTEGER PRIMARY KEY,
-    group_id INTEGER REFERENCES Groups(id),
-    post_id INTEGER REFERENCES Posts(id),
+    id TEXT PRIMARY KEY,
+    group_id TEXT REFERENCES Groups(id),
+    post_id TEXT REFERENCES Posts(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Events Table
 CREATE TABLE Events (
-    id INTEGER PRIMARY KEY,
-    group_id INTEGER REFERENCES Groups(id),
+    id TEXT PRIMARY KEY,
+    group_id TEXT REFERENCES Groups(id),
     title TEXT,
     description TEXT,
     datetime DATETIME,
@@ -81,9 +81,9 @@ CREATE TABLE Events (
 
 -- Events Participant Table
 CREATE TABLE EventsParticipants (
-    id INTEGER PRIMARY KEY,
-    event_id INTEGER REFERENCES Events(id),
-    member_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    event_id TEXT REFERENCES Events(id),
+    member_id TEXT REFERENCES Users(id),
     response TEXT CHECK(response IN ('going', 'not_going')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -91,26 +91,26 @@ CREATE TABLE EventsParticipants (
 
 -- Private Messages Table
 CREATE TABLE PrivateMessages (
-    id INTEGER PRIMARY KEY,
-    sender_id INTEGER REFERENCES Users(id),
-    receiver_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    sender_id TEXT REFERENCES Users(id),
+    receiver_id TEXT REFERENCES Users(id),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Group Messages Table
 CREATE TABLE GroupMessages (
-    id INTEGER PRIMARY KEY,
-    group_id INTEGER REFERENCES Groups(id),
-    sender_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    group_id TEXT REFERENCES Groups(id),
+    sender_id TEXT REFERENCES Users(id),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Notifications Table
 CREATE TABLE Notifications (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    user_id TEXT REFERENCES Users(id),
     type TEXT CHECK(type IN ('follow_request', 'group_invitation', 'new_message', 'new_event')),
     message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -118,8 +118,8 @@ CREATE TABLE Notifications (
 
 -- Sessions Table
 CREATE TABLE Sessions (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
+    id TEXT PRIMARY KEY,
+    user_id TEXT  REFERENCES Users(id),
     session_token TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     expires_at TIMESTAMP,
