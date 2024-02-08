@@ -334,7 +334,7 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 }
 
 // CreatePost inserts a new post into the group in the database
-func (gp *GroupPost) CreatePost(db *sql.DB, groupID uuid.UUID) error {
+func (gp *GroupPost) CreatePost(db *sql.DB, groupID, userOwnerUuid uuid.UUID,) error {
 	// Define the group post default properties
 	gp.ID = uuid.New()
 	gp.GroupID = groupID
@@ -346,7 +346,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB, groupID uuid.UUID) error {
 	gp.Post.UserID = gp.ID
 	gp.PostID = gp.Post.ID
 
-	if err := gp.Post.Create(db); err != nil {
+	if err := gp.Post.Create(db, userOwnerUuid); err != nil {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 

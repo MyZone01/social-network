@@ -26,10 +26,12 @@ type User struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   sql.NullTime
+	
 }
 
 // Create a new user
 func (user *User) Create(db *sql.DB) error {
+
 	// Define the user default properties
 	user.ID = uuid.New()
 	user.CreatedAt = time.Now()

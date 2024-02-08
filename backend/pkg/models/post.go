@@ -73,12 +73,13 @@ func PostPrivacyFromString(s string) (PostPrivacy, error) {
 }
 
 // Create inserts a new post into the database
-func (p *Post) Create(db *sql.DB) error {
+func (p *Post) Create(db *sql.DB, userOwnerUuid uuid.UUID) error {
 	// Define the post default properties
 	p.ID = uuid.New()
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
-	query := `INSERT INTO posts (id, user_id, content, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
+	p.UserID = userOwnerUuid
+	query := `INSERT INTO posts (id, user_id,title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -88,7 +89,7 @@ func (p *Post) Create(db *sql.DB) error {
 
 	_, err = stmt.Exec(
 		p.ID,
-		p.UserID,
+		p.UserID.String(),
 		html.EscapeString(p.Title),
 		html.EscapeString(p.Content),
 		html.EscapeString(p.ImageURL),

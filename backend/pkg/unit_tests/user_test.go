@@ -11,7 +11,7 @@ import (
 func TestUserOBject(t *testing.T) {
 
 	user := models.User{
-		Email: "ldsfdo@outlook.com",
+		Email: "ddldsfdo@outlook.com",
 		FirstName: "lolo",
 		LastName: "juju",
 		AboutMe: "blablablablablablablablablablablablablablablablablabl",
@@ -42,10 +42,6 @@ func TestUserOBject(t *testing.T) {
 
 }
 
-func TestAll(t *testing.T) {
-	userTEst := t.Run("userObjectTEst",TestUserOBject)
-	fmt.Println(userTEst)
 
-}
 
 
