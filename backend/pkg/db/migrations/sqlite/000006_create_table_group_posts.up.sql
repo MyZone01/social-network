@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS GroupPosts (
     group_id UUID REFERENCES Groups(id),
     post_id UUID REFERENCES Posts(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );

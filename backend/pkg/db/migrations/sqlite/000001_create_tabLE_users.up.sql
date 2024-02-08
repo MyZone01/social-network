@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS Users (
     is_public BOOLEAN,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    delete_at TIMESTAMP
+    deleted_at TIMESTAMP
 );

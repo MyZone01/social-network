@@ -3,5 +3,7 @@ CREATE TABLE IF NOT EXISTS GroupMessages (
     group_id UUID REFERENCES Groups(id),
     sender_id UUID REFERENCES Users(id),
     content TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
