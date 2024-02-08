@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-
+	
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -33,12 +33,12 @@ type App struct {
 // 	return &App{}
 // }
 
-func New() *App {
+func New(migration sqlite.Migrations) *App {
 	app := &App{
 		Db: &db{
-			Conn: sqlite.OpenDB(),
+			Conn: sqlite.OpenDB(migration),
 		},
-		routes: make([]*Route, 0),
+		routes:      make([]*Route, 0),
 		onErrorCode: nil,
 	}
 
