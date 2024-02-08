@@ -30,13 +30,10 @@ func OpenDB() *sql.DB {
 			log.Fatal(erp)
 		}
 	}
+
 	currentDir, err := os.Getwd()
-	fmt.Println(currentDir)
 
-	// migrationDir := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/migrations/"
-	// databasePath := "/home/shaykh/Projects/Group_Proj/social-network/backend/pkg/db/sqlite/social-network.db"
-
-	migrationDir := currentDir + "/pkg/db/migrations/"
+	migrationDir := currentDir + "/pkg/db/migrations/sqlite/"
 	fmt.Println(migrationDir)
 	databasePath := currentDir + "/pkg/db/sqlite/social-network.db"
 	m, err := migrate.New("file://"+migrationDir, "sqlite://"+databasePath)
@@ -47,7 +44,7 @@ func OpenDB() *sql.DB {
 	defer m.Close()
 
 	// Apply migrations (Up)
-	// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+	// if err := m.Step(1); err != nil && err != migrate.ErrNoChange {
 	//     log.Fatal(err)
 	// }
 
