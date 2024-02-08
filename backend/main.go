@@ -28,7 +28,11 @@ func main() {
 				} else {
 					migrate.Target = true
 					migrate.Version = version
+					migrate.Action = arg
 				}
+			} else {
+				migrate.Target = true
+				migrate.Action = arg
 			}
 		} else {
 			migrate.Migration = false

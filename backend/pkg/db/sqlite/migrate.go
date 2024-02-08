@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite"
-    _ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 func Migration(DB *sql.DB, migration Migrations) {
@@ -18,13 +19,13 @@ func Migration(DB *sql.DB, migration Migrations) {
 	// 	fmt.Println(err)
 	// }
 
-	currentDir, err := os.Getwd()
-	migrationDir := currentDir + "/pkg/db/migrations/sqlite/"
 	// fSrc, err := (&file.File{}).Open(migrationDir)
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
 
+	currentDir, err := os.Getwd()
+	migrationDir := currentDir + "/pkg/db/migrations/sqlite/"
 	databasePath := currentDir + "/pkg/db/sqlite/social-network.db"
 	m, err := migrate.New("file://"+migrationDir, "sqlite://"+databasePath)
 	if err != nil {
@@ -38,26 +39,37 @@ func Migration(DB *sql.DB, migration Migrations) {
 	// }
 	defer m.Close()
 
-	fmt.Println(m)
-	switch migration.Action {
+	switch strings.ToLower(migration.Action) {
 	case "-up":
-		// Apply migrations (1 Up)
+		fmt.Println(m)
+		// Apply one migration (1 Up)
 		// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		// 	fmt.Println(err)
 		// }
 		if err := m.Steps(1); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
 		}
-	case "down":
+	case "-down":
 		// Rollback one migration (1 Down)
 		if err := m.Steps(-1); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
 		}
-	case "to":
-		// Migrate directly to the target version
-		if err := m.Migrate(uint(migration.Version)); err != nil {
+	case "-upall":
+		// Apply migrations (Up)
+		if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
 		}
+	case "downall":
+		// Rollback all migration (Down)
+		if err := m.Down(); err != nil && err != migrate.ErrNoChange {
+			fmt.Println(err)
+		}
+
+	// case "to":
+	// 	// Migrate directly to the target version
+	// 	if err := m.Migrate(uint(migration.Version)); err != nil {
+	// 		fmt.Println(err)
+	// 	}
 	}
 	currentVersion, dirty, err := m.Version()
 	if err != nil && err != migrate.ErrNilVersion {
