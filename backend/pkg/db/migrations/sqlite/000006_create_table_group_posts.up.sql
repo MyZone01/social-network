@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS GroupPosts (
-    id INTEGER PRIMARY KEY,
-    group_id INTEGER REFERENCES Groups(id),
-    post_id INTEGER REFERENCES Posts(id),
+    id UUID PRIMARY KEY,
+    group_id UUID REFERENCES Groups(id),
+    post_id UUID REFERENCES Posts(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

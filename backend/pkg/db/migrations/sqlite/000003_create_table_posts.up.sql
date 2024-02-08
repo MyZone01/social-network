@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Posts (
-    id INTEGER PRIMARY KEY,
+    id UUID PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
     title TEXT,
     content TEXT,

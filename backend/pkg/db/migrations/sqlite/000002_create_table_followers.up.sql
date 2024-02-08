@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Followers (
-    id INTEGER PRIMARY KEY,
+    id UUID PRIMARY KEY,
     follower_id INTEGER REFERENCES Users(id),
     followee_id INTEGER REFERENCES Users(id),
     status TEXT CHECK(status IN ('requested', 'accepted', 'declined')),
