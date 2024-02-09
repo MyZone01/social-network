@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/db/sqlite"
 	"backend/pkg/handlers"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -42,10 +41,26 @@ func main() {
 	//initialisation of the backend application
 	app := octopus.New(migrate)
 
-	fmt.Println(app)
-
 	// lunch all handlers
 	handlers.HandleAll(app)
+	// app.GET("/", func(ctx *octopus.Context) {
+	// 	newUser := models.User{
+	// 		Email:       "ma@dca.co",
+	// 		Password:    "cdecqce",
+	// 		FirstName:   "cewc",
+	// 		LastName:    "cewc",
+	// 		DateOfBirth: time.Time{},
+	// 		AvatarImage: "cewc",
+	// 		Nickname:    "cewc",
+	// 		AboutMe:     "cewc",
+	// 		IsPublic:    true,
+	// 	}
+	// 	err := newUser.Create(ctx.Db.Conn)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// })
+
 	if err := app.Run(":8081"); err != nil {
 		panic(err)
 	}

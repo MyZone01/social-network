@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS Posts (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
+CREATE TABLE IF NOT EXISTS posts (
+    id UUID PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
     title TEXT,
     content TEXT,
     image_url TEXT,

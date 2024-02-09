@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS GroupPosts;
+DROP TABLE IF EXISTS group_posts;

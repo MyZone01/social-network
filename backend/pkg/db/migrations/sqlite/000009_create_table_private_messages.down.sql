@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS PrivateMessages;
+DROP TABLE IF EXISTS private_messages;

@@ -1,7 +1,9 @@
-CREATE TABLE IF NOT EXISTS PrivateMessages (
-    id INTEGER PRIMARY KEY,
-    sender_id INTEGER REFERENCES Users(id),
-    receiver_id INTEGER REFERENCES Users(id),
+CREATE TABLE IF NOT EXISTS private_messages (
+    id UUID PRIMARY KEY,
+    sender_id UUID REFERENCES users(id),
+    receiver_id UUID REFERENCES users(id),
     content TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );

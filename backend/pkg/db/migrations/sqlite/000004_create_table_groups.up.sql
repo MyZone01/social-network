@@ -1,9 +1,10 @@
-CREATE TABLE IF NOT EXISTS Groups (
-    id INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS groups (
+    id UUID PRIMARY KEY,
     title TEXT,
     description TEXT,
     banner_url TEXT,
-    creator_id INTEGER REFERENCES Users(id),
+    creator_id UUID REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
