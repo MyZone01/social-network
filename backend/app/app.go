@@ -46,7 +46,8 @@ func New(migration sqlite.Migrations) *App {
 }
 
 func (a *App) UseDb(conn *sql.DB) {
-	a.Db.Conn = conn
+	d := &db{Conn: conn}
+	a.Db = d
 }
 
 func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string) {

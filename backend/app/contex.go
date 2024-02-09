@@ -29,6 +29,7 @@ type Context struct {
 	Request        *http.Request
 	handlers       []HandlerFunc
 	index          int
+	Values         map[any]any
 }
 
 func (c *Context) BodyParser(out interface{}) error {
