@@ -17,7 +17,7 @@ func handleNotifications(ctx *octopus.Context) {
 
 // NotificationsHandler defines the structure for handling notifications requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var NotificationsHandler = Handler{
+var NotificationsHandler = route{
 	path:   "/notifications",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{

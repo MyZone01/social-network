@@ -17,7 +17,7 @@ func handleGroups(ctx *octopus.Context) {
 
 // GroupsHandler defines the structure for handling groups requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var GroupsHandler = Handler{
+var GroupsHandler = route{
 	path:   "/groups",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
