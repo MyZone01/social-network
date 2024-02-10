@@ -21,7 +21,7 @@ func AuthRequired(ctx *octopus.Context) {
 func NoAuthRequired(ctx *octopus.Context) {
 	if config.Sess.Start(ctx).Valid() {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
-			"error": "Vous êtes déja connecté.",
+			"error": "You already have session",
 		})
 		return
 	}

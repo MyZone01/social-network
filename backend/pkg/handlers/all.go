@@ -18,13 +18,13 @@ type route struct {
 // AllHandler is a slice of Handler structures that defines all the routes for the application.
 // Each Handler in the slice includes the path, the constructor for creating the route, and the middleware/handler functions to be executed.
 var AllHandler = []route{
-	authenticationHandler,
-	MessagesHandler,
-	postHandler,
-	GroupsHandler,
-	NotificationsHandler,
-	EventsHandler,
-	EventsHandler,
+	authenticationRoute,
+	messagesRoutes,
+	postRoute,
+	groupsRoute,
+	notificationsRoute,
+	EventsRoute,
+	registrationRoute,
 	// Add more handlers here as needed.
 }
 
