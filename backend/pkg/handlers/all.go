@@ -24,7 +24,7 @@ var AllHandler = []route{
 	groupsRoute,
 	notificationsRoute,
 	EventsRoute,
-
+	registrationRoute,
 	// Add more handlers here as needed.
 }
 

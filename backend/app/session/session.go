@@ -268,7 +268,9 @@ func (s *starter) Valid() bool {
 	db := session.database
 	tmpdata := session.data
 	cookie, err := s.Ctx.Request.Cookie(c.CookieName)
+
 	if err != nil {
+
 		// Le cookie n'existe pas
 		return false
 	}

@@ -1,5 +1,5 @@
 -- Users Table
-CREATE TABLE Users (
+CREATE TABLE users (
     id UUID PRIMARY KEY UNIQUE,
     email TEXT UNIQUE,
     password TEXT,
@@ -16,7 +16,7 @@ CREATE TABLE Users (
 );
 
 -- Followers Table
-CREATE TABLE Followers (
+CREATE TABLE followers (
     id UUID PRIMARY KEY,
     follower_id UUID REFERENCES Users(id),
     followee_id UUID REFERENCES Users(id),
@@ -26,7 +26,7 @@ CREATE TABLE Followers (
 );
 
 -- Posts Table
-CREATE TABLE Posts (
+CREATE TABLE posts (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES Users(id),
     title TEXT,
@@ -39,7 +39,7 @@ CREATE TABLE Posts (
 );
 
 -- Groups Table
-CREATE TABLE Groups (
+CREATE TABLE groups (
     id UUID PRIMARY KEY,
     title TEXT,
     description TEXT,
@@ -50,7 +50,7 @@ CREATE TABLE Groups (
 );
 
 -- Group Members Table
-CREATE TABLE GroupMembers (
+CREATE TABLE groupMembers (
     id UUID PRIMARY KEY,
     group_id UUID REFERENCES Groups(id),
     member_id UUID REFERENCES Users(id),
@@ -60,7 +60,7 @@ CREATE TABLE GroupMembers (
 );
 
 -- Group Posts Table
-CREATE TABLE GroupPosts (
+CREATE TABLE groupPosts (
     id UUID PRIMARY KEY,
     group_id UUID REFERENCES Groups(id),
     post_id UUID REFERENCES Posts(id),
@@ -69,7 +69,7 @@ CREATE TABLE GroupPosts (
 );
 
 -- Events Table
-CREATE TABLE Events (
+CREATE TABLE events (
     id UUID PRIMARY KEY,
     group_id UUID REFERENCES Groups(id),
     title TEXT,
@@ -80,7 +80,7 @@ CREATE TABLE Events (
 );
 
 -- Events Participant Table
-CREATE TABLE EventsParticipants (
+CREATE TABLE eventsParticipants (
     id UUID PRIMARY KEY,
     event_id UUID REFERENCES Events(id),
     member_id UUID REFERENCES Users(id),
@@ -90,7 +90,7 @@ CREATE TABLE EventsParticipants (
 );
 
 -- Private Messages Table
-CREATE TABLE PrivateMessages (
+CREATE TABLE privateMessages (
     id UUID PRIMARY KEY,
     sender_id UUID REFERENCES Users(id),
     receiver_id UUID REFERENCES Users(id),
@@ -99,7 +99,7 @@ CREATE TABLE PrivateMessages (
 );
 
 -- Group Messages Table
-CREATE TABLE GroupMessages (
+CREATE TABLE groupMessages (
     id UUID PRIMARY KEY,
     group_id UUID REFERENCES Groups(id),
     sender_id UUID REFERENCES Users(id),
@@ -108,7 +108,7 @@ CREATE TABLE GroupMessages (
 );
 
 -- Notifications Table
-CREATE TABLE Notifications (
+CREATE TABLE notifications (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES Users(id),
     type TEXT CHECK(type IN ('follow_request', 'group_invitation', 'new_message', 'new_event')),
@@ -117,11 +117,10 @@ CREATE TABLE Notifications (
 );
 
 -- Sessions Table
-CREATE TABLE Sessions (
+CREATE TABLE sessions (
     id UUID PRIMARY KEY,
     user_id UUID  REFERENCES Users(id),
-    session_token TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP,
+    expiration_date TIMESTAMP,
     deleted_at TIMESTAMP
 );

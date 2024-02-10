@@ -2,6 +2,7 @@ package main
 
 import (
 	octopus "backend/app"
+	"backend/pkg/config"
 	"backend/pkg/db/sqlite"
 	"backend/pkg/handlers"
 	"log"
@@ -43,23 +44,7 @@ func main() {
 
 	// lunch all handlers
 	handlers.HandleAll(app)
-	// app.GET("/", func(ctx *octopus.Context) {
-	// 	newUser := models.User{
-	// 		Email:       "ma@dca.co",
-	// 		Password:    "cdecqce",
-	// 		FirstName:   "cewc",
-	// 		LastName:    "cewc",
-	// 		DateOfBirth: time.Time{},
-	// 		AvatarImage: "cewc",
-	// 		Nickname:    "cewc",
-	// 		AboutMe:     "cewc",
-	// 		IsPublic:    true,
-	// 	}
-	// 	err := newUser.Create(ctx.Db.Conn)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// })
+	config.Sess.UseDB(app.Db.Conn)
 
 	if err := app.Run(":8081"); err != nil {
 		panic(err)

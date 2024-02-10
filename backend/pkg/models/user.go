@@ -8,25 +8,25 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Users []User
 
 type User struct {
-	ID          uuid.UUID `sql:"type:uuid;primary key"`
-	Email       string    `sql:"type:varchar(100);unique"`
-	Password    string    `sql:"type:varchar(100)"`
-	FirstName   string    `sql:"type:varchar(100)"`
-	LastName    string    `sql:"type:varchar(100)"`
-	DateOfBirth time.Time
-	AvatarImage string `sql:"type:varchar(255)"`
-	Nickname    string `sql:"type:varchar(100);unique"`
-	AboutMe     string `sql:"type:text"`
-	IsPublic    bool
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   sql.NullTime
-	
+	ID          uuid.UUID    `sql:"type:uuid;primary key" json:"id"`
+	Email       string       `sql:"type:varchar(100);unique" json:"email"`
+	Password    string       `sql:"type:varchar(100)" json:"password"`
+	FirstName   string       `sql:"type:varchar(100)" json:"firstName"`
+	LastName    string       `sql:"type:varchar(100)" json:"lastName"`
+	DateOfBirth time.Time    `json:"dateOfBirth"`
+	AvatarImage string       `sql:"type:varchar(255)" json:"avatarImage"`
+	Nickname    string       `sql:"type:varchar(100);unique" json:"nickname"`
+	AboutMe     string       `sql:"type:text" json:"aboutMe"`
+	IsPublic    bool         `json:"isPublic"`
+	CreatedAt   time.Time    `json:"createdAt"`
+	UpdatedAt   time.Time    `json:"updatedAt"`
+	DeletedAt   sql.NullTime `json:"deletedAt"`
 }
 
 // Create a new user
@@ -36,12 +36,16 @@ func (user *User) Create(db *sql.DB) error {
 	user.ID = uuid.New()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
+	paswordCrypted, err := bcrypt.GenerateFromPassword([]byte(html.EscapeString(user.Password)), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
 
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		
+
 		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
 	defer stmt.Close()
@@ -49,7 +53,7 @@ func (user *User) Create(db *sql.DB) error {
 	_, err = stmt.Exec(
 		user.ID.String(),
 		html.EscapeString(user.Email),
-		html.EscapeString(user.Password),
+		paswordCrypted,
 		html.EscapeString(user.FirstName),
 		html.EscapeString(user.LastName),
 		user.DateOfBirth,
