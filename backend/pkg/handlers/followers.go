@@ -16,7 +16,7 @@ func handleFollower(ctx *octopus.Context) {
 
 // FollowerHandler defines the structure for handling follower requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var FollowerHandler = Handler{
+var FollowerHandler = route{
 	path:   "/follower",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{

@@ -16,7 +16,7 @@ func handleMessages(ctx *octopus.Context) {
 
 // MessagesHandler defines the structure for handling messages requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var MessagesHandler = Handler{
+var MessagesHandler = route{
 	path:   "/messages",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{

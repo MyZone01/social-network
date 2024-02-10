@@ -10,14 +10,14 @@ import (
 type HandlerConstructor func(path string, middlewareAndHandler ...octopus.HandlerFunc)
 
 // Handler represents a route with its associated path, constructor, and middleware/handler functions.
-type Handler struct {
+type route struct {
 	path, method         string
 	middlewareAndHandler []octopus.HandlerFunc
 }
 
 // AllHandler is a slice of Handler structures that defines all the routes for the application.
 // Each Handler in the slice includes the path, the constructor for creating the route, and the middleware/handler functions to be executed.
-var AllHandler = []Handler{
+var AllHandler = []route{
 	authenticationHandler,
 	MessagesHandler,
 	postHandler,
