@@ -2,6 +2,7 @@ package main
 
 import (
 	octopus "backend/app"
+	"backend/app/middleware/cors"
 	"backend/pkg/config"
 	"backend/pkg/db/sqlite"
 	"backend/pkg/handlers"
@@ -43,6 +44,14 @@ func main() {
 	app := octopus.New(migrate)
 
 	// lunch all handlers
+	app.Use(cors.New(cors.Config{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
+		AllowCredentials: true,
+		ExposedHeaders:   []string{},
+		MaxAge:           86400,
+	}))
 	handlers.HandleAll(app)
 	config.Sess.UseDB(app.Db.Conn)
 
