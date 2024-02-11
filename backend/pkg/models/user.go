@@ -1,10 +1,12 @@
 package models
 
 import (
+	octopus "backend/app"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"html"
+	"io"
 	"time"
 
 	"github.com/google/uuid"
@@ -152,8 +154,14 @@ func (user *User) Delete(db *sql.DB) error {
 	return nil
 }
 
-func (user *User) UnmarshalFormData(formData []byte) error {
-	if err := json.Unmarshal(formData, user); err != nil {
+func (user *User) UnmarshalFormData(ctx *octopus.Context) error {
+	jsonForm, err := io.ReadAll(ctx.Request.Body)
+	if err != nil {
+
+		return err
+
+	}
+	if err := json.Unmarshal(jsonForm, user); err != nil {
 		return err
 	}
 	return nil
