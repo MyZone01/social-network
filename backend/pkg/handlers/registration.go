@@ -17,7 +17,7 @@ var registationHandler = func(ctx *octopus.Context) {
 	log.Println(" Host:  [ " + ctx.Request.RemoteAddr + " ] " + "reach registration route")
 
 	var newUser = models.User{}
-	
+
 	// Attempts to deserialize the form data into the User instance.
 	if err := newUser.UnmarshalFormData(ctx); err != nil {
 		// If deserialization fails, logs the error and returns an HTTP status  500.
