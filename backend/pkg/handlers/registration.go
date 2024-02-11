@@ -19,7 +19,7 @@ var registationHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
 
 	// Attempts to deserialize the form data into the User instance.
-	if err := newUser.UnmarshalFormData(ctx); err != nil {
+	if err := ctx.BodyParser(newUser); err != nil {
 		// If deserialization fails, logs the error and returns an HTTP status  500.
 		log.Println(err)
 		ctx.Status(500)

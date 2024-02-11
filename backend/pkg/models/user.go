@@ -3,12 +3,10 @@ package models
 import (
 	octopus "backend/app"
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"fmt"
 
 	"html"
-	"io"
 	"time"
 
 	"github.com/google/uuid"
@@ -156,8 +154,8 @@ func (user *User) Delete(db *sql.DB) error {
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
+	return fmt.Errorf("unable to prepare the query. %v", err)
 	defer stmt.Close()
 
 	_, err = stmt.Exec(time.Now(), user.ID)
@@ -167,16 +165,6 @@ func (user *User) Delete(db *sql.DB) error {
 	return nil
 }
 
-func (user *User) UnmarshalFormData(ctx *octopus.Context) error {
-	jsonForm, err := io.ReadAll(ctx.Request.Body)
-	if err != nil {
-		return err
-	}
-	if err := json.Unmarshal(jsonForm, user); err != nil {
-		return err
-	}
-	return nil
-}
 func (user *User) CheckCredentials(ctx *octopus.Context) bool {
 	query := `SELECT id,password FROM users WHERE (email = ? OR nickname = ?)`
 	var realPassword string

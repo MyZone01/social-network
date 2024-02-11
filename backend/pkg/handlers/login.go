@@ -18,7 +18,7 @@ var loginHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
 
 	// Try to deserialize the form data into the User instance.
-	if err := newUser.UnmarshalFormData(ctx); err != nil {
+	if err := ctx.BodyParser(newUser); err != nil {
 		// If deserialization fails, log the error and return an HTTP status  500.
 		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
