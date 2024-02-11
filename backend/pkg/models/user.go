@@ -1,10 +1,14 @@
 package models
 
 import (
+	octopus "backend/app"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
+
 	"html"
+	"io"
 	"time"
 
 	"github.com/google/uuid"
@@ -40,7 +44,18 @@ func (user *User) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-
+	userFeildsCheckCases := []bool{
+		user.Email != "",
+		user.Password != "",
+		user.Nickname != "",
+		user.FirstName != "",
+		user.LastName != "",
+	}
+	for _, v := range userFeildsCheckCases {
+		if !v {
+			return errors.New("some empty values in form")
+		}
+	}
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
@@ -152,11 +167,27 @@ func (user *User) Delete(db *sql.DB) error {
 	return nil
 }
 
-func (user *User) UnmarshalFormData(formData []byte) error {
-	if err := json.Unmarshal(formData, user); err != nil {
+func (user *User) UnmarshalFormData(ctx *octopus.Context) error {
+	jsonForm, err := io.ReadAll(ctx.Request.Body)
+	if err != nil {
+		return err
+	}
+	if err := json.Unmarshal(jsonForm, user); err != nil {
 		return err
 	}
 	return nil
+}
+func (user *User) CheckCredentials(ctx *octopus.Context) bool {
+	query := `SELECT id,password FROM users WHERE (email = ? OR nickname = ?)`
+	var realPassword string
+	err := ctx.Db.Conn.QueryRow(query, user.Email, user.Email).Scan(&user.ID, &realPassword)
+	if err != nil {
+		return false
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(user.Password))
+
+	return err == nil
 }
 
 // GetAll users

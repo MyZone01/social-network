@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	octopus "backend/app" 
+	octopus "backend/app"
 	"backend/pkg/config"
-	"backend/pkg/middleware" 
-	"backend/pkg/models" 
-	"io/ioutil" 
-	"log" 
-	"net/http" 
+	"backend/pkg/middleware"
+	"backend/pkg/models"
+	"log"
+	"net/http"
 )
 
 // registationHandler is a function that handles account creation requests.
@@ -17,20 +16,10 @@ var registationHandler = func(ctx *octopus.Context) {
 	// Logs the client's IP address that reached the registration route.
 	log.Println(" Host:  [ " + ctx.Request.RemoteAddr + " ] " + "reach registration route")
 
-	// Reads the HTTP request body and stores the data in jsonForm.
-	jsonForm, err := ioutil.ReadAll(ctx.Request.Body)
-	if err != nil {
-		// In case of an error reading the request body, logs the error and returns an HTTP status  500.
-		log.Println(err)
-		ctx.Status(500)
-		return
-	}
-
-	// Creates an empty User instance to store user data.
 	var newUser = models.User{}
 
 	// Attempts to deserialize the form data into the User instance.
-	if err := newUser.UnmarshalFormData(jsonForm); err != nil {
+	if err := newUser.UnmarshalFormData(ctx); err != nil {
 		// If deserialization fails, logs the error and returns an HTTP status  500.
 		log.Println(err)
 		ctx.Status(500)
@@ -65,6 +54,6 @@ var registrationRoute = route{
 	path:   "/registrations",
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
-		registationHandler, // The route handler that will be executed when the route is called.
+		registationHandler,        // The route handler that will be executed when the route is called.
 	},
 }

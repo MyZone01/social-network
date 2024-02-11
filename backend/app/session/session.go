@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
 	"net/http"
 	"sync"
 
@@ -268,9 +269,7 @@ func (s *starter) Valid() bool {
 	db := session.database
 	tmpdata := session.data
 	cookie, err := s.Ctx.Request.Cookie(c.CookieName)
-
 	if err != nil {
-
 		// Le cookie n'existe pas
 		return false
 	}
@@ -310,6 +309,7 @@ func (s *starter) Valid() bool {
 
 		// Le cookie existe et la session est valide
 		Notif.Store(userID, true)
+
 		return true
 	}
 	return false

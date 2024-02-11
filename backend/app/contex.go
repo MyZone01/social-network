@@ -1,7 +1,6 @@
 package octopus
 
 import (
-	"backend/pkg/models"
 	"database/sql"
 	"encoding/json"
 	"html/template"
@@ -9,18 +8,7 @@ import (
 )
 
 type db struct {
-	Conn           *sql.DB
-	User           models.User
-	Event          models.Event
-	Follower       models.Follower
-	Group          models.Group
-	GroupMember    models.GroupMember
-	GroupPost      models.GroupPost
-	GroupMessage   models.GroupMessage
-	Notification   models.Notification
-	PrivateMessage models.PrivateMessage
-	Post           models.Post
-	Session        models.Session
+	Conn *sql.DB
 }
 
 type Context struct {

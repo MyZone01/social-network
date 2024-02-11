@@ -8,7 +8,7 @@ import (
 
 func handleAuthentication(ctx *octopus.Context) {
 	ctx.WriteString("hello world")
-	ctx.Db.User.Create(ctx.Db.Conn)
+	// ctx.Db.User.Create(ctx.Db.Conn)
 	/* The 'ctx' variable contains the same arguments as a typical handler function with 'r' and 'w'.
 	and it have new methods such as 'ctx.JSON(data interface{})' to send JSON responses and stuff.
 	*** Example usage:
