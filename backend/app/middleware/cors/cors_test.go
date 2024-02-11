@@ -1,16 +1,15 @@
 package cors
 
 import (
+	octopus "backend/app"
+	"backend/pkg/db/sqlite"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/abdotop/octopus"
 )
 
 func TestCORSMiddleware(t *testing.T) {
-	app := octopus.New()
-
+	app := octopus.New(sqlite.Migrations{})
 	app.Use(New(Config{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -20,7 +19,7 @@ func TestCORSMiddleware(t *testing.T) {
 		MaxAge:           86400,
 	}))
 
-	app.GET("/test", func(c *octopus.Ctx) {})
+	app.GET("/test", func(c *octopus.Context) {})
 
 	req, err := http.NewRequest("GET", "http://localhost:8888/test", nil)
 	if err != nil {
