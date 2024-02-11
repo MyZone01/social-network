@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -24,9 +24,10 @@ type Route struct {
 }
 
 type App struct {
-	Db          *db
-	routes      []*Route
-	onErrorCode ErrorHandlerFunc
+	Db               *db
+	routes           []*Route
+	onErrorCode      ErrorHandlerFunc
+	globalMiddleware []HandlerFunc
 }
 
 // func New() *App {
@@ -55,8 +56,14 @@ func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string
 	for _, method := range methods {
 		methodsMap[method] = true
 	}
+	handlers = append(app.globalMiddleware, handlers...)
 	route := &Route{pattern: pattern, handlers: handlers, methods: methodsMap}
 	app.routes = append(app.routes, route)
+}
+
+// Use adds a middleware to the application
+func (a *App) Use(handlers ...HandlerFunc) {
+	a.globalMiddleware = append(a.globalMiddleware, handlers...)
 }
 
 func (app *App) Static(path string, dir string) {
