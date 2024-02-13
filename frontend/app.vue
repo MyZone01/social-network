@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const colorMode = useColorMode()
 
+// logic for authenticated user
+const authenticated = true
+
 const color = computed(() => colorMode.value === 'dark' ? '#111827' : 'white')
 
 useHead({
@@ -24,9 +27,15 @@ useSeoMeta({
 })
 </script>
 <template>
-  <Html>
-    <NuxtLoadingIndicator />
-    <NuxtPage />
-    <UNotifications />
-  </Html>
+
+  <NuxtPage v-if="authenticated" />
+
+  <AuthLogin v-else />
+
+  <!-- INITIAL CONTENT -->
+  <!-- <Html> -->
+    <!-- <NuxtLoadingIndicator /> -->
+    <!-- <NuxtPage /> -->
+    <!-- <UNotifications /> -->
+  <!-- </Html> -->
 </template>
