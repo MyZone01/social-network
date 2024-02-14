@@ -10,28 +10,28 @@
         <nav id="side">
           <ul>
             <li>
-              <a href="feed.html">
+              <router-link to="feed">
                 <img src="assets/images/icons/home.png" alt="feeds" class="w-6">
                 <span> Feed </span>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="messages.html">
+               <router-link to="/message">
                 <img src="assets/images/icons/message.png" alt="messages" class="w-5">
                 <span> messages </span>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="event.html">
+              <router-link to="/event">
                 <img src="assets/images/icons/event.png" alt="messages" class="w-6">
                 <span> event </span>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="groups.html">
+              <router-link to="/groups">
                 <img src="assets/images/icons/group.png" alt="groups" class="w-6">
                 <span> Groups </span>
-              </a>
+              </router-link >
             </li>
           </ul>
         </nav>

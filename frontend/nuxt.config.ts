@@ -32,4 +32,11 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: '',
   },
+  generate: {
+    routes: [
+      '/message',
+      '/feed',
+      '/event',
+    ],
+  }
 })
