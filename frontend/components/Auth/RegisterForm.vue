@@ -43,7 +43,7 @@
             </div>
 
             <div class="col-span-2">
-                <button @click="handleLogin" class="button bg-primary text-white w-full">Get Started</button>
+                <button @click="handleRegister()" class="button bg-primary text-white w-full">Get Started</button>
             </div>
         </div>
 
@@ -73,7 +73,7 @@ const data = reactive({
     lastName: '',
     email: '',
     nickname: '',
-    repeatpassword: '',
+    confirmPassword: '',
     password: '',
     aboutMe: '',
     avatarImg: '',
@@ -89,7 +89,7 @@ const handleImageSelected = (imageFile) => {
     data.avatarImg = URL.createObjectURL(imageFile)
 }
 
-async function handleLogin() {
+async function handleRegister() {
     data.loading = true
     try {
         await register({
@@ -98,7 +98,7 @@ async function handleLogin() {
             email: data.email,
             nickname: data.nickname,
             password: data.password,
-            repeatpassword: data.repeatpassword,
+            repeatPassword: data.confirmPassword,
             aboutMe: data.aboutMe,
             avatarImg: data.avatarImg,
         })

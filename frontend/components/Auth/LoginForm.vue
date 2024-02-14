@@ -17,7 +17,7 @@
             </div>
 
             <div>
-                <button @click="handleLogin" class="button bg-primary text-white w-full">Sign in</button>
+                <button @click="handleLogin()" class="button bg-primary text-white w-full">Sign in</button>
             </div>
             <div class="text-center flex items-center gap-6">
                 <hr class="flex-1 border-slate-200 dark:border-slate-800">
@@ -55,6 +55,7 @@ async function handleLogin() {
         })
     } catch (error) {
         console.log(error)
+        data.loading = false
     } finally {
         data.loading = false
     }

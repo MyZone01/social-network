@@ -4,8 +4,10 @@ import { userTransformer } from "~/server/transformers/user.js"
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-
-    const { nickname, email, password, repeatPassword, name } = body
+    console.log(body)
+    
+    const { firstName, lastName, email, nickname, password, repeatPassword, aboutMe, avatarImg} = body
+    console.log(firstName)
 
     const requiredFields = [nickname, email, password, repeatPassword, name];
     if (requiredFields.some(field => field == "")) {
@@ -23,14 +25,15 @@ export default defineEventHandler(async (event) => {
     const userData = {
         nickname,
         email,
-        password,
-        name, 
-        profileImage: 'https://picsum.photos/200/200'
+        firstName,
+        lastName,
+        avatarImg,
+        aboutMe
     }
 
-    const user = await createUser(userData)
+    // const user = await createUser(userData)
     return {
-        body: userTransformer(user)
+        body: userData
     }
 
 })

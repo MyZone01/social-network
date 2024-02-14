@@ -20,18 +20,20 @@ export default () => {
         authUser.value = newUser
     }
 
-    const register = ({ email, password }) => {
+    const register = ({ data }) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const data = await $fetch('/api/auth/login', {
+                const fetchData = await $fetch('/api/auth/register', {
                     method: 'POST',
                     body: {
-                        email,
-                        password
+                        data
                     }
                 })
-                setToken(data.access_token)
-                setUser(data.user)
+                // setToken(data.access_token)
+                // setUser(data.user)
+
+                console.log(ftechData)
+                console.log()
 
                 resolve(true)
             } catch (error) {
@@ -50,8 +52,9 @@ export default () => {
                         password
                     }
                 })
-                setToken(data.access_token)
-                setUser(data.user)
+                // setToken(data.access_token)
+                // setUser(data.user)
+                console.log(data)
 
                 resolve(true)
             } catch (error) {
@@ -120,6 +123,7 @@ export default () => {
     }
     return {
         login,
+        register,
         useAuthUser,
         useAuthToken,
         initAuth,
