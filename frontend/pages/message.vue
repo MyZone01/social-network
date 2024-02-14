@@ -398,7 +398,7 @@
                       <div class="relative" style="padding-bottom: 57.4286%">
                         <div class="w-full h-full absolute inset-0">
                           <img
-                            src="../assets/images/product/product-2.jpg" alt=""
+                            src="../assets/images/product/product-3.jpg" alt=""
                             class="block max-w-full max-h-52 w-full h-full object-cover"
                           >
                         </div>

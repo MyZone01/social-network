@@ -320,7 +320,7 @@
                                 class="sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
 
                                 <div class="flex items-start gap-3 relative">
-                                    <a href="timeline.html"> <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                                    <a href="timeline.html"> <img src="../assets/images/avatars/avatar-3.jpg" alt=""
                                             class="w-6 h-6 mt-1 rounded-full"> </a>
                                     <div class="flex-1">
                                         <a href="timeline.html" class="text-black font-medium inline-block dark:text-white">

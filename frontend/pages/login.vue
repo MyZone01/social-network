@@ -1,6 +1,5 @@
 <template>
-  <NuxtLayout name="login-layout">
-    <div class="sm:flex">
+  <div class="sm:flex">
       <div class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
         <div class="w-full lg:max-w-sm mx-auto space-y-10" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
           <!-- logo image-->
@@ -18,7 +17,7 @@
               Sign in to your account
             </h2>
             <p class="text-sm text-gray-700 font-normal">
-              If you haven’t signed up yet. <a href="register" class="text-blue-700">Register here!</a>
+              If you haven’t signed up yet. <router-link to ="register" class="text-blue-700">Register here!</router-link>
             </p>
           </div>
 
@@ -111,7 +110,6 @@
         </div>
       </div>
     </div>
-  </NuxtLayout>
 </template>
 <script setup lang="ts">
 

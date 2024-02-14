@@ -1,7 +1,7 @@
 <template>
   <UCard class="bg-gray-100 dark:bg-gray-950 w-72" :ui="{ header: { padding: 'p-0 rounded-t-lg overflow-hidden' } }">
     <template #header>
-      <img src="assets/images/post/img-2.jpg" class="" alt="">
+      <img src="../assets/images/post/img-2.jpg" class="" alt="">
     </template>
     <div>
       <p class="text-xs font-semibold text-teal-600 mb-1">

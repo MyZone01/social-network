@@ -28,10 +28,9 @@
             Sign up to get started
           </h2>
           <p class="text-sm text-gray-700 font-normal">
-            If you already have an account, <a
-              href="form-login.html"
+            If you already have an account, <router-link to="/login"
               class="text-blue-700"
-            >Login here!</a>
+            >Login here!</router-link>
           </p>
         </div>
 

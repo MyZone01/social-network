@@ -3,7 +3,7 @@
   <div class="rounded-xl shadow-sm text-sm font-medium bg-gray-100 dark:bg-gray-950">
     <!-- post heading -->
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-      <a href="timeline.html"> <img src="assets/images/avatars/avatar-3.jpg" alt="" class="w-9 h-9 rounded-full"> </a>
+      <a href="timeline.html"> <img src="../assets/images/avatars/avatar-3.jpg" alt="" class="w-9 h-9 rounded-full"> </a>
       <div class="flex-1">
         <a href="timeline.html">
           <h4 class="text-black dark:text-white"> Monroe Parker </h4>
@@ -17,14 +17,14 @@
     <!-- post image -->
     <a href="#preview_modal" uk-toggle>
       <div class="relative w-full lg:h-96 h-full sm:px-4">
-        <img src="assets/images/post/img-2.jpg" alt="" class="sm:rounded-lg w-full h-full object-cover">
+        <img src="../assets/images/post/img-2.jpg" alt="" class="sm:rounded-lg w-full h-full object-cover">
       </div>
     </a>
 
     <!-- comments -->
     <div class="sm:p-4 mt-5 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
       <div class="flex items-start gap-3 relative">
-        <a href="timeline.html"> <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-6 h-6 mt-1 rounded-full">
+        <a href="timeline.html"> <img src="../assets/images/avatars/avatar-2.jpg" alt="" class="w-6 h-6 mt-1 rounded-full">
         </a>
         <div class="flex-1">
           <a href="timeline.html" class="text-black font-medium inline-block dark:text-white"> Steeve </a>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="flex items-start gap-3 relative">
-        <a href="timeline.html"> <img src="assets/images/avatars/avatar-3.jpg" alt="" class="w-6 h-6 mt-1 rounded-full">
+        <a href="timeline.html"> <img src="../assets/images/avatars/avatar-3.jpg" alt="" class="w-6 h-6 mt-1 rounded-full">
         </a>
         <div class="flex-1">
           <a href="timeline.html" class="text-black font-medium inline-block dark:text-white"> Monroe </a>
@@ -51,7 +51,7 @@
 
     <!-- add comment -->
     <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-      <img src="assets/images/avatars/avatar-7.jpg" alt="" class="w-6 h-6 rounded-full">
+      <img src="../assets/images/avatars/avatar-7.jpg" alt="" class="w-6 h-6 rounded-full">
 
       <div class="flex-1 relative overflow-hidden h-10">
         <textarea

@@ -98,7 +98,7 @@
                                 <div class="card">
                                     <a href="timeline-event.html">
                                         <div class="card-media h-32">
-                                            <img src="../assets/images/post/img-1.jpg" alt="">
+                                            <img src="../assets/images/post/post-1.jpg" alt="">
                                             <div class="card-overly"></div>
                                         </div>
                                     </a>
@@ -321,7 +321,7 @@
                     <div class="card">
                         <a href="timeline-event.html">
                             <div class="card-media h-32">
-                                <img src="../assets/images/post/img-1.jpg" alt="">
+                                <img src="../assets/images/post/post-1.jpg" alt="">
                                 <div class="card-overly"></div>
                             </div>
                         </a>

@@ -37,6 +37,8 @@ export default defineNuxtConfig({
       '/message',
       '/feed',
       '/event',
+      '/login',
+      '/register'
     ],
   }
 })

@@ -11,25 +11,25 @@
           <ul>
             <li>
               <router-link to="feed">
-                <img src="assets/images/icons/home.png" alt="feeds" class="w-6">
+                <img src="../assets/images/icons/home.png" alt="feeds" class="w-6">
                 <span> Feed </span>
               </router-link>
             </li>
             <li>
                <router-link to="/message">
-                <img src="assets/images/icons/message.png" alt="messages" class="w-5">
+                <img src="../assets/images/icons/message.png" alt="messages" class="w-5">
                 <span> messages </span>
               </router-link>
             </li>
             <li>
               <router-link to="/event">
-                <img src="assets/images/icons/event.png" alt="messages" class="w-6">
+                <img src="../assets/images/icons/event.png" alt="messages" class="w-6">
                 <span> event </span>
               </router-link>
             </li>
             <li>
               <router-link to="/groups">
-                <img src="assets/images/icons/group.png" alt="groups" class="w-6">
+                <img src="../assets/images/icons/group.png" alt="groups" class="w-6">
                 <span> Groups </span>
               </router-link >
             </li>

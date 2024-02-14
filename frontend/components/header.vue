@@ -13,10 +13,10 @@
           />
           <div id="logo">
             <a href="feed.html">
-              <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
-              <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
-              <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
-              <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
+              <img src="../assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
+              <img src="../assets/images/logo-light.png" alt="" class="dark:md:block hidden">
+              <img src="../assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
+              <img src="../assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
             </a>
           </div>
         </div>
@@ -125,7 +125,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-3.jpg" alt=""
+                          src="../assets/images/avatars/avatar-3.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -141,7 +141,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-7.jpg" alt=""
+                          src="../assets/images/avatars/avatar-7.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -156,7 +156,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-6.jpg" alt=""
+                          src="../assets/images/avatars/avatar-6.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -170,7 +170,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-2.jpg" alt=""
+                          src="../assets/images/avatars/avatar-2.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -184,7 +184,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-3.jpg" alt=""
+                          src="../assets/images/avatars/avatar-3.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -199,7 +199,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-4.jpg" alt=""
+                          src="../assets/images/avatars/avatar-4.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -214,7 +214,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-2.jpg" alt=""
+                          src="../assets/images/avatars/avatar-2.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -229,7 +229,7 @@
                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
                       >
                         <div class="relative w-12 h-12 shrink-0"> <img
-                          src="assets/images/avatars/avatar-7.jpg" alt=""
+                          src="../assets/images/avatars/avatar-7.jpg" alt=""
                           class="object-cover w-full h-full rounded-full"
                         ></div>
                         <div class="flex-1 ">
@@ -276,7 +276,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-2.jpg" alt=""
+                            src="../assets/images/avatars/avatar-2.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -297,7 +297,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-4.jpg" alt=""
+                            src="../assets/images/avatars/avatar-4.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -316,7 +316,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-5.jpg" alt=""
+                            src="../assets/images/avatars/avatar-5.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -335,7 +335,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-3.jpg" alt=""
+                            src="../assets/images/avatars/avatar-3.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -356,7 +356,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-7.jpg" alt=""
+                            src="../assets/images/avatars/avatar-7.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -375,7 +375,7 @@
                       >
                         <div class="relative w-10 h-10 shrink-0">
                           <img
-                            src="assets/images/avatars/avatar-4.jpg" alt=""
+                            src="../assets/images/avatars/avatar-4.jpg" alt=""
                             class="object-cover w-full h-full rounded-full"
                           >
                         </div>
@@ -410,13 +410,13 @@
 
             <!-- profile -->
             <UPopover>
-              <UAvatar size="sm" src="/assets/images/avatars/avatar-2.jpg" alt="Avatar" />
+              <UAvatar size="sm" src="../assets/images/avatars/avatar-2.jpg" alt="Avatar" />
 
               <template #panel>
                 <div class="bg-white rounded-lg drop-shadow-xl dark:bg-gray-900 w-64 border2">
                   <a href="timeline.html">
                     <div class="p-4 py-5 flex items-center gap-4">
-                      <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-10 h-10 rounded-full shadow">
+                      <img src="../assets/images/avatars/avatar-2.jpg" alt="" class="w-10 h-10 rounded-full shadow">
                       <div class="flex-1">
                         <h4 class="text-sm font-medium text-black dark:text-white">Stell johnson</h4>
                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@mohnson</div>
@@ -460,14 +460,14 @@
                       </div>
                     </a>
                     <hr class="-mx-2 my-2 dark:border-gray-600/60">
-                    <a href="form-login.html">
+                    <router-link to="/login">
                       <div
                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10"
                       >
                         👋
                         Log Out
                       </div>
-                    </a>
+                    </router-link>
                   </nav>
                 </div>
               </template>
