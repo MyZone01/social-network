@@ -20,19 +20,26 @@ export default () => {
         authUser.value = newUser
     }
 
-    const register = ({ data }) => {
+    const register = ({ firstName, lastName, email, nickname, password, repeatPassword, aboutMe, avatarImg }) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const fetchData = await $fetch('/api/auth/register', {
                     method: 'POST',
                     body: {
-                        data
+                        firstName,
+                        lastName,
+                        email,
+                        nickname,
+                        password,
+                        repeatPassword,
+                        aboutMe,
+                        avatarImg
                     }
                 })
                 // setToken(data.access_token)
                 // setUser(data.user)
 
-                console.log(ftechData)
+                console.log(fetchData)
                 console.log()
 
                 resolve(true)
@@ -54,7 +61,7 @@ export default () => {
                 })
                 // setToken(data.access_token)
                 // setUser(data.user)
-                console.log(data)
+                // console.log(data)
 
                 resolve(true)
             } catch (error) {

@@ -4,6 +4,7 @@
     <div class="space-y-7 text-sm text-black font-medium dark:text-white"
         uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
 
+        <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">{{ data.registerError }}</h2>
         <div class="grid grid-cols-2 gap-4 gap-y-7">
 
             <!-- last name -->
@@ -77,6 +78,7 @@ const data = reactive({
     password: '',
     aboutMe: '',
     avatarImg: '',
+    registerError: '',
     loading: false
 })
 
@@ -103,9 +105,20 @@ async function handleRegister() {
             avatarImg: data.avatarImg,
         })
     } catch (error) {
-        console.log(error)
+        data.registerError = error.statusMessage
+        setTimeout(() => {
+            data.registerError = ''
+        }, 2000)
         data.loading = false
     } finally {
+        data.firstName = ''
+        data.lastName = ''
+        data.email = ''
+        data.nickname = ''
+        data.confirmPassword = ''
+        data.password = ''
+        data.aboutMe = ''
+        data.avatarImg = ''
         data.loading = false
     }
 }

@@ -7,19 +7,17 @@ import { userTransformer } from "~/server/transformers/user.js";
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
-    console.log(body)
-
     const { email, password} = body
 
     const requiredFields = [email, password];
     if (requiredFields.some(field => field == "")) {
         return sendError(event, createError({
             statusCode: 400,
-            statusMessage: 'Invalid params'
+            statusMessage: 'Invalid entries'
         }))
     }
 
-    // User registered
+    // Check if User is registered
     const user = true //await getUserByEmail(email)
 
     if (!user) {
@@ -29,7 +27,7 @@ export default defineEventHandler(async (event) => {
         }))
     }
 
-    // Compare password
+    // Compare password with password stored in DataBase
     const passwordMatched = true //await bcrypt.compare(password, user.password)
     if (!passwordMatched) {
         return sendError(event, createError({
@@ -38,16 +36,12 @@ export default defineEventHandler(async (event) => {
         }))
     }
 
+    // Token LOGIC IMPLEMENTATION
     // generate Token
-    // Access token
-    // refresh oken
-    
-    
-    
-    
-    
+    // Access Token
+    // refresh Token
+   
     // const { accessToken, refreshToken } = generateTokens(user)
-
     // Save refreshToken inside db
     // await createRefreshToken({
         // token: refreshToken,
