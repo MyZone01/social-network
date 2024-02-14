@@ -21,9 +21,9 @@ export default () => {
     }
 
     const register = ({ firstName, lastName, email, nickname, password, repeatPassword, aboutMe, avatarImg }) => {
-        return new Promise(async (resolve, reject) => {
+        return new Promise.all(async (resolve, reject) => {
             try {
-                const fetchData = await $fetch('/api/auth/register', {
+                const fetchData = await $fetch('/api/auth/registerValidator', {
                     method: 'POST',
                     body: {
                         firstName,
@@ -38,9 +38,7 @@ export default () => {
                 })
                 // setToken(data.access_token)
                 // setUser(data.user)
-
                 console.log(fetchData)
-                console.log()
 
                 resolve(true)
             } catch (error) {
@@ -52,16 +50,25 @@ export default () => {
     const login = ({ email, password }) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const data = await $fetch('/api/auth/login', {
+                const data = await $fetch('/api/auth/loginValidator', {
                     method: 'POST',
                     body: {
                         email,
                         password
                     }
-                })
+                })         
+                
+                // directing data to backend
+                // const loginAccess = await $fetch('/api/auth/server', {
+                //     method: 'POST',
+                //     body: JSON.stringify({registration: null, loginAccess: data})
+                // })
+                
+                // FROM BACKEND RESPONSE
+                // logic based on response from backend
                 // setToken(data.access_token)
                 // setUser(data.user)
-                // console.log(data)
+                console.log(data)
 
                 resolve(true)
             } catch (error) {

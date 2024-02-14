@@ -36,23 +36,34 @@ export default defineEventHandler(async (event) => {
         }))
     }
 
-    // Token LOGIC IMPLEMENTATION
-    // generate Token
-    // Access Token
-    // refresh Token
-   
-    // const { accessToken, refreshToken } = generateTokens(user)
-    // Save refreshToken inside db
-    // await createRefreshToken({
-        // token: refreshToken,
-        // userId: user.id
-    // })
-
-    // add http only cookie
-    // sendRefreshToken(event, refreshToken)
-
-    return {
-        access_Token: "accessToken",
-        user: userTransformer(user)
+    const loginAccess = { 
+        email: email,
+        password: password
     }
-} ) 
+    
+    try {
+        const userSession = await $fetch('http://localhost:8081/registration', {
+            method: 'POST',
+            body: JSON.stringify(loginAccess)
+        })
+        
+        if (userSession.error) {
+            // LOGic handling Error from Server
+            return sendError(event, createError({
+                statusCode: 400,
+                statusMessage: error.statusMessage
+            }))
+        } else {
+            return {
+                // filtering what data to expose and which one to set from there
+                body: userTransformer(userSession)
+            }
+        }
+    } catch (error) {
+        // relate It to the server error
+        return sendError(event, createError({
+            statusCode: 400,
+            statusMessage: error.statusMessage
+        }))
+    }
+})
