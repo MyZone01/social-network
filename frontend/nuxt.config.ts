@@ -1,11 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
   ssr: true,
   devtools: { enabled: true },
   typescript: {
     includeWorkspace: true,
   },
-  css: ['~/assets/css/style.css'],
+  css: [
+    '~/assets/css/style.css',
+],
   modules: [
     '@nuxtjs/color-mode',
     '@unocss/nuxt',
@@ -15,6 +18,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     'nuxt-og-image',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/ionic',
   ],
   ui: {
     icons: ['heroicons', 'simple-icons']
@@ -31,5 +35,11 @@ export default defineNuxtConfig({
   },
   colorMode: {
     classSuffix: '',
+  },
+  ionic: {
+    integrations:
+    {
+      icons: true,
+    },
   },
 })
