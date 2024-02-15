@@ -31,7 +31,7 @@
             Sign in to your account
           </h2>
           <p class="text-sm text-gray-700 font-normal">
-            If you haven’t signed up yet. <a href="register" class="text-blue-700">Register here!</a>
+            If you haven’t signed up yet. <router-link to="/register" class="text-blue-700">Register here!</router-link>
           </p>
         </div>
 

@@ -12,12 +12,12 @@
             icon="i-heroicons:bars-3-solid"
           />
           <div id="logo">
-            <a href="feed.html">
+            <router-link to="/">
               <img src="../assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
               <img src="../assets/images/logo-light.png" alt="" class="dark:md:block hidden">
               <img src="../assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
               <img src="../assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
-            </a>
+            </router-link>
           </div>
         </div>
       </div>

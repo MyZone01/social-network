@@ -2,7 +2,8 @@
   <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
     <Header />
     <Sidebar />
-    <main class="ml-48 2xl:ml-0 py-5 px-6 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+    <main  id="site__main"
+      class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
       <nuxt-child />
       <slot />
       <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
