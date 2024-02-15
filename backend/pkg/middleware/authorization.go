@@ -38,7 +38,13 @@ func AuthMiddleware(ctx *octopus.Context) {
 
 // AuthAccessGoup is a middleware that checks if the user is authenticated
 func AuthAccessGoup(ctx *octopus.Context) {
-	user, err := config.Sess.Start(ctx).Get()
+	var token string
+	headerBearer := ctx.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+
+	user, err := config.Sess.Start(ctx).Get(token)
 	if err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",
@@ -155,6 +161,12 @@ func CreatePostMiddleware(c *octopus.Context) {
 
 // CreateGroupMiddleware is a middleware that checks if the data is valid
 func CreateGroupMiddleware(c *octopus.Context) {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -163,7 +175,7 @@ func CreateGroupMiddleware(c *octopus.Context) {
 		})
 		return
 	}
-	_, err := config.Sess.Start(c).Get()
+	_, err := config.Sess.Start(c).Get(token)
 	if err != nil {
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",
@@ -183,6 +195,12 @@ func CreateGroupMiddleware(c *octopus.Context) {
 
 // CreateEventMiddleware is a middleware that checks if the data is valid
 func CreateEventMiddleware(c *octopus.Context) {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -191,7 +209,7 @@ func CreateEventMiddleware(c *octopus.Context) {
 		})
 		return
 	}
-	_, err := config.Sess.Start(c).Get()
+	_, err := config.Sess.Start(c).Get(token)
 	if err != nil {
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",
@@ -212,6 +230,12 @@ func CreateEventMiddleware(c *octopus.Context) {
 
 // CreateGroupPostMiddleware is a middleware that checks if the data is valid
 func CreateGroupPostMiddleware(c *octopus.Context) {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -220,7 +244,7 @@ func CreateGroupPostMiddleware(c *octopus.Context) {
 		})
 		return
 	}
-	_, err := config.Sess.Start(c).Get()
+	_, err := config.Sess.Start(c).Get(token)
 	if err != nil {
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",
@@ -241,6 +265,12 @@ func CreateGroupPostMiddleware(c *octopus.Context) {
 
 // CreateGroupMessageMiddleware is a middleware that checks if the data is valid
 func CreateGroupMessageMiddleware(c *octopus.Context) {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -249,7 +279,7 @@ func CreateGroupMessageMiddleware(c *octopus.Context) {
 		})
 		return
 	}
-	_, err := config.Sess.Start(c).Get()
+	_, err := config.Sess.Start(c).Get(token)
 	if err != nil {
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",

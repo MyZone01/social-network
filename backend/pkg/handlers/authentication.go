@@ -29,7 +29,7 @@ func handleAuthentication(ctx *octopus.Context) {
 // AuthenticationHandler defines the structure for handling authentication requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
 var authenticationRoute = route{
-	path:   "/lolo",
+	path:   "/checkSession",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.

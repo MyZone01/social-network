@@ -143,7 +143,7 @@ func (s *session) Start(c *octopus.Context) *starter {
 	return &starter{session: s, Ctx: c}
 }
 
-func (s *starter) Set(value uuid.UUID) error {
+func (s *starter) Set(value uuid.UUID) (string, error) {
 	s.session.mu.Lock()
 	defer s.session.mu.Unlock()
 
@@ -162,25 +162,25 @@ func (s *starter) Set(value uuid.UUID) error {
 			// // Préparez une instruction SQL pour supprimer la session
 			stmt, err := db.Prepare(fmt.Sprintf("DELETE FROM %s WHERE id=$1", session.SessionName))
 			if err != nil {
-				return err
+				return "", err
 			}
 
 			// // Exécutez l'instruction SQL avec l'UUID de la session
 			_, err = stmt.Exec(user)
 			if err != nil {
-				return err
+				return "", err
 			}
 			tmpdata.Delete(user.String())
 		}
 		// fmt.Println(user)
 		stmt, err := db.Prepare(fmt.Sprintf("INSERT INTO %s (id, user_id, expiration_date) VALUES($1, $2, $3)", session.SessionName))
 		if err != nil {
-			return err
+			return "", err
 		}
 		// Exécutez l'instruction SQL avec le nouvel UUID et les autres valeurs
 		_, err = stmt.Exec(id, value, time.Now().Add(time.Second*time.Duration(c.MaxAge)))
 		if err != nil {
-			return err
+			return "", err
 		}
 
 	}
@@ -203,10 +203,10 @@ func (s *starter) Set(value uuid.UUID) error {
 		"cookie": &storage{cookie: cookie, id: value},
 	})
 	Notif.Store(value, true)
-	return nil
+	return id.String(), nil
 }
 
-func (s *starter) Get() (uuid.UUID, error) {
+func (s *starter) Get(bearer string) (uuid.UUID, error) {
 	s.session.mu.Lock()
 	defer s.session.mu.Unlock()
 
@@ -218,7 +218,14 @@ func (s *starter) Get() (uuid.UUID, error) {
 	// Récupérez le cookie
 	cookie, err := s.Ctx.Request.Cookie(c.CookieName)
 	if err != nil {
-		return uuid.Nil, fmt.Errorf("erreur lors de la récupération du cookie : %v", err)
+		if bearer != "" {
+			cookie = &http.Cookie{
+				Name:     c.CookieName,
+				Value:    bearer,
+			}
+		} else {
+			return uuid.Nil, fmt.Errorf("erreur lors de la récupération du cookie : %v", err)
+		}
 	}
 	// Récupérez l'ID de session à partir du cookie
 	sessionID := cookie.Value
@@ -260,7 +267,7 @@ func (s *starter) Get() (uuid.UUID, error) {
 	return uuid.Nil, fmt.Errorf("erreur lors de la récupération du cookie")
 }
 
-func (s *starter) Valid() bool {
+func (s *starter) Valid(bearer string) bool {
 	s.session.mu.Lock()
 	defer s.session.mu.Unlock()
 
@@ -269,9 +276,17 @@ func (s *starter) Valid() bool {
 	db := session.database
 	tmpdata := session.data
 	cookie, err := s.Ctx.Request.Cookie(c.CookieName)
+	fmt.Println(cookie)
 	if err != nil {
 		// Le cookie n'existe pas
-		return false
+		if bearer != "" {
+			cookie = &http.Cookie{
+				Name:     c.CookieName,
+				Value:    bearer,
+			}
+		} else {
+			return false
+		}
 	}
 	value, ok := tmpdata.Load(cookie.Value)
 	if ok {
@@ -315,7 +330,7 @@ func (s *starter) Valid() bool {
 	return false
 }
 
-func (s *starter) Delete() error {
+func (s *starter) Delete(bearer string) error {
 	s.session.mu.Lock()
 	defer s.session.mu.Unlock()
 
@@ -327,7 +342,14 @@ func (s *starter) Delete() error {
 	cookie, err := ctx.Request.Cookie(c.CookieName)
 	if err != nil {
 		// Le cookie n'existe pas
-		return err
+		if bearer != "" {
+			cookie = &http.Cookie{
+				Name:     c.CookieName,
+				Value:    bearer,
+			}
+		} else {
+			return err
+		}
 	}
 	if db != nil {
 		// Préparez une instruction SQL pour supprimer la session
