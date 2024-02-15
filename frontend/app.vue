@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const colorMode = useColorMode()
 
+// logic for authenticated user
+const authenticated = false
+
 const color = computed(() => colorMode.value === 'dark' ? '#111827' : 'white')
 
 useHead({
@@ -22,11 +25,35 @@ useSeoMeta({
   ogSiteName: 'Social Network',
   twitterCard: 'summary_large_image'
 })
+
+onMounted(() => {
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+
+  // Whenever the user explicitly chooses light mode
+  localStorage.theme = 'light'
+
+  // Whenever the user explicitly chooses dark mode
+  localStorage.theme = 'dark'
+
+  // Whenever the user explicitly chooses to respect the OS preference
+  localStorage.removeItem('theme')
+})
 </script>
 <template>
-  <Html>
-    <NuxtLoadingIndicator />
-    <NuxtPage />
-    <UNotifications />
-  </Html>
+  
+  <NuxtPage v-if="authenticated" />
+
+  <Auth v-else />
+
+  <!-- INITIAL CONTENT -->
+  <!-- <Html> -->
+    <!-- <NuxtLoadingIndicator /> -->
+    <!-- <NuxtPage /> -->
+    <!-- <UNotifications /> -->
+  <!-- </Html> -->
 </template>

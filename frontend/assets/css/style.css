@@ -1,5 +1,14 @@
 /* Convert the css code in the file to tailwind */
 
+
+@font-face {
+  font-family: "Cairo";
+  font-weight: 400;
+  font-style: normal;
+  src: url(https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap);
+}
+
+
 :root {
   --m-top: 4rem;
   /*  64px */
