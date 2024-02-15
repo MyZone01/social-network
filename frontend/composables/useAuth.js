@@ -56,14 +56,14 @@ export default () => {
                         email,
                         password
                     }
-                })         
-                
+                })
+
                 // directing data to backend
                 // const loginAccess = await $fetch('/api/auth/server', {
                 //     method: 'POST',
                 //     body: JSON.stringify({registration: null, loginAccess: data})
                 // })
-                
+
                 // FROM BACKEND RESPONSE
                 // logic based on response from backend
                 // setToken(data.access_token)
@@ -108,7 +108,7 @@ export default () => {
             return
         }
 
-        const jwt = "refreshed"// jwtDecode(authToken.value)
+        const jwt = 'refreshed'// jwtDecode(authToken.value)
 
         const newRefreshTime = Date.now() //jwt.exp - 60000
 

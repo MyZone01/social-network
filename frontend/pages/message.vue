@@ -1,11 +1,11 @@
 <template>
- <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
+  <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
     <Header />
     <Sidebar />
-    </Body>
-    <main class="ml-48 2xl:ml-0 py-5 px-6 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
-      <nuxt-child/>
-      <div class="relative overflow-hidden border -m-2.5 dark:border-slate-700">
+  </Body>
+  <main class="ml-48 2xl:ml-0 py-5 px-6 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+    <nuxt-child />
+    <div class="relative overflow-hidden border -m-2.5 dark:border-slate-700">
       <div class="flex bg-white dark:bg-dark2">
         <!-- sidebar -->
         <div class="md:w-[360px] relative border-r dark:border-slate-700">
@@ -716,8 +716,6 @@
         </div>
       </div>
     </div>
-      <slot />
-    </main>
-  
-
+    <slot />
+  </main>
 </template>

@@ -1,11 +1,11 @@
 <!-- ImageUploader.vue -->
 <template>
-    <div>
-        <label>{{ props.label }}</label>
-        <input type="file" @change="handleFileChange">
-    </div>
+  <div>
+    <label>{{ props.label }}</label>
+    <input type="file" @change="handleFileChange">
+  </div>
 </template>
-  
+
 <script setup>
 
 const props = defineProps({
@@ -21,10 +21,9 @@ const handleFileChange = (event) => {
     emit('image-selected', file)
 }
 </script>
-  
+
 <style scoped>
 input[type="file"] {
     margin-top: 8px;
 }
 </style>
-  

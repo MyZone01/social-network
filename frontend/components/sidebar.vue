@@ -16,7 +16,7 @@
               </router-link>
             </li>
             <li>
-               <router-link to="/message">
+              <router-link to="/message">
                 <img src="../assets/images/icons/message.png" alt="messages" class="w-5">
                 <span> messages </span>
               </router-link>
@@ -31,7 +31,7 @@
               <router-link to="/groups">
                 <img src="../assets/images/icons/group.png" alt="groups" class="w-6">
                 <span> Groups </span>
-              </router-link >
+              </router-link>
             </li>
           </ul>
         </nav>

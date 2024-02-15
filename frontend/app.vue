@@ -45,15 +45,9 @@ onMounted(() => {
 })
 </script>
 <template>
-  
-  <NuxtPage v-if="authenticated" />
-
-  <Auth v-else />
-
-  <!-- INITIAL CONTENT -->
-  <!-- <Html> -->
-    <!-- <NuxtLoadingIndicator /> -->
-    <!-- <NuxtPage /> -->
-    <!-- <UNotifications /> -->
-  <!-- </Html> -->
+  <Html>
+    <NuxtLoadingIndicator />
+    <NuxtPage />
+    <UNotifications />
+  </Html>
 </template>

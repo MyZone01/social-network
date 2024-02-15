@@ -1,6 +1,6 @@
 // import { getUserByEmail } from "~/server/db/users.js";
 // import bcrypt from "bcrypt"
-import { userTransformer } from "~/server/transformers/user.js";
+import { userTransformer } from '~/server/transformers/user.js'
 // import { createRefreshToken } from "~/server/db/refreshToken.js";
 // import { generateTokens, sendRefreshToken } from "~/server/utils/jwt.js";
 
@@ -9,8 +9,8 @@ export default defineEventHandler(async (event) => {
 
     const { email, password} = body
 
-    const requiredFields = [email, password];
-    if (requiredFields.some(field => field == "")) {
+    const requiredFields = [email, password]
+    if (requiredFields.some(field => field == '')) {
         return sendError(event, createError({
             statusCode: 400,
             statusMessage: 'Invalid entries'
@@ -36,17 +36,17 @@ export default defineEventHandler(async (event) => {
         }))
     }
 
-    const loginAccess = { 
+    const loginAccess = {
         email: email,
         password: password
     }
-    
+
     try {
         const userSession = await $fetch('http://localhost:8081/registration', {
             method: 'POST',
             body: JSON.stringify(loginAccess)
         })
-        
+
         if (userSession.error) {
             // LOGic handling Error from Server
             return sendError(event, createError({
