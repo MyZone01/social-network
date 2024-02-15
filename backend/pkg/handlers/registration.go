@@ -5,6 +5,7 @@ import (
 	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -19,12 +20,14 @@ var registationHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
 
 	// Attempts to deserialize the form data into the User instance.
-	if err := ctx.BodyParser(newUser); err != nil {
+	if err := ctx.BodyParser(&newUser); err != nil {
 		// If deserialization fails, logs the error and returns an HTTP status  500.
 		log.Println(err)
 		ctx.Status(500)
 		return
 	}
+
+	fmt.Println(newUser)
 
 	// Attempts to create a new user in the database with the provided data.
 	if err := newUser.Create(ctx.Db.Conn); err != nil {
@@ -35,15 +38,16 @@ var registationHandler = func(ctx *octopus.Context) {
 	}
 
 	// Starts a new session for the user and sets the user's ID as the session key.
-	if err := config.Sess.Start(ctx).Set(newUser.ID); err != nil {
+	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
+	if err != nil {
 		// If starting the session fails, logs the error and returns an HTTP status  500.
 		log.Println(err)
 		ctx.Status(500)
 		return
 	}
-
+	ctx.JSON(idSession)
 	// Logs the success of the user's registration and login.
-	log.Println(" User :" + newUser.Nickname + " with  Host: [ " + ctx.Request.RemoteAddr + " ] " + "is successfully registered and logged")
+	// log.Println(" User :" + newUser.Nickname + " with  Host: [ " + ctx.Request.RemoteAddr + " ] " + "is successfully registered and logged")
 }
 
 // registrationRoute is a structure that defines the registration route for the API.

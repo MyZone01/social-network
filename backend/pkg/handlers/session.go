@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func handleAuthentication(ctx *octopus.Context) {
+func handleValidSession(ctx *octopus.Context) {
 	ctx.WriteString("hello world")
 	// ctx.Db.User.Create(ctx.Db.Conn)
 	/* The 'ctx' variable contains the same arguments as a typical handler function with 'r' and 'w'.
@@ -28,13 +28,13 @@ func handleAuthentication(ctx *octopus.Context) {
 
 // AuthenticationHandler defines the structure for handling authentication requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var authenticationRoute = route{
+var checkSessionRoute = route{
 	path:   "/checkSession",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
 		/* ... you can add other middleware here
 		   Note: Make sure to place your handler function at the end of the list. */
-		handleAuthentication, // Handler function to process the authentication request.
+		handleValidSession, // Handler function to process the authentication request.
 	},
 }

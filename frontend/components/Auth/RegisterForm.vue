@@ -88,20 +88,20 @@ const handleImageSelected = (imageFile) => {
     // Handle the uploaded image file, like upload it to a cloud storage service
 
     imageUrl.value = URL.createObjectURL(imageFile)
-    data.avatarImg = URL.createObjectURL(imageFile)
+    data.avatarImg = imageFile
 }
 
 async function handleRegister() {
     data.loading = true
     try {
         await register({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            nickname: data.nickname,
-            password: data.password,
-            repeatPassword: data.confirmPassword,
-            aboutMe: data.aboutMe,
+            firstName: data.firstName.trim(),
+            lastName: data.lastName.trim(),
+            email: data.email.trim(),
+            nickname: data.nickname.trim(),
+            password: data.password.trim(),
+            repeatPassword: data.confirmPassword.trim(),
+            aboutMe: data.aboutMe.trim(),
             avatarImg: data.avatarImg,
         })
     } catch (error) {

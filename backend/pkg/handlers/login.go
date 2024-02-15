@@ -18,7 +18,7 @@ var loginHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
 
 	// Try to deserialize the form data into the User instance.
-	if err := ctx.BodyParser(newUser); err != nil {
+	if err := ctx.BodyParser(&newUser); err != nil {
 		// If deserialization fails, log the error and return an HTTP status  500.
 		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
@@ -34,12 +34,14 @@ var loginHandler = func(ctx *octopus.Context) {
 		)
 		return
 	}
+	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	// Start a new session for the user and set the user's ID as the session key.
-	if err := config.Sess.Start(ctx).Set(newUser.ID); err != nil {
+	if err != nil {
 		// If starting the session fails, log the error and return an HTTP status  500.
 		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
 	}
+	ctx.JSON(idSession)
 }
 
 // loginRoute is a structure that defines the login route for the API.
@@ -50,6 +52,6 @@ var loginRoute = route{
 	path:   "/login",
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
-		loginHandler,             // The route handler that will be executed when the route is called.
+		loginHandler,              // The route handler that will be executed when the route is called.
 	},
 }
