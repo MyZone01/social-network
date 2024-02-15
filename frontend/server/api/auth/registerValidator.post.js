@@ -31,15 +31,15 @@ export default defineEventHandler(async (event) => {
     );
   }
 
-  if (password.length <= 8) {
-    return sendError(
-        event,
-        createError({
-          statusCode: 400,
-          statusMessage: "Password to short",
-        })
-      );
-  }
+  // if (password.length <= 8) {
+  //   return sendError(
+  //       event,
+  //       createError({
+  //         statusCode: 400,
+  //         statusMessage: "Password to short",
+  //       })
+  //     );
+  // }
 
   if (password !== repeatPassword) {
     return sendError(
@@ -91,7 +91,7 @@ export default defineEventHandler(async (event) => {
     } else {
       return {
         // filtering what data to expose and which one to set from there
-        body: userTransformer(userSession),
+        body: userSession,
       };
     }
   } catch (error) {
