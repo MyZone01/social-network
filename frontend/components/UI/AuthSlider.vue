@@ -41,15 +41,7 @@
 </template>
   
 <script>
-// Initialize the UIkit library here
-import UIkit from 'uikit';
-import 'uikit/dist/css/uikit.min.css';
 
-export default {
-    mounted() {
-        UIkit.slideshow(this.$refs.slideshow);
-    }
-};
 </script>
   
 <style scoped>/* Add custom styling here */</style>
