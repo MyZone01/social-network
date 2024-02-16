@@ -2,6 +2,7 @@
   <div class="overflow-visible">
     <slot />
 
+<<<<<<< HEAD
     <div
       class="space-y-7 text-sm text-black font-medium dark:text-white"
       uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -11,6 +12,15 @@
       </h2>
 
       <UIInput v-model="data.email" label="Email" placeholder="mail@social.net" />
+=======
+        <div class="space-y-7 text-sm text-black font-medium dark:text-white"
+            uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+            <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">{{ data.loginError }}</h2>
+
+            <UIInput v-model="data.email" label="Email" placeholder="mail@social.net" required />
+
+            <UIInput v-model="data.password" label="Password" placeholder="********" type="password" required />
+>>>>>>> origin/master
 
       <UIInput v-model="data.password" label="Password" placeholder="********" type="password" />
 
@@ -61,10 +71,14 @@ const data = reactive({
 async function handleLogin() {
     data.loading = true
     try {
-        await login({
-            email: data.email,
-            password: data.password
-        })
+        if (email && password) {
+            await login({
+                email: data.email.trim(),
+                password: data.password.trim()
+            })
+        } else {
+
+        }
     } catch (error) {
         data.loginError = error.statusMessage
         setTimeout(() => {
