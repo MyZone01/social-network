@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/uikit/3.15.14/js/uikit.min.js' },
       ]
     }
-  },
+  },    
   ssr: true,
   devtools: { enabled: true },
   typescript: {
