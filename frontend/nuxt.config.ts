@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/ionic',
     '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
   ui: {
     icons: ['heroicons', 'simple-icons']
@@ -50,5 +51,11 @@ export default defineNuxtConfig({
     {
       icons: true,
     },
+  },
+  piniaPersistedstate: {
+    cookieOptions: {
+      sameSite: 'strict',
+    },
+    storage: 'sessionStorage'
   },
 })

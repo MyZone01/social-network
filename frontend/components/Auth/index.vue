@@ -64,10 +64,9 @@ useHead(() => ({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap' },
   ],
   script: [
-    // { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
   ]
 }));
-
 
 const data = reactive({
   loginProcess: true
@@ -116,5 +115,4 @@ onMounted(() => {
   })
 })
 
-// useHead(ref="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap")
 </script>

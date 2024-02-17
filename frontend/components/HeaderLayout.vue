@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <header
+        class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-white/80 sky-50 backdrop-blur-xl border-b border-slate-200 dark:bg-dark2 dark:border-slate-800">
+
         <div class="flex items-center w-full xl:px-6 px-2 max-lg:gap-10">
 
             <div class="2xl:w-[--w-side] lg:w-[--w-side-sm]">
@@ -10,13 +12,15 @@
                     <!-- icon menu -->
                     <button uk-toggle="target: #site__sidebar ; cls :!-translate-x-0"
                         class="flex items-center justify-center w-8 h-8 text-xl rounded-full hover:bg-gray-100 xl:hidden dark:hover:bg-slate-600 group">
-                        <ion-icon :icon="ioniconsMenuOutline" class="text-2xl group-aria-expanded:hidden"></ion-icon>
-                        <ion-icon :icon="ioniconsCloseOutline" class="hidden text-2xl group-aria-expanded:block">
-                            <SidebarLeft />
-                        </ion-icon>
+                        <ion-icon name="menu-outline" class="text-2xl group-aria-expanded:hidden"></ion-icon>
+                        <ion-icon name="close-outline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
                     </button>
                     <div id="logo">
                         <a href="feed.html">
+                            <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
+                            <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
+                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
+                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
                         </a>
                     </div>
 
@@ -30,7 +34,7 @@
                     <!-- search -->
                     <div id="search--box"
                         class="xl:w-[680px] sm:w-96 sm:relative rounded-xl overflow-hidden z-20 bg-secondery max-md:hidden w-screen left-0 max-sm:fixed max-sm:top-2 dark:!bg-white/5">
-                        <ion-icon :icon="ioniconsSearch" class="absolute left-4 top-1/2 -translate-y-1/2"></ion-icon>
+                        <ion-icon name="search" class="absolute left-4 top-1/2 -translate-y-1/2"></ion-icon>
                         <input type="text" placeholder="Search Friends, videos .."
                             class="w-full !pl-10 !font-normal !bg-transparent h-12 !text-sm">
                     </div>
@@ -47,62 +51,62 @@
                             <nav class="text-sm font-medium text-black dark:text-white">
                                 <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <img src="~/assets/images/avatars/avatar-2.jpg" class="w-9 h-9 rounded-full">
+                                    <img src="assets/images/avatars/avatar-2.jpg" class="w-9 h-9 rounded-full">
                                     <div>
                                         <div> Jesse Steeve </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon :icon="ioniconsClose"
+                                    </div> <ion-icon name="close"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <img src="~/assets/images/avatars/avatar-2.jpg" class="w-9 h-9 rounded-full">
+                                    <img src="assets/images/avatars/avatar-2.jpg" class="w-9 h-9 rounded-full">
                                     <div>
                                         <div> Martin Gray </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon :icon="ioniconsClose"
+                                    </div> <ion-icon name="close"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <img src="~/assets/images/group/group-2.jpg" class="w-9 h-9 rounded-full">
+                                    <img src="assets/images/group/group-2.jpg" class="w-9 h-9 rounded-full">
                                     <div>
                                         <div> Delicious Foods </div>
                                         <div class="text-xs text-rose-500 font-medium mt-0.5"> Group </div>
-                                    </div> <ion-icon :icon="ioniconsClose"
+                                    </div> <ion-icon name="close"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <img src="~/assets/images/group/group-1.jpg" class="w-9 h-9 rounded-full">
+                                    <img src="assets/images/group/group-1.jpg" class="w-9 h-9 rounded-full">
                                     <div>
                                         <div> Delicious Foods </div>
                                         <div class="text-xs text-yellow-500 font-medium mt-0.5"> Page </div>
-                                    </div> <ion-icon :icon="ioniconsClose"
+                                    </div> <ion-icon name="close"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <img src="~/assets/images/avatars/avatar-6.jpg" class="w-9 h-9 rounded-full">
+                                    <img src="assets/images/avatars/avatar-6.jpg" class="w-9 h-9 rounded-full">
                                     <div>
                                         <div> John Welim </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon :icon="ioniconsClose"
+                                    </div> <ion-icon name="close"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class="hidden relative  px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <ion-icon class="text-2xl" :icon="ioniconsSearchOutline"></ion-icon> Creative ideas
+                                    <ion-icon class="text-2xl" name="search-outline"></ion-icon> Creative ideas
                                     about Business </a>
                                 <a href="#"
                                     class="hidden relative  px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <ion-icon class="text-2xl" :icon="ioniconsSearchOutline"></ion-icon> 8 Facts About
+                                    <ion-icon class="text-2xl" name="search-outline"></ion-icon> 8 Facts About
                                     Writting </a>
                             </nav>
                             <hr class="-mx-2 mt-2 hidden">
                             <div class="flex justify-end pr-2 text-sm font-medium text-red-500 hidden">
                                 <a href="#" class="flex hover:bg-red-50 dark:hover:bg-slate-700 p-1.5 rounded">
-                                    <ion-icon :icon="ioniconsTrash" class="mr-2 text-lg"></ion-icon> Clear your history</a>
+                                    <ion-icon name="trash" class="mr-2 text-lg"></ion-icon> Clear your history</a>
                             </div>
                         </div>
 
@@ -117,7 +121,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15">
                                 </path>
                             </svg>
-                            <ion-icon :icon="ioniconsAdd - circle - outline" class="sm:hidden text-2xl "></ion-icon>
+                            <ion-icon name="add-circle-outline" class="sm:hidden text-2xl "></ion-icon>
                         </button>
                         <div class="hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[324px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -134,37 +138,35 @@
                                         <li class="w-28" uk-scrollspy-class="uk-animation-fade">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-teal-100/60 text-teal-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon :icon="ioniconsBook" class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="book" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Story </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-sky-100/60 text-sky-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon :icon="ioniconsCamera" class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="camera" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Post </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-purple-100/60 text-purple-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon :icon="ioniconsVideocam"
-                                                    class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="videocam" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Reel </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-pink-100/60 text-pink-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon :icon="ioniconsLocation"
-                                                    class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="location" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> location </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-sky-100/70 text-sky-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon :icon="ioniconsHappy" class="text-2xl  drop-shadow-md"></ion-icon>
+                                                <ion-icon name="happy" class="text-2xl  drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Status </div>
                                             </div>
                                         </li>
@@ -175,10 +177,10 @@
                                 <!-- slide nav icons -->
                                 <div class="dark:hidden">
                                     <a class="absolute -translate-y-1/2 top-1/2 -left-4 flex items-center w-8 h-full px-1.5 justify-start bg-gradient-to-r from-white via-white dark:from-slate-600 dark:via-slate-500 dark:from-transparent dark:via-transparent"
-                                        href="#" uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                                        href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
                                             class="text-xl dark:text-white"></ion-icon> </a>
                                     <a class="absolute -translate-y-1/2 top-1/2 -right-4 flex items-center w-8 h-full px-1.5 justify-end bg-gradient-to-l from-white via-white dark:from-transparent dark:via-transparent"
-                                        href="#" uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
+                                        href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
                                             class="text-xl dark:text-white"></ion-icon> </a>
                                 </div>
 
@@ -196,7 +198,7 @@
                                 uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="~/assets/images/icons/group.png" alt="" class="w-7">
+                                    <img src="assets/images/icons/group.png" alt="" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
                                             <h4 class="font-medium text-sm text-black dark:text-white"> Groups </h4>
@@ -207,7 +209,7 @@
                                 </li>
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="~/assets/images/icons/page.png" alt="" class="w-7">
+                                    <img src="assets/images/icons/page.png" alt="" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
                                             <h4 class="font-medium text-sm text-black dark:text-white"> Pages </h4>
@@ -218,7 +220,7 @@
                                 </li>
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="~/assets/images/icons/event.png" class="w-7">
+                                    <img src="assets/images/icons/event.png" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
                                             <h4 class="font-medium text-sm text-black dark:text-white"> Event </h4>
@@ -228,7 +230,7 @@
                                 </li>
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="~/assets/images/icons/market.png" class="w-8 -ml-1">
+                                    <img src="assets/images/icons/market.png" class="w-8 -ml-1">
                                     <div class="flex-1">
                                         <a href="timeline.html">
                                             <h4 class="font-medium text-sm text-black dark:text-white"> Event </h4>
@@ -238,7 +240,7 @@
                                 </li>
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="~/assets/images/icons/game.png" alt="" class="w-7">
+                                    <img src="assets/images/icons/game.png" alt="" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
                                             <h4 class="font-medium text-sm text-black dark:text-white"> Games </h4>
@@ -264,7 +266,7 @@
                             </svg>
                             <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
                                 6</div>
-                            <ion-icon :icon="ioniconsNotifications - outline" class="sm:hidden text-2xl"></ion-icon>
+                            <ion-icon name="notifications-outline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
                         <div class="hidden bg-white pr-1.5 rounded-lg drop-shadow-xl dark:bg-slate-700 md:w-[365px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -280,11 +282,11 @@
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                                         <nav class="text-sm">
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsCheckmarkCircleOutline"></ion-icon> Mark all as read</a>
+                                                    name="checkmark-circle-outline"></ion-icon> Mark all as read</a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsSettingsOutline"></ion-icon> Notification setting</a>
+                                                    name="settings-outline"></ion-icon> Notification setting</a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsNotifications - off - outline"></ion-icon> Mute Notification
+                                                    name="notifications-off-outline"></ion-icon> Mute Notification
                                             </a>
                                         </nav>
                                     </div>
@@ -299,7 +301,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-3.jpg" alt=""
+                                                src="assets/images/avatars/avatar-3.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Alexa Gray</b> started following you.
@@ -313,7 +315,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-7.jpg" alt=""
+                                                src="assets/images/avatars/avatar-7.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1">Jesse Steeve</b> mentioned you in a story.
@@ -325,7 +327,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-6.jpg" alt=""
+                                                src="assets/images/avatars/avatar-6.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Alexa stella</b> commented on your photo
@@ -337,7 +339,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-2.jpg" alt=""
+                                                src="assets/images/avatars/avatar-2.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> John Michael</b> who you might know, is
@@ -350,7 +352,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-3.jpg" alt=""
+                                                src="assets/images/avatars/avatar-3.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Sarah Gray</b> sent you a message. He
@@ -364,7 +366,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-4.jpg" alt=""
+                                                src="assets/images/avatars/avatar-4.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Jesse Steeve</b> sarah tagged you <br> in
@@ -376,7 +378,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-2.jpg" alt=""
+                                                src="assets/images/avatars/avatar-2.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Lewis Lewis</b> mentioned you in a story.
@@ -388,7 +390,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-12 h-12 shrink-0"> <img
-                                                src="~/assets/images/avatars/avatar-7.jpg" alt=""
+                                                src="assets/images/avatars/avatar-7.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full"></div>
                                         <div class="flex-1 ">
                                             <p> <b class="font-bold mr-1"> Martin Gray</b> liked your photo of the
@@ -424,7 +426,7 @@
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <ion-icon :icon="ioniconsChatboxEllipsesOutline" class="sm:hidden text-2xl"></ion-icon>
+                            <ion-icon name="chatbox-ellipses-outline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
                         <div class="hidden bg-white pr-1.5 rounded-lg drop-shadow-xl dark:bg-slate-700 md:w-[360px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -434,14 +436,14 @@
                                 <h3 class="font-bold text-xl"> Chats </h3>
 
                                 <div class="flex gap-2.5 text-lg text-slate-900 dark:text-white">
-                                    <ion-icon :icon="ioniconsExpandOutline"></ion-icon>
-                                    <ion-icon :icon="ioniconsCreateOutline"></ion-icon>
+                                    <ion-icon name="expand-outline"></ion-icon>
+                                    <ion-icon name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="relative w-full p-2 px-3 ">
                                 <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10" placeholder="Search">
-                                <ion-icon :icon="ioniconsSearchOutline"
+                                <ion-icon name="search-outline"
                                     class="dark:text-white absolute left-7 -translate-y-1/2 top-1/2"></ion-icon>
                             </div>
 
@@ -452,7 +454,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-2.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -472,7 +474,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-4.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-4.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -490,7 +492,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-5.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-5.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -507,7 +509,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-3.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-3.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -526,7 +528,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-7.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-7.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -544,7 +546,7 @@
                                     <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
-                                            <img src="~/assets/images/avatars/avatar-4.jpg" alt=""
+                                            <img src="assets/images/avatars/avatar-4.jpg" alt=""
                                                 class="object-cover w-full h-full rounded-full">
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -579,7 +581,7 @@
 
                         <!-- profile -->
                         <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
-                            <img src="~/assets/images/avatars/avatar-2.jpg" alt=""
+                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                 class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
                         </div>
                         <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
@@ -587,7 +589,7 @@
 
                             <a href="timeline.html">
                                 <div class="p-4 py-5 flex items-center gap-4">
-                                    <img src="~/assets/images/avatars/avatar-2.jpg" alt=""
+                                    <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
                                         <h4 class="text-sm font-medium text-black">Stell johnson</h4>
@@ -681,7 +683,7 @@
 
                         <div class="flex items-center gap-2 hidden">
 
-                            <img src="~/assets/images/avatars/avatar-2.jpg" alt="" class="w-9 h-9 rounded-full shadow">
+                            <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-9 h-9 rounded-full shadow">
 
                             <div class="w-20 font-semibold text-gray-600"> Hamse </div>
 
@@ -699,6 +701,6 @@
             </div>
 
         </div>
-    </div>
+
+    </header>
 </template>
-<script></script>

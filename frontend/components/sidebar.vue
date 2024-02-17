@@ -218,3 +218,6 @@
             </div>
         </div>
 </template>
+<script setup>
+import { simplebar } from '../../template/assets/js/simplebar';
+</script>

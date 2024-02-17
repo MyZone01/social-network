@@ -32,32 +32,37 @@
 </template>
 <script setup>
 const { login } = useAuth()
+const router = useRoute()
 
 const data = reactive({
     email: '',
     password: '',
     loginError: '',
+    loading: false,
 })
-let loading = false
 // const loginError = ''
 async function handleLogin() {
-    loading = true
+    data.loading = true
     try {
-        await login({
+        const idSession = await login({
             email: data.email.trim(),
             password: data.password.trim()
         })
+        if (idSession) {
+            console.log("USER LOGGED ...", router)
+            await navigateTo('/')
+            router.push('/')
+        }
     } catch (error) {
-        loginError = error.statusMessage
-        setTimeout(() => {
-            loginError = ''
-        }, 2000)
+        data.loginError = error.statusMessage
         data.loading = false
+        setTimeout(() => {
+            data.loginError = ''
+        }, 2000)
     } finally {
+        data.loading = false
         // data.email = ''
         // data.password = ''
-        loading = false
     }
 }
-
 </script>

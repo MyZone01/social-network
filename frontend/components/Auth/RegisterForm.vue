@@ -84,7 +84,7 @@ const handleImageSelected = (imageFile) => {
 async function handleRegister() {
     data.loading = true
     try {
-        await register({
+        const idSession = await register({
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             email: data.email.trim(),
@@ -94,6 +94,9 @@ async function handleRegister() {
             aboutMe: data.aboutMe.trim(),
             avatarImg: data.avatarImg,
         })
+        if (idSession) {
+            await navigateTo('/')
+        }
     } catch (error) {
         data.registerError = error.statusMessage
         setTimeout(() => {
