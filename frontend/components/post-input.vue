@@ -1,74 +1,120 @@
-<template>
-  <div class="bg-gray-100 dark:bg-gray-950 rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium ">
-    <div class="flex items-center md:gap-3 gap-1">
-      <div class="flex-1 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer bg-gray-200 dark:bg-gray-900">
-        <div class="py-2.5 text-center dark:text-white" @click="isOpen = true">
-          What do you have in mind?
-        </div>
-      </div>
-      <div
-        class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70" viewBox="0 0 24 24"
-          stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M15 8h.01" />
-          <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-          <path d="M3.5 15.5l4.5 -4.5c.928 -.893 2.072 -.893 3 0l5 5" />
-          <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
-        </svg>
-      </div>
-      <div
-        class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-sky-100/60 hover:bg-sky-100 dark:bg-white/10 dark:hover:bg-white/20"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70 " viewBox="0 0 24 24"
-          stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
-          <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
-        </svg>
-      </div>
+<template lang="">
+<div class="hidden lg:p-20 uk- open" id="create-status" uk-modal="">
+
+<div
+    class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
+
+    <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+        <h2 class="text-sm font-medium text-black"> Create Post </h2>
+
+        <!-- close button -->
+        <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
     </div>
-    <UModal v-model="isOpen">
-      <div class="relative overflow-hidden flex justify-between items-center flex-wrap shadow-xl rounded-lg w-full bg-white dark:bg-gray-900">
-        <div class="text-center p-4 border-b mb-0 dark:border-slate-700 flex w-full items-center justify-between">
-          <h2 class="text-lg font-medium text-black  dark:text-white">
-            Create Post
-          </h2>
-          <UButton
-            variant="solid" color="gray" :ui="{ rounded: 'rounded-full' }" square icon="i-heroicons:x-mark"
-            @click="isOpen = false"
-          />
+
+    <form action="" ref = "post_form">
+
+        <div class="space-y-5 mt-3 p-2">
+            <textarea
+                class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl   dark:!text-white dark:placeholder:!text-white dark:!bg-slate-800"
+                name="post-content-text" id="" rows="6" placeholder="What do you have in mind?"></textarea>
         </div>
 
-        <textarea
-          class="w-full m-4 p-2 !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl dark:!text-white dark:placeholder:!text-white dark:!bg-slate-800" rows="6" placeholder="What do you have in mind?"
-        />
+        <div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
+            <button type="button"
+                class="flex items-center gap-1.5 bg-sky-50 text-sky-600 rounded-full py-1 px-2 border-2 border-sky-100 dark:bg-sky-950 dark:border-sky-900"
+                @click="openFileInput">
+                <ion-icon name="image" class="text-base"></ion-icon>
+                Image
+            </button>
+            <input type="file" id="photo-input" name="photo" accept="image/*" style="display: none" ref="fileInput">
 
-        <div class="p-5 flex w-full justify-between items-center">
-          <USelectMenu v-model="selected" color="primary" variant="outline" :options="privacyLevel" />
-          <div class="flex items-center gap-2">
-            <UButton>Create</UButton>
-          </div>
+
         </div>
-      </div>
-    </UModal>
-  </div>
+
+        <div class="p-5 flex justify-between items-center">
+            <div>
+                <button
+                    class="inline-flex items-center py-1 px-2.5 gap-1 font-medium text-sm rounded-full bg-slate-50 border-2 border-slate-100 group aria-expanded:bg-slate-100 aria-expanded: dark:text-white dark:bg-slate-700 dark:border-slate-600"
+                    type="button">
+                    Everyone
+                    <ion-icon name="chevron-down-outline"
+                        class="text-base duration-500 group-aria-expanded:rotate-180"></ion-icon>
+                </button>
+
+                <div class="p-2 bg-white rounded-lg shadow-lg text-black font-medium border border-slate-100 w-60 dark:bg-slate-700"
+                    uk-drop="offset:10;pos: bottom-left; reveal-left;animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left ; mode:click">
+
+                    <!-- <form>
+                    </form> -->
+                    <label>
+                        <input type="radio" name="radio-status" id="monthly1"
+                            class="peer appearance-none hidden" checked />
+                        <div
+                            class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
+                            <div class="text-sm"> Everyone </div>
+                            <ion-icon name="checkmark-circle"
+                                class="hidden active absolute -translate-y-1/2 right-2 text-2xl text-blue-600 uk-animation-scale-up"></ion-icon>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="radio-status" id="monthly1"
+                            class="peer appearance-none hidden" />
+                        <div
+                            class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
+                            <div class="text-sm"> private </div>
+                            <ion-icon name="checkmark-circle"
+                                class="hidden active absolute -translate-y-1/2 right-2 text-2xl text-blue-600 uk-animation-scale-up"></ion-icon>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="radio-status" id="monthly"
+                            class="peer appearance-none hidden" />
+                        <div
+                            class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
+                            <div class="text-sm"> Only me </div>
+                            <ion-icon name="checkmark-circle"
+                                class="hidden active absolute -translate-y-1/2 right-2 text-2xl text-blue-600 uk-animation-scale-up"></ion-icon>
+                        </div>
+                    </label>
+
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]"
+                   > Create</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</div>
+
 </template>
+<script>
+export default {
+  mounted(){
+    this.$refs.post_form.addEventListener('submit', this.handleSubmitPost)
+  },
+  methods: {
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+    handleSubmitPost(e) {
+      e.preventDefault();
+      let formdata = new FormData(e.target)
+      console.log(formdata.get("photo"));
 
-<script setup lang="ts">
-const isOpen = ref(false)
-
-const privacyLevel = [
-  'public',
-  'private',
-  'almost private',
-  'unlisted',
-]
-
-const selected = ref(privacyLevel[0])
+    }
+  }
+}
 </script>
+<style lang="">
+  
+</style>
