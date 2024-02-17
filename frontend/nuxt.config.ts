@@ -4,8 +4,6 @@ export default defineNuxtConfig({
     head : {
       script :[
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
-        { type: "module", src: "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" },
-        { src: "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" },
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/uikit/3.15.14/js/uikit.min.js' },
       ]
     }
@@ -17,6 +15,7 @@ export default defineNuxtConfig({
   },
   css: [
     '~/assets/css/style.css',
+    '~/assets/css/tailwind.css'
 ],
   modules: [
     '@nuxtjs/color-mode',
@@ -28,6 +27,7 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/ionic',
+    '@pinia/nuxt',
   ],
   ui: {
     icons: ['heroicons', 'simple-icons']

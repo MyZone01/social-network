@@ -53,16 +53,6 @@
             Or continue with
             <hr class="flex-1 border-slate-200 dark:border-slate-800">
         </div>
-
-        <!-- social login -->
-        <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
-            <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
-                    name="logo-facebook" class="text-lg"></ion-icon> facebook </a>
-            <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
-                    name="logo-twitter"></ion-icon> twitter </a>
-            <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
-                    name="logo-github"></ion-icon> github </a>
-        </div>
     </div>
 </template>
 

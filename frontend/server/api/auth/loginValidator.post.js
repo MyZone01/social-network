@@ -52,8 +52,7 @@ export default defineEventHandler(async (event) => {
     } else {
       return {
         // snap the token from the Cookies establish from server
-        token: getCookie(event, "token"),
-        user: userSession,
+        userSession
       };
     }
   } catch (error) {

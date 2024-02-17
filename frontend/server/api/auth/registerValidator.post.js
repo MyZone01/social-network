@@ -91,7 +91,7 @@ export default defineEventHandler(async (event) => {
     } else {
       return {
         // filtering what data to expose and which one to set from there
-        body: userSession,
+        userSession,
       };
     }
   } catch (error) {

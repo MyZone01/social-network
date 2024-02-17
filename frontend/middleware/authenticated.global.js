@@ -1,15 +1,18 @@
+// import { useStore } from "pinia";
+// import { useGlobalAuthStore } from "@/stores/useGlobalStateAuthStore";
 // // import { navigateTo } from "nuxt/app"
 
 export default defineNuxtRouteMiddleware((to, from) => {
-    const authenticated = (event) => {
-        if (getCookie(event), "token"){}
-      }
-    if (false) {
-        return navigateTo("/auth")
-    } else {
-        return navigateTo("/")
-    }
-})
+    const authStore = useGlobalAuthStore();;
+    const isAuthenticated = authStore.isAuthenticated;
+
+  if (!isAuthenticated && to.path !== "/auth") {
+    return navigateTo("/auth");
+  }
+  if (isAuthenticated && to.path === "auth") {
+    return navigateTo("/");
+  }
+});
 
 // export default defineEventHandler(async (event) => {
 //     const endpoints = [
@@ -36,7 +39,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 //             statusMessage: 'Unauthorized'
 //         }))
 //     }
-    
+
 //     try {
 //         const userId = decoded.userId
 //         const user = await getuserById(userId)
