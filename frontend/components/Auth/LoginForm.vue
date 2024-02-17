@@ -32,7 +32,6 @@
 </template>
 <script setup>
 const { login } = useAuth()
-const router = useRoute()
 
 const data = reactive({
     email: '',
@@ -49,9 +48,7 @@ async function handleLogin() {
             password: data.password.trim()
         })
         if (idSession) {
-            console.log("USER LOGGED ...", router)
-            await navigateTo('/')
-            router.push('/')
+            await navigateTo('/feed')
         }
     } catch (error) {
         data.loginError = error.statusMessage

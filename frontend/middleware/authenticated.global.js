@@ -10,9 +10,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo("/auth");
   }
   if (isAuthenticated && to.path === "/auth") {
-    return navigateTo("/");
+    return navigateTo("/feed");
   }
-
 });
 
 // export default defineEventHandler(async (event) => {

@@ -2017,6 +2017,18 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/lodash-es@^4.17.6":
+  version "4.17.12"
+  resolved "https://registry.npmjs.org/@types/lodash-es/-/lodash-es-4.17.12.tgz"
+  integrity sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.202"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.202.tgz"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
+
 "@types/mdast@^4.0.0", "@types/mdast@^4.0.2", "@types/mdast@^4.0.3":
   version "4.0.3"
   resolved "https://registry.npmjs.org/@types/mdast/-/mdast-4.0.3.tgz"
@@ -3309,6 +3321,11 @@ camelize@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/camelize/-/camelize-1.0.1.tgz"
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
+
+can-use-dom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/can-use-dom/-/can-use-dom-0.1.0.tgz"
+  integrity sha512-ceOhN1DL7Y4O6M0j9ICgmTYziV89WMd96SvSl0REd8PMgrY0B/WBOPoed5S1KUmJqXgUXh8gzSe6E3ae27upsQ==
 
 caniuse-api@^3.0.0:
   version "3.0.0"
@@ -9205,6 +9222,24 @@ simple-swizzle@^0.2.2:
   integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
   dependencies:
     is-arrayish "^0.3.1"
+
+simplebar-core@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/simplebar-core/-/simplebar-core-1.2.4.tgz"
+  integrity sha512-P+Sqshef4fq3++gQ82TgNYcgl3qZFSCP5jS2/8NMmw18oagXOijMzs1G+vm6RUY3oMvpwH3wGoqh9u6SyDjHfQ==
+  dependencies:
+    "@types/lodash-es" "^4.17.6"
+    can-use-dom "^0.1.0"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
+simplebar@^6.2.5:
+  version "6.2.5"
+  resolved "https://registry.npmjs.org/simplebar/-/simplebar-6.2.5.tgz"
+  integrity sha512-vfxKR6KNBsPx7+sZnqO7T8VuCvi4px6OlycrrkNgyjvoHhRW7LIyVkHhUfXxbz33Gw99Wb9UMMsnEZv35wtLSw==
+  dependencies:
+    can-use-dom "^0.1.0"
+    simplebar-core "^1.2.4"
 
 sirv@^2.0.4:
   version "2.0.4"
