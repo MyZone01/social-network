@@ -43,14 +43,10 @@ let loading = false
 async function handleLogin() {
     loading = true
     try {
-        if (email && password) {
-            await login({
-                email: data.email.trim(),
-                password: data.password.trim()
-            })
-        } else {
-
-        }
+        await login({
+            email: data.email.trim(),
+            password: data.password.trim()
+        })
     } catch (error) {
         loginError = error.statusMessage
         setTimeout(() => {

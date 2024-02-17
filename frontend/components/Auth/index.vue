@@ -37,11 +37,11 @@
             <!-- social login -->
             <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
-                        name="logo-facebook" class="text-lg"></ion-icon> facebook </a>
+                        :icon="ioniconsLogoFacebook" class="text-lg"></ion-icon> facebook </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
-                        name="logo-twitter"></ion-icon> twitter </a>
+                  :icon="ioniconsLogoTwitter"></ion-icon> twitter </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
-                        name="logo-github"></ion-icon> github </a>
+                  :icon="ioniconsLogoGithub"></ion-icon> github </a>
             </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ useHead(() => ({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap' },
   ],
   script: [
-    { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
+    // { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
   ]
 }));
 

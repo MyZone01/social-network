@@ -6,12 +6,14 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const authStore = useGlobalAuthStore();;
     const isAuthenticated = authStore.isAuthenticated;
 
-  if (!isAuthenticated && to.path !== "/auth") {
+  if (!isAuthenticated.value && to.path !== "/auth") {
     return navigateTo("/auth");
   }
-  if (isAuthenticated && to.path === "auth") {
+  if (isAuthenticated.value && to.path === "auth") {
     return navigateTo("/");
   }
+
+//   return navigateTo("/auth")
 });
 
 // export default defineEventHandler(async (event) => {
