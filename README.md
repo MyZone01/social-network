@@ -8,17 +8,14 @@ To know more about this project, please visit this [link](https://github.com/01-
 + **Followers**
 
     Users have the ability to follow each others.
----
 
 + **Profile**
 
     Each user has a profile presenting some information about him/her.
----
 
 + **Posts**
 
     Users  have the ability to post their best moments with their friends.
----
 
 + **Groups**
 
@@ -27,7 +24,6 @@ To know more about this project, please visit this [link](https://github.com/01-
 + **Notification**
 
     Users will be notified on every event that concern him/her.
----
 
 + **Chats**
 
@@ -41,21 +37,18 @@ To know more about this project, please visit this [link](https://github.com/01-
 
     - [documentation](https://nuxt.com/docs)
 
-    ---
-
+    
 + **Tailwind**
 
     Tailwind CSS is an open source CSS framework. The main feature of this library is that, unlike other CSS frameworks like Bootstrap, it does not provide a series of predefined classes for elements such as buttons or tables. [Wikipedia](https://en.wikipedia.org/wiki/Tailwind_CSS)
 
     - [documantation](https://tailwindcss.com/docs/installation/framework-guides)
 
----
 + **Golang**
 
     Go is a statically typed, compiled high-level programming language designed at Google. [Wikipedia](https://en.wikipedia.org/wiki/Go_(programming_language))
 
     - [documentation](https://go.dev/doc/)
----
 
 + **SQlite**
 
@@ -77,7 +70,6 @@ To start the frontend you can follow one of the following steps:
 2. from the root of the project run this command:
 `make start-frontend`
 
----
 
 + **Backend**
 
@@ -91,7 +83,6 @@ To start the backend server you can follow one of the following steps:
 
 You can also run `make start` to start both, the **backend** server and **frontend** server.
 
----
 
 + **Database**
 Run this command to create a new migration logic:
