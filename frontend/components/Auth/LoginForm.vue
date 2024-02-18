@@ -27,15 +27,6 @@
                 <hr class="flex-1 border-slate-200 dark:border-slate-800">
             </div>
 
-            <!-- social login -->
-            <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
-                <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
-                        name="logo-facebook" class="text-lg"></ion-icon> facebook </a>
-                <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
-                        name="logo-twitter"></ion-icon> twitter </a>
-                <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
-                        name="logo-github"></ion-icon> github </a>
-            </div>
         </div>
     </div>
 </template>
@@ -46,31 +37,29 @@ const data = reactive({
     email: '',
     password: '',
     loginError: '',
-    loading: false
+    loading: false,
 })
 // const loginError = ''
 async function handleLogin() {
     data.loading = true
     try {
-        if (email && password) {
-            await login({
-                email: data.email.trim(),
-                password: data.password.trim()
-            })
-        } else {
-
+        const idSession = await login({
+            email: data.email.trim(),
+            password: data.password.trim()
+        })
+        if (idSession) {
+            await navigateTo('/feed')
         }
     } catch (error) {
         data.loginError = error.statusMessage
+        data.loading = false
         setTimeout(() => {
             data.loginError = ''
         }, 2000)
-        data.loading = false
     } finally {
-        data.email = ''
-        data.password = ''
         data.loading = false
+        // data.email = ''
+        // data.password = ''
     }
 }
-
 </script>

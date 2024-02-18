@@ -1,5 +1,4 @@
 import { sendError } from "h3";
-import { userTransformer } from "~/server/transformers/user.js";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -31,16 +30,6 @@ export default defineEventHandler(async (event) => {
     );
   }
 
-  // if (password.length <= 8) {
-  //   return sendError(
-  //       event,
-  //       createError({
-  //         statusCode: 400,
-  //         statusMessage: "Password to short",
-  //       })
-  //     );
-  // }
-
   if (password !== repeatPassword) {
     return sendError(
       event,
@@ -50,7 +39,6 @@ export default defineEventHandler(async (event) => {
       })
     );
   }
-
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   if (emailRegex.test(email)) {
@@ -72,8 +60,7 @@ export default defineEventHandler(async (event) => {
     aboutMe: aboutMe.trim(),
     password: password.trim(),
   };
-
-  try {
+  
     const userSession = await $fetch("http://localhost:8081/registration", {
       method: "POST",
       body: JSON.stringify(userData),
@@ -85,23 +72,13 @@ export default defineEventHandler(async (event) => {
         event,
         createError({
           statusCode: 400,
-          statusMessage: error.statusMessage,
+          statusMessage: `Rejection from server : ${userSession.error}`
         })
       );
     } else {
       return {
-        // filtering what data to expose and which one to set from there
-        body: userSession,
+        // server return the idSession will use to establish cookie
+        userSession,
       };
     }
-  } catch (error) {
-    // relate It to the server error
-    return sendError(
-      event,
-      createError({
-        statusCode: 400,
-        statusMessage: error.statusMessage,
-      })
-    );
-  }
 });

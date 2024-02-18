@@ -1,4 +1,4 @@
-import { getCookie } from "h3";
+import { sendError } from "h3";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   // Check if User mail or nickname syntax is correct
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const userEmail = emailRegex.test(email);
-  if (!userEmail || (email.includes(' ') && email.length >= 3)) {
+  if (!userEmail || (email.includes(" ") && email.length >= 3)) {
     return sendError(
       event,
       createError({
@@ -28,42 +28,30 @@ export default defineEventHandler(async (event) => {
       })
     );
   }
-  
+
   const loginAccess = {
     email: email,
     password: password,
   };
-
-  try {
-    const userSession = await $fetch("http://localhost:8081/login", {
-      method: "POST",
-      body: JSON.stringify(loginAccess),
-    });
-
-    if (userSession.error) {
-      // LOGic handling Error from Server
-      return sendError(
-        event,
-        createError({
-          statusCode: 400,
-          statusMessage: error.statusMessage,
-        })
-      );
-    } else {
-      return {
-        // snap the token from the Cookies establish from server
-        token: getCookie(event, "token"),
-        user: userSession,
-      };
-    }
-  } catch (error) {
-    // relate It to the server error
+  
+  const userSession = await $fetch("http://localhost:8081/login", {
+    method: "POST",
+    body: JSON.stringify(loginAccess),
+  });
+  
+  if (userSession.error) {
+    // LOGic handling Error from Server
     return sendError(
       event,
       createError({
         statusCode: 400,
-        statusMessage: error.statusMessage,
+        statusMessage: `Not Valid: ${userSession.error}`
       })
     );
+  } else {
+    return {
+      // server return the idSession will use to establish cookie
+      userSession,
+    };
   }
 });
