@@ -1,6 +1,5 @@
 <template lang="">
-      <NuxtLayout>
-      </NuxtLayout>
+  <NuxtLayout />
 </template>
 <script>
 export default {
@@ -8,5 +7,5 @@ export default {
 }
 </script>
 <style lang="">
-    
+
 </style>

@@ -3,9 +3,10 @@
     <Header />
     <Sidebar />
     <main
-      id="site__main"
-      class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
-    >
+  id="site__main"
+  class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
+  style="max-height: 100%; overflow-y: auto;"
+>
       <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
         <div class="page-heading">
           <h1 class="page-title">
@@ -260,7 +261,7 @@
         </div>
 
         <!-- listing  slider -->
-        <div class="grid lg:grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-2.5 mt-8">
+        <div class="grid lg:grid-cols-1 md:grid-cols-5 sm:grid-cols-4 gap-2.5 mt-8">
           <div class="uk-slider-container pb-1">
             <ul class="uk-slider-items grid-small">
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
@@ -283,7 +284,7 @@
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
                     <img
-                      src="../assets/images/post/img-2.jpg" alt=""
+                      src="../assets/images/post/img-3.jpg" alt=""
                       class="h-36 w-full object-cover"
                     >
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
@@ -299,7 +300,7 @@
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
                     <img
-                      src="../assets/images/post/img-2.jpg" alt=""
+                      src="../assets/images/post/img-4.jpg" alt=""
                       class="h-36 w-full object-cover"
                     >
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
@@ -315,7 +316,7 @@
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
                     <img
-                      src="../assets/images/post/img-2.jpg" alt=""
+                      src="../assets/images/post/post-1.jpg" alt=""
                       class="h-36 w-full object-cover"
                     >
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">

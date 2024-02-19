@@ -4,14 +4,14 @@ export default defineNuxtConfig({
     head: {
       script: [
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
-        { type: "module", src: "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" },
-        { src: "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" },
+        { type: 'module', src: 'https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js' },
+        { src: 'https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js' },
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/uikit/3.15.14/js/uikit.min.js' },
-        { src: "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"  }
+        { src: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'  }
       ],
       link: [
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' },
-      ] 
+      ]
       // style:[
       //   {href : '~/assets/css/style.css',}
       // ]

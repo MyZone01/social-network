@@ -10,7 +10,7 @@
         <nav id="side">
           <ul>
             <li>
-              <router-link to="feed">
+              <router-link to="/feed">
                 <img src="../assets/images/icons/home.png" alt="feeds" class="w-6">
                 <span> Feed </span>
               </router-link>

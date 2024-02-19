@@ -3,16 +3,16 @@
 // // import { navigateTo } from "nuxt/app"
 
 export default defineNuxtRouteMiddleware((to, from) => {
-    const authStore = useGlobalAuthStore();;
-    const isAuthenticated = true;
+    const authStore = useGlobalAuthStore()
+    const isAuthenticated = true
 
-  if (!isAuthenticated && to.path !== "/auth") {
-    return navigateTo("/auth");
+  if (!isAuthenticated && to.path !== '/auth') {
+    return navigateTo('/auth')
   }
-  if (isAuthenticated && to.path === "/auth") {
-    return navigateTo("/feed");
+  if (isAuthenticated && to.path === '/auth') {
+    return navigateTo('/feed')
   }
-});
+})
 
 // export default defineEventHandler(async (event) => {
 //     const endpoints = [

@@ -2,8 +2,8 @@
   <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
     <Header />
     <Sidebar />
-    <main  id="site__main"
-      class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+    <main id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
+      style="max-height: 100%; overflow-y: auto;">
       <nuxt-child />
       <slot />
       <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
@@ -13,10 +13,8 @@
           </h1>
 
           <nav class="nav__underline">
-            <ul
-              class="group"
-              uk-switcher="connect: #group-tabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
-            >
+            <ul class="group"
+              uk-switcher="connect: #group-tabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
               <li> <a href="#"> Suggestions </a> </li>
               <li> <a href="#"> Popular </a> </li>
               <li> <a href="#"> My groups </a> </li>
@@ -36,10 +34,8 @@
                 </div>
               </a>
               <div class="card-body relative z-10">
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg" alt=""
-                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800"
-                >
+                <img src="../assets/images/avatars/avatar-4.jpg" alt=""
+                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
                 <a href="timeline-group.html">
                   <h4 class="card-title"> Delicious Foods </h4>
                 </a>
@@ -66,10 +62,8 @@
                 </div>
               </a>
               <div class="card-body relative z-10">
-                <img
-                  src="../assets/images/avatars/avatar-3.jpg" alt=""
-                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800"
-                >
+                <img src="../assets/images/avatars/avatar-3.jpg" alt=""
+                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
                 <a href="timeline-group.html">
                   <h4 class="card-title"> Abstract minimal </h4>
                 </a>
@@ -96,10 +90,8 @@
                 </div>
               </a>
               <div class="card-body relative z-10">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg" alt=""
-                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800"
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
                 <a href="timeline-group.html">
                   <h4 class="card-title"> Delicious Foods </h4>
                 </a>
@@ -126,10 +118,8 @@
                 </div>
               </a>
               <div class="card-body relative z-10">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg" alt=""
-                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800"
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                  class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
                 <a href="timeline-group.html">
                   <h4 class="card-title"> Graphic Design </h4>
                 </a>
@@ -173,18 +163,12 @@
                   </div>
                   <div class="flex items-center gap-3 mt-3">
                     <div class="flex -space-x-2">
-                      <img
-                        src="../assets/images/avatars/avatar-2.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-3.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-7.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
+                      <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-3.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-7.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
                     </div>
                     <p class="card-text">
                       6 friend are members
@@ -220,18 +204,12 @@
                   </div>
                   <div class="flex items-center gap-3 mt-3">
                     <div class="flex -space-x-2">
-                      <img
-                        src="../assets/images/avatars/avatar-2.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-3.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-7.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
+                      <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-3.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-7.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
                     </div>
                     <p class="card-text">
                       8 friend are members
@@ -267,18 +245,12 @@
                   </div>
                   <div class="flex items-center gap-3 mt-3">
                     <div class="flex -space-x-2">
-                      <img
-                        src="../assets/images/avatars/avatar-4.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-3.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-7.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
+                      <img src="../assets/images/avatars/avatar-4.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-3.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-7.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
                     </div>
                     <p class="card-text">
                       12 friend are members
@@ -314,18 +286,12 @@
                   </div>
                   <div class="flex items-center gap-3 mt-3">
                     <div class="flex -space-x-2">
-                      <img
-                        src="../assets/images/avatars/avatar-2.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-3.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="../assets/images/avatars/avatar-7.jpg" alt=""
-                        class="w-6 rounded-full border-2 border-white dark:border-slate-800"
-                      >
+                      <img src="../assets/images/avatars/avatar-2.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-3.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
+                      <img src="../assets/images/avatars/avatar-7.jpg" alt=""
+                        class="w-6 rounded-full border-2 border-white dark:border-slate-800">
                     </div>
                     <p class="card-text">
                       3 friend are members
@@ -363,10 +329,7 @@
                   <div>42k members </div>
                 </div>
                 <div class="flex gap-2">
-                  <button
-                    type="button"
-                    class="button bg-primary-soft text-primary dark:text-white flex-1"
-                  >
+                  <button type="button" class="button bg-primary-soft text-primary dark:text-white flex-1">
                     Join
                   </button>
                   <button type="button" class="button bg-secondery flex-1">
@@ -394,10 +357,7 @@
                   <div>42k members </div>
                 </div>
                 <div class="flex gap-2">
-                  <button
-                    type="button"
-                    class="button bg-primary-soft text-primary dark:text-white flex-1"
-                  >
+                  <button type="button" class="button bg-primary-soft text-primary dark:text-white flex-1">
                     Join
                   </button>
                   <button type="button" class="button bg-secondery flex-1">
@@ -425,10 +385,7 @@
                   <div>232k members </div>
                 </div>
                 <div class="flex gap-2">
-                  <button
-                    type="button"
-                    class="button bg-primary-soft text-primary dark:text-white flex-1"
-                  >
+                  <button type="button" class="button bg-primary-soft text-primary dark:text-white flex-1">
                     Join
                   </button>
                   <button type="button" class="button bg-secondery flex-1">
@@ -456,10 +413,7 @@
                   <div>620k members </div>
                 </div>
                 <div class="flex gap-2">
-                  <button
-                    type="button"
-                    class="button bg-primary-soft text-primary dark:text-white flex-1"
-                  >
+                  <button type="button" class="button bg-primary-soft text-primary dark:text-white flex-1">
                     Join
                   </button>
                   <button type="button" class="button bg-secondery flex-1">
@@ -491,10 +445,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/Buy-and-sell.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/Buy-and-sell.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> Shopping </div>
                     </div>
@@ -504,10 +455,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/health.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/health.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> health </div>
                     </div>
@@ -517,10 +465,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/science-and-tech.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/science-and-tech.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> science </div>
                     </div>
@@ -530,10 +475,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/travel.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/travel.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> Travel </div>
                     </div>
@@ -543,10 +485,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/business.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/business.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> business </div>
                     </div>
@@ -556,10 +495,7 @@
               <li class="md:w-1/5 sm:w-1/3 w-1/2">
                 <a href="#">
                   <div class="relative rounded-lg overflow-hidden">
-                    <img
-                      src="../assets/images/category/Buy-and-sell.jpg" alt=""
-                      class="h-36 w-full object-cover"
-                    >
+                    <img src="../assets/images/category/Buy-and-sell.jpg" alt="" class="h-36 w-full object-cover">
                     <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                       <div class="text-white p-5 text-lg leading-3"> Shopping </div>
                     </div>
@@ -570,14 +506,8 @@
           </div>
 
           <!-- slide nav icons -->
-          <a class="nav-prev" href="#" uk-slider-item="previous"> <ion-icon
-            name="chevron-back"
-            class="text-2xl"
-          /> </a>
-          <a class="nav-next" href="#" uk-slider-item="next"> <ion-icon
-            name="chevron-forward"
-            class="text-2xl"
-          /></a>
+          <a class="nav-prev" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back" class="text-2xl" /> </a>
+          <a class="nav-next" href="#" uk-slider-item="next"> <ion-icon name="chevron-forward" class="text-2xl" /></a>
         </div>
 
         <!-- suggest title -->
@@ -597,16 +527,12 @@
         <div class="grid md:grid-cols-2 md:gap-2 gap-3">
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-4.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-4.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Delicious Foods </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 16K Members</div>
@@ -614,40 +540,26 @@
                 <div> 12 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   14 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-3.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-3.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Abstract minimal </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 18K Members</div>
@@ -655,40 +567,26 @@
                 <div> 16 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   24 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-2.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-2.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Delicious Foods </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 19K Members</div>
@@ -696,40 +594,26 @@
                 <div> 21 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   16 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-1.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-1.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Graphic Design </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 24K Members</div>
@@ -737,40 +621,26 @@
                 <div> 12 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   14 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-3.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-3.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Abstract minimal </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 18K Members</div>
@@ -778,40 +648,26 @@
                 <div> 16 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   24 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
           <div class="flex md:items-center space-x-4 p-4 rounded-md box">
             <div class="sm:w-20 w-14 sm:h-20 h-14 flex-shrink-0 rounded-lg relative">
-              <img
-                src="../assets/images/group/group-4.jpg"
-                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt=""
-              >
+              <img src="../assets/images/group/group-4.jpg"
+                class="absolute w-full h-full inset-0 rounded-md object-cover shadow-sm" alt="">
             </div>
             <div class="flex-1">
-              <a
-                href="timeline-group.html"
-                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white"
-              >
+              <a href="timeline-group.html"
+                class="md:text-lg text-base font-semibold capitalize text-black dark:text-white">
                 Delicious Foods </a>
               <div class="flex space-x-2 items-center text-sm font-normal">
                 <div> 16K Members</div>
@@ -819,35 +675,22 @@
                 <div> 12 posts a week</div>
               </div>
               <div class="flex items-center mt-2">
-                <img
-                  src="../assets/images/avatars/avatar-2.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200 -mr-2" alt=""
-                >
-                <img
-                  src="../assets/images/avatars/avatar-4.jpg"
-                  class="w-6 rounded-full border-2 border-gray-200" alt=""
-                >
+                <img src="../assets/images/avatars/avatar-2.jpg" class="w-6 rounded-full border-2 border-gray-200 -mr-2"
+                  alt="">
+                <img src="../assets/images/avatars/avatar-4.jpg" class="w-6 rounded-full border-2 border-gray-200" alt="">
                 <div class="text-sm text-gray-500 ml-2">
                   14 friends are members
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"
-            >
-              <ion-icon
-                name="add-circle" class="text-xl -ml-1"
-              /> Join
+            <button type="button" class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden">
+              <ion-icon name="add-circle" class="text-xl -ml-1" /> Join
             </button>
           </div>
         </div>
 
         <div class="flex justify-center my-6">
-          <button
-            type="button"
-            class="bg-white py-2 px-5 rounded-full shadow-md font-semibold text-sm dark:bg-dark2"
-          >
+          <button type="button" class="bg-white py-2 px-5 rounded-full shadow-md font-semibold text-sm dark:bg-dark2">
             Load
             more...
           </button>
