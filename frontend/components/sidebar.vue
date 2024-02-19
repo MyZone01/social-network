@@ -39,17 +39,5 @@
     </div>
   </aside>
 </template>
-<style scoped>
-#side {
-  @apply text-sm font-medium capitalize tracking-wide text-gray-900 dark:text-white;
-  --tw-text-opacity: 1;
-}
-
-#side a {
-  @apply flex items-center gap-4 px-4 p-3 rounded-xl;
-}
-
-#side a:hover {
-  @apply bg-gray-900/10 dark:bg-white/10;
-}
-</style>
+<script setup>
+</script>

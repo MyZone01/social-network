@@ -2,7 +2,7 @@
 const colorMode = useColorMode()
 
 // logic for authenticated user
-const authenticated = false
+const authenticated = true
 
 const color = computed(() => colorMode.value === 'dark' ? '#111827' : 'white')
 

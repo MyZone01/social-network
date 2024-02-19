@@ -3,7 +3,7 @@ export default defineAppConfig({
   ui: {
     strategy: 'override',
     icon: 'mdi',
-    primary: 'blue',
-    colors: ['gray', 'success', 'critical', 'warning', 'interactive', 'primary']
+      primary: 'green',
+
   },
 })

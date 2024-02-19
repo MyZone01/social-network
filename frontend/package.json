@@ -15,8 +15,10 @@
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/ionic": "^0.13.1",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "eslint": "^8.56.0",
     "nuxt": "^3.10.0",
+    "tailwindcss": "^3.3.0",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
@@ -28,11 +30,13 @@
     "@nuxt/ui": "^2.13.0",
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtjs/tailwindcss": "^6.10.1",
+    "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.58.4",
     "ionic": "^5.4.16",
     "nuxt-og-image": "^3.0.0-rc.37",
     "nuxt-primevue": "^0.2.2",
+    "pinia": "^2.1.7",
     "sharp": "^0.33.2",
-    "uikit": "^3.18.3"
+    "simplebar": "^6.2.5"
   }
 }

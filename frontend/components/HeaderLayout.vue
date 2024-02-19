@@ -1,5 +1,4 @@
 <template>
-
     <header
         class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-white/80 sky-50 backdrop-blur-xl border-b border-slate-200 dark:bg-dark2 dark:border-slate-800">
 
@@ -20,10 +19,8 @@
                         <a href="feed.html">
                             <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
                             <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
-                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden"
-                                alt="">
-                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20"
-                                alt="">
+                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
+                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
                         </a>
                     </div>
 
@@ -116,13 +113,11 @@
                     </div>
 
                     <!-- header icons -->
-                    <div
-                        class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
+                    <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
                         <!-- create -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5 max-sm:hidden">
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 max-sm:hidden">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15">
                                 </path>
                             </svg>
@@ -157,16 +152,14 @@
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-purple-100/60 text-purple-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="videocam"
-                                                    class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="videocam" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Reel </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-pink-100/60 text-pink-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="location"
-                                                    class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon name="location" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> location </div>
                                             </div>
                                         </li>
@@ -261,8 +254,7 @@
                         </div>
 
                         <!-- notification -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
                             uk-tooltip="title: Notification; pos: bottom; offset:6">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 max-sm:hidden">
@@ -272,8 +264,7 @@
                                     d="M12 2.25A6.75 6.75 0 005.25 9v.75a8.217 8.217 0 01-2.119 5.52.75.75 0 00.298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 107.48 0 24.583 24.583 0 004.83-1.244.75.75 0 00.298-1.205 8.217 8.217 0 01-2.118-5.52V9A6.75 6.75 0 0012 2.25zM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 004.496 0l.002.1a2.25 2.25 0 11-4.5 0z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <div
-                                class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
+                            <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
                                 6</div>
                             <ion-icon name="notifications-outline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
@@ -285,9 +276,8 @@
                                 <h3 class="font-bold text-xl"> Notifications </h3>
 
                                 <div class="flex gap-2.5">
-                                    <button type="button"
-                                        class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> <ion-icon
-                                            class="text-xl" name="ellipsis-horizontal"></ion-icon> </button>
+                                    <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white">
+                                        <ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon> </button>
                                     <div class="w-[280px] group"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                                         <nav class="text-sm">
@@ -303,128 +293,116 @@
                                 </div>
                             </div>
 
-                  <div class="text-sm h-[400px] w-full overflow-y-auto pr-2">
-                    <!-- contents list -->
-                    <div class="pl-2 p-1 text-sm font-normal dark:text-white">
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-3.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Alexa Gray</b> started following you. Welcome him to your
-                            profile. 👋
-                          </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours ago </div>
-                          <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5" />
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-7.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1">Jesse Steeve</b> mentioned you in a story. Check it out and reply.
-                            📣
-                          </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours ago </div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-6.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Alexa stella</b> commented on your photo “Wow, stunning shot!” 💬
-                          </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours ago </div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-2.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> John Michael</b> who you might know, is on socialite.</p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 2 hours ago </div>
-                        </div>
-                        <button type="button" class="button text-white bg-primary">fallow</button>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-3.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Sarah Gray</b> sent you a message. He wants to chat with you. 💖
-                          </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours ago </div>
-                          <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5" />
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-4.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Jesse Steeve</b> sarah tagged you <br> in a photo of your
-                            birthday
-                            party. 📸 </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours ago </div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-2.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Lewis Lewis</b> mentioned you in a story. Check it out and reply.
-                            📣
-                          </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours ago </div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-12 h-12 shrink-0"> <img
-                          src="../assets/images/avatars/avatar-7.jpg" alt=""
-                          class="object-cover w-full h-full rounded-full"
-                        ></div>
-                        <div class="flex-1 ">
-                          <p> <b class="font-bold mr-1"> Martin Gray</b> liked your photo of the Eiffel Tower. 😍 </p>
-                          <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours ago </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
+                            <div class="text-sm h-[400px] w-full overflow-y-auto pr-2">
+
+                                <!-- contents list -->
+                                <div class="pl-2 p-1 text-sm font-normal dark:text-white">
+
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Alexa Gray</b> started following you.
+                                                Welcome him to your profile. 👋 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
+                                                ago </div>
+                                            <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-7.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1">Jesse Steeve</b> mentioned you in a story.
+                                                Check it out and reply. 📣 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
+                                                ago </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-6.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Alexa stella</b> commented on your photo
+                                                “Wow, stunning shot!” 💬 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
+                                                ago </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-2.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> John Michael</b> who you might know, is
+                                                on socialite.</p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 2 hours
+                                                ago </div>
+                                        </div>
+                                        <button type="button" class="button text-white bg-primary">fallow</button>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Sarah Gray</b> sent you a message. He
+                                                wants to chat with you. 💖 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
+                                                ago </div>
+                                            <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-4.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Jesse Steeve</b> sarah tagged you <br> in
+                                                a photo of your birthday party. 📸 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
+                                                ago </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-2.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Lewis Lewis</b> mentioned you in a story.
+                                                Check it out and reply. 📣 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
+                                                ago </div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-7.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Martin Gray</b> liked your photo of the
+                                                Eiffel Tower. 😍 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
+                                                ago </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+
+                            </div>
 
 
                             <!-- footer -->
@@ -440,8 +418,7 @@
                         </div>
 
                         <!-- messages -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
                             uk-tooltip="title: Messages; pos: bottom; offset:6">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 max-sm:hidden">
@@ -465,135 +442,129 @@
                             </div>
 
                             <div class="relative w-full p-2 px-3 ">
-                                <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10"
-                                    placeholder="Search">
+                                <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10" placeholder="Search">
                                 <ion-icon name="search-outline"
                                     class="dark:text-white absolute left-7 -translate-y-1/2 top-1/2"></ion-icon>
                             </div>
 
-                  <div class="h-80 overflow-y-auto pr-2">
-                    <div class="p-2 pt-0 pr-1 dark:text-white/80">
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-2.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Jesse Steeve</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 09:40AM </div>
-                            <div class="w-2.5 h-2.5 bg-blue-600 rounded-full dark:bg-gray-900" />
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">Love your
-                            photos 😍
-                          </div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-4.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Martin Gray</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 02:40AM </div>
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">Product
-                            photographer wanted? 📷</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-5.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Jesse Steeve</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 2 day </div>
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">Want to buy
-                            landscape photo? 🌄</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-3.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Monroe Parker</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 4 week </div>
-                            <div class="w-2.5 h-2.5 bg-blue-600 rounded-full dark:bg-gray-900" />
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">I’m glad you
-                            like
-                            it.😊</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-7.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Alex Dolve</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 2 month </div>
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">Photo editor
-                            needed. Fix photos? 🛠️</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#"
-                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10"
-                      >
-                        <div class="relative w-10 h-10 shrink-0">
-                          <img
-                            src="../assets/images/avatars/avatar-4.jpg" alt=""
-                            class="object-cover w-full h-full rounded-full"
-                          >
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 mb-1">
-                            <div class="mr-auto text-sm text-black dark:text-white font-medium">Jesse Steeve</div>
-                            <div class="text-xs text-gray-500 dark:text-white/80"> 09:40AM </div>
-                          </div>
-                          <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">Love your
-                            photos 😍
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
+                            <div class="h-80 overflow-y-auto pr-2">
+
+                                <div class="p-2 pt-0 pr-1 dark:text-white/80">
+
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Jesse Steeve</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 09:40AM
+                                                </div>
+                                                <div class="w-2.5 h-2.5 bg-blue-600 rounded-full dark:bg-slate-700">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                Love your photos 😍</div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-4.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Martin Gray</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 02:40AM
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                Product photographer wanted? 📷</div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-5.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Jesse Steeve</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 2 day </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                Want to buy landscape photo? 🌄</div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Monroe Parker</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 4 week </div>
+                                                <div class="w-2.5 h-2.5 bg-blue-600 rounded-full dark:bg-slate-700">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                I’m glad you like it.😊</div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-7.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Alex Dolve</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 2 month
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                Photo editor needed. Fix photos? 🛠️</div>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                                        <div class="relative w-10 h-10 shrink-0">
+                                            <img src="assets/images/avatars/avatar-4.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <div class="mr-auto text-sm text-black dark:text-white font-medium">
+                                                    Jesse Steeve</div>
+                                                <div class="text-xs text-gray-500 dark:text-white/80"> 09:40AM
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                                                Love your photos 😍</div>
+                                        </div>
+                                    </a>
+
+                                </div>
+
+                            </div>
 
 
                             <!-- footer -->
@@ -608,21 +579,25 @@
                             </div>
                         </div>
 
-            <!-- profile -->
-            <UPopover>
-              <UAvatar size="sm" src="../assets/images/avatars/avatar-2.jpg" alt="Avatar" />
+                        <!-- profile -->
+                        <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
+                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
+                        </div>
+                        <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
+                            uk-drop="offset:6;pos: bottom-right;animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
 
-              <template #panel>
-                <div class="bg-white rounded-lg drop-shadow-xl dark:bg-gray-900 w-64 border2">
-                  <a href="timeline.html">
-                    <div class="p-4 py-5 flex items-center gap-4">
-                      <img src="../assets/images/avatars/avatar-2.jpg" alt="" class="w-10 h-10 rounded-full shadow">
-                      <div class="flex-1">
-                        <h4 class="text-sm font-medium text-black dark:text-white">Stell johnson</h4>
-                        <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@mohnson</div>
-                      </div>
-                    </div>
-                  </a>
+                            <a href="timeline.html">
+                                <div class="p-4 py-5 flex items-center gap-4">
+                                    <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                        class="w-10 h-10 rounded-full shadow">
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-medium text-black">Stell johnson</h4>
+                                        <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
+                                            @mohnson</div>
+                                    </div>
+                                </div>
+                            </a>
 
                             <hr class="dark:border-gray-600/60">
 
@@ -682,8 +657,7 @@
                                                 d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                                         </svg>
                                         Night mode
-                                        <span
-                                            class="bg-slate-200/40 ml-auto p-0.5 rounded-full w-9 dark:hover:bg-white/20">
+                                        <span class="bg-slate-200/40 ml-auto p-0.5 rounded-full w-9 dark:hover:bg-white/20">
                                             <span
                                                 class="bg-white block h-4 relative rounded-full shadow-md w-2 w-4 dark:bg-blue-600"></span>
                                         </span>
@@ -693,8 +667,8 @@
                                 <a href="form-login.html">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
-                                        <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                                             </path>
@@ -709,15 +683,13 @@
 
                         <div class="flex items-center gap-2 hidden">
 
-                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
-                                class="w-9 h-9 rounded-full shadow">
+                            <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-9 h-9 rounded-full shadow">
 
                             <div class="w-20 font-semibold text-gray-600"> Hamse </div>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                             </svg>
 
                         </div>
@@ -732,4 +704,3 @@
 
     </header>
 </template>
-<script></script>

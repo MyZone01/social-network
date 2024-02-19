@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   // Check if User mail or nickname syntax is correct
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const userEmail = emailRegex.test(email);
-  if (!userEmail || (email.includes(' ') && email.length >= 3)) {
+  if (!userEmail || (email.includes(" ") && email.length >= 3)) {
     return sendError(
       event,
       createError({
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       })
     );
   }
-  
+
   const loginAccess = {
     email: email,
     password: password,
