@@ -10797,11 +10797,6 @@ ufo@^1.1.2, ufo@^1.2.0, ufo@^1.3.0, ufo@^1.3.1, ufo@^1.3.2:
   resolved "https://registry.npmjs.org/ufo/-/ufo-1.4.0.tgz"
   integrity sha512-Hhy+BhRBleFjpJ2vchUNN40qgkh0366FWJGqVLYBHev0vpHTrXSA0ryT+74UiW6KWsldNurQMKGqCm1M2zBciQ==
 
-uikit@^3.18.3:
-  version "3.18.3"
-  resolved "https://registry.npmjs.org/uikit/-/uikit-3.18.3.tgz"
-  integrity sha512-Pym55s6Bok3Ph1OvA+Mi2o4+N+uj3LAJ+A9RYYvxzI2J1lnbsVupMSxgdS9FrNqY9JktuOyaz14PWCvRZSNEHw==
-
 ultrahtml@^1.2.0, ultrahtml@^1.5.2:
   version "1.5.2"
   resolved "https://registry.npmjs.org/ultrahtml/-/ultrahtml-1.5.2.tgz"
