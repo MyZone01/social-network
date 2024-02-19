@@ -47,6 +47,16 @@
               </p>
             </div>
           </AuthRegisterForm>
+
+            <!-- social login -->
+            <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
+                <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
+                        :icon="ioniconsLogoFacebook" class="text-lg"></ion-icon> facebook </a>
+                <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
+                  :icon="ioniconsLogoTwitter"></ion-icon> twitter </a>
+                <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
+                  :icon="ioniconsLogoGithub"></ion-icon> github </a>
+            </div>
         </div>
       </div>
 
@@ -65,8 +75,6 @@ useHead(() => ({
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '~/assets/images/favicon.png' },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap' },
-    { rel: 'stylesheet', href: '~/assets/css/style.css' },
-    { rel: 'stylesheet', href: '~/assets/css/tailwind.css' },
   ],
   script: [
     { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
@@ -75,7 +83,6 @@ useHead(() => ({
 
   ]
 }))
-
 
 const data = reactive({
   loginProcess: true
@@ -124,5 +131,4 @@ onMounted(() => {
   })
 })
 
-// useHead(ref="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap")
 </script>

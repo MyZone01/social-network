@@ -1,5 +1,5 @@
 <template>
-  <Body class="dark:bg-gray-900 bg-white overflow-x-hidden">
+  <Body class="bg-15-23-42 overflow-x-hidden">
     <Header />
     <Sidebar />
     <main id="site__main"

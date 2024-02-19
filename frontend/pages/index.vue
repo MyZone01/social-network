@@ -1,56 +1,63 @@
 <template>
   <NuxtLayout>
-    <div class="lg:flex 2xl:gap-16 gap-12 max-w-[1065px]">
-      <div class="max-w-[680px] mx-auto">
-        <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
-          <PostInput />
-          <UCarousel :items="items" :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }" arrows>
-            <UserCard class="mr-5" />
-          </UCarousel>
-          <UCarousel :items="items" :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }" arrows>
-            <GroupCard class="mr-5" />
-          </UCarousel>
-          <UCarousel :items="items" :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }" arrows>
-            <EventCard class="mr-5" />
-          </UCarousel>
-          <PostCard />
-          <PostCard />
+    <div class="max-w-[680px] mx-auto">
+      <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
+
+        <!-- add story -->
+        <div class="bg-white rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1 dark:bg-dark2">
+
+          <div class="flex items-center md:gap-3 gap-1">
+            <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
+              uk-toggle="target: #create-status">
+              <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
+            </div>
+            <div
+              class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20"
+              uk-toggle="target: #create-status">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70" viewBox="0 0 24 24"
+                stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 8h.01" />
+                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                <path d="M3.5 15.5l4.5 -4.5c.928 -.893 2.072 -.893 3 0l5 5" />
+                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
+              </svg>
+            </div>
+            <div
+              class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-sky-100/60 hover:bg-sky-100 dark:bg-white/10 dark:hover:bg-white/20"
+              uk-toggle="target: #create-status">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70 " viewBox="0 0 24 24"
+                stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+              </svg>
+            </div>
+          </div>
+
         </div>
+
+        <!--  post image-->
+        <post-card-img />
+
+        <!--  post image with slider-->
+
+
+        <!-- post text-->
+        <post-card-text />
+
+        <!-- placeholder -->
+        <post-placeholder />
+
       </div>
-      <div class="flex-1" />
+
     </div>
+    <!-- create post  -->
+    <post-input/>
+    <post-preview />
   </NuxtLayout>
 </template>
 <script lang="ts" setup>
-const items = [
-  'https://picsum.photos/600/600?random=1',
-  'https://picsum.photos/600/600?random=2',
-  'https://picsum.photos/600/600?random=3',
-  'https://picsum.photos/600/600?random=4',
-  'https://picsum.photos/600/600?random=5',
-  'https://picsum.photos/600/600?random=6'
-]
 
-definePageMeta({
-  alias: ['/'],
-})
 
-useHead({
-  title: 'Home',
-})
-
-useSeoMeta({
-  titleTemplate: '',
-  title: 'Home',
-  ogTitle: 'Home',
-  description: 'Description',
-  ogDescription: 'Description'
-})
-
-defineOgImageComponent('NuxtSeo', {
-  title: 'Hello OG Image 👋',
-  description: 'Look what at me in dark mode',
-  theme: '#ff0000',
-  colorMode: 'dark',
-})
 </script>

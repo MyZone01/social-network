@@ -2,7 +2,6 @@
   <div class="overflow-visible">
     <slot />
 
-<<<<<<< HEAD
     <div
       class="space-y-7 text-sm text-black font-medium dark:text-white"
       uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -12,15 +11,6 @@
       </h2>
 
       <UIInput v-model="data.email" label="Email" placeholder="mail@social.net" />
-=======
-        <div class="space-y-7 text-sm text-black font-medium dark:text-white"
-            uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
-            <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">{{ data.loginError }}</h2>
-
-            <UIInput v-model="data.email" label="Email" placeholder="mail@social.net" required />
-
-            <UIInput v-model="data.password" label="Password" placeholder="********" type="password" required />
->>>>>>> origin/master
 
       <UIInput v-model="data.password" label="Password" placeholder="********" type="password" />
 
@@ -65,31 +55,29 @@ const data = reactive({
     email: '',
     password: '',
     loginError: '',
-    loading: false
+    loading: false,
 })
 // const loginError = ''
 async function handleLogin() {
     data.loading = true
     try {
-        if (email && password) {
-            await login({
-                email: data.email.trim(),
-                password: data.password.trim()
-            })
-        } else {
-
+        const idSession = await login({
+            email: data.email.trim(),
+            password: data.password.trim()
+        })
+        if (idSession) {
+            await navigateTo('/feed')
         }
     } catch (error) {
         data.loginError = error.statusMessage
+        data.loading = false
         setTimeout(() => {
             data.loginError = ''
         }, 2000)
-        data.loading = false
     } finally {
-        data.email = ''
-        data.password = ''
         data.loading = false
+        // data.email = ''
+        // data.password = ''
     }
 }
-
 </script>
