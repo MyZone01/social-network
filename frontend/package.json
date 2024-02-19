@@ -29,10 +29,11 @@
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtjs/tailwindcss": "^6.10.1",
     "@unocss/nuxt": "^0.58.4",
-    "ionic": "^5.4.16",
+    "formidable": "^3.5.1",
     "nuxt-og-image": "^3.0.0-rc.37",
     "nuxt-primevue": "^0.2.2",
     "sharp": "^0.33.2",
-    "uikit": "^3.18.3"
+    "uikit": "^3.18.3",
+    "uuid": "^9.0.1"
   }
 }

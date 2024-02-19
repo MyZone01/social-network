@@ -50,4 +50,10 @@ onMounted(() => {
     <NuxtPage />
     <UNotifications />
   </Html>
+</template><template>
+  <Html>
+    <NuxtLoadingIndicator />
+    <NuxtPage />
+    <UNotifications />
+  </Html>
 </template>
