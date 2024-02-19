@@ -98,9 +98,9 @@ Run this command to create a new migration logic:
 
 ## Contributors
 
-1. [Mouhamed Sarr](https://learn.zone01dakar.sn/git/mohamedsarr0)
-2. [Papa Alassane Ba](https://learn.zone01dakar.sn/git/pba)
+1. [Papa Alassane Ba](https://learn.zone01dakar.sn/git/pba)
+2. [Bounama Coulibaly](https://learn.zone01dakar.sn/git/bcoulibal)
 3. [Cheikh Ahmadou Tidiane Diallo](https://learn.zone01dakar.sn/git/chdiallo)
-4. [Abdou Top](https://learn.zone01dakar.sn/git/abdotop)
-5. [Serigne Saliou Mbacke](https://learn.zone01dakar.sn/git/serignmbaye)
-6. [Bounama Coulibaly](https://learn.zone01dakar.sn/git/bcoulibal)
+4. [Serigne Saliou Mbacké Mbaye](https://learn.zone01dakar.sn/git/serignmbaye)
+5. [Abdou Top](https://learn.zone01dakar.sn/git/abdotop)
+6. [Mouhamed Sarr](https://learn.zone01dakar.sn/git/mohamedsarr0)
