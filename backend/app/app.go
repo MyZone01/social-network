@@ -114,7 +114,7 @@ func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			if r.URL.Path == route.pattern {
-				if route.methods[r.Method] {
+				if route.methods[r.Method] || r.Method == "OPTIONS" {
 					c.handlers = route.handlers
 					c.Next()
 					return

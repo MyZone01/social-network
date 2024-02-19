@@ -95,7 +95,7 @@ async function handleRegister() {
             avatarImg: data.avatarImg,
         })
         if (idSession) {
-            await navigateTo('/feed')
+            await navigateTo('/')
         }
     } catch (error) {
         data.registerError = error.statusMessage

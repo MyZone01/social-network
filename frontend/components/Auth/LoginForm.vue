@@ -48,7 +48,7 @@ async function handleLogin() {
             password: data.password.trim()
         })
         if (idSession) {
-            await navigateTo('/feed')
+            await navigateTo('/')
         }
     } catch (error) {
         data.loginError = error.statusMessage
