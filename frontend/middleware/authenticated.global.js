@@ -19,11 +19,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     });
 
   const isAuthenticated = authenticate && tokenValid;
+  console.log(isAuthenticated)
   if (!isAuthenticated && to.path !== "/auth") {
     authStore.logout();
     return navigateTo("/auth");
   }
-  
+
   if (isAuthenticated && to.path === "/auth") {
     return navigateTo("/");
   }

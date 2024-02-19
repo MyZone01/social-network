@@ -8,3 +8,6 @@
     <Footer />
   </Body>
 </template>
+
+<script setup>
+</script>

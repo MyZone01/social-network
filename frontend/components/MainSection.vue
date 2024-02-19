@@ -22,7 +22,7 @@
                                     <li class="md:pr-3" uk-scrollspy-class="uk-animation-fade">
                                         <div class="md:w-16 md:h-16 w-12 h-12 rounded-full relative border-2 border-dashed grid place-items-center bg-slate-200 border-slate-300 dark:border-slate-700 dark:bg-dark2 shrink-0"
                                             uk-toggle="target: #create-story">
-                                            <ion-icon name="camera" class="text-2xl"></ion-icon>
+                                            <ion-icon :icon="ioniconsCamera" class="text-2xl"></ion-icon>
                                         </div>
                                     </li>
                                     <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
@@ -1220,5 +1220,5 @@
 
         </main>
     </div>
-    <MainChatBox                 />
+    <MainChatBox />
 </template>
