@@ -39,6 +39,7 @@
         type="textarea" rows="4"
       />
 
+<<<<<<< HEAD
       <div class="col-span-2">
         <label id="rememberme" class="inline-flex items-center">
           <input id="accept-terms" type="checkbox" class="!rounded-md accent-red-800">
@@ -52,6 +53,38 @@
           Get Started
         </button>
       </div>
+=======
+            <!-- avatar image -->
+            <UIImage @image-selected="handleImageSelected" />
+            <div v-if="imageUrl" class="col-span-1">
+                <img :src="imageUrl" alt="Uploaded Image">
+            </div>
+
+            <!-- about me -->
+            <div class="col-span-2">
+            <UITextField v-model="data.aboutMe" label="About Me" placeholder="Short introduction about yourself ..."
+                type="textarea" rows="4" />
+            </div>
+<!-- 
+            <div class="col-span-2">
+                <label class="inline-flex items-center" id="rememberme">
+                    <input type="checkbox" id="accept-terms" class="!rounded-md accent-red-800" />
+                    <span class="ml-2">you agree to our <a href="#" class="text-blue-700 hover:underline">terms of use </a>
+                    </span>
+                </label>
+            </div> -->
+
+            <div class="col-span-2">
+                <button @click="handleRegister()" class="button bg-primary text-white w-full cursor-pointer">Get Started</button>
+            </div>
+        </div>
+
+        <!-- <div class="text-center flex items-center gap-6">
+            <hr class="flex-1 border-slate-200 dark:border-slate-800">
+            Or continue with
+            <hr class="flex-1 border-slate-200 dark:border-slate-800">
+        </div> -->
+>>>>>>> origin/master
     </div>
 
     <div class="text-center flex items-center gap-6">
@@ -114,7 +147,7 @@ async function handleRegister() {
             avatarImg: data.avatarImg,
         })
         if (idSession) {
-            await navigateTo('/feed')
+            await navigateTo('/')
         }
     } catch (error) {
         data.registerError = error.statusMessage

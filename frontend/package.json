@@ -33,6 +33,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.58.4",
     "axios": "^1.6.7",
+    "ionic": "^5.4.16",
     "nuxt-og-image": "^3.0.0-rc.37",
     "nuxt-primevue": "^0.2.2",
     "pinia": "^2.1.7",

@@ -12,7 +12,28 @@
 
       <UIInput v-model="data.email" label="Email" placeholder="mail@social.net" />
 
+<<<<<<< HEAD
       <UIInput v-model="data.password" label="Password" placeholder="********" type="password" />
+=======
+            <UIInput v-model="data.password" label="Password" placeholder="********" type="password" required />
+
+            <!-- <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <input id="rememberme" name="rememberme" type="checkbox" class="!rounded-md accent-red-800">
+                    <label for="rememberme" class="font-normal">Remember me</label>
+                </div>
+                <a href="#" class="text-blue-700">Forgot password </a>
+            </div> -->
+
+            <div>
+                <button @click="handleLogin()" class="button bg-primary text-white w-full cursor-pointer">Sign in</button>
+            </div>
+            <!-- <div class="text-center flex items-center gap-6">
+                <hr class="flex-1 border-slate-200 dark:border-slate-800">
+                Or continue with
+                <hr class="flex-1 border-slate-200 dark:border-slate-800">
+            </div> -->
+>>>>>>> origin/master
 
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2.5">
@@ -66,7 +87,7 @@ async function handleLogin() {
             password: data.password.trim()
         })
         if (idSession) {
-            await navigateTo('/feed')
+            await navigateTo('/')
         }
     } catch (error) {
         data.loginError = error.statusMessage
