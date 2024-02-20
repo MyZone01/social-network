@@ -37,7 +37,7 @@
                     <!-- search -->
                     <div id="search--box"
                         class="xl:w-[680px] sm:w-96 sm:relative rounded-xl overflow-hidden z-20 bg-secondery max-md:hidden w-screen left-0 max-sm:fixed max-sm:top-2 dark:!bg-white/5">
-                        <ion-icon name="search" class="absolute left-4 top-1/2 -translate-y-1/2"></ion-icon>
+                        <ion-icon :icon="ioniconsSearch" class="absolute left-4 top-1/2 -translate-y-1/2"></ion-icon>
                         <input type="text" placeholder="Search Friends, videos .."
                             class="w-full !pl-10 !font-normal !bg-transparent h-12 !text-sm">
                     </div>
@@ -58,7 +58,7 @@
                                     <div>
                                         <div> Jesse Steeve </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon name="close"
+                                    </div> <ion-icon :icon="ioniconsClose"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
@@ -67,7 +67,7 @@
                                     <div>
                                         <div> Martin Gray </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon name="close"
+                                    </div> <ion-icon :icon="ioniconsClose"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
@@ -76,7 +76,7 @@
                                     <div>
                                         <div> Delicious Foods </div>
                                         <div class="text-xs text-rose-500 font-medium mt-0.5"> Group </div>
-                                    </div> <ion-icon name="close"
+                                    </div> <ion-icon :icon="ioniconsClose"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
@@ -85,7 +85,7 @@
                                     <div>
                                         <div> Delicious Foods </div>
                                         <div class="text-xs text-yellow-500 font-medium mt-0.5"> Page </div>
-                                    </div> <ion-icon name="close"
+                                    </div> <ion-icon :icon="ioniconsClose"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
@@ -94,22 +94,22 @@
                                     <div>
                                         <div> John Welim </div>
                                         <div class="text-xs text-blue-500 font-medium mt-0.5"> Friend </div>
-                                    </div> <ion-icon name="close"
+                                    </div> <ion-icon :icon="ioniconsClose"
                                         class="text-base absolute right-3 top-1/2 -translate-y-1/2 "></ion-icon>
                                 </a>
                                 <a href="#"
                                     class="hidden relative  px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <ion-icon class="text-2xl" name="search-outline"></ion-icon> Creative ideas
+                                    <ion-icon class="text-2xl" :icon="ioniconsSearchOutline"></ion-icon> Creative ideas
                                     about Business </a>
                                 <a href="#"
                                     class="hidden relative  px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
-                                    <ion-icon class="text-2xl" name="search-outline"></ion-icon> 8 Facts About
+                                    <ion-icon class="text-2xl" :icon="ioniconsSearchOutline"></ion-icon> 8 Facts About
                                     Writting </a>
                             </nav>
                             <hr class="-mx-2 mt-2 hidden">
                             <div class="flex justify-end pr-2 text-sm font-medium text-red-500 hidden">
                                 <a href="#" class="flex hover:bg-red-50 dark:hover:bg-slate-700 p-1.5 rounded">
-                                    <ion-icon name="trash" class="mr-2 text-lg"></ion-icon> Clear your history</a>
+                                    <ion-icon :icon="ioniconsTrash" class="mr-2 text-lg"></ion-icon> Clear your history</a>
                             </div>
                         </div>
 
