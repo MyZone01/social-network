@@ -11,25 +11,25 @@
                     <nav id="side">
 
                         <ul>
-                            <li class="active">
+                            <li :class="{ active: $route.path === '/' }">
                                 <a href="/">
                                     <img src="assets/images/icons/home.png" alt="feeds" class="w-6">
                                     <span> Feed </span>
                                 </a>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/messages' }">
                                 <a href="/messages">
                                     <img src="assets/images/icons/message.png" alt="messages" class="w-5">
                                     <span> messages </span>
                                 </a>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/events' }">
                                 <a href="/events">
                                     <img src="assets/images/icons/event.png" alt="messages" class="w-6">
                                     <span> events </span>
                                 </a>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/groups' }">
                                 <a href="/groups">
                                     <img src="assets/images/icons/group.png" alt="groups" class="w-6">
                                     <span> Groups </span>
@@ -155,6 +155,13 @@
 </template>
 <script setup>
 const store = useGlobalAuthStore();
+
+const props = defineProps({
+    modelValue: {
+        type: String,
+        required: true
+    },
+})
 
 function handleLogout() {
     store.logout()
