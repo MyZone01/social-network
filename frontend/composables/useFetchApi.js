@@ -1,5 +1,5 @@
 export default (url, options = {}) => {
-    const store = useGlobalAuthStore()
+    const store = useGlobalAuthStore();
 
     return $fetch(url, {
         ...options,

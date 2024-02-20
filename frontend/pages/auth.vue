@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Auth />
-  </div>
+    <div>
+        <Auth />
+    </div>
 </template>
 
 <script setup>
