@@ -1,18 +1,18 @@
-// import { sendError } from "h3";
+import { sendError } from "h3";
 
-// export default defineEventHandler(async (event) => {
-//   const body = await readBody(event);
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
 
-//   const {
-//     firstName,
-//     lastName,
-//     email,
-//     nickname,
-//     password,
-//     repeatPassword,
-//     aboutMe,
-//     avatarImg,
-//   } = body;
+  const {
+    firstName,
+    lastName,
+    email,
+    nickname,
+    password,
+    repeatPassword,
+    aboutMe,
+    avatarImg,
+  } = body;
 
   const requiredFields = [
     firstName,
@@ -31,15 +31,15 @@
     );
   }
 
-//   if (password !== repeatPassword) {
-//     return sendError(
-//       event,
-//       createError({
-//         statusCode: 400,
-//         statusMessage: "Passwords do not match",
-//       })
-//     );
-//   }
+  if (password !== repeatPassword) {
+    return sendError(
+      event,
+      createError({
+        statusCode: 400,
+        statusMessage: "Passwords do not match",
+      })
+    );
+  }
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   if (!emailRegex.test(email)) {
@@ -67,19 +67,19 @@
       body: JSON.stringify(userData),
     });
 
-//     if (userSession.error) {
-//       // LOGic handling Error from Server
-//       return sendError(
-//         event,
-//         createError({
-//           statusCode: 400,
-//           statusMessage: `Rejection from server : ${userSession.error}`
-//         })
-//       );
-//     } else {
-//       return {
-//         // server return the idSession will use to establish cookie
-//         userSession,
-//       };
-//     }
-// });
+    if (userSession.error) {
+      // LOGic handling Error from Server
+      return sendError(
+        event,
+        createError({
+          statusCode: 400,
+          statusMessage: `Rejection from server : ${userSession.error}`
+        })
+      );
+    } else {
+      return {
+        // server return the idSession will use to establish cookie
+        userSession,
+      };
+    }
+});

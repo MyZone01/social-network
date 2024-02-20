@@ -1,5 +1,5 @@
 export const userTransformer = (user) => {
-
+    
     return {
         id: user.id,
         firstName: user.firstName,
