@@ -1,6 +1,6 @@
 <template>
   <footer class="fixed bottom-0 w-screen flex items-center justify-center text-sm shadow-inner">
-    Copyright ©️ {{ new Date().getFullYear() }} | Made with <span mx-1 class="heart">❤️</span> and ☕
+    Copyright ©️ {{ new Date().getFullYear() }} | Made with <span mx-1 class="heart">❤️</span> and ☕ by @01Talents
   </footer>
 </template>
 <style scoped lang="css">
