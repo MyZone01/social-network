@@ -882,4 +882,12 @@
     </div>
   </header>
 </template>
-<script></script>
+<script setup>
+const store = useGlobalAuthStore();
+
+function handleLogout() {
+    store.logout()
+
+    navigateTo('/auth')
+}
+</script>

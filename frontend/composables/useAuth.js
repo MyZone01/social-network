@@ -20,7 +20,8 @@ export default () => {
     aboutMe,
     avatarImg,
   }) => {
-    return new Promise.all(async (resolve, reject) => {
+    console.log(avatarImg)
+    return new Promise(async (resolve, reject) => {
       try {
         const fetchData = await $fetch("/api/auth/registerValidator", {
           method: "POST",

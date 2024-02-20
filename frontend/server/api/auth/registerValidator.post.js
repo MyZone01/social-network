@@ -14,21 +14,22 @@
 //     avatarImg,
 //   } = body;
 
-//   const requiredFields = [
-//     firstName,
-//     lastName,
-//     email,
-//     nickname,
-//     password,
-//     repeatPassword,
-//   ];
-//   if (requiredFields.some((field) => field == "")) {
-//     const errorMessage = "Invalid entries";
-//     return sendError(
-//       event,
-//       createError({ statusCode: 400, statusMessage: errorMessage })
-//     );
-//   }
+  const requiredFields = [
+    firstName,
+    lastName,
+    email,
+    nickname,
+    password,
+    repeatPassword,
+  ];
+  console.log(avatarImg)
+  if (requiredFields.some((field) => field == "")) {
+    const errorMessage = "Invalid entries";
+    return sendError(
+      event,
+      createError({ statusCode: 400, statusMessage: errorMessage })
+    );
+  }
 
 //   if (password !== repeatPassword) {
 //     return sendError(
@@ -40,30 +41,31 @@
 //     );
 //   }
 
-//   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-//   if (emailRegex.test(email)) {
-//     return sendError(
-//       event,
-//       createError({
-//         statusCode: 400,
-//         statusMessage: "Email syntax not accepted",
-//       })
-//     );
-//   }
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    return sendError(
+      event,
+      createError({
+        statusCode: 400,
+        statusMessage: "Email syntax not accepted",
+      })
+    );
+  }
 
-//   const userData = {
-//     email: email.trim(),
-//     firstName: firstName.trim(),
-//     lastName: lastName.trim(),
-//     avatarImage: avatarImg,
-//     nickname: nickname.trim(),
-//     aboutMe: aboutMe.trim(),
-//     password: password.trim(),
-//   };
-//     const userSession = await $fetch("http://localhost:8081/registration", {
-//       method: "POST",
-//       body: JSON.stringify(userData),
-//     });
+  const userData = {
+    email: email.trim(),
+    firstName: firstName.trim(),
+    lastName: lastName.trim(),
+    avatarImage: avatarImg,
+    nickname: nickname.trim(),
+    aboutMe: aboutMe.trim(),
+    password: password.trim(),
+  };
+  
+    const userSession = await $fetch("http://localhost:8081/registrations", {
+      method: "POST",
+      body: JSON.stringify(userData),
+    });
 
 //     if (userSession.error) {
 //       // LOGic handling Error from Server
