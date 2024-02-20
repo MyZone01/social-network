@@ -1,34 +1,57 @@
-<script  >
+<script>
 export default {
     mounted() {
-        
+
         $(document).ready(function () {
             $('.js-example-basic-multiple').select2({
-                placeholder: "Select friend ..",
-            });
-        });
+                placeholder: 'Select friend ..',
+            })
+        })
     }
 }
 
 </script>
 
 <template>
-    <select class="js-example-basic-multiple  " id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
-        <option value="AL">Alabama</option>
+  <select id="selecUser" class="js-example-basic-multiple  " style="width: 40%" name="states[]" multiple="multiple">
+    <option value="AL">
+      Alabama
+    </option>
 
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-
-    </select>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+    <option value="WY">
+      Wyoming
+    </option>
+  </select>
 </template>
 <style>
 .select2-dropdown {
@@ -42,7 +65,7 @@ export default {
     max-height: 8vh;
     overflow-y: auto;
     overflow-x: hidden;
-    
+
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));

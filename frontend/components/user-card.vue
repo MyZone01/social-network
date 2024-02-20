@@ -4,7 +4,7 @@
     :ui="{ body: { padding: 'p-2' }, header: { padding: 'p-0 h-38 rounded-t-lg overflow-hidden' } }"
   >
     <template #header>
-      <img src="assets/images/avatars/avatar-2.jpg" class="w-full" alt="">
+      <img src="../assets/images/avatars/avatar-2.jpg" class="w-full" alt="">
     </template>
     <div>
       <a href="timeline-event.html">

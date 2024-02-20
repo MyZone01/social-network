@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     } else if (registration) {
         userData = registration
     }
-    
+
     if (!true) {
         return sendError(event, createError({
             statusCode: 400,
@@ -19,14 +19,14 @@ export default defineEventHandler(async (event) => {
     // generate Token
     // Access Token
     // refresh Token
-    
+
     // const { accessToken, refreshToken } = generateTokens(user)
     // Save refreshToken inside db
     // await createRefreshToken({
         // token: refreshToken,
         // userId: user.id
     // })
-    
+
     // add http only cookie
     // sendRefreshToken(event, refreshToken)
 
