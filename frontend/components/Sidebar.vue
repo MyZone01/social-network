@@ -12,84 +12,29 @@
 
                         <ul>
                             <li class="active">
-                                <a href="feed.html">
+                                <a href="/">
                                     <img src="assets/images/icons/home.png" alt="feeds" class="w-6">
                                     <span> Feed </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="messages.html">
+                                <a href="/messages">
                                     <img src="assets/images/icons/message.png" alt="messages" class="w-5">
                                     <span> messages </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="video.html">
-                                    <img src="assets/images/icons/video.png" alt="messages" class="w-6">
-                                    <span> video </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="event.html">
+                                <a href="/events">
                                     <img src="assets/images/icons/event.png" alt="messages" class="w-6">
-                                    <span> event </span>
+                                    <span> events </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="pages.html">
-                                    <img src="assets/images/icons/page.png" alt="pages" class="w-6">
-                                    <span> Pages </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="groups.html">
+                                <a href="/groups">
                                     <img src="assets/images/icons/group.png" alt="groups" class="w-6">
                                     <span> Groups </span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="market.html">
-                                    <img src="assets/images/icons/market.png" alt="market" class="w-7 -ml-1">
-                                    <span> market </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="blog.html">
-                                    <img src="assets/images/icons/blog.png" alt="blog" class="w-6">
-                                    <span> blog </span>
-                                </a>
-                            </li>
-                            <li class="!hidden" id="show__more">
-                                <a href="games.html">
-                                    <img src="assets/images/icons/game.png" alt="games" class="w-6">
-                                    <span> games </span>
-                                </a>
-                            </li>
-                            <li class="!hidden" id="show__more">
-                                <a href="funding.html">
-                                    <img src="assets/images/icons/fund.png" alt="messages" class="w-6">
-                                    <span> Fundraiser </span>
-                                </a>
-                            </li>
-                            <li class="!hidden" id="show__more">
-                                <a href="blog-2.html">
-                                    <img src="assets/images/icons/blog-2.png" alt="blog" class="w-6">
-                                    <span> blog II </span>
-                                </a>
-                            </li>
-                            <li class="!hidden" id="show__more">
-                                <a href="event-2.html">
-                                    <img src="assets/images/icons/event-2.png" alt="event" class="w-6">
-                                    <span> Event II </span>
-                                </a>
-                            </li>
-                            <li class="!hidden" id="show__more">
-                                <a href="groups-2.html">
-                                    <img src="assets/images/icons/group-2.png" alt="groups" class="w-6">
-                                    <span> Groups II </span>
-                                </a>
-                            </li>
-
                         </ul>
 
                         <button type="button"
@@ -136,15 +81,15 @@
                     </div>
 
                     <nav id="side"
-                        class="font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800">
-                        <div class="px-3 pb-2 text-sm font-medium">
+                        class="font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800 absolute inset-x-0 bottom-0">
+                        <!-- <div class="px-3 pb-2 text-sm font-medium">
                             <div class="text-black dark:text-white">Pages</div>
-                        </div>
+                        </div> -->
 
                         <ul class="mt-2 -space-y-2" uk-nav="multiple: true">
 
                             <li>
-                                <a href="setting.html">
+                                <a href="/settings">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -152,30 +97,20 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                    <span> Setting </span>
+                                    <span> Settings </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="upgrade.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                                    </svg>
-                                    <span> Upgrade </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="form-login.html">
+                                <a @click="handleLogout()" class="cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                                     </svg>
-                                    <span> Authentication </span>
+                                    <span> Logout </span>
                                 </a>
                             </li>
-                            <li class="uk-parent">
+                            <!-- <li class="uk-parent">
                                 <a href="#" class="group">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -183,7 +118,7 @@
                                             d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                                     </svg>
                                     <span> Development </span>
-                                    <ion-icon name="chevron-down"
+                                    <ion-icon :icon="ioniconsChevronDown"
                                         class="text-base ml-auto duration-200 group-aria-expanded:rotate-180"></ion-icon>
                                 </a>
                                 <ul class="pl-10 my-1 space-y-0 text-sm">
@@ -191,21 +126,21 @@
                                     <li><a href="components.html" class="!py-2 !rounded -md">Components</a></li>
                                     <li><a href="components.html" class="!py-2 !rounded -md">Icons</a></li>
                                 </ul>
-                            </li>
+                            </li> -->
 
                         </ul>
 
                     </nav>
 
 
-                    <div class="text-xs font-medium flex flex-wrap gap-2 gap-y-0.5 p-2 mt-2">
+                    <!-- <div class="text-xs font-medium flex flex-wrap gap-2 gap-y-0.5 p-2 mt-2">
                         <a href="#" class="hover:underline">About</a>
                         <a href="#" class="hover:underline">Blog </a>
                         <a href="#" class="hover:underline">Careers</a>
                         <a href="#" class="hover:underline">Support</a>
                         <a href="#" class="hover:underline">Contact Us </a>
                         <a href="#" class="hover:underline">Developer</a>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -219,4 +154,11 @@
         </div>
 </template>
 <script setup>
+const store = useGlobalAuthStore();
+
+function handleLogout() {
+    store.logout()
+
+    navigateTo('/auth')
+}
 </script>

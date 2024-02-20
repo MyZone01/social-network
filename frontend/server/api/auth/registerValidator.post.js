@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
     password,
     repeatPassword,
   ];
+  console.log(avatarImg)
   if (requiredFields.some((field) => field == "")) {
     const errorMessage = "Invalid entries";
     return sendError(
@@ -41,7 +42,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  if (emailRegex.test(email)) {
+  if (!emailRegex.test(email)) {
     return sendError(
       event,
       createError({
@@ -61,7 +62,7 @@ export default defineEventHandler(async (event) => {
     password: password.trim(),
   };
   
-    const userSession = await $fetch("http://localhost:8081/registration", {
+    const userSession = await $fetch("http://localhost:8081/registrations", {
       method: "POST",
       body: JSON.stringify(userData),
     });

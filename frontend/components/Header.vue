@@ -13,8 +13,8 @@
                     <!-- icon menu -->
                     <button uk-toggle="target: #site__sidebar ; cls :!-translate-x-0"
                         class="flex items-center justify-center w-8 h-8 text-xl rounded-full hover:bg-gray-100 xl:hidden dark:hover:bg-slate-600 group">
-                        <ion-icon name="menu-outline" class="text-2xl group-aria-expanded:hidden"></ion-icon>
-                        <ion-icon name="close-outline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
+                        <ion-icon :icon="ioniconsMenuOutline" class="text-2xl group-aria-expanded:hidden"></ion-icon>
+                        <ion-icon :icon="ioniconsCloseOutline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
                     </button>
                     <div id="logo">
                         <a href="feed.html">
@@ -126,7 +126,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15">
                                 </path>
                             </svg>
-                            <ion-icon name="add-circle-outline" class="sm:hidden text-2xl "></ion-icon>
+                            <ion-icon :icon="ioniconsAddCircleOutline" class="sm:hidden text-2xl "></ion-icon>
                         </button>
                         <div class="hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[324px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -143,21 +143,21 @@
                                         <li class="w-28" uk-scrollspy-class="uk-animation-fade">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-teal-100/60 text-teal-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="book" class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon :icon="ioniconsBook" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Story </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-sky-100/60 text-sky-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="camera" class="text-2xl drop-shadow-md"></ion-icon>
+                                                <ion-icon :icon="ioniconsCamera" class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Post </div>
                                             </div>
                                         </li>
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-purple-100/60 text-purple-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="videocam"
+                                                <ion-icon :icon="ioniconsVideocam"
                                                     class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Reel </div>
                                             </div>
@@ -165,7 +165,7 @@
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-pink-100/60 text-pink-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="location"
+                                                <ion-icon :icon="ioniconsLocation"
                                                     class="text-2xl drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> location </div>
                                             </div>
@@ -173,7 +173,7 @@
                                         <li class="w-28">
                                             <div
                                                 class="p-3 px-4 rounded-lg bg-sky-100/70 text-sky-600 dark:text-white dark:bg-dark4">
-                                                <ion-icon name="happy" class="text-2xl  drop-shadow-md"></ion-icon>
+                                                <ion-icon :icon="ioniconsHappy" class="text-2xl  drop-shadow-md"></ion-icon>
                                                 <div class="mt-1.5 text-sm font-medium"> Status </div>
                                             </div>
                                         </li>
@@ -184,10 +184,10 @@
                                 <!-- slide nav icons -->
                                 <div class="dark:hidden">
                                     <a class="absolute -translate-y-1/2 top-1/2 -left-4 flex items-center w-8 h-full px-1.5 justify-start bg-gradient-to-r from-white via-white dark:from-slate-600 dark:via-slate-500 dark:from-transparent dark:via-transparent"
-                                        href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
+                                        href="#" uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
                                             class="text-xl dark:text-white"></ion-icon> </a>
                                     <a class="absolute -translate-y-1/2 top-1/2 -right-4 flex items-center w-8 h-full px-1.5 justify-end bg-gradient-to-l from-white via-white dark:from-transparent dark:via-transparent"
-                                        href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
+                                        href="#" uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
                                             class="text-xl dark:text-white"></ion-icon> </a>
                                 </div>
 
@@ -275,7 +275,7 @@
                             <div
                                 class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
                                 6</div>
-                            <ion-icon name="notifications-outline" class="sm:hidden text-2xl"></ion-icon>
+                            <ion-icon :icon="ioniconsNotificationsOutline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
                         <div class="hidden bg-white pr-1.5 rounded-lg drop-shadow-xl dark:bg-slate-700 md:w-[365px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -287,16 +287,16 @@
                                 <div class="flex gap-2.5">
                                     <button type="button"
                                         class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> <ion-icon
-                                            class="text-xl" name="ellipsis-horizontal"></ion-icon> </button>
+                                            class="text-xl" :icon="ioniconsEllipsisHorizontal"></ion-icon> </button>
                                     <div class="w-[280px] group"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                                         <nav class="text-sm">
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    name="checkmark-circle-outline"></ion-icon> Mark all as read</a>
+                                                    :icon="ioniconsCheckmarkCircleOutline"></ion-icon> Mark all as read</a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    name="settings-outline"></ion-icon> Notification setting</a>
+                                                    :icon="ioniconsSettingsOutline"></ion-icon> Notification setting</a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    name="notifications-off-outline"></ion-icon> Mute Notification
+                                                    :icon="ioniconsNotificationsOffOutline"></ion-icon> Mute Notification
                                             </a>
                                         </nav>
                                     </div>
@@ -439,7 +439,7 @@
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <ion-icon name="chatbox-ellipses-outline" class="sm:hidden text-2xl"></ion-icon>
+                            <ion-icon :icon="ioniconsChatboxEllipsesOutline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
                         <div class="hidden bg-white pr-1.5 rounded-lg drop-shadow-xl dark:bg-slate-700 md:w-[360px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -449,15 +449,15 @@
                                 <h3 class="font-bold text-xl"> Chats </h3>
 
                                 <div class="flex gap-2.5 text-lg text-slate-900 dark:text-white">
-                                    <ion-icon name="expand-outline"></ion-icon>
-                                    <ion-icon name="create-outline"></ion-icon>
+                                    <ion-icon :icon="ioniconsExpandOutline"></ion-icon>
+                                    <ion-icon :icon="ioniconsCreateOutline"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="relative w-full p-2 px-3 ">
                                 <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10"
                                     placeholder="Search">
-                                <ion-icon name="search-outline"
+                                <ion-icon :icon="ioniconsSearchOutline"
                                     class="dark:text-white absolute left-7 -translate-y-1/2 top-1/2"></ion-icon>
                             </div>
 
@@ -601,7 +601,7 @@
                         <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
                             uk-drop="offset:6;pos: bottom-right;animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
 
-                            <a href="timeline.html">
+                            <a href="/profile">
                                 <div class="p-4 py-5 flex items-center gap-4">
                                     <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                         class="w-10 h-10 rounded-full shadow">
@@ -616,40 +616,7 @@
                             <hr class="dark:border-gray-600/60">
 
                             <nav class="p-2 text-sm text-black font-normal dark:text-white">
-                                <a href="upgrade.html">
-                                    <div
-                                        class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10 text-blue-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                                        </svg>
-                                        Upgrade To Premium
-                                    </div>
-                                </a>
-                                <a href="setting.html">
-                                    <div
-                                        class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                                        </svg>
-                                        My Billing
-                                    </div>
-                                </a>
-                                <a href="setting.html">
-                                    <div
-                                        class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
-                                        </svg>
-                                        Advatacing
-                                    </div>
-                                </a>
-                                <a href="setting.html">
+                                <a href="/settings">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -662,7 +629,7 @@
                                         My Account
                                     </div>
                                 </a>
-                                <button type="button" class="w-full">
+                                <!-- <button type="button" class="w-full">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -677,9 +644,9 @@
                                                 class="bg-white block h-4 relative rounded-full shadow-md w-2 w-4 dark:bg-blue-600"></span>
                                         </span>
                                     </div>
-                                </button>
+                                </button> -->
                                 <hr class="-mx-2 my-2 dark:border-gray-600/60">
-                                <a href="form-login.html">
+                                <a @click="handleLogout()" class="cursor-pointer">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
                                         <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -721,4 +688,12 @@
 
     </header>
 </template>
-<script></script>
+<script setup>
+const store = useGlobalAuthStore();
+
+function handleLogout() {
+    store.logout()
+
+    navigateTo('/auth')
+}
+</script>

@@ -1,8 +1,8 @@
 <template>
-  <div class="dark:bg-gray-900 bg-white overflow-visible">
-    <div class="sm:flex overflow-visible">
+  <div class="dark:bg-gray-900 bg-white overflow-scroll">
+    <div class="sm:flex">
       <div
-        class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
+        class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10 overflow-y-scroll">
 
         <div class="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true  overflow-visible">
@@ -17,7 +17,7 @@
             <div>
               <h2 class="text-2xl font-semibold mb-1.5"> Sign in to your account </h2>
               <p class="text-sm text-gray-700 font-normal">If you haven’t signed up yet.
-                <a @click="handleProcess()" class="text-blue-700">Register here!</a>
+                <a @click="handleProcess()" class="text-blue-700 cursor-pointer">Register here!</a>
               </p>
             </div>
           </AuthLoginForm>
@@ -28,21 +28,21 @@
                 Sign up to get started
               </h2>
               <p class="text-sm text-gray-700 font-normal">
-                If you already have an account, <a @click="handleProcess()" class="text-blue-700">Login
+                If you already have an account, <a @click="handleProcess()" class="text-blue-700 cursor-pointer">Login
                   here!</a>
               </p>
             </div>
           </AuthRegisterForm>
 
             <!-- social login -->
-            <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
+            <!-- <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
                         :icon="ioniconsLogoFacebook" class="text-lg"></ion-icon> facebook </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
                   :icon="ioniconsLogoTwitter"></ion-icon> twitter </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
                   :icon="ioniconsLogoGithub"></ion-icon> github </a>
-            </div>
+            </div> -->
         </div>
       </div>
 
