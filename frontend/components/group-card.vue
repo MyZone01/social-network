@@ -1,5 +1,5 @@
 <template>
-  <UCard class="card bg-gray-100 dark:bg-gray-950 w-72" :ui="{ header: { padding: 'p-0 rounded-t-lg overflow-hidden' } }">
+  <UCard class="card bg-gray-100 dark:bg-gray-950  p-0 flex-1" :ui="{ header: { padding: 'p-0 rounded-t-lg overflow-hidden' } }">
     <NuxtLink to="/groups/id">
       <div class="card-media h-24 rounded-t-lg">
         <img src="assets/images/post/img-2.jpg" class="" alt="">

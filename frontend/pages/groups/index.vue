@@ -27,7 +27,7 @@
                 <div class="uk-switcher" id="group-tabs">
 
                     <!-- card layout 1 -->
-                    <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
+                    <div class="flex flex-row gap-5 overflow-hidden">
                         <GroupCard />
                         <GroupCard />
                         <GroupCard />
