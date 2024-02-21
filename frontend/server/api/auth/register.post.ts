@@ -10,21 +10,22 @@ export default defineEventHandler(async (event) => {
     nickname,
     password,
     repeatPassword,
+    dateOfBirth,
     aboutMe,
-    avatarImg,
+    form,
+    avatarUrl
   } = body;
 
   const requiredFields = [
     firstName,
     lastName,
     email,
-    nickname,
     password,
     repeatPassword,
+    dateOfBirth
   ];
-  console.log("AVATAR IMG", avatarImg)
   if (requiredFields.some((field) => field == "")) {
-    const errorMessage = "Invalid entries";
+    const errorMessage = "some Fields can not be empty";
     return sendError(
       event,
       createError({ statusCode: 400, statusMessage: errorMessage })
@@ -52,34 +53,38 @@ export default defineEventHandler(async (event) => {
     );
   }
 
+  let [year, month, day] = dateOfBirth.split("-");
+  let formattedDateOfBirth = new Date(year, month - 1, day);
+  
   const userData = {
     email: email.trim(),
     firstName: firstName.trim(),
     lastName: lastName.trim(),
-    avatarImage: avatarImg,
+    avatarImage: 'uploads/default.jpg',
     nickname: nickname.trim(),
     aboutMe: aboutMe.trim(),
     password: password.trim(),
+    dateOfBirth: formattedDateOfBirth
   };
-  
-    const userSession = await $fetch("http://localhost:8081/registrations", {
-      method: "POST",
-      body: JSON.stringify(userData),
-    });
 
-    if (userSession.error) {
-      // LOGic handling Error from Server
-      return sendError(
-        event,
-        createError({
-          statusCode: 400,
-          statusMessage: `Rejection from server : ${userSession.error}`
-        })
-      );
-    } else {
-      return {
-        // server return the idSession will use to establish cookie
-        userSession,
-      };
-    }
+  const userSession = await $fetch("http://localhost:8081/registrations", {
+    method: "POST",
+    body: JSON.stringify(userData),
+  });
+
+  if (!userSession) {
+    // LOGic handling Error from Server
+    return sendError(
+      event,
+      createError({
+        statusCode: 400,
+        statusMessage: `Rejection from server : ${userSession}`
+      })
+    );
+  } else {
+    return {
+      // server return the idSession will use to establish cookie
+      userSession,
+    };
+  }
 });

@@ -60,7 +60,7 @@ useHead(() => ({
     { hid: 'description', name: 'description', content: 'Authentication for Access' }
   ],
   link: [
-    { rel: 'icon', type: 'image/x-icon', href: '~/assets/images/favicon.png' },
+    { rel: 'icon', type: 'image/x-icon', href: '../../assets/images/favicon.png' },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap' },
   ],
   script: [

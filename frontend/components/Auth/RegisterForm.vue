@@ -25,18 +25,23 @@
             <!-- confirm password -->
             <UIInput v-model="data.confirmPassword" label="Confirm Password" placeholder="********" type="password" />
 
+            
+            <UIInput v-model="data.dateOfBirth" placeholder="01/01/2000" label="Date Of Birth" type="date" required/>
+            <!-- Date Of Birth -->
+            <!-- <UIInput v-model="data.dateOfBirth" label="Date Of Birth" placeholder="" type="date" /> -->
+
             <!-- avatar image -->
-            <UIImage @image-selected="handleImageSelected" />
+            <UIImage @image-selected="handleImageSelected" label="Avatar Image" />
             <div v-if="imageUrl" class="col-span-1">
                 <img :src="imageUrl" alt="Uploaded Image">
             </div>
 
             <!-- about me -->
             <div class="col-span-2">
-            <UITextField v-model="data.aboutMe" label="About Me" placeholder="Short introduction about yourself ..."
-                type="textarea" rows="4" />
+                <UITextField v-model="data.aboutMe" label="About Me" placeholder="Short introduction about yourself ..."
+                    type="textarea" rows="4" />
             </div>
-<!-- 
+            <!-- 
             <div class="col-span-2">
                 <label class="inline-flex items-center" id="rememberme">
                     <input type="checkbox" id="accept-terms" class="!rounded-md accent-red-800" />
@@ -46,7 +51,8 @@
             </div> -->
 
             <div class="col-span-2">
-                <button @click="handleRegister()" class="button bg-primary text-white w-full cursor-pointer">Get Started</button>
+                <button @click="handleRegister()" class="button bg-primary text-white w-full cursor-pointer">Get
+                    Started</button>
             </div>
         </div>
 
@@ -66,10 +72,12 @@ const data = reactive({
     lastName: '',
     email: '',
     nickname: '',
-    confirmPassword: '',
     password: '',
+    confirmPassword: '',
+    dateOfBirth: '',
     aboutMe: '',
     avatarImg: '',
+    avatarLocalUrl: '',
     registerError: '',
     loading: false
 })
@@ -80,6 +88,7 @@ const handleImageSelected = (imageFile) => {
     // Handle the uploaded image file, like upload it to a cloud storage service
 
     imageUrl.value = URL.createObjectURL(imageFile)
+    data.avatarLocalUrl = imageUrl.value
     data.avatarImg = imageFile
 }
 
@@ -93,8 +102,10 @@ async function handleRegister() {
             nickname: data.nickname.trim(),
             password: data.password.trim(),
             repeatPassword: data.confirmPassword.trim(),
+            dateOfBirth: data.dateOfBirth,
             aboutMe: data.aboutMe.trim(),
             avatarImg: data.avatarImg,
+            avatarUrl: data.avatarLocalUrl,
         })
         if (idSession) {
             await navigateTo('/')
@@ -106,14 +117,14 @@ async function handleRegister() {
         }, 2000)
         data.loading = false
     } finally {
-        data.firstName = ''
-        data.lastName = ''
-        data.email = ''
-        data.nickname = ''
-        data.confirmPassword = ''
-        data.password = ''
-        data.aboutMe = ''
-        data.avatarImg = ''
+        // data.firstName = ''
+        // data.lastName = ''
+        // data.email = ''
+        // data.nickname = ''
+        // data.confirmPassword = ''
+        // data.password = ''
+        // data.aboutMe = ''
+        // data.avatarImg = ''
         data.loading = false
     }
 }

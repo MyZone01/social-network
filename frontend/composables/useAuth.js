@@ -1,13 +1,16 @@
-import { useGlobalAuthStore } from '../stores/useGobalStateAuthStore';
+import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
+import FormData from "form-data";
+import axios from "axios";
+// import fs from 'fs';
 
 export default () => {
   const store = useGlobalAuthStore();
-  
-  const setUser = (newToken) => {
-    store.login(newToken)
 
-    const cookie = useCookie('token')
-    cookie.value = newToken
+  const setUser = (newToken) => {
+    store.login(newToken);
+
+    const cookie = useCookie("token");
+    cookie.value = newToken;
   };
 
   const register = ({
@@ -17,13 +20,18 @@ export default () => {
     nickname,
     password,
     repeatPassword,
+    dateOfBirth,
     aboutMe,
     avatarImg,
+    avatarUrl,
   }) => {
-    console.log(avatarImg)
+    const form = new FormData();
+    form.append("file", avatarImg);
+
+    console.log(form.get("file"));
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchData = await $fetch("/api/auth/registerValidator", {
+        const fetchData = await $fetch("api/auth/register", {
           method: "POST",
           body: {
             firstName,
@@ -32,12 +40,30 @@ export default () => {
             nickname,
             password,
             repeatPassword,
+            dateOfBirth,
             aboutMe,
-            avatarImg,
+            form,
+            avatarUrl,
           },
         });
+        console.log("Well registered", fetchData);
+        if (avatarUrl != "") {
+          console.log(form.get("file"));
+          await axios.post("http://localhost:8081/avatarupload", form, {
+              headers: {
+                'Authorization': `Bearer ${fetchData.userSession}`,
+                'Content-Type': 'multipart/form-data'
+              },
+            })
+            .then((res) => {
+              console.log(res)
+            })
+            .catch((result) => {
+              console.log(result)
+            })
+        }
         if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession)
+          setUser(fetchData.userSession);
           resolve(true);
         }
       } catch (error) {
@@ -57,7 +83,7 @@ export default () => {
           },
         });
         if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession)
+          setUser(fetchData.userSession);
           resolve(true);
         }
       } catch (error) {
@@ -65,7 +91,7 @@ export default () => {
       }
     });
   };
-  
+
   return {
     login,
     register,

@@ -77,9 +77,8 @@ func (user *User) Create(db *sql.DB) error {
 		user.CreatedAt,
 		user.UpdatedAt,
 	)
-	fmt.Println()
+	
 	if err != nil {
-		fmt.Println("here")
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
 

@@ -5,7 +5,6 @@ import (
 	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -26,8 +25,6 @@ var registationHandler = func(ctx *octopus.Context) {
 		ctx.Status(500)
 		return
 	}
-
-	fmt.Println(newUser)
 
 	// Attempts to create a new user in the database with the provided data.
 	if err := newUser.Create(ctx.Db.Conn); err != nil {

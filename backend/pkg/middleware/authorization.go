@@ -4,6 +4,7 @@ import (
 	octopus "backend/app"
 	"backend/pkg/config"
 	"backend/pkg/models"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -79,6 +80,7 @@ func AuthAccessGoup(ctx *octopus.Context) {
 
 // ImageUploadMiddleware is a middleware that checks if the file is an image and downloads it
 func ImageUploadMiddleware(c *octopus.Context) {
+	fmt.Println("Image Checker")
 	c.Request.ParseMultipartForm(10 << 20) // limit your max input length!
 	file, handler, err := c.Request.FormFile("file")
 	if err != nil {
@@ -87,6 +89,7 @@ func ImageUploadMiddleware(c *octopus.Context) {
 		})
 		return
 	}
+	fmt.Println(file)
 	defer file.Close()
 	// Check if the file is an image
 	ext := []string{".jpeg", ".jpg", ".png", ".svg+xml"}
