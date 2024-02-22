@@ -8,7 +8,7 @@ import (
 )
 
 func handleGroups(ctx *octopus.Context) {
-	// Write function to get all groups from the database.
+	ctx.WriteString("Hello, groups!")
 }
 
 var groupsRoute = route{

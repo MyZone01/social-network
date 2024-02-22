@@ -10,6 +10,10 @@ import (
 	"net/http"
 )
 
+type credentials struct {
+	email    string `json:"email"`
+	password string `json:"password"`
+}
 
 // loginHandler is a function that handles user login requests.
 // It attempts to unmarshal the form data from the client into a User instance,
@@ -17,14 +21,19 @@ import (
 var loginHandler = func(ctx *octopus.Context) {
 	// Log the client's IP address that reached the login route.
 	log.Println("Host: [" + ctx.Request.RemoteAddr + "] reach login route")
-	var newUser = models.User{}
+	var credentials = credentials{}
 
 	// Try to deserialize the form data into the User instance.
-	if err := ctx.BodyParser(&newUser); err != nil {
+	if err := ctx.BodyParser(&credentials); err != nil {
 		// If deserialization fails, log the error and return an HTTP status  500.
 		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
 		return
+	}
+
+	newUser := models.User{
+		Email:    credentials.email,
+		Password: credentials.password,
 	}
 	// Check if the user's credentials are valid.
 	if userCredentialAreValid := newUser.CheckCredentials(ctx); !userCredentialAreValid {
