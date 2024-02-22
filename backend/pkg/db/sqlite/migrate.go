@@ -41,6 +41,7 @@ func Migration(DB *sql.DB, migration Migrations) {
 
 	switch strings.ToLower(migration.Action) {
 	case "-up":
+		fmt.Println("here")
 		// Apply one migration (1 Up)
 		// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		// 	fmt.Println(err)
@@ -63,11 +64,12 @@ func Migration(DB *sql.DB, migration Migrations) {
 		if err := m.Down(); err != nil && err != migrate.ErrNoChange {
 			fmt.Println(err)
 		}
-	case "-to":
-		// Migrate directly to the target version
-		if err := m.Migrate(uint(migration.Version)); err != nil {
-			fmt.Println(err)
-		}
+
+		case "-to":
+			// Migrate directly to the target version
+			if err := m.Migrate(uint(migration.Version)); err != nil {
+				fmt.Println(err)
+			}
 	}
 	currentVersion, dirty, err := m.Version()
 	if err != nil && err != migrate.ErrNilVersion {
