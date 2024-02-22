@@ -21,7 +21,12 @@ var EventsRoute = route{
 	path:   "/events",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
-		handleEvents,              // Handler function to process the events request.
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleEvents,            // Handler function to process the events request.
 	},
+}
+
+func init() {
+	// Register the events route with the global AllHandler map.
+	AllHandler[EventsRoute.path] = EventsRoute
 }

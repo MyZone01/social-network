@@ -9,7 +9,6 @@ import (
 	"os"
 	"strings"
 	"sync"
-	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -99,7 +98,7 @@ func (app *App) NotAllowed(c *Context) {
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
-	c := &Context{ResponseWriter: w, Request: r, Db: app.Db}
+	c := &Context{ResponseWriter: w, Request: r, Db: app.Db, Values: make(map[any]any)}
 	for _, route := range app.routes {
 		if strings.HasSuffix(route.pattern, "*") {
 			if strings.HasPrefix(r.URL.Path, strings.TrimSuffix(route.pattern, "*")) {
@@ -153,12 +152,12 @@ func (app *App) Run(addr string) error {
 		}
 	}()
 
-	// Attendre que le serveur démarre
-	time.Sleep(time.Second)
+	// // Attendre que le serveur démarre
+	// time.Sleep(time.Second)
 
-	// Vérifier si le serveur est en cours d'exécution
-	checkServer(addr)
-
+	// // Vérifier si le serveur est en cours d'exécution
+	// checkServer(addr
+		displayLaunchMessage(addr)
 	wg.Wait()
 	return nil
 }

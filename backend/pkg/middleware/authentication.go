@@ -21,6 +21,14 @@ func AuthRequired(ctx *octopus.Context) {
 		})
 		return
 	}
+	userId, err := config.Sess.Start(ctx).Get(token)
+	if err != nil{
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "Vous n'êtes pas connecté.",
+		})
+		return
+	}
+	ctx.Values["userId"] = userId
 	ctx.Next()
 }
 

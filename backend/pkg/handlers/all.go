@@ -17,26 +17,16 @@ type route struct {
 
 // AllHandler is a slice of Handler structures that defines all the routes for the application.
 // Each Handler in the slice includes the path, the constructor for creating the route, and the middleware/handler functions to be executed.
-var AllHandler = []route{
-	messagesRoutes,
-	postRoute,
-	groupsRoute,
-	notificationsRoute,
-	EventsRoute,
-	registrationRoute,
-	loginRoute,
-	checkSessionRoute,
-	// Add more handlers here as needed.
-}
+var AllHandler = map[string]route{}
 
 // HandleAll is a function that iterates over the AllHandler slice and applies each Handler's constructor to register the routes.
 // This function should be called during the initialization phase of the application to set up all the routes.
 var HandleAll = func(app *octopus.App) {
-	var mapContructors = map[string]HandlerConstructor{
+	var mapConstructors = map[string]HandlerConstructor{
 		http.MethodGet:  app.GET,
 		http.MethodPost: app.POST,
 	}
 	for _, v := range AllHandler {
-		mapContructors[v.method](v.path, v.middlewareAndHandler...)
+		mapConstructors[v.method](v.path, v.middlewareAndHandler...)
 	}
 }

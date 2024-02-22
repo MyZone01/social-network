@@ -21,7 +21,12 @@ var notificationsRoute = route{
 	path:   "/notifications",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
-		handleNotifications,       // Handler function to process the notifications request.
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleNotifications,     // Handler function to process the notifications request.
 	},
+}
+
+func init() {
+	// Register the notifications route with the global AllHandler map.
+	AllHandler[notificationsRoute.path] = notificationsRoute
 }

@@ -25,3 +25,8 @@ var checkSessionRoute = route{
 		handleValidSession, // Handler function to process the authentication request.
 	},
 }
+
+func init() {
+	// Register the authentication route with the global AllHandler map.
+	AllHandler[checkSessionRoute.path] = checkSessionRoute
+}
