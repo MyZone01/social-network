@@ -15,7 +15,6 @@ import (
 )
 
 func main() {
-
 	args := os.Args[1:]
 
 	migrate := sqlite.Migrations{}
@@ -47,7 +46,14 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
+		AllowedHeaders:   []string{
+			"Accept",
+			"Content-Type",
+			"Content-Length",
+			"Accept-Encoding",
+			"X-CSRF-Token",
+			"Authorization",
+		},
 		AllowCredentials: true,
 		ExposedHeaders:   []string{},
 		MaxAge:           86400,

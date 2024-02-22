@@ -32,11 +32,11 @@ var AllHandler = []route{
 // HandleAll is a function that iterates over the AllHandler slice and applies each Handler's constructor to register the routes.
 // This function should be called during the initialization phase of the application to set up all the routes.
 var HandleAll = func(app *octopus.App) {
-	var mapContructors = map[string]HandlerConstructor{
+	var mapConstructors = map[string]HandlerConstructor{
 		http.MethodGet:  app.GET,
 		http.MethodPost: app.POST,
 	}
 	for _, v := range AllHandler {
-		mapContructors[v.method](v.path, v.middlewareAndHandler...)
+		mapConstructors[v.method](v.path, v.middlewareAndHandler...)
 	}
 }

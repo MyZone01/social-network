@@ -87,12 +87,11 @@ You can also run `make start` to start both, the **backend** server and **fronte
 + **Database**
 Run this command to create a new migration logic:
 
-`migrate create -seq -ext=.sql -dir=./pkg/db/migrations create_ratings_table`
+`migrate create -seq -ext=.sql -dir=./pkg/db/migrations/sqlite <table_name>`
 
 `-seq`: to use number for ordering
 
 `-ext=<file>`: specify the migration file extension where `<file>` is the migration file.
-
 
 `-dir=<directory>`: directory to the migrations directory
 

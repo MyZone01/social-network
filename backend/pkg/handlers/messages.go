@@ -20,7 +20,7 @@ var messagesRoutes = route{
 	path:   "/messages",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
-		handleMessages,            // Handler function to process the messages request.
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleMessages,          // Handler function to process the messages request.
 	},
 }

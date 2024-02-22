@@ -20,7 +20,7 @@ var FollowerRoute = route{
 	path:   "/follower",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthMiddleware, // Middleware to check if the request is authenticated.
-		handleFollower,            // Handler function to process the follower request.
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleFollower,          // Handler function to process the follower request.
 	},
 }
