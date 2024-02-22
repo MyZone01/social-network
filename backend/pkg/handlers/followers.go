@@ -24,3 +24,8 @@ var FollowerRoute = route{
 		handleFollower,          // Handler function to process the follower request.
 	},
 }
+
+func init() {
+	// Register the follower route with the global AllHandler map.
+	AllHandler[FollowerRoute.path] = FollowerRoute
+}
