@@ -11,8 +11,8 @@ import (
 )
 
 type credentials struct {
-	email    string `json:"email"`
-	password string `json:"password"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 // loginHandler is a function that handles user login requests.
@@ -32,8 +32,8 @@ var loginHandler = func(ctx *octopus.Context) {
 	}
 
 	newUser := models.User{
-		Email:    credentials.email,
-		Password: credentials.password,
+		Email:    credentials.Email,
+		Password: credentials.Password,
 	}
 	// Check if the user's credentials are valid.
 	if userCredentialAreValid := newUser.CheckCredentials(ctx); !userCredentialAreValid {
@@ -117,4 +117,10 @@ var registrationRoute = route{
 		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
 		registrationHandler,       // The route handler that will be executed when the route is called.
 	},
+}
+
+func init() {
+	// Register the login and registration routes with the global AllHandler map.
+	AllHandler[loginRoute.path] = loginRoute
+	AllHandler[registrationRoute.path] = registrationRoute
 }

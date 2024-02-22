@@ -34,11 +34,19 @@ const (
 	MemberStatusDeclined   GroupMemberStatus = "declined"
 )
 
+type GroupMemberRole string
+
+const (
+	MemberRoleAdmin GroupMemberRole = "admin"
+	MemberRoleUser  GroupMemberRole = "user"
+)
+
 type GroupMember struct {
 	ID        uuid.UUID `sql:"type:uuid;primary key"`
 	GroupID   uuid.UUID `sql:"type:uuid"`
 	MemberID  uuid.UUID `sql:"type:uuid"`
 	Status    GroupMemberStatus
+	Role      GroupMemberRole
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
@@ -47,6 +55,7 @@ type GroupMember struct {
 
 type GroupPost struct {
 	ID        uuid.UUID `sql:"type:uuid;primary key"`
+	CreatorID uuid.UUID `sql:"type:uuid"`
 	GroupID   uuid.UUID `sql:"type:uuid"`
 	PostID    uuid.UUID `sql:"type:uuid"`
 	CreatedAt time.Time
@@ -71,6 +80,16 @@ func (g *Group) Create(db *sql.DB) error {
 	_, err = stmt.Exec(g.ID, html.EscapeString(g.Title), html.EscapeString(g.Description), html.EscapeString(g.BannerURL), g.CreatorID, g.CreatedAt, g.UpdatedAt)
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+
+	// Create the group creator as a admin of the group
+	gm := GroupMember{
+		Status: MemberStatusAccepted,
+		Role:   MemberRoleAdmin,
+	}
+	err = gm.CreateMember(db, g.CreatorID, g.ID)
+	if err != nil {
+		return fmt.Errorf("unable to create group member. %v", err)
 	}
 
 	return nil
@@ -197,7 +216,6 @@ func (gm *GroupMember) CreateMember(db *sql.DB, memberID, groupID uuid.UUID) err
 	gm.ID = uuid.New()
 	gm.GroupID = groupID
 	gm.MemberID = memberID
-	gm.Status = MemberStatusInvited
 	gm.CreatedAt = time.Now()
 	gm.UpdatedAt = time.Now()
 	query := `INSERT INTO group_members (id, group_id, member_id, status, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)`
@@ -334,10 +352,9 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 }
 
 // CreatePost inserts a new post into the group in the database
-func (gp *GroupPost) CreatePost(db *sql.DB, groupID, userOwnerUuid uuid.UUID,) error {
+func (gp *GroupPost) CreatePost(db *sql.DB,) error {
 	// Define the group post default properties
 	gp.ID = uuid.New()
-	gp.GroupID = groupID
 	gp.CreatedAt = time.Now()
 	gp.UpdatedAt = time.Now()
 	gp.Post.CreatedAt = time.Now()
@@ -346,7 +363,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB, groupID, userOwnerUuid uuid.UUID,) e
 	gp.Post.UserID = gp.ID
 	gp.PostID = gp.Post.ID
 
-	if err := gp.Post.Create(db, userOwnerUuid); err != nil {
+	if err := gp.Post.Create(db, gp.CreatorID); err != nil {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 
@@ -448,7 +465,7 @@ func (gp *GroupPost) DeletePost(db *sql.DB) error {
 }
 
 // GetPosts retrieves all posts of the group from the database
-func (g *GroupPosts) GetPosts(db *sql.DB, groupID uuid.UUID, getpost bool) error{
+func (g *GroupPosts) GetPosts(db *sql.DB, groupID uuid.UUID, getpost bool) error {
 	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)

@@ -52,6 +52,25 @@ func AuthAccessGroup(ctx *octopus.Context) {
 		})
 		return
 	}
+	ctx.Values["role"] = mg.Role
+	ctx.Next()
+}
+
+// CheckRole is a middleware that checks if the user have a specific role in the group
+func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
+	_role, ok := ctx.Values["role"].(models.GroupMemberRole)
+	if !ok {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "Vous n'êtes pas autorisé.",
+		})
+		return
+	}
+	if _role != role {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "Vous n'êtes pas autorisé.",
+		})
+		return
+	}
 	ctx.Next()
 }
 

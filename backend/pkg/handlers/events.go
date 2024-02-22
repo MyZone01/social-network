@@ -25,3 +25,8 @@ var EventsRoute = route{
 		handleEvents,            // Handler function to process the events request.
 	},
 }
+
+func init() {
+	// Register the events route with the global AllHandler map.
+	AllHandler[EventsRoute.path] = EventsRoute
+}

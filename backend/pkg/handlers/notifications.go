@@ -25,3 +25,8 @@ var notificationsRoute = route{
 		handleNotifications,     // Handler function to process the notifications request.
 	},
 }
+
+func init() {
+	// Register the notifications route with the global AllHandler map.
+	AllHandler[notificationsRoute.path] = notificationsRoute
+}
