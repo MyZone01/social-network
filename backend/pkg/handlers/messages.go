@@ -24,3 +24,8 @@ var messagesRoutes = route{
 		handleMessages,          // Handler function to process the messages request.
 	},
 }
+
+func init() {
+	// Register the messages route with the global AllHandler map.
+	AllHandler[messagesRoutes.path] = messagesRoutes
+}

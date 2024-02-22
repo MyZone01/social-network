@@ -22,3 +22,8 @@ var postRoute = route{
 		handlePost, // Handler function to process the authentication request.
 	},
 }
+
+func init() {
+	// Register the authentication route with the global AllHandler map.
+	AllHandler[postRoute.path] = postRoute
+}
