@@ -33,12 +33,12 @@ export default defineEventHandler(async (event) => {
     email: email,
     password: password,
   };
-  
+
   const userSession = await $fetch("http://localhost:8081/login", {
     method: "POST",
     body: JSON.stringify(loginAccess),
   });
-  
+
   if (userSession.error) {
     // LOGic handling Error from Server
     return sendError(
