@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const authStore = useGlobalAuthStore();
   let tokenValid;
   const authenticate = authStore.isAuthenticated;
-
+  
   await axios
     .get("http://localhost:8081/checksession", {
       headers: {
@@ -19,7 +19,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     });
 
   const isAuthenticated = authenticate && tokenValid;
-  console.log(isAuthenticated)
+
+  // console.log(authStore.user)
+
   if (!isAuthenticated && to.path !== "/auth") {
     authStore.logout();
     return navigateTo("/auth");

@@ -27,8 +27,7 @@ export default () => {
   }) => {
     const form = new FormData();
     form.append("file", avatarImg);
-
-    console.log(form.get("file"));
+    
     return new Promise(async (resolve, reject) => {
       try {
         const fetchData = await $fetch("api/auth/register", {
@@ -46,9 +45,8 @@ export default () => {
             avatarUrl,
           },
         });
-        console.log("Well registered", fetchData);
+
         if (avatarUrl != "") {
-          console.log(form.get("file"));
           await axios.post("http://localhost:8081/avatarupload", form, {
               headers: {
                 'Authorization': `Bearer ${fetchData.userSession}`,
@@ -82,8 +80,10 @@ export default () => {
             password,
           },
         });
+        // console.log(fetchData)
+        // console.log(store.user)
         if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession);
+          setUser(fetchData.userSession, fetchData);
           resolve(true);
         }
       } catch (error) {

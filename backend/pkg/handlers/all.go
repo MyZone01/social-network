@@ -27,6 +27,7 @@ var AllHandler = []route{
 	loginRoute,
 	checkSessionRoute,
 	avatarUploadRoute,
+	userInfosRoute,
 	// Add more handlers here as needed.
 }
 

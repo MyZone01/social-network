@@ -42,7 +42,19 @@ var registationHandler = func(ctx *octopus.Context) {
 		ctx.Status(500)
 		return
 	}
-	ctx.JSON(idSession)
+	
+	userInfos, erro := config.Sess.Start(ctx).Get(idSession)
+	if erro != nil {
+		// If starting the session fails, log the error and return an HTTP status  500.
+		log.Println(err)
+		ctx.Status(http.StatusInternalServerError)
+	}
+	data := map[string]interface{}{
+		"userInfos": userInfos,
+		"idSession": idSession,
+	}
+
+	ctx.JSON(data)
 	// Logs the success of the user's registration and login.
 	// log.Println(" User :" + newUser.Nickname + " with  Host: [ " + ctx.Request.RemoteAddr + " ] " + "is successfully registered and logged")
 }

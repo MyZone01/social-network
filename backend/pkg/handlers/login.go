@@ -41,7 +41,22 @@ var loginHandler = func(ctx *octopus.Context) {
 		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
 	}
-	ctx.JSON(idSession)
+
+	// user := models.User{}
+	// id, err := config.Sess.Start(ctx).Get(idSession)
+	// if err != nil {
+	// 	ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+	// 		"error": "Invalid Token.",
+	// 	})
+	// }
+
+	// user.Get(octopus.Db, id)
+	data := map[string]interface{}{
+		// "userInfos": user,
+		"idSession": idSession,
+	}
+
+	ctx.JSON(data)
 }
 
 // loginRoute is a structure that defines the login route for the API.
