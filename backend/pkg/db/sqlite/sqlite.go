@@ -16,14 +16,20 @@ type Migrations struct {
 }
 
 func OpenDB(migration Migrations) *sql.DB {
-	_, errorNoFile := os.Stat("./pkg/db/sqlite/social-network.db")
-
+	
 	DB, err := sql.Open("sqlite3", "./pkg/db/sqlite/social-network.db")
 	if err != nil {
 		log.Println(err)
 	}
+	
+	if migration.Migration {
+		Migration(DB, migration)
+	}
+	
+	_, errorNoFile := os.Stat("./pkg/db/sqlite/social-network.db")
 
 	if errorNoFile != nil {
+
 		sqlCode, ERR := os.ReadFile("./pkg/db/sqlite/init.sql")
 		if ERR != nil {
 			log.Fatal(ERR)
@@ -32,10 +38,7 @@ func OpenDB(migration Migrations) *sql.DB {
 		if erp != nil {
 			log.Fatal(erp)
 		}
-	}
 
-	if migration.Migration {
-		Migration(DB, migration)
 	}
 
 	return DB
