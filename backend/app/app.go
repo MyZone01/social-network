@@ -1,7 +1,6 @@
 package octopus
 
 import (
-	"backend/pkg/db/sqlite"
 	"database/sql"
 	"fmt"
 	"log"
@@ -9,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -29,21 +29,22 @@ type App struct {
 	globalMiddleware []HandlerFunc
 }
 
-// func New() *App {
-// 	return &App{}
-// }
-
-func New(migration sqlite.Migrations) *App {
-	app := &App{
-		Db: &db{
-			Conn: sqlite.OpenDB(migration),
-		},
-		routes:      make([]*Route, 0),
-		onErrorCode: nil,
-	}
-
-	return app
+func New() *App {
+	return new(App)
 }
+
+// func New(migration sqlite.Migrations) *App {
+// 	database := sqlite.OpenDB(migration)
+// 	app := &App{
+// 		Db: &db{
+// 			Conn: database,
+// 		},
+// 		routes:      make([]*Route, 0),
+// 		onErrorCode: nil,
+// 	}
+
+// 	return app
+// }
 
 func (a *App) UseDb(conn *sql.DB) {
 	d := &db{Conn: conn}
@@ -98,7 +99,7 @@ func (app *App) NotAllowed(c *Context) {
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
-	c := &Context{ResponseWriter: w, Request: r, Db: app.Db, Values: make(map[any]any)}
+	c := &Context{ResponseWriter: w, Request: r, Db: app.Db}
 	for _, route := range app.routes {
 		if strings.HasSuffix(route.pattern, "*") {
 			if strings.HasPrefix(r.URL.Path, strings.TrimSuffix(route.pattern, "*")) {
@@ -152,12 +153,12 @@ func (app *App) Run(addr string) error {
 		}
 	}()
 
-	// // Attendre que le serveur démarre
-	// time.Sleep(time.Second)
+	// Attendre que le serveur démarre
+	time.Sleep(time.Second)
 
-	// // Vérifier si le serveur est en cours d'exécution
-	// checkServer(addr
-		displayLaunchMessage(addr)
+	// Vérifier si le serveur est en cours d'exécution
+	checkServer(addr)
+
 	wg.Wait()
 	return nil
 }
