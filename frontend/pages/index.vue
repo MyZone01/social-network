@@ -57,7 +57,6 @@
       </div>
       <!-- create post  -->
       <post-input />
-      <post-preview />
     </main>
   </NuxtLayout>
 </template>
