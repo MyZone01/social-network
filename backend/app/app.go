@@ -1,7 +1,6 @@
 package octopus
 
 import (
-	"backend/pkg/db/sqlite"
 	"database/sql"
 	"fmt"
 	"log"
@@ -30,21 +29,22 @@ type App struct {
 	globalMiddleware []HandlerFunc
 }
 
-// func New() *App {
-// 	return &App{}
-// }
-
-func New(migration sqlite.Migrations) *App {
-	app := &App{
-		Db: &db{
-			Conn: sqlite.OpenDB(migration),
-		},
-		routes:      make([]*Route, 0),
-		onErrorCode: nil,
-	}
-
-	return app
+func New() *App {
+	return new(App)
 }
+
+// func New(migration sqlite.Migrations) *App {
+// 	database := sqlite.OpenDB(migration)
+// 	app := &App{
+// 		Db: &db{
+// 			Conn: database,
+// 		},
+// 		routes:      make([]*Route, 0),
+// 		onErrorCode: nil,
+// 	}
+
+// 	return app
+// }
 
 func (a *App) UseDb(conn *sql.DB) {
 	d := &db{Conn: conn}

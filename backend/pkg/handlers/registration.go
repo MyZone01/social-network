@@ -64,7 +64,7 @@ var registationHandler = func(ctx *octopus.Context) {
 // It also associates the middlewares and the route handler.
 var registrationRoute = route{
 	method: http.MethodPost,
-	path:   "/registrations",
+	path:   "/registration",
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
 		registationHandler,        // The route handler that will be executed when the route is called.

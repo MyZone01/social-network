@@ -30,7 +30,7 @@ export default () => {
     
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchData = await $fetch("api/auth/register", {
+        const fetchData = await $fetch("/api/auth/register", {
           method: "POST",
           body: {
             firstName,
@@ -46,20 +46,20 @@ export default () => {
           },
         });
 
-        if (avatarUrl != "") {
-          await axios.post("http://localhost:8081/avatarupload", form, {
-              headers: {
-                'Authorization': `Bearer ${fetchData.userSession}`,
-                'Content-Type': 'multipart/form-data'
-              },
-            })
-            .then((res) => {
-              console.log(res)
-            })
-            .catch((result) => {
-              console.log(result)
-            })
-        }
+        // if (avatarUrl != "") {
+        //   await axios.post("http://localhost:8081/avatarupload", form, {
+        //       headers: {
+        //         'Authorization': `Bearer ${fetchData.userSession}`,
+        //         'Content-Type': 'multipart/form-data'
+        //       },
+        //     })
+        //     .then((res) => {
+        //       console.log(res)
+        //     })
+        //     .catch((result) => {
+        //       console.log(result)
+        //     })
+        // }
         if (fetchData.userSession && !store.isAuthenticated) {
           setUser(fetchData.userSession);
           resolve(true);

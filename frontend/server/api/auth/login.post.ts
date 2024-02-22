@@ -43,38 +43,37 @@ export default defineEventHandler(async (event) => {
   };
 
   try {
-  }
-  const result: response = await $fetch("http://localhost:8081/login", {
-    method: "POST",
-    body: JSON.stringify(loginAccess),
-  })
-  if (!result) {
+    const result: response = await $fetch("http://localhost:8081/login", {
+      method: "POST",
+      body: JSON.stringify(loginAccess),
+    })
+
     console.log(result)
     let userInfos;
     console.log("USER INFOS VARIABLE => ", result);
-  } else {
-    return sendError(
-      event,
-      createError({
-        statusCode: 400,
-        statusMessage: `Not Valid: ${error}`,
+    
+  } catch(err) {
+    return sendError(event, createError({
+      statusCode: 400,
+        statusMessage: `Not Valid: ${err}`,
       })
     );
   }
-    // await axios
-    // .get("http://localhost:8081/userinfos", {
-    //     headers: {
-    //       Authorization: `Bearer ${res.idSession}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log("USER INFOS VARIABLE => ", res.data);
-    //     userInfos = !res.error ? res : {};
-    //   })
-    //   .catch((err) => {
-    //     throw err;
-    //   });
-      // console.log("USER INFOS VARIABLE => ", userInfos);
+})
+// await axios
+// .get("http://localhost:8081/userinfos", {
+  //     headers: {
+//       Authorization: `Bearer ${res.idSession}`,
+//     },
+//   })
+//   .then((res) => {
+//     console.log("USER INFOS VARIABLE => ", res.data);
+//     console.log("USER INFOS VARIABLE => ", userInfos);
+//     userInfos = !res.error ? res : {};
+//   })
+//   .catch((err) => {
+  //     throw err;
+  //   });
 //     return {
 //       // server return the idSession will use to establish cookie
 //       result
