@@ -20,6 +20,7 @@ func New(config Config) octopus.HandlerFunc {
 	if len(config.AllowedOrigins) == 0 {
 		config.AllowedOrigins = []string{"*"}
 	}
+
 	if len(config.AllowedMethods) == 0 {
 		config.AllowedMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	}
@@ -34,7 +35,7 @@ func New(config Config) octopus.HandlerFunc {
 	}
 
 	return func(c *octopus.Context) {
-		c.ResponseWriter.Header().Set("Access-Control-Allow-Origin",  strings.Join(config.AllowedOrigins, ","))
+		c.ResponseWriter.Header().Set("Access-Control-Allow-Origin", strings.Join(config.AllowedOrigins, ","))
 		c.ResponseWriter.Header().Set("Access-Control-Allow-Methods", strings.Join(config.AllowedMethods, ","))
 		c.ResponseWriter.Header().Set("Access-Control-Allow-Headers", strings.Join(config.AllowedHeaders, ","))
 		c.ResponseWriter.Header().Set("Access-Control-Allow-Credentials", strconv.FormatBool(config.AllowCredentials))
