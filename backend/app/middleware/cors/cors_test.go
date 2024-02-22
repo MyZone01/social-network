@@ -9,7 +9,11 @@ import (
 )
 
 func TestCORSMiddleware(t *testing.T) {
-	app := octopus.New(sqlite.Migrations{})
+	app := octopus.New()
+	migrate := sqlite.Migrations{}
+	database := sqlite.OpenDB(migrate)
+	app.UseDb(database)
+
 	app.Use(New(Config{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},

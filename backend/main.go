@@ -15,11 +15,12 @@ import (
 )
 
 func main() {
+
 	args := os.Args[1:]
 
 	migrate := sqlite.Migrations{}
 	for _, arg := range args {
-		if arg == "-up" || arg == "-down" || arg[:3] == "-to" || arg == "-upall" || arg == "-downall" {
+		if arg == "-up" || arg == "-down" || arg[:3] == "-to" || arg == "-up--all" || arg == "-down--all" {
 			migrate.Migration = true
 			if len(strings.Split(arg, "=")) == 2 {
 				version, err := strconv.Atoi(strings.Split(arg, "=")[1])
@@ -39,21 +40,18 @@ func main() {
 		}
 		break
 	}
+
 	//initialisation of the backend application
-	app := octopus.New(migrate)
+	// app := octopus.New(migrate)
+	app := octopus.New()
+	database := sqlite.OpenDB(migrate)
+	app.UseDb(database)
 
 	// lunch all handlers
 	app.Use(cors.New(cors.Config{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{
-			"Accept",
-			"Content-Type",
-			"Content-Length",
-			"Accept-Encoding",
-			"X-CSRF-Token",
-			"Authorization",
-		},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
 		AllowCredentials: true,
 		ExposedHeaders:   []string{},
 		MaxAge:           86400,

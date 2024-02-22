@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS group_members (
     member_id UUID REFERENCES users(id),
     status TEXT CHECK(status IN ('invited', 'requesting', 'accepted', 'declined')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );

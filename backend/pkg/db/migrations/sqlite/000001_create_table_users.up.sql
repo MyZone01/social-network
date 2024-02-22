@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name TEXT,
     date_of_birth DATE,
     avatar_image TEXT,
-    nickname UNIQUE  TEXT,
+    nickname TEXT UNIQUE,
     about_me TEXT,
     is_public BOOLEAN,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
