@@ -32,14 +32,23 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    const response = await fetch('http://localhost:8081/upload', {
-        method: 'POST',
-        headers: {
-            "content-type": "multipart/form-data",
-            Authorization: token,
-        },
-        body,
-    });
-    console.log("File uploaded", response.status);
+    try {
+        const response = await fetch('http://localhost:8081/upload', {
+            method: 'POST',
+            headers: {
+                Authorization: token,
+            },
+            body,
+        });
+        console.log(response.status);
+        
+    }
+    catch (e) {
+        console.error(e);
+        return {
+            status: 500,
+            body: 'Internal server error',
+        };
+    }
     
 });
