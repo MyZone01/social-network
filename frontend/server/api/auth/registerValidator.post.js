@@ -62,7 +62,7 @@ export default defineEventHandler(async (event) => {
     password: password.trim(),
   };
   
-    const userSession = await $fetch("http://localhost:8081/registrations", {
+    const userSession = await $fetch("http://localhost:8081/registration", {
       method: "POST",
       body: JSON.stringify(userData),
     });
