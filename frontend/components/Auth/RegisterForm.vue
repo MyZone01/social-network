@@ -76,7 +76,7 @@ const data = reactive({
     confirmPassword: '',
     dateOfBirth: '',
     aboutMe: '',
-    avatarImg: '',
+    avatarImg: File,
     avatarLocalUrl: '',
     registerError: '',
     loading: false
@@ -104,7 +104,7 @@ async function handleRegister() {
             repeatPassword: data.confirmPassword.trim(),
             dateOfBirth: data.dateOfBirth,
             aboutMe: data.aboutMe.trim(),
-            avatarImg: data.avatarImg,
+            avatarImg: data.avatarImg ,
             avatarUrl: data.avatarLocalUrl,
         })
         if (idSession) {

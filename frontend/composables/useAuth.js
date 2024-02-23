@@ -1,4 +1,5 @@
 import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
+// import sendFile from "./uploadfile.js"
 import FormData from "form-data";
 import axios from "axios";
 // import fs from 'fs';
@@ -13,7 +14,7 @@ export default () => {
     cookie.value = newToken;
   };
 
-  const register = ({
+  const register = async ({
     firstName,
     lastName,
     email,
@@ -25,9 +26,11 @@ export default () => {
     avatarImg,
     avatarUrl,
   }) => {
-    const form = new FormData();
-    form.append("file", avatarImg);
-    
+    // const form = new FormData();
+    // form.append("file", avatarImg);
+    // console.log(avatarImg);
+   const reponse = await sendFile(avatarImg, "avatarUrl");
+   console.log(reponse);
     return new Promise(async (resolve, reject) => {
       try {
         const fetchData = await $fetch("/api/auth/register", {
@@ -41,7 +44,7 @@ export default () => {
             repeatPassword,
             dateOfBirth,
             aboutMe,
-            form,
+            // form,
             avatarUrl,
           },
         });
