@@ -17,7 +17,7 @@ export class Login {
             return [false, "Invalid email"];
         }
 
-        if (this.password) {
+        if (!this.password) {
             return [false, "Password is missing. Please provide it."];
         }
 

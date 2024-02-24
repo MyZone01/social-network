@@ -1,11 +1,9 @@
 package models
 
 import (
-	octopus "backend/app"
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
 	"net/mail"
 	"reflect"
 	"strings"
@@ -14,8 +12,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
-	// "golang.org/x/crypto/bcrypt"
 )
 
 type Users []User
@@ -66,22 +62,7 @@ func (user *User) Create(db *sql.DB) error {
 	user.ID = uuid.New()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
-	paswordCrypted, err := bcrypt.GenerateFromPassword([]byte(html.EscapeString(user.Password)), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-	userFeildsCheckCases := []bool{
-		user.Email != "",
-		user.Password != "",
-		user.Nickname != "",
-		user.FirstName != "",
-		user.LastName != "",
-	}
-	for _, v := range userFeildsCheckCases {
-		if !v {
-			return errors.New("some empty values in form")
-		}
-	}
+
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
@@ -94,7 +75,7 @@ func (user *User) Create(db *sql.DB) error {
 	_, err = stmt.Exec(
 		user.ID.String(),
 		html.EscapeString(user.Email),
-		paswordCrypted,
+		user.Password,
 		html.EscapeString(user.FirstName),
 		html.EscapeString(user.LastName),
 		user.DateOfBirth,
@@ -113,31 +94,48 @@ func (user *User) Create(db *sql.DB) error {
 }
 
 // Get a user by its ID
-func (user *User) Get(db *sql.DB, id uuid.UUID) error {
-	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id = $1 AND deleted_at IS NULL`
+func (user *User) Get(db *sql.DB, identifier interface{}) error {
+	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id=$1 OR email=$1 OR nickname=$1`
 
-	row := db.QueryRow(query, id.String())
-
-	err := row.Scan(
-		&user.ID,
-		&user.Email,
-		&user.Password,
-		&user.FirstName,
-		&user.LastName,
-		&user.DateOfBirth,
-		&user.AvatarImage,
-		&user.Nickname,
-		&user.AboutMe,
-		&user.IsPublic,
-		&user.CreatedAt,
-		&user.UpdatedAt,
-	)
-
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return fmt.Errorf("no user found with id %v", id)
+	switch identifier.(type) {
+	case string:
+		err := db.QueryRow(query, identifier).Scan(
+			&user.ID,
+			&user.Email,
+			&user.Password,
+			&user.FirstName,
+			&user.LastName,
+			&user.DateOfBirth,
+			&user.AvatarImage,
+			&user.Nickname,
+			&user.AboutMe,
+			&user.IsPublic,
+			&user.CreatedAt,
+			&user.UpdatedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to execute the query. %v", err)
 		}
-		return fmt.Errorf("unable to execute the query. %v", err)
+	case uuid.UUID:
+		err := db.QueryRow(query, identifier).Scan(
+			&user.ID,
+			&user.Email,
+			&user.Password,
+			&user.FirstName,
+			&user.LastName,
+			&user.DateOfBirth,
+			&user.AvatarImage,
+			&user.Nickname,
+			&user.AboutMe,
+			&user.IsPublic,
+			&user.CreatedAt,
+			&user.UpdatedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to execute the query. %v", err)
+		}
+	default:
+		return fmt.Errorf("unable to execute the query. %v", errors.New("Invalid type"))
 	}
 
 	return nil
@@ -180,8 +178,8 @@ func (user *User) Delete(db *sql.DB) error {
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
-	return fmt.Errorf("unable to prepare the query. %v", err)
 	defer stmt.Close()
 
 	_, err = stmt.Exec(time.Now(), user.ID)
@@ -189,21 +187,6 @@ func (user *User) Delete(db *sql.DB) error {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
 	return nil
-}
-
-func (user *User) CheckCredentials(ctx *octopus.Context) bool {
-	query := `SELECT id,password FROM users WHERE (email = ? OR nickname = ?)`
-	log.Println("✅>>>>>>>>>>>>>>>>>>>>", user.Email, user.Password)
-
-	var realPassword string
-	err := ctx.Db.Conn.QueryRow(query, user.Email, user.Email).Scan(&user.ID, &realPassword)
-	if err != nil {
-		return false
-	}
-
-	err = bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(user.Password))
-
-	return err == nil
 }
 
 // GetAll users

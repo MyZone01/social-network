@@ -15,112 +15,43 @@ export default () => {
     cookie.value = newToken;
   };
 
-  const register = async ({
-    firstName,
-    lastName,
-    email,
-    nickname,
-    password,
-    repeatPassword,
-    dateOfBirth,
-    aboutMe,
-    avatarImage,
-    avatarUrl,
-  }) => {
-    // const form = new FormData();
-    // form.append("file", avatarImg);
-    // console.log(avatarImg);
-
-
+  const register = async ({ avatarImage, data }) => {
     return new Promise(async (resolve, reject) => {
-      // try {
-        const body = new FormData();
-       if (avatarImage) {
-          body.append('file', avatarImage);
-        }
-        body.append('data', JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          nickname,
-          password,
-          repeatPassword,
-          dateOfBirth,
-          aboutMe,
-          avatarUrl,
-          }));
-        
-        
-        const fetchData  = await $fetch('/api/auth/register', {
-          method: 'POST',
-          body: body,
-        });
-        if (fetchData.status!==200) {
-          console.log(fetchData);
-          reject(fetchData);
-        }
-        // const fetchData: { userSession: string } = await $fetch("/api/auth/register", {
-        //   method: "POST",
-        //   body: {
-        //     firstName,
-        //     lastName,
-        //     email,
-        //     nickname,
-        //     password,
-        //     repeatPassword,
-        //     dateOfBirth,
-        //     aboutMe,
-        //     // form,
-        //     avatarUrl,
-        //   },
-        // });
+      const body = new FormData();
+      if (avatarImage) {
+        body.append('file', avatarImage);
+      }
+      body.append('data', data);
 
-        if (fetchData.userSession && !store.isAuthenticated) {
-          // console.log("test 1");
-          // const reponse = await sendFile(avatarImage, fetchData.userSession).then(async (res) => {
-          //   return await res.json();
-          // });
-          // console.log("test 12");
-          // if (reponse.status === 200) {
-          //   // u.avatarImg = reponse.data
-          //   const u: user = {
-          //     email,
-          //     password: "",
-          //     nickname,
-          //     firstName,
-          //     lastName,
-          //     dateOfBirth,
-          //     aboutMe,
-          //     isPublic: true,
-          //     avatarImage: reponse.data
-          //   }
-          //   console.log("test 123");
+      const response = await $fetch('/api/auth/register', {
+        method: 'POST',
+        body: body,
+      });
 
-          //   const reponse2 = await editeUser(u, fetchData.userSession)
-          //   console.log(reponse2);
-          // }
-          setUser(fetchData.userSession);
-          resolve(true);
-        }
-      // } catch (error) {
-      //   console.log(error);
-      //   reject(error);
-      // }
+      if (response.ok !== true) {
+        reject(response);
+      }
+      if (response.ok === true && response.status !== 200) {
+        // alert the user that the avatar does not upload correctly
+        // 
+        // 
+        // and redirect to the index page
+      }
+      if (response.session && !store.isAuthenticated) {
+        setUser(response.session);
+        resolve(true);
+      }
     });
   };
 
   const login = ({ email, password }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchData = await $fetch("/api/auth/loginValidator", {
+        const fetchData = await $fetch("/api/auth/login", {
           method: "POST",
-          body: {
-            email,
-            password,
-          },
+          body: JSON.stringify({ data: { email, password } })
         });
-        // console.log(fetchData)
-        // console.log(store.user)
+
         if (fetchData.userSession && !store.isAuthenticated) {
           setUser(fetchData.userSession);
           resolve(true);

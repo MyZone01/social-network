@@ -6,8 +6,11 @@ import (
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/mail"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type credentials struct {
@@ -36,7 +39,6 @@ var loginHandler = func(ctx *octopus.Context) {
 
 	// Try to deserialize the form data into the User instance.
 	if err := ctx.BodyParser(&credentials); err != nil {
-		// If deserialization fails, log the error and return an HTTP status  500.
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while parsing the form data.",
@@ -45,24 +47,36 @@ var loginHandler = func(ctx *octopus.Context) {
 		return
 	}
 
-	newUser := models.User{
-		Email:    credentials.Email,
-		Password: credentials.Password,
-	}
-
-	if err := newUser.Validate(); err != nil {
+	if err := credentials.Validate(); err != nil {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"session": "",
 			"message": err.Error(),
 			"status":  http.StatusBadRequest,
 		})
 	}
-	// Check if the user's credentials are valid.
-	if userCredentialAreValid := newUser.CheckCredentials(ctx); !userCredentialAreValid {
-		// If the credentials are not valid, return an HTTP status  401 with an error message.
+
+	newUser := models.User{
+		Email:    credentials.Email,
+		Password: credentials.Password,
+	}
+
+	err := newUser.Get(ctx.Db.Conn, credentials.Email)
+	if err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
 			"session": "",
-			"message": "Invalid credentials.",
+			"message": "invalid email.",
+			"status":  http.StatusUnauthorized,
+		})
+		return
+	}
+
+	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
+
+	// Check if the user's credentials are valid.
+	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Invalid credentials. Please try again.",
 			"status":  http.StatusUnauthorized,
 		})
 		return
@@ -119,6 +133,18 @@ var registrationHandler = func(ctx *octopus.Context) {
 		})
 		return
 	}
+
+	newHash, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while hashing the password.",
+			"status":  http.StatusInternalServerError,
+		})
+		return
+	}
+	fmt.Println(string(newHash))
+	newUser.Password = string(newHash)
 	// Attempts to create a new user in the database with the provided data.
 	if newUser.Create(ctx.Db.Conn) != nil {
 		// If user creation fails, logs the error and returns an HTTP status  500.

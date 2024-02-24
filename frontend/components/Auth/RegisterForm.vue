@@ -25,8 +25,8 @@
             <!-- confirm password -->
             <UIInput v-model="data.confirmPassword" label="Confirm Password" placeholder="********" type="password" />
 
-            
-            <UIInput v-model="data.dateOfBirth" placeholder="01/01/2000" label="Date Of Birth" type="date" required/>
+
+            <UIInput v-model="data.dateOfBirth" placeholder="01/01/2000" label="Date Of Birth" type="date" required />
             <!-- Date Of Birth -->
             <!-- <UIInput v-model="data.dateOfBirth" label="Date Of Birth" placeholder="" type="date" /> -->
 
@@ -95,7 +95,7 @@ const handleImageSelected = (imageFile) => {
 async function handleRegister() {
     data.loading = true
     try {
-        const idSession = await register({
+        const fomdata = JSON.stringify({
             firstName: data.firstName.trim(),
             lastName: data.lastName.trim(),
             email: data.email.trim(),
@@ -104,10 +104,10 @@ async function handleRegister() {
             repeatPassword: data.confirmPassword.trim(),
             dateOfBirth: data.dateOfBirth,
             aboutMe: data.aboutMe.trim(),
-            avatarImg: data.avatarImg ,
-            avatarUrl: data.avatarLocalUrl,
         })
+        const idSession = await register({ avatarImage: data.avatarImg, data: fomdata })
         if (idSession) {
+            console.log('User registered successfully');
             await navigateTo('/')
         }
     } catch (error) {
