@@ -6,12 +6,16 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/mail"
+	"reflect"
+	"strings"
 
 	"html"
 	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+	// "golang.org/x/crypto/bcrypt"
 )
 
 type Users []User
@@ -30,6 +34,29 @@ type User struct {
 	CreatedAt   time.Time    `json:"createdAt"`
 	UpdatedAt   time.Time    `json:"updatedAt"`
 	DeletedAt   sql.NullTime `json:"deletedAt"`
+}
+
+func (u *User) Validate() error {
+	requiredFields := []string{"Email", "Password", "FirstName", "LastName", "DateOfBirth", "Nickname"}
+
+	v := reflect.ValueOf(u).Elem()
+
+	for _, field := range requiredFields {
+		f := v.FieldByName(field)
+		if f.Interface() == reflect.Zero(f.Type()).Interface() {
+			return errors.New(strings.ToLower(field) + " is missing. Please provide it.")
+		}
+	}
+
+	if _, err := mail.ParseAddress(u.Email); err != nil {
+		return errors.New("Invalid email")
+	}
+
+	if len(u.Password) < 8 {
+		return errors.New("Password must be at least 8 characters long")
+	}
+
+	return nil
 }
 
 // Create a new user

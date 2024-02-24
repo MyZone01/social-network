@@ -1,17 +1,4 @@
-import { sendError } from "h3";
-import Joi from 'joi';
-
-const schema = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().min(8).required(),
-  repeatPassword: Joi.ref('password'),
-  dateOfBirth: Joi.date().required(),
-  nickname: Joi.string(),
-  aboutMe: Joi.string(),
-  avatarImage: Joi.string()
-}).with('password', 'repeatPassword');
+import { Register } from "@/server/models/register";
 
 // export default defineEventHandler(async (event) => {
 //   const body = await readBody(event);
@@ -103,14 +90,19 @@ const schema = Joi.object({
 // });
 
 export default defineEventHandler(async (event) => {
+
+  console.log("Registering a new user");
   // const body = await readBody(event);
   const reader = await readMultipartFormData(event);
-  if (!reader) return { status: 400, body: 'Bad request' };
+  if (!reader) return { status: 400, body: 'Bad request' }
   let file;
   let jsonData;
 
+  console.log(reader);
+  
+
   for await (const part of reader) {
-    if (part.type === "file") {
+    if (part.name === "file") {
       // This is a file part, store it in file variable
       file = part;
     } else if (part.name === 'data') {
@@ -119,14 +111,50 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const requiredFields = [
-    "firstName",
-    "lastName",
-    "email",
-    "password",
-    "repeatPassword",
-    "dateOfBirth"
-  ];
-  console.log(jsonData);
+  const register = new Register(jsonData);
+  const [isValid, message] = register.validate();
+  if (!isValid) {
+    return { status: 400, body: message }
+  }
 
+  const response1: any = await $fetch("http://localhost:8081/registration", {
+    method: "POST",
+    body: JSON.stringify(register),
+  })
+  const reponseJson = await JSON.parse(response1);
+  if (reponseJson.status !== "200") {
+    return { status: 400, body: response1.message }
+  }
+
+  console.log("status3");
+
+  // Create a new FormData instance
+  if (!file) {
+    return {
+      status: 200,
+      body: 'No file uploaded',
+    };
+  }
+
+  console.log("file", file);
+
+
+  // const body = new FormData();
+  // // Append the file to the FormData instance
+  // body.append('file', new Blob([file.data]), file.filename);
+
+  // const response = await $fetch('http://localhost:8081/upload', {
+  //   method: 'POST',
+  //   headers: {
+  //     Authorization: reponseJson.session,
+  //   },
+  //   body,
+  // }).then(async (res: any) => await res.json()).catch((err) => {
+  //   console.log(err);
+  //   return {
+  //     status: 500,
+  //     body: 'Internal server error',
+  //   };
+  // });
+  // console.log("response", response);
 });

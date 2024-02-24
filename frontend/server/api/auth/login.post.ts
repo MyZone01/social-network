@@ -1,4 +1,4 @@
-import { sendError } from "h3";
+// import { sendError } from "h3";
 import axios from "axios";
 import { useGlobalAuthStore } from "../../../stores/useGobalStateAuthStore";
 
@@ -8,6 +8,7 @@ interface response {
 }
 
 export default defineEventHandler(async (event) => {
+  console.log("Login endpoint called");
   const body = await readBody(event);
   const store = useGlobalAuthStore()
 
