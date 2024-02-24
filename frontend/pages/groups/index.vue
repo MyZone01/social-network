@@ -1,13 +1,26 @@
+<script>
+const data = ref([])
+onMounted(() => {
+    const store = useGlobalAuthStore()
+    const response = $fetch("/api/group", {
+
+        headers: {
+            Authorization: `Bearer ${store.token}`,
+        }
+    })
+    data = response[0]
+    console.log(response);
+})
+
+</script>
+
 <template>
     <NuxtLayout>
         <main id="site__main"
             class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
             <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
-
                 <div class="page-heading">
-
                     <h1 class="page-title"> Groups </h1>
-
                     <nav class="nav__underline">
 
                         <ul class="group"
@@ -20,24 +33,13 @@
                         </ul>
 
                     </nav>
-
                 </div>
-
                 <!-- group list tabs -->
                 <div class="uk-switcher" id="group-tabs">
-
                     <!-- card layout 1 -->
-                    <div class="flex flex-row gap-5 overflow-hidden">
-                        <GroupCard />
-                        <GroupCard />
-                        <GroupCard />
-                        <GroupCard />
-
-
-
-
+                    <div class="flex flex-row gap-5 overflow-hidden" >
+                        <GroupCard :group="data" />
                     </div>
-
                     <!-- card layout 2 -->
                     <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-2.5">
 

@@ -1,3 +1,7 @@
+<script>
+  const props = defineProps(['group'])
+</script>
+
 <template>
   <UCard class="card bg-gray-100 dark:bg-gray-950  p-0 flex-1" :ui="{ header: { padding: 'p-0 rounded-t-lg overflow-hidden' } }">
     <NuxtLink to="/groups/id">
@@ -9,7 +13,7 @@
       <UAvatar size="sm" src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar"
         class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800" />
       <NuxtLink to="/groups/id">
-        <h4 class="card-title text-xl font-bold"> Delicious Foods </h4>
+        <h4 class="card-title text-xl font-bold"> props.group.Title</h4>
       </NuxtLink>
       <div class="flex mb-4 text-sm mt-2">
         <div>Travel</div>
