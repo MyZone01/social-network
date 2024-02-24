@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func handleUpdateUser(ctx *octopus.Context) {
@@ -28,6 +29,16 @@ func handleUpdateUser(ctx *octopus.Context) {
 		})
 		return
 	}
+	newHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while hashing the password.",
+			"status":  http.StatusInternalServerError,
+		})
+		return
+	}
+	user.Password = string(newHash)
 	if err := user.Update(ctx.Db.Conn); err != nil {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"message": err.Error(),
@@ -52,7 +63,7 @@ var updateUserRoute = route{
 			ctx.Next()
 		},
 		middleware.AuthRequired, // Middleware to check if the request is authenticated.
-		handleUpdateUser,         // Handler function to process the authentication request.
+		handleUpdateUser,        // Handler function to process the authentication request.
 	},
 }
 

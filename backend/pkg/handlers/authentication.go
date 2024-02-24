@@ -143,7 +143,6 @@ var registrationHandler = func(ctx *octopus.Context) {
 		})
 		return
 	}
-	fmt.Println(string(newHash))
 	newUser.Password = string(newHash)
 	// Attempts to create a new user in the database with the provided data.
 	if newUser.Create(ctx.Db.Conn) != nil {
