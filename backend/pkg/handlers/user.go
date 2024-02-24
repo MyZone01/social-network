@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -58,10 +57,6 @@ var updateUserRoute = route{
 	path:   "/updateuser",
 	method: http.MethodPut,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		func(ctx *octopus.Context) {
-			fmt.Println("fgr")
-			ctx.Next()
-		},
 		middleware.AuthRequired, // Middleware to check if the request is authenticated.
 		handleUpdateUser,        // Handler function to process the authentication request.
 	},
