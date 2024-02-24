@@ -1,8 +1,6 @@
 
 
 export default defineEventHandler(async (event) => {
-    console.log("Uploading file");
-
     const reader = await readMultipartFormData(event);
     if (!reader) return { status: 400, body: 'Bad request' };
     let file;
@@ -32,23 +30,23 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    try {
-        const response = await fetch('http://localhost:8081/upload', {
-            method: 'POST',
-            headers: {
-                Authorization: token,
-            },
-            body,
-        });
-        console.log(response.status);
-        
-    }
-    catch (e) {
-        console.error(e);
+
+    const response = await fetch('http://localhost:8081/upload', {
+        method: 'POST',
+        headers: {
+            Authorization: token,
+        },
+        body,
+    }).then(async (res) => await res.json()).catch((err) => {
+        console.log(err);
         return {
             status: 500,
             body: 'Internal server error',
         };
-    }
-    
+    });
+
+    return {
+        status: 200,
+        data: response.imageurl,
+    };
 });

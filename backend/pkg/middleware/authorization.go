@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/config"
 	"backend/pkg/models"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -79,7 +78,6 @@ const DirName = "uploads"
 
 // ImageUploadMiddleware is a middleware that checks if the file is an image and downloads it
 func ImageUploadMiddleware(c *octopus.Context) {
-	fmt.Println("Image Checker")
 	// Parse the multipart form in the request
 	err := c.Request.ParseMultipartForm(10 << 20) // 10 MB
 	if err != nil {
