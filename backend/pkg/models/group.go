@@ -220,7 +220,7 @@ func (gm *GroupMember) CreateMember(db *sql.DB, memberID, groupID uuid.UUID) err
 	gm.MemberID = memberID
 	gm.CreatedAt = time.Now()
 	gm.UpdatedAt = time.Now()
-	query := `INSERT INTO groupMembers (id, group_id, member_id, status, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)`
+	query := `INSERT INTO group_members (id, group_id, member_id, status, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -237,7 +237,7 @@ func (gm *GroupMember) CreateMember(db *sql.DB, memberID, groupID uuid.UUID) err
 
 // GetMember retrieves a member from the group in the database
 func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuser bool) error {
-	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM groupMembers WHERE group_id=$1 AND member_id=$2 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND member_id=$2 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -273,7 +273,7 @@ func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuse
 // UpdateMember updates the member in the group in the database
 func (gm *GroupMember) UpdateMember(db *sql.DB) error {
 	gm.UpdatedAt = time.Now()
-	query := `UPDATE groupMembers SET status=$1, updated_at=$2 WHERE id=$3`
+	query := `UPDATE group_members SET status=$1, updated_at=$2 WHERE id=$3`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -291,7 +291,7 @@ func (gm *GroupMember) UpdateMember(db *sql.DB) error {
 
 // DeleteMember removes the member from the group in the database
 func (gm *GroupMember) DeleteMember(db *sql.DB) error {
-	query := `UPDATE groupMembers SET deleted_at=$1 WHERE id=$2`
+	query := `UPDATE group_members SET deleted_at=$1 WHERE id=$2`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -309,7 +309,7 @@ func (gm *GroupMember) DeleteMember(db *sql.DB) error {
 
 // GetMembers retrieves all members of the group from the database
 func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
-	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM groupMembers WHERE group_id=$1 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -369,7 +369,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB,) error {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 
-	query := `INSERT INTO groupPosts (id, group_id, post_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO group_posts (id, group_id, post_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -388,7 +388,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB,) error {
 
 // GetPost retrieves a post from the group in the database
 func (gp *GroupPost) GetPost(db *sql.DB, groupID, groupPostID uuid.UUID, getpost bool) error {
-	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM groupPosts WHERE group_id=$1 AND post_id=$2 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND post_id=$2 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -422,7 +422,7 @@ func (gp *GroupPost) GetPost(db *sql.DB, groupID, groupPostID uuid.UUID, getpost
 // UpdatePost updates the post in the group in the database
 func (gp *GroupPost) UpdatePost(db *sql.DB) error {
 	gp.UpdatedAt = time.Now()
-	query := `UPDATE groupPosts SET updated_at=$1 WHERE id=$2`
+	query := `UPDATE group_posts SET updated_at=$1 WHERE id=$2`
 
 	// Update the post
 	if err := gp.Post.Update(db); err != nil {
@@ -445,7 +445,7 @@ func (gp *GroupPost) UpdatePost(db *sql.DB) error {
 
 // DeletePost removes the post from the group in the database
 func (gp *GroupPost) DeletePost(db *sql.DB) error {
-	query := `UPDATE groupPosts SET deleted_at=$1 WHERE id=$2`
+	query := `UPDATE group_posts SET deleted_at=$1 WHERE id=$2`
 
 	// Delete the post
 	if err := gp.Post.Delete(db); err != nil {
@@ -468,7 +468,7 @@ func (gp *GroupPost) DeletePost(db *sql.DB) error {
 
 // GetPosts retrieves all posts of the group from the database
 func (g *GroupPosts) GetPosts(db *sql.DB, groupID uuid.UUID, getpost bool) error {
-	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM groupPosts WHERE group_id=$1 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
