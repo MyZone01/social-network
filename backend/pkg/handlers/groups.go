@@ -19,7 +19,9 @@ func createGroup(ctx *octopus.Context) {
 		return
 	}
 
+	newGroup.CreatorID = ctx.Values["userId"].(uuid.UUID)
 	if err := newGroup.Create(ctx.Db.Conn); err != nil {
+		log.Println(err)
 		ctx.Status(http.StatusInternalServerError)
 		return
 	}
