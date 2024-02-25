@@ -18,7 +18,7 @@ export class Register {
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.dateOfBirth = new Date(data.dateOfBirth);
-        this.avatarImage = data.avatarImage;
+        this.avatarImage = data.avatarImage !== undefined ? data.avatarImage : "uploads/default-avatar.png";
         this.nickname = data.nickname;
         this.aboutMe = data.aboutMe;
         this.isPublic = data.isPublic !== undefined ? data.isPublic : true;
