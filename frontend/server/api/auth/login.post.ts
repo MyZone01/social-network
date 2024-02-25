@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
 
   const login = new Login(data);
   const [isValid, message] = login.validate();
-  console.log(login);
 
   if (!isValid) {
     return {
@@ -18,7 +17,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const response = await fetcher("http://localhost:8081/login", "POST", JSON.stringify(login), "");
-  console.log(response);
 
   if (response.status !== "200") {
     return { status: 400, body: response.message, session: response.session, ok: false }

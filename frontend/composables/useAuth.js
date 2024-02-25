@@ -29,7 +29,7 @@ export default () => {
       });
 
       if (response.ok !== true) {
-        reject(response);
+        reject(response.message);
       }
       if (response.ok === true && response.status !== 200) {
         // alert the user that the avatar does not upload correctly
@@ -46,19 +46,18 @@ export default () => {
 
   const login = ({ email, password }) => {
     return new Promise(async (resolve, reject) => {
-      try {
-        const fetchData = await $fetch("/api/auth/login", {
+        const response = await $fetch("/api/auth/login", {
           method: "POST",
           body: JSON.stringify({ data: { email, password } })
         });
 
-        if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession);
+        if (response.ok !== true) {
+          reject(response.message);
+        }
+        if (response.session && !store.isAuthenticated) {
+          setUser(response.session);
           resolve(true);
         }
-      } catch (error) {
-        reject(error);
-      }
     });
   };
 
