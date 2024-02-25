@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -40,6 +41,19 @@ func New(migration sqlite.Migrations) *App {
 
 	return app
 }
+
+// func New(migration sqlite.Migrations) *App {
+// 	database := sqlite.OpenDB(migration)
+// 	app := &App{
+// 		Db: &db{
+// 			Conn: database,
+// 		},
+// 		routes:      make([]*Route, 0),
+// 		onErrorCode: nil,
+// 	}
+
+// 	return app
+// }
 
 func (a *App) UseDb(conn *sql.DB) {
 	d := &db{Conn: conn}
@@ -147,12 +161,12 @@ func (app *App) Run(addr string) error {
 		}
 	}()
 
-	// // Attendre que le serveur démarre
-	// time.Sleep(time.Second)
+	// Attendre que le serveur démarre
+	time.Sleep(time.Second)
 
-	// // Vérifier si le serveur est en cours d'exécution
-	// checkServer(addr
-		displayLaunchMessage(addr)
+	// Vérifier si le serveur est en cours d'exécution
+	checkServer(addr)
+
 	wg.Wait()
 	return nil
 }

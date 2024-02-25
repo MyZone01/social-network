@@ -15,11 +15,12 @@ import (
 )
 
 func main() {
+
 	args := os.Args[1:]
 
 	migrate := sqlite.Migrations{}
 	for _, arg := range args {
-		if arg == "-up" || arg == "-down" || arg[:3] == "-to" || arg == "-upall" || arg == "-downall" {
+		if arg == "-up" || arg == "-down" || arg[:3] == "-to" || arg == "-up--all" || arg == "-down--all" {
 			migrate.Migration = true
 			if len(strings.Split(arg, "=")) == 2 {
 				version, err := strconv.Atoi(strings.Split(arg, "=")[1])
@@ -38,8 +39,11 @@ func main() {
 			migrate.Migration = false
 		}
 	}
+
 	//initialisation of the backend application
 	app := octopus.New(migrate)
+	database := sqlite.OpenDB(migrate)
+	app.UseDb(database)
 
 	// lunch all handlers
 	app.Use(func(c *octopus.Context) {

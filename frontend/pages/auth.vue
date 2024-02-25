@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="  max-height: 100%; overflow-y: auto;">
         <Auth />
     </div>
 </template>
@@ -8,6 +8,4 @@
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

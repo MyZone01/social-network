@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     'nuxt-og-image',
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/ionic',
+    // '@nuxtjs/ionic',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
   ],
@@ -52,10 +52,20 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: '',
   },
-  ionic: {
-    integrations:
-    {
-      icons: true,
+  // ionic: {
+  //   integrations:
+  //   {
+  //     icons: true,
+  //   },
+  // },
+  runtimeConfig: {
+    app: {
+      devtools: {
+        iframeProps: {
+          allow: 'cross-origin-isolated',
+          credentialless: true,
+        },
+      },
     },
   },
   piniaPersistedstate: {

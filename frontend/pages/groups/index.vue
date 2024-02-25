@@ -2,8 +2,6 @@
     <NuxtLayout>
         <main id="site__main"
             class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
-
-
             <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
 
                 <div class="page-heading">
@@ -29,108 +27,14 @@
                 <div class="uk-switcher" id="group-tabs">
 
                     <!-- card layout 1 -->
-                    <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-2.5">
+                    <div class="flex flex-row gap-5 overflow-hidden">
+                        <GroupCard />
+                        <GroupCard />
+                        <GroupCard />
+                        <GroupCard />
 
-                        <div class="card">
-                            <a href="timeline-group.html">
-                                <div class="card-media h-24">
-                                    <img src="~/assets/images/group/group-cover-4.jpg" alt="">
-                                    <div class="card-overly"></div>
-                                </div>
-                            </a>
-                            <div class="card-body relative z-10">
-                                <img src="assets/images/avatars/avatar-4.jpg" alt=""
-                                    class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
-                                <a href="timeline-group.html">
-                                    <h4 class="card-title"> Delicious Foods </h4>
-                                </a>
-                                <div class="card-list-info font-normal mt-1">
-                                    <a href="#"> Travel </a>
-                                    <div class="md:block hidden">·</div>
-                                    <div> 232k members </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                                    <a href="timeline-group.html" class="button bg-secondery !w-auto"> View</a>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="card">
-                            <a href="timeline-group.html">
-                                <div class="card-media h-24">
-                                    <img src="assets/images/group/group-cover-3.jpg" alt="">
-                                    <div class="card-overly"></div>
-                                </div>
-                            </a>
-                            <div class="card-body relative z-10">
-                                <img src="assets/images/avatars/avatar-3.jpg" alt=""
-                                    class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
-                                <a href="timeline-group.html">
-                                    <h4 class="card-title"> Abstract minimal </h4>
-                                </a>
-                                <div class="card-list-info font-normal mt-1">
-                                    <a href="#"> Technology </a>
-                                    <div class="md:block hidden">·</div>
-                                    <div> 328k members </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                                    <a href="timeline-group.html" class="button bg-secondery !w-auto"> View</a>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="card">
-                            <a href="timeline-group.html">
-                                <div class="card-media h-24">
-                                    <img src="assets/images/group/group-cover-2.jpg" alt="">
-                                    <div class="card-overly"></div>
-                                </div>
-                            </a>
-                            <div class="card-body relative z-10">
-                                <img src="assets/images/avatars/avatar-2.jpg" alt=""
-                                    class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
-                                <a href="timeline-group.html">
-                                    <h4 class="card-title"> Delicious Foods </h4>
-                                </a>
-                                <div class="card-list-info font-normal mt-1">
-                                    <a href="#"> Bussiness </a>
-                                    <div class="md:block hidden">·</div>
-                                    <div> 436k members </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                                    <a href="timeline-group.html" class="button bg-secondery !w-auto"> View</a>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <a href="timeline-group.html">
-                                <div class="card-media h-24">
-                                    <img src="assets/images/group/group-cover-1.jpg" alt="">
-                                    <div class="card-overly"></div>
-                                </div>
-                            </a>
-                            <div class="card-body relative z-10">
-                                <img src="assets/images/avatars/avatar-2.jpg" alt=""
-                                    class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
-                                <a href="timeline-group.html">
-                                    <h4 class="card-title"> Graphic Design </h4>
-                                </a>
-                                <div class="card-list-info font-normal mt-1">
-                                    <a href="#"> Design </a>
-                                    <div class="md:block hidden">·</div>
-                                    <div> 420k members </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                                    <a href="timeline-group.html" class="button bg-secondery !w-auto"> View</a>
-                                </div>
-
-                            </div>
-                        </div>
 
                     </div>
 
@@ -401,8 +305,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/business.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> Shopping </div>
                                         </div>
                                     </div>
@@ -413,8 +316,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/health.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> health </div>
                                         </div>
                                     </div>
@@ -425,8 +327,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/science-and-tech.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> science </div>
                                         </div>
                                     </div>
@@ -437,8 +338,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/travel.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> Travel </div>
                                         </div>
                                     </div>
@@ -449,8 +349,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/business.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> business </div>
                                         </div>
                                     </div>
@@ -461,8 +360,7 @@
                                     <div class="relative rounded-lg overflow-hidden">
                                         <img src="assets/images/category/business.jpg" alt=""
                                             class="h-36 w-full object-cover">
-                                        <div
-                                            class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
+                                        <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10">
                                             <div class="text-white p-5 text-lg leading-3"> Shopping </div>
                                         </div>
                                     </div>
@@ -518,7 +416,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -546,7 +444,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -574,7 +472,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -602,7 +500,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -630,7 +528,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -658,7 +556,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                            :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
 
