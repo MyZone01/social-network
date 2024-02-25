@@ -37,16 +37,20 @@ func main() {
 		} else {
 			migrate.Migration = false
 		}
-		break
 	}
 	//initialisation of the backend application
 	app := octopus.New(migrate)
 
 	// lunch all handlers
+	app.Use(func(c *octopus.Context) {
+		log.Println("\t\t[" + c.Request.URL.Path + c.Request.Method + "]")
+		c.Next()
+	})
+
 	app.Use(cors.New(cors.Config{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{
 			"Accept",
 			"Content-Type",
 			"Content-Length",

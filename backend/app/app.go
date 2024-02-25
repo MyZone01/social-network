@@ -29,10 +29,6 @@ type App struct {
 	globalMiddleware []HandlerFunc
 }
 
-// func New() *App {
-// 	return &App{}
-// }
-
 func New(migration sqlite.Migrations) *App {
 	app := &App{
 		Db: &db{
@@ -60,7 +56,6 @@ func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string
 	app.routes = append(app.routes, route)
 }
 
-// Use adds a middleware to the application
 func (a *App) Use(handlers ...HandlerFunc) {
 	a.globalMiddleware = append(a.globalMiddleware, handlers...)
 }
