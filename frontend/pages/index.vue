@@ -8,10 +8,11 @@
           <div class="bg-white rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1 dark:bg-dark2">
 
             <div class="flex items-center md:gap-3 gap-1">
+
               <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
-                uk-toggle="target: #create-status">
-                <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
-              </div>
+              uk-toggle="target: #create-status">
+              <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
+            </div>
               <div
                 class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20"
                 uk-toggle="target: #create-status">
@@ -25,7 +26,7 @@
                   <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
                 </svg>
               </div>
-              <div
+              <!-- <div
                 class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-sky-100/60 hover:bg-sky-100 dark:bg-white/10 dark:hover:bg-white/20"
                 uk-toggle="target: #create-status">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70 "
@@ -35,7 +36,7 @@
                   <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
                   <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
                 </svg>
-              </div>
+              </div> -->
             </div>
 
           </div>
