@@ -1,5 +1,4 @@
 import { Login } from "@/server/models/login";
-import { secure } from "@/server/utils/transformer";
 import { sendError } from 'h3'
 
 export default defineEventHandler(async (event) => {
@@ -16,15 +15,19 @@ export default defineEventHandler(async (event) => {
     }))
   }
   const response = await fetcher("http://localhost:8081/login", "POST", JSON.stringify(login), "");
+  console.log(response)
 
   if (response.status !== "200") {
-    return { status: 400, body: response.message, session: response.session, ok: false }
+    return sendError(event, createError({
+      statusCode: 400,
+      statusMessage: message
+    }))
   }
   return {
     status: 200,
     body: "User registered successfully",
     session: response.session,
-    user: secure(response.user),
+    user: response.user,
     ok: true
   };
 })

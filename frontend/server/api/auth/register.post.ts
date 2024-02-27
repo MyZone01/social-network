@@ -1,8 +1,6 @@
 import { Register } from "@/server/models/register";
 import { fetcher } from "@/server/utils/fetcher";
 import { processParts } from "@/server/utils/processParts";
-import { encoder, secure } from "@/server/utils/transformer";
-
 
 export default defineEventHandler(async (event) => {
   const reader = await readMultipartFormData(event);
@@ -28,11 +26,12 @@ export default defineEventHandler(async (event) => {
   }
 
   if (!file) {
+    console.log("No File given")
     return {
       status: 200,
       body: 'No file uploaded',
       session: response.session,
-      user: secure(response.user),
+      user: response.user,
       ok: true
     };
   }

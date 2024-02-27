@@ -32,10 +32,8 @@ export default () => {
           // and redirect to the index page
           // resolve(true);
         }
-        if (response.session && !store.isAuthenticated) {
-          setUser(response);
-          resolve(true);
-        }
+        setUser(response);
+        resolve(true);
       } catch (err) {
         reject(err);
       }
@@ -43,8 +41,6 @@ export default () => {
   };
 
   const login = ({ email, password }) => {
-    console.log("PASSED");
-
     return new Promise(async (resolve, reject) => {
       try {
         const response = await $fetch("/api/auth/login", {
@@ -52,10 +48,9 @@ export default () => {
           body: JSON.stringify({ data: { email, password } }),
         });
 
-        if (!store.isAuthenticated) {
-          setUser(response);
-          resolve(true);
-        }
+        console.log(response);
+        setUser(response);
+        resolve(true);
       } catch (err) {
         console.log("ERROR SIDE");
         reject(err);
