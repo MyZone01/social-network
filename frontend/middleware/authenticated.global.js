@@ -4,28 +4,32 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const authStore = useGlobalAuthStore();
   let tokenValid;
   const authenticate = authStore.isAuthenticated;
+  const token = authStore.token 
 
-  await axios
-    .get("http://localhost:8081/checksession", {
+
+  try {
+    await $fetch("http://localhost:8081/checksession", {
       headers: {
         Authorization: `Bearer ${authStore.token}`,
       },
-    })
-    .then((res) => {
-      tokenValid = !res.error ? true : false;
-    })
-    .catch((err) => {
-      return;
-    });
+    }).then(response => {
+      console.log("\n\n>>>>>>>>>>> response <<<<<<<<<<<<<<< ", response);
 
-  // const isAuthenticated = authenticate && tokenValid;
-  // console.log(isAuthenticated)
-  // if (!isAuthenticated && to.path !== "/auth") {
-  //   authStore.logout();
-  //   return navigateTo("/auth");
-  // }
+      if (response) {
+        if (to.path !== "/auth") {
+          return navigateTo("/auth");
+        } else {
+          return navigateTo("/");
+        }
+      }
+    }).catch(err => {
+      throw err
+    })
+  } catch (err) {
+    if (to.path !== '/auth') {
 
-  // if (isAuthenticated && to.path === "/auth") {
-  //   return navigateTo("/");
-  // }
-});
+      return navigateTo("/auth");
+    }
+  };
+
+})

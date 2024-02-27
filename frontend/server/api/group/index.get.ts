@@ -1,5 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const group = await $fetch("http://localhost:8081/get-all-groups/");
-  // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>", group);
-  return { group };
-});
+  const token = event.headers.get('Authorization')
+  const groups = await $fetch('http://localhost:8081/get-all-groups', {
+    headers: {
+      'Authorization': `${token}`
+    }
+
+  })
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>from api", groups);
+  return { groups }
+})

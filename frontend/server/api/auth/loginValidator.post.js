@@ -49,6 +49,7 @@ export default defineEventHandler(async (event) => {
       })
     );
   } else {
+
     return {
       // server return the idSession will use to establish cookie
       userSession,

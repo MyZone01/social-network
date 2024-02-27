@@ -8,10 +8,11 @@ interface AuthState {
 }
 // Define store
 export const useGlobalAuthStore = defineStore('auth', {
-  state: (): AuthState => ({
+  state: (): AuthState => {
+    return {
     isAuthenticated: false,
     token: '',
-  }),
+  }},
   persist: true,
   actions: {
     login(newToken: String) {
