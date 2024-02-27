@@ -1,13 +1,13 @@
 import { Register } from "@/server/models/register";
 import { fetcher } from "@/server/utils/fetcher";
 import { processParts } from "@/server/utils/processParts";
+import { encoder, secure } from "@/server/utils/transformer";
 
 
 export default defineEventHandler(async (event) => {
-  console.log("Registering a new user");
   const reader = await readMultipartFormData(event);
   if (!reader) return { status: 400, body: 'Bad request', ok: false }
-  
+
   const { file, jsonData } = await processParts(reader);
 
   const register = new Register(jsonData);
@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
     return {
       status: 200,
       body: 'No file uploaded',
-      session: response.session,
+      session: encoder(response.session),
+      user: secure(response.user),
       ok: true
     };
   }
@@ -48,6 +49,7 @@ export default defineEventHandler(async (event) => {
     status: 200,
     body: "User registered successfully",
     session: response.session,
+    user: response.user,
     ok: true
   };
 });

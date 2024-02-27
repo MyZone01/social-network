@@ -16,12 +16,14 @@
                         <ion-icon :icon="ioniconsCloseOutline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
                     </button>
                     <div id="logo">
-                        <a href="/">
+                        <NuxtLink to="/">
                             <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
                             <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
-                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
-                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
-                        </a>
+                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden"
+                                alt="">
+                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20"
+                                alt="">
+                        </NuxtLink>
                     </div>
 
                 </div>

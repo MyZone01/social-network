@@ -30,7 +30,7 @@ export class Register {
     }
 
     validate(): [boolean, string] {
-        const requiredFields = ['email', 'password', 'repeatPassword', 'firstName', 'lastName', 'dateOfBirth', 'nickname'];
+        const requiredFields = ['email', 'password', 'repeatPassword', 'firstName', 'lastName', 'dateOfBirth'];
 
         for (const field of requiredFields) {
             if (!this[field]) {

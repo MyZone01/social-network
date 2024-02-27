@@ -1,3 +1,38 @@
+<script setup>
+
+onMounted() = {
+    store: useGlobalAuthStore(),
+    data: reactive({
+        firstName: store.firstName,
+        lastName: store.lastName,
+        nickname: store.nickname,
+        email: store.email,
+        avatar: 'http://localhost:8081/'+store.avatarImage
+    })
+}
+
+let FormFeedbackType = null;
+
+const isLoading = ref(false);
+// const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+const name = ref('');
+const email = ref('');
+const consent = ref(false);
+const success = ref(true);
+
+const saveChanges = async () => {
+    isLoading.value = true;
+    console.log("SAVED CHANGE")
+    // formFeedback.value = null;
+
+    // await editeUser({ data.firstName, })
+
+
+}
+
+</script>
+
 <template lang="">
       <NuxtLayout>
             <div id="wrapper">
@@ -17,8 +52,9 @@
                 <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
 
                     <label for="file" class="cursor-pointer">
-                        <img id="img" src="assets/images/avatars/avatar-3.jpg"
-                            class="object-cover w-full h-full rounded-full" alt="" />
+                        <nuxt-image id="img" :src="data.avatar" class="object-cover w-full h-full rounded-full" alt=""></nuxt-image>
+                        <!-- <img id="img" :src=data.avatar
+                            class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
 
@@ -40,20 +76,18 @@
                 </div>
 
                 <div class="flex-1">
-                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> firstName
-                        lastName
-                    </h3>
-                    <p class="text-sm text-blue-600 mt-1 font-normal">@Nickname</p>
+                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ data.firstName }} {{ data.lastName }} </h3>
+                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ data.nickname }}</p>
                 </div>
 
-                <button
+                <!-- <button
                     class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700"
                     type="button" aria-haspopup="true" aria-expanded="false">
                     <ion-icon :icon="ioniconsFlashOutline"
                         class="text-base duration-500 group-aria-expanded:rotate-180 md hydrated" role="img"
                         aria-label="chevron down outline"></ion-icon>
                     <span class="font-medium text-sm"> Donate </span>
-                </button>
+                </button> -->
             </div>
 
             <!-- nav tabs -->
@@ -96,126 +130,134 @@
 
 
                 <!-- tab user basic info -->
-                <div>
+                <form @submit.prevent="saveChanges()">
 
                     <div>
 
                         <div class="space-y-6">
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> Nickname </label>
+                                <label class="md:w-32 text-right text-white"> Nickname </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" placeholder="Monroe" class="lg:w-1/2 w-full" readonly>
+                                    <input type="text" :placeholder="data.nickname" class="lg:w-1/2 w-full" readonly>
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> Email </label>
+                                <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" placeholder="info@mydomain.com" class="w-full" readonly>
+                                    <input type="text" :placeholder="data.email" class="w-full" readonly>
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> Last Name </label>
+                                <label class="md:w-32 text-right text-white"> Last Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" placeholder="Monroe" class="lg:w-1/2 w-full">
+                                    <input type="text" :placeholder="data.lastName" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> First Name </label>
+                                <label class="md:w-32 text-right text-white"> First Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" placeholder="Monroe" class="lg:w-1/2 w-full">
+                                    <input type="text" :placeholder="data.firstName" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> Gender </label>
+                                <label class="md:w-32 text-right text-white"> Date Of Birth </label>
+                                <div class="flex-1 max-md:mt-4">
+                                    <input type="date" placeholder="Monroe" class="lg:w-1/2 w-full">
+                                </div>
+                            </div>
+
+                            <!-- <div class="md:flex items-center gap-10">
+                                <label class="md:w-32 text-right text-white"> Gender </label>
                                 <div class="flex-1 max-md:mt-4">
                                     <select class="!border-0 !rounded-md lg:w-1/2 w-full">
+                                        <option value="1"> Prefer Not to Say </option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right"> Relationship </label>
+                            <!-- <div class="md:flex items-center gap-10">
+                                <label class="md:w-32 text-right text-white"> Relationship </label>
                                 <div class="flex-1 max-md:mt-4">
                                     <select class="!border-0 !rounded-md lg:w-1/2 w-full">
-                                        <option value="0">None</option>
+                                        <option value="0"> Prefer Not to Say </option>
                                         <option value="1">Single</option>
                                         <option value="2">In a relationship</option>
                                         <option value="3">Married</option>
                                         <option value="4">Engaged</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="md:flex items-start gap-10">
-                                <label class="md:w-32 text-right"> About Me </label>
+                                <label class="md:w-32 text-right text-white"> About Me </label>
                                 <div class="flex-1 max-md:mt-4">
                                     <textarea class="w-full" rows="5" placeholder="Inter your Bio"></textarea>
                                 </div>
                             </div>
 
-                            <div class="md:flex items-start gap-10 ">
-                                <label class="md:w-32 text-right"> Avatar </label>
+                            <!-- <div class="md:flex items-start gap-10 ">
+                                <label class="md:w-32 text-right text-white"> Avatar </label>
                                 <div class="flex-1 flex items-center gap-5 max-md:mt-4">
                                     <img src="assets/images/avatars/avatar-3.jpg" alt=""
-                                        class="w-10 h-10 rounded-full">
+                                        class="w-24 h-24 rounded-full">
                                     <button type="submit"
                                         class="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white">
                                         Change</button>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
-                            <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
-                                Cancel</button>
-                            <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">
+                            <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
+                                Cancel</button> -->
+                            <button type="submit" @click.prevent="saveChanges()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
                                 Save
                                 <span class="ripple-overlay"></span></button>
                         </div>
 
                     </div>
 
-                </div>
+                </form>
 
                 <!-- tab settings-->
                 <div>
 
-                    <div>
+                    <form @submit.prevent="changePassword()">
 
                         <div class="space-y-6 max-w-lg mx-auto">
 
                             <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                                <label class="md:w-40 text-right"> Current Password </label>
+                                <label class="md:w-40 text-right text-white"> Current Password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="******" class="w-full">
+                                    <input type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                                <label class="md:w-40 text-right"> New password </label>
+                                <label class="md:w-40 text-right text-white"> New password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="******" class="w-full">
+                                    <input type="password" placeholder="" class="w-full text-black">
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                                <label class="md:w-40 text-right"> Repeat password </label>
+                                <label class="md:w-40 text-right text-white"> Repeat password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="******" class="w-full">
+                                    <input type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <hr class="border-gray-100 dark:border-gray-700">
 
                             <div class="md:flex items-center gap-16 justify-between">
-                                <label class="md:w-40 text-right"> Profile Type </label>
+                                <label class="md:w-40 text-right text-white"> Profile Type </label>
                                 <div class="flex-1 max-md:mt-4">
                                     <select class="w-full !border-0 !rounded-md">
                                         <option value="2">Public</option>
@@ -228,13 +270,13 @@
                         </div>
 
                         <div class="flex items-center justify-center gap-4 mt-16">
-                            <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
-                                Cancel</button>
-                            <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">
+                            <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
+                                Cancel</button> -->
+                            <button type="submit" @click.prevent="changePassword()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
                                 Save</button>
                         </div>
 
-                    </div>
+                    </form>
 
                 </div>
 
@@ -645,11 +687,6 @@
 </div>
       </NuxtLayout>
 </template>
-<script>
-export default {
-
-}
-</script>
 <style lang="">
     
 </style>

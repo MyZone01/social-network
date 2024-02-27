@@ -1,10 +1,9 @@
-// stores/useGobalStateAuthStore.ts
 import { defineStore } from 'pinia'
-import axios from 'axios'
+// import axios from 'axios'
 
 // Define interface for state properties
 interface AuthState {
-  isAuthenticated: boolean
+  isAuthenticated: Boolean
   token: String
   user: Object
 }
@@ -22,13 +21,15 @@ export const useGlobalAuthStore = defineStore('auth', {
       this.isAuthenticated = true
       this.token = newToken
       this.user = userInfos
+      await navigateTo('/')
       return
     },
-    logout() {
+    async logout() {
       // Perform logout logic
       this.isAuthenticated = false
       this.token = ''
       this.user = {}
+      await navigateTo('/auth')
       return
     },
   },

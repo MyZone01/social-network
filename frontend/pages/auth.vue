@@ -4,9 +4,12 @@
     </div>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+// definePageMeta({
+//   middleware: 'authGuard'
+// })
 </script>
+
 
 <style scoped>
 

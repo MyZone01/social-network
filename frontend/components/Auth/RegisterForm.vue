@@ -93,6 +93,7 @@ const handleImageSelected = (imageFile) => {
 }
 
 async function handleRegister() {
+    data.registerError = ''
     data.loading = true
     try {
         const fomdata = JSON.stringify({
@@ -106,15 +107,13 @@ async function handleRegister() {
             aboutMe: data.aboutMe.trim(),
         })
         const idSession = await register({ avatarImage: data.avatarImg, data: fomdata })
-        if (idSession) {
-            console.log('User registered successfully');
-            await navigateTo('/')
-        }
+
+        // if (idSession) {
+        //     console.log('User registered successfully');
+        //     await navigateTo('/')
+        // }
     } catch (error) {
         data.registerError = error.statusMessage
-        setTimeout(() => {
-            data.registerError = ''
-        }, 2000)
         data.loading = false
     } finally {
         // data.firstName = ''

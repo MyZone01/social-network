@@ -1,15 +1,11 @@
 import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
-// import sendFile from "./uploadfile.js"
 import FormData from "form-data";
-import axios from "axios";
-import { editeUser } from "./editeUser";
-// import fs from 'fs';
 
 export default () => {
   const store = useGlobalAuthStore();
 
-  const setUser = (newToken) => {
-    store.login(newToken, {});
+  const setUser = (access) => {
+    store.login(access.session, access.user);
 
     const cookie = useCookie("token");
     cookie.value = newToken;
@@ -19,12 +15,12 @@ export default () => {
     return new Promise(async (resolve, reject) => {
       const body = new FormData();
       if (avatarImage) {
-        body.append('file', avatarImage);
+        body.append("file", avatarImage);
       }
-      body.append('data', data);
+      body.append("data", data);
 
-      const response = await $fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await $fetch("/api/auth/register", {
+        method: "POST",
         body: body,
       });
 
@@ -33,12 +29,12 @@ export default () => {
       }
       if (response.ok === true && response.status !== 200) {
         // alert the user that the avatar does not upload correctly
-        // 
-        // 
+        //
+        //
         // and redirect to the index page
       }
       if (response.session && !store.isAuthenticated) {
-        setUser(response.session);
+        setUser(response);
         resolve(true);
       }
     });
@@ -48,7 +44,7 @@ export default () => {
     return new Promise(async (resolve, reject) => {
         const response = await $fetch("/api/auth/login", {
           method: "POST",
-          body: JSON.stringify({ data: { email, password } })
+          body: JSON.stringify({ data: { email, password } }),
         });
 
         if (response.ok !== true) {

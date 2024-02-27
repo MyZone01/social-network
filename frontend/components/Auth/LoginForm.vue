@@ -27,21 +27,18 @@ const data = reactive({
 })
 // const loginError = ''
 async function handleLogin() {
+    data.loginError = ''
     data.loading = true
     try {
         const idSession = await login({
             email: data.email.trim(),
             password: data.password.trim()
         })
-        if (idSession) {
-            await navigateTo('/')
-        }
+        
+        // await navigateTo('/')
     } catch (error) {
         data.loginError = error.statusMessage
         data.loading = false
-        setTimeout(() => {
-            data.loginError = ''
-        }, 2000)
     } finally {
         data.loading = false
         // data.email = ''
