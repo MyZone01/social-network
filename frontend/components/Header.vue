@@ -596,7 +596,7 @@
                                     <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
-                                        <h4 class="text-sm font-medium text-black">{{ store.user.firstName }} Stell johnson</h4>
+                                        <h4 class="text-sm font-medium text-black"> Stell johnson</h4>
                                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
                                             @mohnson</div>
                                     </div>
@@ -678,7 +678,7 @@
 </template>
 <script setup>
 import { useGlobalAuthStore } from '@/stores/useGobalStateAuthStore';
-const store = useGlobalAuthStore().user;
+const store = useGlobalAuthStore();
 
 function handleLogout() {
     store.logout()

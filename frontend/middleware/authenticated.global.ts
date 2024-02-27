@@ -1,4 +1,3 @@
-import axios from "axios";
 import { decoder } from "@/server/utils/transformer";
 import { useGlobalAuthStore } from "@/stores/useGobalStateAuthStore";
 let checker: Boolean
@@ -7,8 +6,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (process.server) { return }
 
   const authStore = useGlobalAuthStore();
-  const pass = authStore.token
-  const token = decoder(pass.toString())
+  // const pass = authStore.token
+  const token = authStore.token// decoder(pass.toString())
   
   const response = await useFetch('/api/auth/session', {
     method: 'POST',

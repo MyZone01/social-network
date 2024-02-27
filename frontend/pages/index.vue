@@ -10,9 +10,9 @@
             <div class="flex items-center md:gap-3 gap-1">
 
               <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
-              uk-toggle="target: #create-status">
-              <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
-            </div>
+                uk-toggle="target: #create-status">
+                <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
+              </div>
               <div
                 class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20"
                 uk-toggle="target: #create-status">
@@ -59,8 +59,8 @@
       <!-- create post  -->
       <post-input />
     </main>
-  </NuxtLayout>
-</template>
+</NuxtLayout></template>
 <script setup>
+// const imageError = 
 
 </script>

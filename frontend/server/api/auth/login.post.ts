@@ -1,5 +1,6 @@
 import { Login } from "@/server/models/login";
-import { encoder, secure } from "@/server/utils/transformer";
+import { secure } from "@/server/utils/transformer";
+import { sendError } from 'h3'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -9,12 +10,11 @@ export default defineEventHandler(async (event) => {
   const login = new Login(data);
   const [isValid, message] = login.validate();
   if (!isValid) {
-    return {
-      status: 400,
-      body: message,
-    };
+    return sendError(event, createError({
+      statusCode: 400,
+      statusMessage: message
+    }))
   }
-  
   const response = await fetcher("http://localhost:8081/login", "POST", JSON.stringify(login), "");
 
   if (response.status !== "200") {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   return {
     status: 200,
     body: "User registered successfully",
-    session: encoder(response.session),
+    session: response.session,
     user: secure(response.user),
     ok: true
   };

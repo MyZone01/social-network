@@ -8,7 +8,7 @@ export default () => {
     store.login(access.session, access.user);
 
     const cookie = useCookie("token");
-    cookie.value = newToken;
+    // cookie.value = newToken;
   };
 
   const register = async ({ avatarImage, data }) => {
@@ -27,11 +27,12 @@ export default () => {
       if (response.ok !== true) {
         reject(response.message);
       }
-      if (response.ok === true && response.status !== 200) {
+      if (response.ok === false && response.status == 200) {
         // alert the user that the avatar does not upload correctly
         //
         //
         // and redirect to the index page
+        resolve(true);
       }
       if (response.session && !store.isAuthenticated) {
         setUser(response);
@@ -51,7 +52,7 @@ export default () => {
           reject(response.message);
         }
         if (response.session && !store.isAuthenticated) {
-          setUser(response.session);
+          setUser(response);
           resolve(true);
         }
     });

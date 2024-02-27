@@ -1,15 +1,5 @@
 <script setup>
 
-onMounted() = {
-    store: useGlobalAuthStore(),
-    data: reactive({
-        firstName: store.firstName,
-        lastName: store.lastName,
-        nickname: store.nickname,
-        email: store.email,
-        avatar: 'http://localhost:8081/'+store.avatarImage
-    })
-}
 
 let FormFeedbackType = null;
 
@@ -76,8 +66,8 @@ const saveChanges = async () => {
                 </div>
 
                 <div class="flex-1">
-                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ data.firstName }} {{ data.lastName }} </h3>
-                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ data.nickname }}</p>
+                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> first & last name </h3>
+                    <p class="text-sm text-blue-600 mt-1 font-normal">@nickname</p>
                 </div>
 
                 <!-- <button
