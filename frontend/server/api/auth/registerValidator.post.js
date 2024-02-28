@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     password,
     repeatPassword,
   ];
-  console.log(avatarImg)
+  
   if (requiredFields.some((field) => field == "")) {
     const errorMessage = "Invalid entries";
     return sendError(

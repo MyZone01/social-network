@@ -6,6 +6,7 @@ import (
 	"backend/pkg/config"
 	"backend/pkg/db/sqlite"
 	"backend/pkg/handlers"
+	"backend/pkg/middleware"
 	"log"
 	"os"
 	"strconv"
@@ -15,6 +16,16 @@ import (
 )
 
 func main() {
+	// define the directory name
+	_, err := os.Stat(middleware.DirName)
+
+	// if the directory does not exist, create it
+	if os.IsNotExist(err) {
+		errDir := os.MkdirAll(middleware.DirName, 0755)
+		if errDir != nil {
+			log.Fatal(err)
+		}
+	}
 
 	args := os.Args[1:]
 
@@ -46,6 +57,8 @@ func main() {
 	app := octopus.New()
 	database := sqlite.OpenDB(migrate)
 	app.UseDb(database)
+
+	app.Static("/uploads", middleware.DirName)
 
 	// lunch all handlers
 	app.Use(cors.New(cors.Config{
