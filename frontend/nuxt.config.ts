@@ -74,4 +74,7 @@ export default defineNuxtConfig({
     },
     storage: 'sessionStorage'
   },
+  runtimeConfig: {
+    apiSecret: "thisisthesecretsauce",
+  }
 })

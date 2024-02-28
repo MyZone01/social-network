@@ -8,6 +8,7 @@ dist
 
 # Node dependencies
 node_modules
+node_modules/.yarn-integrity
 
 # Logs
 logs
@@ -22,3 +23,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# Database for Test
+backend/pkg/db/sqlite/social-network.db
+*.db
