@@ -26,6 +26,9 @@ export const useGlobalAuthStore = defineStore('auth', {
     },
     async logout() {
       // Perform logout logic
+      await useFetch('/api/auth/clear', {
+        method: 'DELETE',
+      })
       this.isAuthenticated = false
       this.token = ''
       this.user = {}

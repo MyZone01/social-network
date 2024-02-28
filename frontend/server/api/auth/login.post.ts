@@ -1,5 +1,5 @@
 import { Login } from "@/server/models/login";
-import { sendError } from 'h3'
+import { sendError, useSession } from 'h3'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -23,6 +23,14 @@ export default defineEventHandler(async (event) => {
       statusMessage: message
     }))
   }
+
+  const thatOne = await useSession(event, {
+    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
+    name: "server-store",
+    generateId: () => { return response.session }
+  })
+  console.log(thatOne);
+  
   return {
     status: 200,
     body: "User registered successfully",
@@ -31,3 +39,4 @@ export default defineEventHandler(async (event) => {
     ok: true
   };
 })
+
