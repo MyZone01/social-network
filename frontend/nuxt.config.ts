@@ -52,12 +52,6 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: '',
   },
-  // ionic: {
-  //   integrations:
-  //   {
-  //     icons: true,
-  //   },
-  // },
   runtimeConfig: {
     app: {
       devtools: {
@@ -67,6 +61,8 @@ export default defineNuxtConfig({
         },
       },
     },
+    apiSecret: "thisisthesecretsauce",
+
   },
   piniaPersistedstate: {
     cookieOptions: {
@@ -74,7 +70,4 @@ export default defineNuxtConfig({
     },
     storage: 'sessionStorage'
   },
-  runtimeConfig: {
-    apiSecret: "thisisthesecretsauce",
-  }
 })
