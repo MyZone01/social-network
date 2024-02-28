@@ -24,5 +24,6 @@ logs
 .env.*
 !.env.example
 
-# Database forr Test
+# Database for Test
+backend/pkg/db/sqlite/social-network.db
 *.db
