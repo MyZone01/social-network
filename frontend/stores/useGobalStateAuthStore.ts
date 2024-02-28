@@ -9,8 +9,7 @@ interface AuthState {
 }
 // Define store
 export const useGlobalAuthStore = defineStore('auth', {
-  state: (): AuthState => {
-    return {
+  state: (): AuthState => ({
     isAuthenticated: false,
     token: '',
     user: {}
