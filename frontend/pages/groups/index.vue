@@ -56,7 +56,7 @@ onMounted(async () => {
                     </div>
                 </div>
             </div>
-            <CreateGroupModal></CreateGroupModal>
+            <GroupCreateGroupModal></GroupCreateGroupModal>
         </main>
     </NuxtLayout>
 </template>

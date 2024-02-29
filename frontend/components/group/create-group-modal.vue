@@ -54,12 +54,16 @@ export default {
             const store = useGlobalAuthStore()
             const data = new FormData(e.target)
             const response = await $fetch('/api/group/create', {
-                method:'post',
+                method: 'post',
                 headers: {
                     Authorization: `Bearer ${store.token}`,
                 },
                 body: JSON.stringify(Object.fromEntries(data.entries()))
             })
+            const gid = response.ID
+            navigateTo(`/groups/${gid}`)
+
+
 
         }
     }
