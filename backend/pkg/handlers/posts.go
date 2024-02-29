@@ -3,27 +3,41 @@ package handlers
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
+	"backend/pkg/models"
+	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
-func handlePost(ctx *octopus.Context) {
+func createPost(ctx *octopus.Context) {
+	newPost := models.Post{}
+	if err := ctx.BodyParser(&newPost); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(newPost, err)
+	}
 
+	_userID := ctx.Values["userId"].(uuid.UUID)
+
+	if err := newPost.Create(ctx.Db.Conn, _userID); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusCreated).JSON(newPost)
 }
 
-// AuthenticationHandler defines the structure for handling authentication requests.
-// It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
 var postRoute = route{
-	path:   "/post",
-	method: http.MethodGet,
+	path:   "/create-post",
+	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired, // Middleware to check if the request is authenticated.
-		/* ... you can add other middleware here
-		   Note: Make sure to place your handler function at the end of the list. */
-		handlePost, // Handler function to process the authentication request.
+		middleware.AuthRequired,
+		middleware.IsPostValid,
+		createPost,
 	},
 }
 
 func init() {
-	// Register the authentication route with the global AllHandler map.
 	AllHandler[postRoute.path] = postRoute
 }

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"html/template"
+	"io"
 	"net/http"
 )
 
@@ -20,8 +21,27 @@ type Context struct {
 	Values         map[any]any
 }
 
-func (c *Context) 	BodyParser(out interface{}) error {
-	return json.NewDecoder(c.Request.Body).Decode(&out)
+func (c *Context) BodyParser(out interface{}) error {
+	if cachedBody, ok := c.Values["_parsedBody"]; ok {
+		out = cachedBody
+		return nil
+	}
+
+	body, err := io.ReadAll(c.Request.Body)
+	defer c.Request.Body.Close()
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(body, &out)
+	if err != nil {
+		return err
+	}
+
+	c.Values["_parsedBody"] = out
+
+	// c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+	return nil
 }
 
 func (c *Context) JSON(data interface{}) error {

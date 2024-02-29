@@ -47,7 +47,7 @@ func main() {
 
 	// lunch all handlers
 	app.Use(func(c *octopus.Context) {
-		log.Println("\t\t[" + c.Request.URL.Path + c.Request.Method + "]")
+		log.Println("\t\t[" + c.Request.URL.Path +" : "+ c.Request.Method + "]")
 		c.Next()
 	})
 

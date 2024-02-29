@@ -20,12 +20,12 @@ const (
 )
 
 type Post struct {
-	ID        uuid.UUID `sql:"type:uuid;primary key"`
-	UserID    uuid.UUID `sql:"type:uuid"`
-	Title     string    `sql:"type:varchar(255)"`
-	Content   string    `sql:"type:text"`
-	ImageURL  string    `sql:"type:varchar(255)"`
-	Privacy   PostPrivacy
+	ID        uuid.UUID `json:"id"`
+	UserID    uuid.UUID `json:"userId"`
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	ImageURL  string    `json:"image_url"`
+	Privacy   PostPrivacy `json:"privacy"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime

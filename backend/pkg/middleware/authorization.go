@@ -5,6 +5,7 @@ import (
 	"backend/pkg/config"
 	"backend/pkg/models"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path"
@@ -14,39 +15,20 @@ import (
 	"github.com/google/uuid"
 )
 
-// AuthAccessGroup is a middleware that checks if the user is authenticated
-func AuthAccessGroup(ctx *octopus.Context) {
-	var token string
-	headerBearer := ctx.Request.Header.Get("Authorization")
-	if strings.HasPrefix(headerBearer, "Bearer ") {
-		token = strings.TrimPrefix(headerBearer, "Bearer ")
-	}
-
-	user, err := config.Sess.Start(ctx).Get(token)
-	if err != nil {
-		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
-			"error": "Vous n'êtes pas connecté.",
-		})
-		return
-	}
-	var data = map[string]interface{}{}
-	if err := ctx.BodyParser(&data); err != nil {
+// HaveGroupAccess is a middleware that checks if the user is authenticated
+func HaveGroupAccess(ctx *octopus.Context) {
+	groupId := ctx.Request.URL.Query().Get("group_id")
+	if groupId == "" {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]string{
-			"error": "Erreur de données.",
+			"error": "Group Id",
 		})
 		return
 	}
 
-	groupId, ok := data["group_id"].(string)
-	if !ok {
-		ctx.Status(http.StatusBadRequest).JSON(map[string]string{
-			"error": "Erreur de données.",
-		})
-		return
-	}
+	userUUID := ctx.Values["userId"].(uuid.UUID)
 
 	var mg = new(models.GroupMember)
-	if err := mg.GetMember(ctx.Db.Conn, user, uuid.MustParse(groupId), false); err != nil {
+	if err := mg.GetMember(ctx.Db.Conn, userUUID, uuid.MustParse(groupId), false); err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas autorisé.",
 		})
@@ -126,8 +108,8 @@ func contains(s []string, e string) bool {
 	return false
 }
 
-// CreatePostMiddleware is a middleware that checks if the data is valid
-func CreatePostMiddleware(c *octopus.Context) {
+// IsPostValid is a middleware that checks if the data is valid
+func IsPostValid(c *octopus.Context) {
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -146,7 +128,7 @@ func CreatePostMiddleware(c *octopus.Context) {
 	}
 
 	if data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" ||
-		data["Title"] == nil || strings.TrimSpace(data["Title"].(string)) == "" ||
+		data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
 		(data["image_url"] == nil && strings.TrimSpace(data["image_url"].(string)) == "") {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Invalid data",
@@ -226,7 +208,7 @@ func CreateEventMiddleware(c *octopus.Context) {
 }
 
 // CreateGroupPostMiddleware is a middleware that checks if the data is valid
-func CreateGroupPostMiddleware(c *octopus.Context) {
+func IsGroupPostValid(c *octopus.Context) {
 	var token string
 	headerBearer := c.Request.Header.Get("Authorization")
 	if strings.HasPrefix(headerBearer, "Bearer ") {
@@ -236,6 +218,7 @@ func CreateGroupPostMiddleware(c *octopus.Context) {
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
+		log.Println(err.Error())
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Error parsing request body",
 		})
@@ -243,20 +226,44 @@ func CreateGroupPostMiddleware(c *octopus.Context) {
 	}
 	_, err := config.Sess.Start(c).Get(token)
 	if err != nil {
+		log.Println(err.Error())
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous n'êtes pas connecté.",
 		})
 		return
 	}
-	if data["group_id"] == nil || strings.TrimSpace(data["group_id"].(string)) == "" ||
-		data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
-		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" ||
-		(data["image_url"] == nil && strings.TrimSpace(data["image_url"].(string)) == "") {
+	if data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
+		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private") {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Invalid data",
 		})
 		return
 	}
+
+	c.Next()
+}
+
+func IsGroupExist(c *octopus.Context) {
+	_groupId := c.Request.URL.Query().Get("group_id")
+	group := new(models.Group)
+	// Check if the group is uuid
+
+	groupId, err := uuid.Parse(_groupId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid group uuid",
+		})
+		return
+	}
+
+	if err := group.Get(c.Db.Conn, groupId, false, false); err != nil {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Group not found",
+		})
+		return
+	}
+
+	c.Values["group_id"] = groupId
 	c.Next()
 }
 
