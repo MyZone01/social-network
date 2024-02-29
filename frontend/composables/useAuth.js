@@ -1,4 +1,4 @@
-import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
+import { useGlobalAuthStore } from "../stores/useGlobalStateAuthStore";
 import FormData from "form-data";
 
 export default () => {
@@ -32,6 +32,7 @@ export default () => {
           // and redirect to the index page
           // resolve(true);
         }
+        response.user.dateOfBirth = dateFormatter(response.user.dateOfBirth)
         setUser(response);
         resolve(true);
       } catch (err) {
@@ -47,12 +48,10 @@ export default () => {
           method: "POST",
           body: JSON.stringify({ data: { email, password } }),
         });
-
-        console.log(response);
+        response.user.dateOfBirth = dateFormatter(response.user.dateOfBirth)
         setUser(response);
         resolve(true);
       } catch (err) {
-        console.log("ERROR SIDE");
         reject(err);
       }
     });
@@ -63,3 +62,7 @@ export default () => {
     register,
   };
 };
+
+const dateFormatter = (date) => {
+  return date.split("T00:00:00Z")[0]
+}

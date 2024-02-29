@@ -20,7 +20,7 @@ type Context struct {
 	Values         map[any]any
 }
 
-func (c *Context) 	BodyParser(out interface{}) error {
+func (c *Context) BodyParser(out interface{}) error {
 	return json.NewDecoder(c.Request.Body).Decode(&out)
 }
 

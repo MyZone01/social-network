@@ -1,4 +1,4 @@
-import { useGlobalAuthStore } from '../stores/useGobalStateAuthStore';
+import { useGlobalAuthStore } from '../stores/useGlobalStateAuthStore';
 
 export default () => {
     const store = useGlobalAuthStore();

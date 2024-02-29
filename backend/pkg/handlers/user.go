@@ -4,6 +4,7 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
+	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -14,6 +15,8 @@ func handleUpdateUser(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
 	user := new(models.User)
 	if err := ctx.BodyParser(user); err != nil {
+		fmt.Println("INSIDE Updater", ctx.Values)
+		fmt.Println("THIS IS THE ERror", err)
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"message": "Error while parsing the form data.",
 			"status":  http.StatusBadRequest,
@@ -62,6 +65,51 @@ var updateUserRoute = route{
 	},
 }
 
+func handleUpdateUserInfos(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+	user := new(models.User)
+	if err := ctx.BodyParser(user); err != nil {
+		fmt.Println("INSIDE Updater", ctx.Values)
+		fmt.Println("THIS IS THE ERror", err)
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"message": "Error while parsing the form data.",
+			"status":  http.StatusBadRequest,
+		})
+		return
+	}
+	
+	fmt.Println("Parser Passed")
+	user.ID = userId
+	if err := user.Validate(); err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"message": err.Error(),
+			"status":  http.StatusBadRequest,
+		})
+		return
+	}
+
+	if err := user.Update(ctx.Db.Conn); err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"message": err.Error(),
+			"status":  http.StatusInternalServerError,
+		})
+		return
+	}
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "User updated successfully",
+		"status":  http.StatusOK,
+	})
+}
+
+var updateUserInfosRoute = route{
+	path:   "/edituser",
+	method: http.MethodPut,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleUpdateUserInfos,        // Handler function to process the authentication request.
+	},
+}
 func init() {
 	AllHandler[updateUserRoute.path] = updateUserRoute
+	AllHandler[updateUserInfosRoute.path] = updateUserInfosRoute
 }

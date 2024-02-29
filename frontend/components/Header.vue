@@ -16,14 +16,12 @@
                         <ion-icon :icon="ioniconsCloseOutline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
                     </button>
                     <div id="logo">
-                        <NuxtLink to="/">
+                        <a href="/">
                             <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
                             <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
-                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden"
-                                alt="">
-                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20"
-                                alt="">
-                        </NuxtLink>
+                            <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden" alt="">
+                            <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20" alt="">
+                        </a>
                     </div>
 
                 </div>
@@ -51,7 +49,7 @@
                                 <button type="button" class="text-blue-500">Clear</button>
                             </div>
                             <nav class="text-sm font-medium text-black dark:text-white">
-                                <a href="#"
+                                <!-- <a href="#"
                                     class=" relative px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
                                     <img src="assets/images/avatars/avatar-2.jpg" class="w-9 h-9 rounded-full">
                                     <div>
@@ -103,7 +101,7 @@
                                 <a href="#"
                                     class="hidden relative  px-3 py-1.5 flex items-center gap-4 hover:bg-secondery rounded-lg dark:hover:bg-white/10">
                                     <ion-icon class="text-2xl" :icon="ioniconsSearchOutline"></ion-icon> 8 Facts About
-                                    Writting </a>
+                                    Writting </a> -->
                             </nav>
                             <hr class="-mx-2 mt-2 hidden">
                             <div class="flex justify-end pr-2 text-sm font-medium text-red-500 hidden">
@@ -200,8 +198,8 @@
                             <!-- list -->
                             <ul class="-m-1 mt-4 pb-1 text-xs text-gray-500 dark:text-white"
                                 uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
-                                <li
-                                    class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10"  uk-toggle="target: #create-status">
+                                <li class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10"
+                                    uk-toggle="target: #create-status">
                                     <img src="assets/images/icons/page.png" alt="" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
@@ -302,7 +300,7 @@
                                 <!-- contents list -->
                                 <div class="pl-2 p-1 text-sm font-normal dark:text-white">
 
-                                    <a href="#"
+                                    <!-- <a href="#"
                                         class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
                                         <div class="relative w-12 h-12 shrink-0"> <img
                                                 src="assets/images/avatars/avatar-3.jpg" alt=""
@@ -402,7 +400,7 @@
                                             <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 8 hours
                                                 ago </div>
                                         </div>
-                                    </a>
+                                    </a> -->
 
                                 </div>
 
@@ -455,7 +453,7 @@
 
                                 <div class="p-2 pt-0 pr-1 dark:text-white/80">
 
-                                    <a href="#"
+                                    <!-- <a href="#"
                                         class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
                                         <div class="relative w-10 h-10 shrink-0">
                                             <img src="assets/images/avatars/avatar-2.jpg" alt=""
@@ -564,7 +562,7 @@
                                                 class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
                                                 Love your photos 😍</div>
                                         </div>
-                                    </a>
+                                    </a> -->
 
                                 </div>
 
@@ -619,7 +617,7 @@
                                         My Account
                                     </div>
                                 </a>
-                                <!-- <button type="button" class="w-full">
+                                <button type="button" class="w-full">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -628,13 +626,12 @@
                                                 d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                                         </svg>
                                         Night mode
-                                        <span
-                                            class="bg-slate-200/40 ml-auto p-0.5 rounded-full w-9 dark:hover:bg-white/20">
+                                        <span class="bg-slate-200/40 ml-auto p-0.5 rounded-full w-9 dark:hover:bg-white/20">
                                             <span
                                                 class="bg-white block h-4 relative rounded-full shadow-md w-2 w-4 dark:bg-blue-600"></span>
                                         </span>
                                     </div>
-                                </button> -->
+                                </button>
                                 <hr class="-mx-2 my-2 dark:border-gray-600/60">
                                 <a @click="handleLogout()" class="cursor-pointer">
                                     <div
@@ -675,21 +672,23 @@
         </div>
 
     </header>
+    <!-- create post  -->
+    <post-input />
 </template>
 <script setup>
-import { useGlobalAuthStore } from '@/stores/useGobalStateAuthStore';
+import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore';
 const store = useGlobalAuthStore();
 
+const data = reactive({
+    firstName: store.user.firstName,
+    lastName: store.user.lastName,
+    nickname: store.user.nickname,
+
+})
 function handleLogout() {
     store.logout()
 
-    const data = reactive({
-        firstName: store.firstName,
-        lastName: store.lastName,
-        nickname: store.nickname,
-
-    })
 
     navigateTo('/auth')
 }
-</script>
+</script>@/stores/useGlobalStateAuthStore

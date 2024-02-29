@@ -8,6 +8,7 @@ import (
 
 func handleValidSession(ctx *octopus.Context) {
 	data := map[string]interface{}{
+		"idSession": "",
 		"message": "Authenticated successfully",
 	}
 	ctx.JSON(data)

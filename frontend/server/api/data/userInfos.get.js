@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useGlobalAuthStore } from "../../../stores/useGobalStateAuthStore";
+import { useGlobalAuthStore } from "../../../stores/useGlobalStateAuthStore";
 import { sendError } from "h3";
 
 export default defineEventHandler(async (event) => {
