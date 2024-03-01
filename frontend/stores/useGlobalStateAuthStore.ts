@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-// import axios from 'axios'
 
 // Define interface for state properties
 interface AuthState {
@@ -33,6 +32,13 @@ export const useGlobalAuthStore = defineStore('auth', {
       this.token = ''
       this.user = {}
       await navigateTo('/auth')
+      return
+    },
+    async update(newToken: string, userInfos: Object) {
+      // Perform update user logic
+      this.isAuthenticated = true
+      this.token = newToken
+      this.user = userInfos
       return
     },
   },

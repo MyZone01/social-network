@@ -1,6 +1,7 @@
 import { Login } from "@/server/models/login";
-import { sendError, useSession, setCookie } from 'h3'
+import { sendError, useSession } from 'h3'
 import { secure } from "@/server/utils/transformer";
+import { sessionCreator } from "@/server/utils/createSession";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -23,21 +24,9 @@ export default defineEventHandler(async (event) => {
       statusMessage: message
     }))
   }
-  
-  const serverSession = await useSession(event, {
-    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
-    name: "server-store",
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    },
-    maxAge: 60 * 60 * 24 * 7,
-    generateId: () => { return response.session }
-  })
-  await serverSession.update({
-    userInfos: response.user
-  })
+
+  const serverSession = await sessionCreator(response.session, response.user, event)
+  console.log(serverSession)
 
   return {
     status: 200,

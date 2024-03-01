@@ -2,6 +2,7 @@ import { Register } from "@/server/models/register";
 import { fetcher } from "@/server/utils/fetcher";
 import { processParts } from "@/server/utils/processParts";
 import { secure } from "@/server/utils/transformer";
+import { sessionCreator } from "@/server/utils/createSession";
 
 export default defineEventHandler(async (event) => {
   const reader = await readMultipartFormData(event);
@@ -26,22 +27,10 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  const serverSession = await useSession(event, {
-    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
-    name: "server-store",
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    },
-    maxAge: 60 * 60 * 24 * 7,
-    generateId: () => { return response.session }
-  })
-  await serverSession.update({
-    userInfos: response.user
-  })
-
+  
   if (!file) {
+    const serverSession = await sessionCreator(response.session, response.user, event)
+    console.log(serverSession)
     return {
       status: 200,
       body: 'No file uploaded',
@@ -68,6 +57,20 @@ export default defineEventHandler(async (event) => {
   }
 
   response.user.avatarImage = register.avatarImage
+  const serverSession = await useSession(event, {
+    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
+    name: "server-store",
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    },
+    maxAge: 60 * 60 * 24 * 7,
+    generateId: () => { return response.session }
+  })
+  await serverSession.update({
+    userInfos: response.user
+  })
   return {
     status: 200,
     body: "User registered successfully",

@@ -15,7 +15,7 @@ const userInfos = reactive({
     nickname: store.nickname,
     aboutMe: store.aboutMe,
     isPublic: store.isPublic ? "public" : "private",
-    dataError: "",
+    message: "",
 })
 
 const isPublic = ref(null)
@@ -37,20 +37,20 @@ const password = reactive({
 function changer(event) {
     const value = event.target.value
     userInfos[`${event.target.id}`] = value
-    event.target.value = value //userInfos[`${event.target.id}`]
-    // store[`${event.target.id}`] = event.target.value
-    console.log(event.target.id)
+    // event.target.value = value
 }
 
 const saveChanges = async () => {
     // isLoading.value = true;
     userInfos.error = ''
     try {
-        const changes = await editeUser(userInfos)
-        console.log(changes)
-        console.log("SAVED CHANGE")
+        const result = await editeUser(userInfos)
+        if (result) {
+            userInfos.message = result.message
+            console.log("SAVED CHANGE")
+        }
     } catch (error) {
-        userInfos.dataError = error
+        userInfos.message = error
         console.log(error)
     } finally {
         console.log("DONE")
@@ -213,7 +213,7 @@ const saveChanges = async () => {
                             </div>
                         </div>
 
-                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.dataError }}</h2>
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.message }}</h2>
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">

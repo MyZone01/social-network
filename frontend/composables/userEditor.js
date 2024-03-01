@@ -50,15 +50,16 @@ export const editeUser = async (user) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${store.token}`,
+          "Authorization": `${store.token}`,
         },
         body: data,
-      });
-      if (!response.ok || response.status != 200) {
-        reject(response.statusText);  
-      }
-      console.log(response);
-      resolve(true);
+      })
+      console.log(response)
+      console.log(response.message)
+      console.log(response.user)
+      console.log(response.session)
+      await store.update(response.session, response.user)
+      resolve(response.message)
     } catch (error) {
       reject(error);
     }

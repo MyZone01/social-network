@@ -28,7 +28,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo("/auth");
     }
     if (isAuthenticated && to.path === '/auth') {
-      return navigateTo('/')
+      return navigateTo(from.path)
     }
   })
   .catch((error) => {
