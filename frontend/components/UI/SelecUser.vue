@@ -1,35 +1,31 @@
-<script  >
+<script>
+import { GetAllFollower } from '~/composables/getAllUser';
+
 export default {
-    mounted() {
-        
-        $(document).ready(function () {
-            $('.js-example-basic-multiple').select2({
-                placeholder: "Select friend ..",
-            });
+    data() {
+        return {
+            userFollowers: null
+        }
+    },
+    async mounted() {
+        this.userFollowers = await GetAllFollower();
+        // Initialisation de Select2 une fois que les données ont été récupérées
+        $('.js-example-basic-multiple').select2({
+            placeholder: "Selec Followers .."
         });
+
     }
 }
-
 </script>
 
 <template>
-    <select class="js-example-basic-multiple  " id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
-        <option value="AL">Alabama</option>
-
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-        <option value="WY">Wyoming</option>
-
+    <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
+        <option> "fldlfdl"</option>
+        <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option>
     </select>
 </template>
+
+
 <style>
 .select2-dropdown {
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
@@ -42,8 +38,9 @@ export default {
     max-height: 8vh;
     overflow-y: auto;
     overflow-x: hidden;
-    
+
 }
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
     border: none !important;

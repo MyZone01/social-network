@@ -14,15 +14,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
-
             </div>
 
-            <form action="" ref="post_form">
+            <form action="" ref="post_form" @submit="handleSubmitPost">
 
                 <div class="space-y-5 mt-3 p-2">
                     <textarea
                         class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl   dark:!text-white dark:placeholder:!text-white dark:!bg-slate-800"
-                        name="post-content-text" id="" rows="6" placeholder="What do you have in mind?"></textarea>
+                        name="post-content-text" id="" rows="6" placeholder="What do you have in mind?" required ></textarea>
                 </div>
  
                 <div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
@@ -37,6 +36,17 @@
 
 
                 </div>
+                
+                <UAlert
+                v-if="showAlert"
+    icon="ic:baseline-warning"
+    class= "custom-alert"
+    variant="solid"
+    title="Error!"
+    description = "Choose audiance for your post "
+   
+  > 
+ </UAlert>
 
                 <div class="p-5 flex justify-between items-center">
                     <div>
@@ -54,8 +64,8 @@
                             <!-- <form>
                         </form> -->
                             <label>
-                                <input type="radio" name="radio-status" id="monthly1"
-                                    class="peer appearance-none hidden" checked />
+                                <input type="radio" name="radio-status" ref="publicCheck"
+                                value = "public" class="peer appearance-none hidden" checked @change="resetSelectMenu"/>
                                 <div
                                     class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
                                     <div class="text-sm"> public </div>
@@ -64,8 +74,8 @@
                                 </div>
                             </label>
                             <label>
-                                <input type="radio" name="radio-status" id="monthly1"
-                                    class="peer appearance-none hidden" />
+                                <input type="radio" name="radio-status" ref="privateCheck"
+                                    value = "private" class="peer appearance-none hidden"  @change="resetSelectMenu"/>
                                 <div
                                     class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
                                     <div class="text-sm"> private </div>
@@ -82,7 +92,7 @@
                     
                     <UISelecUser />
                     <div class="flex items-center gap-2">
-                        <button type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">
+                        <button ref= "creatPostButon" type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">
                             Create</button>
                     </div>
                 </div>
@@ -95,23 +105,54 @@
 
 </template>
 <script>
+import { ref } from 'vue';
+import { LoadImageAsBase64 } from '~/composables/getAllUser'
+
 export default {
+    setup() {
+        let showAlert = ref(false);;
+        return { showAlert };
+    },
     mounted() {
-        this.$refs.post_form.addEventListener('submit', this.handleSubmitPost)
+        $('.js-example-basic-multiple').on("select2:select", this.resetCheckbox)
     },
     methods: {
         openFileInput() {
             this.$refs.fileInput.click();
         },
-        handleSubmitPost(e) {
+        async handleSubmitPost(e) {
             e.preventDefault();
+            let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
             let formdata = new FormData(e.target)
-            console.log(formdata.get("photo"));
+            if (followersSelected.length == 0 && !formdata.get("radio-status")) {
+                this.showAlert = true
+                setTimeout(() => this.showAlert = false, 2000)
+                return
+            }
+            let jsonFormObject = {
+                content: formdata.get("post-content-text"),
+                privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
+                followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
+                base64Image: formdata.get("photo").size > 0 ? await LoadImageAsBase64(formdata.get("photo")) : null,
+            }
 
+            console.log(jsonFormObject)
+
+
+        },
+        resetCheckbox() {
+            this.$refs.publicCheck.checked = false
+            this.$refs.privateCheck.checked = false
+        },
+        resetSelectMenu() {
+            console.log("fdkkfdk");
+            $('.js-example-basic-multiple').val([]).change()
         }
     }
 }
 </script>
-<style lang="">
-
-</style>    
+<style>
+.custom-alert {
+    background-color: red;
+}
+</style>     
