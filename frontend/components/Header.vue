@@ -617,7 +617,7 @@
                                         My Account
                                     </div>
                                 </a>
-                                <button type="button" class="w-full">
+                                <!-- <button type="button" id="theme-mode" class="w-full" @click="">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -631,7 +631,7 @@
                                                 class="bg-white block h-4 relative rounded-full shadow-md w-2 w-4 dark:bg-blue-600"></span>
                                         </span>
                                     </div>
-                                </button>
+                                </button> -->
                                 <hr class="-mx-2 my-2 dark:border-gray-600/60">
                                 <a @click="handleLogout()" class="cursor-pointer">
                                     <div
@@ -677,6 +677,8 @@
 </template>
 <script setup>
 import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore';
+// const { useAssets } = themeToogler()
+
 const store = useGlobalAuthStore();
 
 const data = reactive({
