@@ -1,6 +1,7 @@
 package octopus
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"html/template"
@@ -22,11 +23,6 @@ type Context struct {
 }
 
 func (c *Context) BodyParser(out interface{}) error {
-	if cachedBody, ok := c.Values["_parsedBody"]; ok {
-		out = cachedBody
-		return nil
-	}
-
 	body, err := io.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	if err != nil {
@@ -38,9 +34,7 @@ func (c *Context) BodyParser(out interface{}) error {
 		return err
 	}
 
-	c.Values["_parsedBody"] = out
-
-	// c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+	c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 	return nil
 }
 

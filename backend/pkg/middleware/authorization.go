@@ -209,12 +209,6 @@ func CreateEventMiddleware(c *octopus.Context) {
 
 // CreateGroupPostMiddleware is a middleware that checks if the data is valid
 func IsGroupPostValid(c *octopus.Context) {
-	var token string
-	headerBearer := c.Request.Header.Get("Authorization")
-	if strings.HasPrefix(headerBearer, "Bearer ") {
-		token = strings.TrimPrefix(headerBearer, "Bearer ")
-	}
-
 	var data = map[string]interface{}{}
 
 	if err := c.BodyParser(&data); err != nil {
@@ -224,16 +218,9 @@ func IsGroupPostValid(c *octopus.Context) {
 		})
 		return
 	}
-	_, err := config.Sess.Start(c).Get(token)
-	if err != nil {
-		log.Println(err.Error())
-		c.Status(http.StatusUnauthorized).JSON(map[string]string{
-			"error": "Vous n'êtes pas connecté.",
-		})
-		return
-	}
+
 	if data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
-		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private") {
+		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private" && data["privacy"] != "unlisted" && data["privacy"] != "almost private") {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Invalid data",
 		})
@@ -264,6 +251,31 @@ func IsGroupExist(c *octopus.Context) {
 	}
 
 	c.Values["group_id"] = groupId
+	c.Next()
+}
+
+func IsGroupPostExist(c *octopus.Context) {
+	groupId := c.Values["group_id"].(uuid.UUID)
+	_postId := c.Request.URL.Query().Get("post_id")
+	post := new(models.GroupPost)
+
+	postId, err := uuid.Parse(_postId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid post uuid",
+		})
+		return
+	}
+
+	if err := post.GetPost(c.Db.Conn, groupId, postId, false); err != nil {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Post not found",
+		})
+		return
+	}
+
+	c.Values["group_id"] = groupId
+	c.Values["post_id"] = postId
 	c.Next()
 }
 

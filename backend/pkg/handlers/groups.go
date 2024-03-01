@@ -30,7 +30,7 @@ func createGroup(ctx *octopus.Context) {
 	ctx.Status(http.StatusCreated).JSON(newGroup)
 }
 
-var groupsCreateRoute = route{
+var createGroupRoute = route{
 	path:   "/create-group",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
@@ -39,7 +39,7 @@ var groupsCreateRoute = route{
 	},
 }
 
-func getGroups(ctx *octopus.Context) {
+func getAllGroups(ctx *octopus.Context) {
 	groups := models.Groups{}
 	isMemberNeeded := ctx.Request.URL.Query().Get("isMemberNeeded") == "true"
 	isUserNeeded := ctx.Request.URL.Query().Get("isUserNeeded") == "true"
@@ -53,9 +53,18 @@ func getGroups(ctx *octopus.Context) {
 	ctx.JSON(groups)
 }
 
+var getAllGroupsRoute = route{
+	path:   "/get-all-groups",
+	method: http.MethodGet,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		getAllGroups,
+	},
+}
+
 func getGroupById(ctx *octopus.Context) {
 	group := models.Group{}
-	groupID := uuid.MustParse(ctx.Request.URL.Query().Get("id"))
+	groupID := ctx.Values["group_id"].(uuid.UUID)
 	isMemberNeeded := ctx.Request.URL.Query().Get("isMemberNeeded") == "true"
 	isUserNeeded := ctx.Request.URL.Query().Get("isUserNeeded") == "true"
 	err := group.Get(ctx.Db.Conn, groupID, isMemberNeeded, isUserNeeded)
@@ -68,11 +77,21 @@ func getGroupById(ctx *octopus.Context) {
 	ctx.JSON(group)
 }
 
+var getGroupByIdRoute = route{
+	path:   "/get-group",
+	method: http.MethodGet,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		getGroupById,
+	},
+}
+
 func createPostGroup(ctx *octopus.Context) {
 	newPost := models.GroupPost{}
 	post := models.Post{}
-	_groupId := uuid.MustParse(ctx.Request.URL.Query().Get("group_id"))
-	newPost.GroupID = _groupId
+	newPost.GroupID = ctx.Values["group_id"].(uuid.UUID)
 	newPost.CreatorID = ctx.Values["userId"].(uuid.UUID)
 
 	if err := ctx.BodyParser(&post); err != nil {
@@ -93,9 +112,21 @@ func createPostGroup(ctx *octopus.Context) {
 	ctx.Status(http.StatusCreated).JSON(newPost)
 }
 
-func getGroupPosts(ctx *octopus.Context) {
+var createPostGroupRoute = route{
+	path:   "/create-post-group",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		middleware.IsGroupPostValid,
+		createPostGroup,
+	},
+}
+
+func getAllGroupPosts(ctx *octopus.Context) {
 	posts := models.GroupPosts{}
-	groupID := uuid.MustParse(ctx.Request.URL.Query().Get("group_id"))
+	groupID := ctx.Values["group_id"].(uuid.UUID)
 	err := posts.GetPosts(ctx.Db.Conn, groupID, true)
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
@@ -104,6 +135,17 @@ func getGroupPosts(ctx *octopus.Context) {
 	}
 
 	ctx.JSON(posts)
+}
+
+var getAllGroupPostsRoute = route{
+	path:   "/get-all-post-group",
+	method: http.MethodGet,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		getAllGroupPosts,
+	},
 }
 
 func getGroupPostById(ctx *octopus.Context) {
@@ -126,50 +168,6 @@ func getGroupPostById(ctx *octopus.Context) {
 	}
 
 	ctx.JSON(post)
-	
-}
-
-var groupsGetRoute = route{
-	path:   "/get-all-groups",
-	method: http.MethodGet,
-	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired,
-		getGroups,
-	},
-}
-
-var groupsGetByIdRoute = route{
-	path:   "/get-group",
-	method: http.MethodGet,
-	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired,
-		middleware.IsGroupExist,
-		middleware.HaveGroupAccess,
-		getGroupById,
-	},
-}
-
-var createPostGroupRoute = route{
-	path:   "/create-post-group",
-	method: http.MethodPost,
-	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired,
-		middleware.IsGroupExist,
-		middleware.HaveGroupAccess,
-		middleware.IsGroupPostValid,
-		createPostGroup,
-	},
-}
-
-var getGroupPostsRoute = route{
-	path:   "/get-all-post-group",
-	method: http.MethodGet,
-	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired,
-		middleware.IsGroupExist,
-		middleware.HaveGroupAccess,
-		getGroupPosts,
-	},
 }
 
 var getGroupPostRoute = route{
@@ -178,16 +176,17 @@ var getGroupPostRoute = route{
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
+		middleware.IsGroupPostExist,
 		middleware.HaveGroupAccess,
 		getGroupPostById,
 	},
 }
 
 func init() {
-	AllHandler[groupsCreateRoute.path] = groupsCreateRoute
-	AllHandler[groupsGetRoute.path] = groupsGetRoute
-	AllHandler[groupsGetByIdRoute.path] = groupsGetByIdRoute
+	AllHandler[createGroupRoute.path] = createGroupRoute
+	AllHandler[getAllGroupsRoute.path] = getAllGroupsRoute
+	AllHandler[getGroupByIdRoute.path] = getGroupByIdRoute
 	AllHandler[createPostGroupRoute.path] = createPostGroupRoute
-	AllHandler[getGroupPostsRoute.path] = getGroupPostsRoute
+	AllHandler[getAllGroupPostsRoute.path] = getAllGroupPostsRoute
 	AllHandler[getGroupPostRoute.path] = getGroupPostRoute
 }

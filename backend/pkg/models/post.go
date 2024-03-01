@@ -20,11 +20,11 @@ const (
 )
 
 type Post struct {
-	ID        uuid.UUID `json:"id"`
-	UserID    uuid.UUID `json:"userId"`
-	Title     string    `json:"title"`
-	Content   string    `json:"content"`
-	ImageURL  string    `json:"image_url"`
+	ID        uuid.UUID   `json:"id"`
+	UserID    uuid.UUID   `json:"userId"`
+	Title     string      `json:"title"`
+	Content   string      `json:"content"`
+	ImageURL  string      `json:"image_url"`
 	Privacy   PostPrivacy `json:"privacy"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -79,7 +79,7 @@ func (p *Post) Create(db *sql.DB, userOwnerUuid uuid.UUID) error {
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
 	p.UserID = userOwnerUuid
-	query := `INSERT INTO posts (id, user_id,title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
+	query := `INSERT INTO posts (id, user_id, title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -99,7 +99,7 @@ func (p *Post) Create(db *sql.DB, userOwnerUuid uuid.UUID) error {
 	)
 
 	if err != nil {
-		return fmt.Errorf("unable to execute the query. %v", err)
+		return fmt.Errorf("unable to execute the query. %v, privacy %v", err, p.Privacy)
 	}
 
 	return nil

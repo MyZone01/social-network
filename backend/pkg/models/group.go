@@ -416,6 +416,8 @@ func (gp *GroupPost) GetPost(db *sql.DB, groupID, groupPostID uuid.UUID, getpost
 		}
 	}
 
+	gp.CreatorID = gp.Post.UserID
+
 	return nil
 }
 
