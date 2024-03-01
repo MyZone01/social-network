@@ -126,7 +126,69 @@ var updateUserInfosRoute = route{
 	},
 }
 
+func handleUpdateUserPassword(ctx *octopus.Context) {
+	fmt.Println("Password Updater")
+	fmt.Println(ctx.Values)
+	// userId := ctx.Values["userId"].(uuid.UUID)
+	// user := new(models.User)
+	// if err := ctx.BodyParser(user); err != nil {
+	// 	ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+	// 		"message": "Error while parsing the form data.",
+	// 		"status":  http.StatusBadRequest,
+	// 	})
+	// 	return
+	// }
+
+	// user.ID = userId
+	// if err := user.Validate(); err != nil {
+	// 	ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+	// 		"message": err.Error(),
+	// 		"status":  http.StatusBadRequest,
+	// 	})
+	// 	return
+	// }
+
+	
+	// if err := user.Update(ctx.Db.Conn); err != nil {
+	// 	ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+	// 		"message": err.Error(),
+	// 		"status":  http.StatusInternalServerError,
+	// 	})
+	// 	return
+	// }
+	
+	// idSession, err := config.Sess.Start(ctx).Set(user.ID)
+	// // Start a new session for the user and set the user's ID as the session key.
+	// if err != nil {
+	// 	// If starting the session fails, log the error and return an HTTP status  500.
+	// 	ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+	// 		"session": "",
+	// 		"message": "Error while starting the session.",
+	// 		"status":  http.StatusInternalServerError,
+	// 	})
+	// 	return
+	// }
+	
+	// data := map[string]interface{}{
+	// 	"message": "User updated successfully",
+	// 	"session": idSession,
+	// 	"user":    user,
+	// 	"status":  http.StatusOK,
+	// }
+	// ctx.JSON(data)
+}
+
+var updateUserPasswordRoute = route{
+	path:   "/updatepassword",
+	method: http.MethodPut,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handleUpdateUserPassword,   // Handler function to process the authentication request.
+	},
+}
+
 func init() {
 	AllHandler[updateUserRoute.path] = updateUserRoute
 	AllHandler[updateUserInfosRoute.path] = updateUserInfosRoute
+	AllHandler[updateUserPasswordRoute.path] = updateUserPasswordRoute
 }

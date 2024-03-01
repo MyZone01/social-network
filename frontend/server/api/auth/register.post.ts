@@ -29,8 +29,7 @@ export default defineEventHandler(async (event) => {
 
   
   if (!file) {
-    const serverSession = await sessionCreator(response.session, response.user, event)
-    console.log(serverSession)
+    await sessionCreator(response.session, response.user, event)
     return {
       status: 200,
       body: 'No file uploaded',

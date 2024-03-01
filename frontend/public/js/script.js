@@ -18,23 +18,23 @@ localStorage.theme = "dark";
 // Whenever the user explicitly chooses to respect the OS preference
 localStorage.removeItem("theme");
 
-addEventListener("DOMContentLoaded", () => {
-  console.log("CHANGING THEME");
-  const toggleButton = document.getElementById("theme-mode");
-  const body = document.body;
+// addEventListener("DOMContentLoaded", () => {
+//   console.log("CHANGING THEME");
+//   const toggleButton = document.getElementById("theme-mode");
+//   const body = document.body;
 
-  console.log(body, toggleButton);
+//   console.log(body, toggleButton);
 
-  toggleButton.addEventListener("click", () => {
-    console.log("toogled")
-    if (document.documentElement.classList.contains("dark")) {
-      document.documentElement.classList.remove("dark")
-    } else {
-      document.documentElement.classList.add("dark")
-    }
-    // body.classList.toggle("dark");
-  });
-});
+//   toggleButton.addEventListener("click", () => {
+//     console.log("toogled")
+//     if (document.documentElement.classList.contains("dark")) {
+//       document.documentElement.classList.remove("dark")
+//     } else {
+//       document.documentElement.classList.add("dark")
+//     }
+//     // body.classList.toggle("dark");
+//   });
+// });
 
 
 // }

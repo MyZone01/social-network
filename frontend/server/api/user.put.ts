@@ -19,29 +19,36 @@ export default defineEventHandler(async (event) => {
         generateId: () => { return '' }
     })
 
-    try {
-        const response = await fetch('http://localhost:8081/edituser', {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-
-        })
-        const result = await response.json()
-        const serverSession = await sessionUpdater(result.session, result.user, event)
-        const cleanInfos = {
-            session: result.session,
-            message: result.message,
-            user: secure(result.user),
-        }
-        return cleanInfos
-    } catch (err) {
+    if (session.id != token) {
         return sendError(event, createError({
-            statusCode: 500,
-            statusMessage: 'Internal server error' + err
+            statusCode: 400,
+            statusMessage: 'No user session available'
         }))
+    } else {
+        try {
+            const response = await fetch('http://localhost:8081/edituser', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+
+            })
+            const result = await response.json()
+            await sessionUpdater(result.session, result.user, event)
+            const cleanInfos = {
+                session: result.session,
+                message: result.message,
+                user: secure(result.user),
+            }
+            return cleanInfos
+        } catch (err) {
+            return sendError(event, createError({
+                statusCode: 500,
+                statusMessage: 'Internal server error' + err
+            }))
+        }
     }
 });
 

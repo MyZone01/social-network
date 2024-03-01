@@ -1,26 +1,5 @@
 import { useGlobalAuthStore } from "@/stores/useGlobalStateAuthStore";
 
-// export type user = {
-//     email: string,
-//     password: string,
-//     firstName: string,
-//     lastName: string,
-//     dateOfBirth: Date,
-//     avatarImage: string,
-//     nickname: string,
-//     aboutMe: string,
-//     isPublic: boolean,
-//     createdAt: Date,
-//     updatedAt: Date,
-//     deletedAt: Date,
-// }
-
-// interface Password {
-//     current: string,
-//     newPassword: string,
-//     repeatNewPassword: string,
-// }
-
 export const loadUserInfos = async () => {
   const store = useGlobalAuthStore();
 
@@ -50,20 +29,43 @@ export const editeUser = async (user) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `${store.token}`,
+          Authorization: `${store.token}`,
         },
-        body: data,
-      })
-      console.log(response)
-      console.log(response.message)
-      console.log(response.user)
-      console.log(response.session)
-      await store.update(response.session, response.user)
-      resolve(response.message)
+        body: JSON.stringify(data),
+      });
+
+      await store.update(response.session, response.user);
+      resolve(response.message);
     } catch (error) {
       reject(error);
     }
   });
 };
 
-export const updatePassword = async (password) => {};
+export const updatePassword = async (password) => {
+  const store = useGlobalAuthStore();
+
+  return new Promise(async (resolve, reject) => {
+    const data = {
+      password: password.currentPassword.trim(),
+      newPassword: password.newPassword.trim(),
+      repeatNewPassword: password.repeatNewPassword.trim(),
+    };
+
+    try {
+      const response = await $fetch("/api/updatepassword", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${store.token}badtoken`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      await store.update(response.session, response.user);
+      resolve(response.message);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

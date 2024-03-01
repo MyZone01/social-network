@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore'
-import { editeUser } from '@/composables/userEditor.js';
+import { editeUser, updatePassword } from '@/composables/userEditor.js';
 
+const status = ["public", "private"] 
 const baseStore = useGlobalAuthStore()
 const store = reactive(baseStore.user)//reactiveOmit(useGlobalAuthStore().user)
 const userInfos = reactive({
@@ -18,21 +19,10 @@ const userInfos = reactive({
     message: "",
 })
 
-const isPublic = ref(null)
-onMounted(() => {
-    console.log(isPublic)
-})
-
 function selector() {
     const index = store.isPublic ? 0 : 1
     console.log(ref("isPublic")[index])
 }
-
-const password = reactive({
-    currentPassword: "",
-    newPassword: "",
-    repeatNewPassword: "",
-})
 
 function changer(event) {
     const value = event.target.value
@@ -42,15 +32,42 @@ function changer(event) {
 
 const saveChanges = async () => {
     // isLoading.value = true;
-    userInfos.error = ''
+    userInfos.message = ''
     try {
         const result = await editeUser(userInfos)
+        if (result) {
+            userInfos.message = result.message
+        }
+    } catch (error) {
+        userInfos.message = error
+    } finally {
+        console.log("DONE")
+    }
+}
+
+const password = reactive({
+    currentPassword: "",
+    newPassword: "",
+    repeatNewPassword: "",
+    message: "",
+})
+
+function passwordChanger(event) {
+    const value = event.target.value
+    password[`${event.target.id}`] = value
+    // event.target.value = value
+}
+
+const changePassword = async () => {
+    password.message = ''
+    try {
+        const result = await updatePassword(password)
         if (result) {
             userInfos.message = result.message
             console.log("SAVED CHANGE")
         }
     } catch (error) {
-        userInfos.message = error
+        password.message = error
         console.log(error)
     } finally {
         console.log("DONE")
@@ -199,12 +216,16 @@ const saveChanges = async () => {
                                 <label class="md:w-32 text-right text-white"> Profile Status</label>
                                 <div class="flex-1 max-md:mt-4">
                                     <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
-                                        <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
-                                        <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option>
+                                        <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
+                                        <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
+                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic === account">
+                                            {{ account }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
+                        
                             <div @change="changer" class="md:flex items-start gap-10">
                                 <label class="md:w-32 text-right text-white"> About Me </label>
                                 <div class="flex-1 max-md:mt-4">
@@ -254,34 +275,38 @@ const saveChanges = async () => {
                 <!-- tab settings-->
                 <div>
 
-                    <form @submit.prevent="changePassword()">
+                    <form @submit="changePassword()">
 
                         <div class="space-y-6 max-w-lg mx-auto">
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Current Password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full">
+                                    <input id="currentPassword" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> New password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full text-black">
+                                    <input id="newPassword" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Repeat password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full">
+                                    <input id="repeatNewPassword" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <hr class="border-gray-100 dark:border-gray-700">
 
                         </div>
+
+                        <h2>{{ password }}</h2>
+
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ password.message }}</h2>
 
                         <div class="flex items-center justify-center gap-4 mt-16">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
