@@ -37,16 +37,7 @@
 
                 </div>
                 
-                <UAlert
-                v-if="showAlert"
-    icon="ic:baseline-warning"
-    class= "custom-alert"
-    variant="solid"
-    title="Error!"
-    description = "Choose audiance for your post "
-   
-  > 
- </UAlert>
+                <UAlert v-if="showAlert" icon="ic:baseline-warning" class= "custom-alert" variant="solid" title="Error!" description = "Choose audiance for your post "> </UAlert>
 
                 <div class="p-5 flex justify-between items-center">
                     <div>
@@ -133,12 +124,33 @@ export default {
                 content: formdata.get("post-content-text"),
                 privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
                 followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
-                base64Image: formdata.get("photo").size > 0 ? await LoadImageAsBase64(formdata.get("photo")) : null,
             }
+            if (formdata.get('photo').name) {
+                let body = new FormData()
+                body.append('file', formdata.get('photo'))
+                let response = await fetch("/api/upload", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${useGlobalAuthStore().token}`
+                    },
+                    body: body,
+                }).then(response => response.json()).catch(err => ({ errors: err }))
+                if (response.data) jsonFormObject.image_url = response.data
+            }
+            try {
+                let response = await fetch("http://localhost:8081/post/insert", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${useGlobalAuthStore().token}`
+                    },
+                    body: JSON.stringify(jsonFormObject)
+                }).then(response => response.json())
+                useFeedStore().addPost(response)
+                UIkit.modal("#create-status").hide();
 
-            console.log(jsonFormObject)
-
-
+            } catch (err) {
+                console.log(err)
+            }
         },
         resetCheckbox() {
             this.$refs.publicCheck.checked = false
@@ -147,7 +159,7 @@ export default {
         resetSelectMenu() {
             console.log("fdkkfdk");
             $('.js-example-basic-multiple').val([]).change()
-        }
+        },
     }
 }
 </script>

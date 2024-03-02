@@ -2,6 +2,7 @@
 
 export default defineEventHandler(async (event) => {
     const reader = await readMultipartFormData(event);
+    console.log(reader);
     if (!reader) return { status: 400, body: 'Bad request' };
     let file;
     for (let part of reader) {

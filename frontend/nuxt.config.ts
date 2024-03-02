@@ -67,5 +67,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     apiSecret: "thisisthesecretsauce",
-  }
+  },
+  image: {
+    domains: ['localhost:8081'],
+  },
 })

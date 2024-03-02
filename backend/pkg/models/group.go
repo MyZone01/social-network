@@ -363,7 +363,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB,) error {
 	gp.Post.UserID = gp.ID
 	gp.PostID = gp.Post.ID
 
-	if err := gp.Post.Create(db, gp.CreatorID); err != nil {
+	if err := gp.Post.Create(db); err != nil {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 
