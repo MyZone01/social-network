@@ -95,7 +95,7 @@ var loginHandler = func(ctx *octopus.Context) {
 	}
 	ctx.JSON(map[string]interface{}{
 		"session": idSession,
-		"user": newUser,
+		"user":    newUser,
 		"message": "User successfully logged.",
 		"status":  "200",
 	})
@@ -169,7 +169,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 	}
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
 		"session": idSession,
-		"user": newUser,
+		"user":    newUser,
 		"message": "User successfully registered and logged.",
 		"status":  "200",
 	})

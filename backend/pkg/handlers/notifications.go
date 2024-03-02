@@ -12,7 +12,7 @@ import (
 // Use the Context object to implement the notifications logic, such as creating or updating notifications.
 // After successful operation, you can send a response back to the client using methods like ctx.JSON().
 func handleNotifications(ctx *octopus.Context) {
-	// TODO: Implement the notifications logic here.
+	//TODO: Implement the notifications logic here.
 }
 
 // NotificationsHandler defines the structure for handling notifications requests.

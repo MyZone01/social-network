@@ -32,6 +32,7 @@ export const useGlobalAuthStore = defineStore('auth', {
       this.isAuthenticated = false
       this.token = ''
       this.user = {}
+      
       await navigateTo('/auth')
       return
     },
