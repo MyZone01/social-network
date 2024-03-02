@@ -22,6 +22,7 @@ const (
 type Notification struct {
 	ID        uuid.UUID `sql:"type:uuid;primary key"`
 	UserID    uuid.UUID `sql:"type:uuid"`
+	ConcernID uuid.UUID `sql:"type:uuid"`
 	Type      NotificationType
 	Message   string `sql:"type:text"`
 	CreatedAt time.Time
@@ -33,10 +34,10 @@ func (n *Notification) Create(db *sql.DB) error {
 	n.ID = uuid.New()
 	n.CreatedAt = time.Now()
 
-	query := `INSERT INTO notifications (id, user_id, type, message, created_at) 
+	query := `INSERT INTO notifications (id, user_id, concern_id, type, message, created_at) 
 		VALUES ($1, $2, $3, $4, $5)`
 
-	_, err := db.Exec(query, n.ID, n.UserID, n.Type, html.EscapeString(n.Message), n.CreatedAt)
+	_, err := db.Exec(query, n.ID, n.UserID, n.ConcernID, n.Type, html.EscapeString(n.Message), n.CreatedAt)
 	if err != nil {
 		return err
 	}
@@ -45,7 +46,7 @@ func (n *Notification) Create(db *sql.DB) error {
 
 // Get a notification by its ID
 func (n *Notification) Get(db *sql.DB, id uuid.UUID) error {
-	query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, user_id, concern_id, type, message, created_at, deleted_at FROM notifications WHERE id = $1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -54,7 +55,7 @@ func (n *Notification) Get(db *sql.DB, id uuid.UUID) error {
 
 	defer stm.Close()
 
-	err = stm.QueryRow(id).Scan(&n.ID, &n.UserID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
+	err = stm.QueryRow(id).Scan(&n.ID, &n.UserID, &n.ConcernID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
 	if err != nil {
 		return err
 	}

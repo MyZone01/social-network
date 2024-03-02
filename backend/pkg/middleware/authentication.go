@@ -28,6 +28,7 @@ func AuthRequired(ctx *octopus.Context) {
 		})
 		return
 	}
+
 	ctx.Values["userId"] = userId
 	ctx.Next()
 }

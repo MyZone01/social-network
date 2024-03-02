@@ -38,6 +38,17 @@ func HaveGroupAccess(ctx *octopus.Context) {
 	ctx.Next()
 }
 
+func IsGroupAdmin(ctx *octopus.Context) {
+	role := ctx.Values["role"].(models.GroupMemberRole)
+	if role != models.MemberRoleAdmin {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "Vous n'êtes pas autorisé.",
+		})
+		return
+	}
+	ctx.Next()
+}
+
 // CheckRole is a middleware that checks if the user have a specific role in the group
 func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
 	_role, ok := ctx.Values["role"].(models.GroupMemberRole)
@@ -254,6 +265,29 @@ func IsGroupExist(c *octopus.Context) {
 	c.Next()
 }
 
+func IsInvitedUserExist(c *octopus.Context) {
+	_userId := c.Request.URL.Query().Get("user_id")
+	user := new(models.User)
+
+	userId, err := uuid.Parse(_userId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid user uuid",
+		})
+		return
+	}
+
+	if err := user.Get(c.Db.Conn, userId); err != nil {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "User not found",
+		})
+		return
+	}
+
+	c.Values["invited_user_id"] = userId
+	c.Next()
+}
+
 func IsGroupPostExist(c *octopus.Context) {
 	groupId := c.Values["group_id"].(uuid.UUID)
 	_postId := c.Request.URL.Query().Get("post_id")
@@ -276,6 +310,54 @@ func IsGroupPostExist(c *octopus.Context) {
 
 	c.Values["group_id"] = groupId
 	c.Values["post_id"] = postId
+	c.Next()
+}
+
+func IsInvitationExist(c *octopus.Context) {
+	_invitationId := c.Request.URL.Query().Get("invitation_id")
+	member := new(models.GroupMember)
+
+	invitationId, err := uuid.Parse(_invitationId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid invitation uuid",
+		})
+		return
+	}
+
+	if err := member.GetMemberById(c.Db.Conn, invitationId, false); err != nil && member.Status != models.MemberStatusInvited {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Invitation not found",
+		})
+		return
+	}
+
+	c.Values["invitation_id"] = invitationId
+	c.Values["member"] = member
+	c.Next()
+}
+
+func IsRequestExist(c *octopus.Context) {
+	_requestingId := c.Request.URL.Query().Get("requesting_id")
+	member := new(models.GroupMember)
+
+	requestingId, err := uuid.Parse(_requestingId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid requesting uuid",
+		})
+		return
+	}
+
+	if err := member.GetMemberById(c.Db.Conn, requestingId, false); err != nil && member.Status != models.MemberStatusRequesting {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Requesting not found",
+		})
+		return
+	}
+
+	c.Values["requesting_id"] = requestingId
+	c.Values["member"] = member
 	c.Next()
 }
 

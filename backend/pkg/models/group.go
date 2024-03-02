@@ -123,7 +123,7 @@ func (g *Group) Get(db *sql.DB, id uuid.UUID, getmembers, getuser bool) error {
 	}
 
 	if getmembers {
-		err = g.GetMembers(db, getuser)
+		err = g.GetMembers(db, GroupMemberStatus(StatusAccepted), getuser)
 		if err != nil {
 			return fmt.Errorf("unable to get group members. %v", err)
 		}
@@ -201,7 +201,7 @@ func (gs *Groups) GetAllGroups(db *sql.DB, getmembers, getuser bool) error {
 		}
 
 		if getmembers {
-			err = g.GetMembers(db, getuser)
+			err = g.GetMembers(db, GroupMemberStatus(StatusAccepted),getuser)
 			if err != nil {
 				return fmt.Errorf("unable to get group members. %v", err)
 			}
@@ -271,6 +271,41 @@ func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuse
 	return nil
 }
 
+func (gm *GroupMember) GetMemberById(db *sql.DB, id uuid.UUID, getuser bool) error {
+	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE id=$1 AND deleted_at IS NULL`
+
+	stm, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stm.Close()
+
+	row := stm.QueryRow(id)
+	err = row.Scan(
+		&gm.ID,
+		&gm.GroupID,
+		&gm.MemberID,
+		&gm.Status,
+		&gm.Role,
+		&gm.CreatedAt,
+		&gm.UpdatedAt,
+		&gm.DeletedAt,
+	)
+	if err != nil {
+		return fmt.Errorf("unable to scan the row. %v", err)
+	}
+
+	if getuser {
+		var user = new(User)
+		err = user.Get(db, gm.MemberID)
+		if err != nil {
+			return fmt.Errorf("unable to get user. %v", err)
+		}
+	}
+
+	return nil
+}
+
 // UpdateMember updates the member in the group in the database
 func (gm *GroupMember) UpdateMember(db *sql.DB) error {
 	gm.UpdatedAt = time.Now()
@@ -309,8 +344,8 @@ func (gm *GroupMember) DeleteMember(db *sql.DB) error {
 }
 
 // GetMembers retrieves all members of the group from the database
-func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
-	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND deleted_at IS NULL`
+func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) error {
+	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND status=$2 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -318,7 +353,7 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 	}
 	defer stm.Close()
 
-	rows, err := stm.Query(g.ID)
+	rows, err := stm.Query(g.ID, status)
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
