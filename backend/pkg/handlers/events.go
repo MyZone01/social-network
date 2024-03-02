@@ -4,29 +4,117 @@ package handlers
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
+	"backend/pkg/models"
+	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
-// handleEvents is the core function that processes the events request.
-// It receives a Context object containing the request and response writer, along with additional methods for handling the request.
-// Use the Context object to implement the events logic, such as creating or updating events.
-// After successful operation, you can send a response back to the client using methods like ctx.JSON().
-func handleEvents(ctx *octopus.Context) {
-	// TODO: Implement the events logic here.
+func createEventHandler(ctx *octopus.Context) {
+	newEvent := models.Event{}
+
+	if err := ctx.BodyParser(&newEvent); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	newEvent.CreatorID = ctx.Values["userId"].(uuid.UUID)
+	newEvent.GroupID = ctx.Values["group_id"].(uuid.UUID)
+	if err := newEvent.Create(ctx.Db.Conn); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusCreated).JSON(newEvent)
 }
 
-// EventsHandler defines the structure for handling events requests.
-// It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var EventsRoute = route{
-	path:   "/events",
+var createEventRoute = route{
+	path:   "/create-event",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		createEventHandler,
+	},
+}
+
+func getAllEventByGroup(ctx *octopus.Context) {
+	events := models.Events{}
+	groupId := ctx.Values["group_id"].(uuid.UUID)
+	err := events.GetGroupEvents(ctx.Db.Conn, groupId, true, true)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusAccepted).JSON(events)
+}
+
+var getAllEventRoute = route{
+	path:   "/get-all-event-group",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired, // Middleware to check if the request is authenticated.
-		handleEvents,            // Handler function to process the events request.
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		getAllEventByGroup,
+	},
+}
+
+func respondEventHandler(ctx *octopus.Context) {
+	event := ctx.Values["event"].(models.Event)
+	member := ctx.Values["member"].(models.GroupMember)
+	participant := models.EventParticipant{}
+	_participant := models.EventParticipant{}
+	if err := ctx.BodyParser(&_participant); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	err := participant.GetParticipant(ctx.Db.Conn, event.ID, member.ID, false)
+	participant.Response = _participant.Response
+	if err != nil {
+		err := participant.CreateParticipant(ctx.Db.Conn, event.ID, member.ID)
+		if err != nil {
+			ctx.Status(http.StatusInternalServerError)
+			log.Println(err)
+			return
+		}
+	} else {
+		err := participant.UpdateParticipant(ctx.Db.Conn)
+		if err != nil {
+			ctx.Status(http.StatusInternalServerError)
+			log.Println(err)
+			return
+		}
+	}
+
+
+
+	ctx.Status(http.StatusOK).JSON(participant)
+}
+
+// TODO: Check if the event is not passed
+var respondEventRoute = route{
+	path:   "/response-event",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		middleware.IsGroupAdmin,
+		middleware.IsEventExist,
+		respondEventHandler,
 	},
 }
 
 func init() {
-	// Register the events route with the global AllHandler map.
-	AllHandler[EventsRoute.path] = EventsRoute
+	AllHandler[createEventRoute.path] = createEventRoute
+	AllHandler[getAllEventRoute.path] = getAllEventRoute
+	AllHandler[respondEventRoute.path] = respondEventRoute
 }

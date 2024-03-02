@@ -35,6 +35,7 @@ func HaveGroupAccess(ctx *octopus.Context) {
 		return
 	}
 	ctx.Values["role"] = mg.Role
+	ctx.Values["member"] = mg
 	ctx.Next()
 }
 
@@ -218,7 +219,6 @@ func CreateEventMiddleware(c *octopus.Context) {
 	c.Next()
 }
 
-// CreateGroupPostMiddleware is a middleware that checks if the data is valid
 func IsGroupPostValid(c *octopus.Context) {
 	var data = map[string]interface{}{}
 
@@ -232,6 +232,28 @@ func IsGroupPostValid(c *octopus.Context) {
 
 	if data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
 		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private" && data["privacy"] != "unlisted" && data["privacy"] != "almost private") {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid data",
+		})
+		return
+	}
+
+	c.Next()
+}
+
+func IsGroupValid(c *octopus.Context) {
+	var data = map[string]interface{}{}
+
+	if err := c.BodyParser(&data); err != nil {
+		log.Println(err.Error())
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Error parsing request body",
+		})
+		return
+	}
+
+	if data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
+		data["description"] == nil || strings.TrimSpace(data["description"].(string)) == "" {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Invalid data",
 		})
@@ -358,6 +380,30 @@ func IsRequestExist(c *octopus.Context) {
 
 	c.Values["requesting_id"] = requestingId
 	c.Values["member"] = member
+	c.Next()
+}
+
+func IsEventExist(c *octopus.Context) {
+	_eventId := c.Request.URL.Query().Get("event_id")
+	event := new(models.Event)
+
+	eventId, err := uuid.Parse(_eventId)
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Invalid event uuid",
+		})
+		return
+	}
+
+	if err := event.Get(c.Db.Conn, eventId, false, false); err != nil {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Event not found",
+		})
+		return
+	}
+
+	c.Values["event_id"] = eventId
+	c.Values["event"] = event
 	c.Next()
 }
 

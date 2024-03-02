@@ -35,6 +35,7 @@ var createGroupRoute = route{
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
+		middleware.IsGroupValid,
 		createGroup,
 	},
 }

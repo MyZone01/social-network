@@ -126,7 +126,9 @@ var askAccessRoute = route{
 }
 
 func getAllRequestAccess(ctx *octopus.Context) {
-	group := models.Group{}
+	group := models.Group{
+		ID: ctx.Values["group_id"].(uuid.UUID),
+	}
 	err := group.GetMembers(ctx.Db.Conn, models.MemberStatusRequesting, true)
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
