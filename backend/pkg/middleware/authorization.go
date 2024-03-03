@@ -308,7 +308,30 @@ func IsInvitedUserExist(c *octopus.Context) {
 		return
 	}
 
+	// Check if the user is already in the group
+	groupId := c.Values["group_id"].(uuid.UUID)
+	member := new(models.GroupMember)
+	if err := member.GetMember(c.Db.Conn, userId, groupId, false); err == nil {
+		c.Status(http.StatusConflict).JSON(map[string]string{
+			"error": "User already in the group",
+		})
+	}
+
 	c.Values["invited_user_id"] = userId
+	c.Next()
+}
+
+func NoGroupAccess(c *octopus.Context) {
+	groupId := c.Values["group_id"].(uuid.UUID)
+	userUUID := c.Values["userId"].(uuid.UUID)
+
+	var mg = new(models.GroupMember)
+	if err := mg.GetMember(c.Db.Conn, userUUID, groupId, false); err == nil {
+		c.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "Vous êtes déjà membre de ce groupe.",
+		})
+		return
+	}
 	c.Next()
 }
 
@@ -361,7 +384,7 @@ func IsInvitationExist(c *octopus.Context) {
 	c.Next()
 }
 
-func IsRequestExist(c *octopus.Context) {
+func IsAccessDemandExist(c *octopus.Context) {
 	_requestingId := c.Request.URL.Query().Get("requesting_id")
 	member := new(models.GroupMember)
 

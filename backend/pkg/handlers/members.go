@@ -97,9 +97,9 @@ var declineIntegrationRoute = route{
 	},
 }
 
-func askAccessHandler(ctx *octopus.Context) {
+func demandAccessHandler(ctx *octopus.Context) {
 	newMember := models.GroupMember{
-		Status: models.MemberStatusInvited,
+		Status: models.MemberStatusRequesting,
 		Role:   models.MemberRoleUser,
 	}
 
@@ -128,17 +128,18 @@ func askAccessHandler(ctx *octopus.Context) {
 	ctx.JSON(newMember)
 }
 
-var askAccessRoute = route{
-	path:   "/request-access",
+var demandAccessRoute = route{
+	path:   "/demand-access",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
-		askAccessHandler,
+		middleware.NoGroupAccess,
+		demandAccessHandler,
 	},
 }
 
-func getAllRequestAccess(ctx *octopus.Context) {
+func getAllAccessDemand(ctx *octopus.Context) {
 	group := models.Group{
 		ID: ctx.Values["group_id"].(uuid.UUID),
 	}
@@ -153,36 +154,40 @@ func getAllRequestAccess(ctx *octopus.Context) {
 	ctx.JSON(requestingUsers)
 }
 
-var getAllRequestAccessRoute = route{
-	path:   "/get-all-request-access",
+var getAllAccessDemandRoute = route{
+	path:   "/get-all-access-demand",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
 		middleware.HaveGroupAccess,
 		middleware.IsGroupAdmin,
-		getAllRequestAccess,
+		getAllAccessDemand,
 	},
 }
 
-var acceptRequestAccessRoute = route{
-	path:   "/accept-access",
+var acceptAccessDemandRoute = route{
+	path:   "/accept-access-demand",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
 		middleware.HaveGroupAccess,
 		middleware.IsGroupAdmin,
-		middleware.IsRequestExist,
+		middleware.IsAccessDemandExist,
 		acceptIntegrationHandler,
 	},
 }
 
-var declineRequestAccessRoute = route{
-	path:   "/accept-decline-access",
+var declineAccessDemandRoute = route{
+	path:   "/decline-access-demand",
 	method: http.MethodPost,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		middleware.IsGroupAdmin,
+		middleware.IsAccessDemandExist,
 		declineIntegrationHandler,
 	},
 }
@@ -191,8 +196,8 @@ func init() {
 	AllHandler[sendInvitationRoute.path] = sendInvitationRoute
 	AllHandler[acceptIntegrationRoute.path] = acceptIntegrationRoute
 	AllHandler[declineIntegrationRoute.path] = declineIntegrationRoute
-	AllHandler[askAccessRoute.path] = askAccessRoute
-	AllHandler[getAllRequestAccessRoute.path] = getAllRequestAccessRoute
-	AllHandler[acceptRequestAccessRoute.path] = acceptRequestAccessRoute
-	AllHandler[declineRequestAccessRoute.path] = declineRequestAccessRoute
+	AllHandler[demandAccessRoute.path] = demandAccessRoute
+	AllHandler[getAllAccessDemandRoute.path] = getAllAccessDemandRoute
+	AllHandler[acceptAccessDemandRoute.path] = acceptAccessDemandRoute
+	AllHandler[declineAccessDemandRoute.path] = declineAccessDemandRoute
 }
