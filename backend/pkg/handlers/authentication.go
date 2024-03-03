@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 type credentials struct {
@@ -127,9 +129,31 @@ var logoutRoute = route{
 	},
 }
 
+func meHandler(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+	user := models.User{}
+	err := user.Get(ctx.Db.Conn, userId)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	ctx.Status(http.StatusOK).JSON(user)
+}
+
+var meRoute = route{
+	method: http.MethodGet,
+	path:   "/me",
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		meHandler,
+	},
+}
+
 func init() {
 	AllHandler[loginRoute.path] = loginRoute
 	AllHandler[logoutRoute.path] = logoutRoute
+	AllHandler[meRoute.path] = meRoute
 	AllHandler[registrationRoute.path] = registrationRoute
 	AllHandler[healthRoute.path] = healthRoute
 }

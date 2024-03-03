@@ -35,7 +35,7 @@ func (n *Notification) Create(db *sql.DB) error {
 	n.CreatedAt = time.Now()
 
 	query := `INSERT INTO notifications (id, user_id, concern_id, type, message, created_at) 
-		VALUES ($1, $2, $3, $4, $5)`
+		VALUES ($1, $2, $3, $4, $5, $6)`
 
 	_, err := db.Exec(query, n.ID, n.UserID, n.ConcernID, n.Type, html.EscapeString(n.Message), n.CreatedAt)
 	if err != nil {
