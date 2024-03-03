@@ -34,11 +34,7 @@ func (c *credentials) Validate() error {
 	return nil
 }
 
-// loginHandler is a function that handles user login requests.
-// It attempts to unmarshal the form data from the client into a User instance,
-// checks if the credentials are valid, and if successful, starts a new session for the user.
 var loginHandler = func(ctx *octopus.Context) {
-	// Log the client's IP address that reached the login route.
 	var credentials = credentials{}
 
 	if err := ctx.BodyParser(&credentials); err != nil {
@@ -75,7 +71,6 @@ var loginHandler = func(ctx *octopus.Context) {
 
 	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
 
-	// Check if the user's credentials are valid.
 	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
 			"session": "",
@@ -87,7 +82,6 @@ var loginHandler = func(ctx *octopus.Context) {
 
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	if err != nil {
-		// If starting the session fails, log the error and return an HTTP status  500.
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while starting the session.",
@@ -114,7 +108,6 @@ var loginRoute = route{
 
 var registrationHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
-	// Attempts to deserialize the form data into the User instance.
 	if err := ctx.BodyParser(&newUser); err != nil {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"session": "",
@@ -144,9 +137,8 @@ var registrationHandler = func(ctx *octopus.Context) {
 		return
 	}
 	newUser.Password = string(newHash)
-	// Attempts to create a new user in the database with the provided data.
-	if newUser.Create(ctx.Db.Conn) != nil {
-		// If user creation fails, logs the error and returns an HTTP status  500.
+	if err := newUser.Create(ctx.Db.Conn); err != nil {
+		log.Println(err.Error())
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while creating the user.",
@@ -157,7 +149,6 @@ var registrationHandler = func(ctx *octopus.Context) {
 
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	if err != nil {
-		// If starting the session fails, logs the error and returns an HTTP status  500.
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while starting the session.",
