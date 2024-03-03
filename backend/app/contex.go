@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"strings"
 )
 
 type db struct {
@@ -66,4 +67,13 @@ func (c *Context) Status(code int) *Context {
 
 func (c *Context) WriteString(s string) (int, error) {
 	return c.ResponseWriter.Write([]byte(s))
+}
+
+func (c *Context) GetBearerToken() string {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+	return token
 }

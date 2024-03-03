@@ -9,8 +9,8 @@ import (
 )
 
 func TestCORSMiddleware(t *testing.T) {
-	migrate := sqlite.Migrations{}
 	app := octopus.New()
+	migrate := sqlite.Migrations{}
 	database := sqlite.OpenDB(migrate)
 	app.UseDb(database)
 

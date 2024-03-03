@@ -401,7 +401,7 @@ func (gp *GroupPost) CreatePost(db *sql.DB) error {
 	gp.Post.CreatedAt = time.Now()
 	gp.Post.UpdatedAt = time.Now()
 
-	if err := gp.Post.Create(db, gp.CreatorID); err != nil {
+	if err := gp.Post.Create(db); err != nil {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 

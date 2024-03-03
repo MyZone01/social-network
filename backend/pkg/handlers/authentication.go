@@ -5,11 +5,14 @@ import (
 	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
+	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/google/uuid"
+	"net/mail"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type credentials struct {
@@ -17,14 +20,40 @@ type credentials struct {
 	Password string `json:"password"`
 }
 
+func (c *credentials) Validate() error {
+	if _, err := mail.ParseAddress(c.Email); err != nil {
+		return errors.New("Invalid email")
+	}
+
+	if c.Password == "" {
+		return errors.New("Password is missing. Please provide it.")
+	}
+
+	return nil
+}
+
+// loginHandler is a function that handles user login requests.
+// It attempts to unmarshal the form data from the client into a User instance,
+// checks if the credentials are valid, and if successful, starts a new session for the user.
 var loginHandler = func(ctx *octopus.Context) {
-	log.Println("Host: [" + ctx.Request.RemoteAddr + "] reach login route")
+	// Log the client's IP address that reached the login route.
 	var credentials = credentials{}
 
 	if err := ctx.BodyParser(&credentials); err != nil {
-		log.Println(err)
-		ctx.Status(http.StatusInternalServerError)
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while parsing the form data.",
+			"status":  http.StatusInternalServerError,
+		})
 		return
+	}
+
+	if err := credentials.Validate(); err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"session": "",
+			"message": err.Error(),
+			"status":  http.StatusBadRequest,
+		})
 	}
 
 	newUser := models.User{
@@ -32,20 +61,44 @@ var loginHandler = func(ctx *octopus.Context) {
 		Password: credentials.Password,
 	}
 
-	if userCredentialAreValid := newUser.CheckCredentials(ctx); !userCredentialAreValid {
-		ctx.Status(http.StatusUnauthorized).JSON(
-			map[string]interface{}{
-				"error": "credentials are not valid",
-			},
-		)
+	err := newUser.Get(ctx.Db.Conn, credentials.Email)
+	if err != nil {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
+			"session": "",
+			"message": "invalid email.",
+			"status":  http.StatusUnauthorized,
+		})
 		return
 	}
+
+	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
+
+	// Check if the user's credentials are valid.
+	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Invalid credentials. Please try again.",
+			"status":  http.StatusUnauthorized,
+		})
+		return
+	}
+
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	if err != nil {
-		log.Println(err)
-		ctx.Status(http.StatusInternalServerError)
+		// If starting the session fails, log the error and return an HTTP status  500.
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while starting the session.",
+			"status":  http.StatusInternalServerError,
+		})
+		return
 	}
-	ctx.JSON(idSession)
+	ctx.JSON(map[string]interface{}{
+		"session": idSession,
+		"user":    newUser,
+		"message": "User successfully logged.",
+		"status":  "200",
+	})
 }
 
 var loginRoute = route{
@@ -58,31 +111,64 @@ var loginRoute = route{
 }
 
 var registrationHandler = func(ctx *octopus.Context) {
-	log.Println(" Host:  [ " + ctx.Request.RemoteAddr + " ] " + "reach registration route")
-
 	var newUser = models.User{}
-
+	// Attempts to deserialize the form data into the User instance.
 	if err := ctx.BodyParser(&newUser); err != nil {
-		log.Println(err)
-		ctx.Status(500)
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while parsing the form data.",
+			"status":  http.StatusBadRequest,
+		})
 		return
 	}
 
-	fmt.Println(newUser)
+	err := newUser.Validate()
+	if err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"session": "",
+			"message": err.Error(),
+			"status":  http.StatusBadRequest,
+		})
+		return
+	}
 
-	if err := newUser.Create(ctx.Db.Conn); err != nil {
-		log.Println(err)
-		ctx.Status(500)
+	newHash, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while hashing the password.",
+			"status":  http.StatusInternalServerError,
+		})
+		return
+	}
+	newUser.Password = string(newHash)
+	// Attempts to create a new user in the database with the provided data.
+	if newUser.Create(ctx.Db.Conn) != nil {
+		// If user creation fails, logs the error and returns an HTTP status  500.
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while creating the user.",
+			"status":  http.StatusInternalServerError,
+		})
 		return
 	}
 
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	if err != nil {
-		log.Println(err)
-		ctx.Status(500)
+		// If starting the session fails, logs the error and returns an HTTP status  500.
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"session": "",
+			"message": "Error while starting the session.",
+			"status":  http.StatusInternalServerError,
+		})
 		return
 	}
-	ctx.JSON(idSession)
+	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
+		"session": idSession,
+		"user":    newUser,
+		"message": "User successfully registered and logged.",
+		"status":  "200",
+	})
 }
 
 var registrationRoute = route{

@@ -10,7 +10,7 @@ export default defineConfig({
     'bg-active': 'bg-gray:10',
     'bg-faded': 'bg-gray:5',
     'bg-base': 'bg-white p-2 dark:bg-gray-900',
-    'text-base': 'text-black dark:text-white',
+    // 'text-base': 'text-black dark:text-white',
     'input-base': 'rounded-[50px] min-w-[300px] border-gray-200',
     'ui-base': 'bg-base text-base border-base',
   },

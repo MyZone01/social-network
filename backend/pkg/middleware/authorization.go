@@ -69,9 +69,18 @@ func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
 	ctx.Next()
 }
 
+const DirName = "uploads"
+
 // ImageUploadMiddleware is a middleware that checks if the file is an image and downloads it
 func ImageUploadMiddleware(c *octopus.Context) {
-	c.Request.ParseMultipartForm(10 << 20) // limit your max input length!
+	// Parse the multipart form in the request
+	err := c.Request.ParseMultipartForm(10 << 20) // 10 MB
+	if err != nil {
+		c.Status(http.StatusBadRequest).JSON(map[string]string{
+			"error": "Error Parsing the Form",
+		})
+		return
+	}
 	file, handler, err := c.Request.FormFile("file")
 	if err != nil {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
@@ -91,7 +100,7 @@ func ImageUploadMiddleware(c *octopus.Context) {
 	}
 
 	id := uuid.New()
-	path := path.Join("uploads", id.String()+filepath.Ext(handler.Filename))
+	path := path.Join(DirName, id.String()+filepath.Ext(handler.Filename))
 	// Create the file using the id as the name and the extension from the original file
 	dst, err := os.Create(path)
 	if err != nil {

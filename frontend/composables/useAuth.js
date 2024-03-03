@@ -1,47 +1,41 @@
-import { useGlobalAuthStore } from '../stores/useGobalStateAuthStore';
+import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
+import FormData from "form-data";
 
 export default () => {
   const store = useGlobalAuthStore();
-  
-  const setUser = (newToken) => {
-    store.login(newToken)
 
-    const cookie = useCookie('token')
-    cookie.value = newToken
+  const setUser = (access) => {
+    store.login(access.session, access.user);
+
+    const cookie = useCookie("token");
+    // cookie.value = newToken;
   };
 
-  const register = ({
-    firstName,
-    lastName,
-    email,
-    nickname,
-    password,
-    repeatPassword,
-    aboutMe,
-    avatarImg,
-  }) => {
-    console.log(avatarImg)
+  const register = async ({ avatarImage, data }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchData = await $fetch("/api/auth/registerValidator", {
-          method: "POST",
-          body: {
-            firstName,
-            lastName,
-            email,
-            nickname,
-            password,
-            repeatPassword,
-            aboutMe,
-            avatarImg,
-          },
-        });
-        if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession)
-          resolve(true);
+        const body = new FormData();
+        if (avatarImage) {
+          body.append("file", avatarImage);
         }
-      } catch (error) {
-        reject(error);
+        body.append("data", data);
+
+        const response = await $fetch("/api/auth/register", {
+          method: "POST",
+          body: body,
+        });
+
+        if (response.ok === false && response.status == 200) {
+          // alert the user that the avatar does not upload correctly
+          //
+          //
+          // and redirect to the index page
+          // resolve(true);
+        }
+        setUser(response);
+        resolve(true);
+      } catch (err) {
+        reject(err);
       }
     });
   };
@@ -49,23 +43,21 @@ export default () => {
   const login = ({ email, password }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const fetchData = await $fetch("/api/auth/loginValidator", {
+        const response = await $fetch("/api/auth/login", {
           method: "POST",
-          body: {
-            email,
-            password,
-          },
+          body: JSON.stringify({ data: { email, password } }),
         });
-        if (fetchData.userSession && !store.isAuthenticated) {
-          setUser(fetchData.userSession)
-          resolve(true);
-        }
-      } catch (error) {
-        reject(error);
+
+        console.log(response);
+        setUser(response);
+        resolve(true);
+      } catch (err) {
+        console.log("ERROR SIDE");
+        reject(err);
       }
     });
   };
-  
+
   return {
     login,
     register,

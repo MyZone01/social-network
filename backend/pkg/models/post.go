@@ -20,15 +20,16 @@ const (
 )
 
 type Post struct {
-	ID        uuid.UUID   `json:"id"`
-	UserID    uuid.UUID   `json:"userId"`
-	Title     string      `json:"title"`
-	Content   string      `json:"content"`
-	ImageURL  string      `json:"image_url"`
-	Privacy   PostPrivacy `json:"privacy"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt sql.NullTime
+	ID                uuid.UUID    `json:"id" sql:"type:uuid;primary key"`
+	UserID            uuid.UUID    `json:"user_id" sql:"type:uuid"`
+	Title             string       `json:"title" sql:"type:varchar(255)"`
+	Content           string       `json:"content" sql:"type:text"`
+	ImageURL          string       `json:"image_url" sql:"type:varchar(255)"`
+	Privacy           PostPrivacy  `json:"privacy"`
+	SelectedFollowers []uuid.UUID  `json:"followersSelectedID"`
+	CreatedAt         time.Time    `json:"created_at"`
+	UpdatedAt         time.Time    `json:"updated_at"`
+	DeletedAt         sql.NullTime `json:"deleted_at"`
 }
 
 // IsPublic returns true if the post is public
@@ -73,13 +74,12 @@ func PostPrivacyFromString(s string) (PostPrivacy, error) {
 }
 
 // Create inserts a new post into the database
-func (p *Post) Create(db *sql.DB, userOwnerUuid uuid.UUID) error {
+func (p *Post) Create(db *sql.DB) error {
 	// Define the post default properties
 	p.ID = uuid.New()
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
-	p.UserID = userOwnerUuid
-	query := `INSERT INTO posts (id, user_id, title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
+	query := `INSERT INTO posts (id, user_id,title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -101,8 +101,11 @@ func (p *Post) Create(db *sql.DB, userOwnerUuid uuid.UUID) error {
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v, privacy %v", err, p.Privacy)
 	}
+	if p.Privacy != PrivacyAlmostPrivate {
+		return nil
+	}
 
-	return nil
+	return p.saveFolowersSelection(db)
 }
 
 // Get retrieves a post from the database
@@ -251,4 +254,127 @@ func (p *Posts) GetAll(db *sql.DB) error {
 	}
 
 	return nil
+}
+
+func (p *Post) saveFolowersSelection(db *sql.DB) error {
+	// Préparez la requête SQL pour insérer les utilisateurs sélectionnés dans la table userSelected
+	query := `INSERT INTO selected_users (id, post_id, user_id) VALUES (? ,?, ?)`
+
+	// Préparez la requête SQL
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stmt.Close()
+
+	// Exécutez la requête pour chaque utilisateur sélectionné
+	for _, userID := range p.SelectedFollowers {
+		_, err = stmt.Exec(uuid.New(), p.ID, userID)
+		if err != nil {
+			return fmt.Errorf("unable to execute the query. %v", err)
+		}
+	}
+	return nil
+}
+func (p *Posts) GetAvailablePostForUser(db *sql.DB, userID uuid.UUID) error {
+	// Récupérez tous les posts publics
+	query := `SELECT * FROM posts WHERE privacy = 'public' AND deleted_at IS NULL`
+	if err := p.getPostsFromQuery(db, query); err != nil {
+		return err
+	}
+
+	// Récupérez les posts privés pour lesquels l'utilisateur est un abonné
+	query = `SELECT p.* FROM posts p
+             JOIN followers f ON p.user_id = f.followee_id
+             WHERE p.privacy = 'private' AND f.follower_id = ? AND f.status = 'accepted' AND p.deleted_at IS NULL`
+	if err := p.getPostsFromQuery(db, query, userID); err != nil {
+		return err
+	}
+
+	// Récupérez les posts presque privés pour lesquels l'utilisateur est sélectionné
+	query = `SELECT p.* FROM posts p
+             JOIN selected_users  us ON p.id = us.post_id
+             WHERE p.privacy = 'almost private' AND us.user_id = ? AND p.deleted_at IS NULL`
+	if err := p.getPostsFromQuery(db, query, userID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Une méthode d'aide pour exécuter une requête et remplir les posts
+func (p *Posts) getPostsFromQuery(db *sql.DB, query string, args ...interface{}) error {
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(args...)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(
+			&post.ID,
+			&post.UserID,
+			&post.Title,
+			&post.Content,
+			&post.ImageURL,
+			&post.Privacy,
+			&post.CreatedAt,
+			&post.UpdatedAt,
+			&post.DeletedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to scan the row. %v", err)
+		}
+		*p = append(*p, post)
+	}
+	return nil
+}
+func (Posts *Posts) ExploitForRendering(db *sql.DB) []map[string]interface{} {
+	valueToReturn := []map[string]interface{}{}
+	for _, v := range *Posts {
+		user := User{}
+		user.Get(db, v.UserID)
+		valueToReturn = append(valueToReturn, v.ExploitForRendering(db))
+	}
+	return valueToReturn
+}
+func (p *Post) ExploitForRendering(db *sql.DB) map[string]interface{} {
+	user := User{}
+	user.Get(db, p.UserID)
+	return map[string]interface{}{
+		"id":                 p.ID,
+		"userCompletName":    user.FirstName + user.LastName,
+		"imageUrl":           p.ImageURL,
+		"content":            p.Content,
+		"userAvatarImageUrl": user.AvatarImage,
+		"createdAt":          timeAgo(p.CreatedAt),
+	}
+}
+
+func timeAgo(t time.Time) string {
+	now := time.Now()
+	diff := now.Sub(t)
+	switch {
+	case diff.Hours() > 24:
+		days := int(diff.Hours() / 24)
+		return fmt.Sprintf("%d days ago", days)
+	case diff.Hours() > 1:
+		hours := int(diff.Hours())
+		return fmt.Sprintf("%d hours ago", hours)
+	case diff.Minutes() > 1:
+		minutes := int(diff.Minutes())
+		return fmt.Sprintf("%d minutes ago", minutes)
+	case diff.Seconds() < 1:
+		return "now"
+	default:
+		seconds := int(diff.Seconds())
+		return fmt.Sprintf("%d seconds ago", seconds)
+	}
 }

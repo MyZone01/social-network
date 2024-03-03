@@ -1,11 +1,10 @@
 package octopus
 
 import (
-	"backend/pkg/db/sqlite"
 	"database/sql"
 )
 
-var migrate = sqlite.Migrations{}
+// var migrate = sqlite.Migrations{}
 var AppTest = New()
 
 var Db = func() *sql.DB {

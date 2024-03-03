@@ -1,5 +1,4 @@
 <template>
-
     <header
         class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-white/80 sky-50 backdrop-blur-xl border-b border-slate-200 dark:bg-dark2 dark:border-slate-800">
 
@@ -17,14 +16,14 @@
                         <ion-icon :icon="ioniconsCloseOutline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
                     </button>
                     <div id="logo">
-                        <a href="feed.html">
+                        <NuxtLink to="/">
                             <img src="assets/images/logo.png" alt="" class="w-28 md:block hidden dark:!hidden">
                             <img src="assets/images/logo-light.png" alt="" class="dark:md:block hidden">
                             <img src="assets/images/logo-mobile.png" class="hidden max-md:block w-20 dark:!hidden"
                                 alt="">
                             <img src="assets/images/logo-mobile-light.png" class="hidden dark:max-md:block w-20"
                                 alt="">
-                        </a>
+                        </NuxtLink>
                     </div>
 
                 </div>
@@ -116,13 +115,11 @@
                     </div>
 
                     <!-- header icons -->
-                    <div
-                        class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
+                    <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
                         <!-- create -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5 max-sm:hidden">
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 max-sm:hidden">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15">
                                 </path>
                             </svg>
@@ -131,12 +128,12 @@
                         <div class="hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[324px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
 
-                            <h3 class="font-bold text-md"> Create </h3>
+                            <h3 class="font-bold text-xl"> Create </h3>
 
                             <!-- slider -->
                             <div class="mt-4" tabindex="-1" uk-slider="finite:true;sets: true">
 
-                                <div class="uk-slider-container pb-1">
+                                <!-- <div class="uk-slider-container pb-1">
 
                                     <ul class="uk-slider-items grid-small"
                                         uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-right-small; delay: 20 ;repeat: true">
@@ -179,7 +176,7 @@
                                         </li>
                                     </ul>
 
-                                </div>
+                                </div> -->
 
                                 <!-- slide nav icons -->
                                 <div class="dark:hidden">
@@ -204,6 +201,17 @@
                             <ul class="-m-1 mt-4 pb-1 text-xs text-gray-500 dark:text-white"
                                 uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
                                 <li
+                                    class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10"  uk-toggle="target: #create-status">
+                                    <img src="assets/images/icons/page.png" alt="" class="w-7">
+                                    <div class="flex-1">
+                                        <a href="timeline.html">
+                                            <h4 class="font-medium text-sm text-black dark:text-white"> Post </h4>
+                                        </a>
+                                        <div class="mt-1"> Share and enjoy with friends.
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                     <img src="assets/images/icons/group.png" alt="" class="w-7">
                                     <div class="flex-1">
@@ -216,17 +224,6 @@
                                 </li>
                                 <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                    <img src="assets/images/icons/page.png" alt="" class="w-7">
-                                    <div class="flex-1">
-                                        <a href="timeline.html">
-                                            <h4 class="font-medium text-sm text-black dark:text-white"> Pages </h4>
-                                        </a>
-                                        <div class="mt-1"> Find and connect with businesses.
-                                        </div>
-                                    </div>
-                                </li>
-                                <li
-                                    class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                     <img src="assets/images/icons/event.png" class="w-7">
                                     <div class="flex-1">
                                         <a href="timeline.html">
@@ -235,7 +232,7 @@
                                         <div class="mt-1">Discover fun activities near you .</div>
                                     </div>
                                 </li>
-                                <li
+                                <!-- <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                     <img src="assets/images/icons/market.png" class="w-8 -ml-1">
                                     <div class="flex-1">
@@ -244,8 +241,8 @@
                                         </a>
                                         <div class="mt-1">Find local buyers and sellers .</div>
                                     </div>
-                                </li>
-                                <li
+                                </li> -->
+                                <!-- <li
                                     class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                     <img src="assets/images/icons/game.png" alt="" class="w-7">
                                     <div class="flex-1">
@@ -254,15 +251,14 @@
                                         </a>
                                         <div class="mt-1"> play game with friends have fun. </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
 
 
                         </div>
 
                         <!-- notification -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
                             uk-tooltip="title: Notification; pos: bottom; offset:6">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 max-sm:hidden">
@@ -272,8 +268,7 @@
                                     d="M12 2.25A6.75 6.75 0 005.25 9v.75a8.217 8.217 0 01-2.119 5.52.75.75 0 00.298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 107.48 0 24.583 24.583 0 004.83-1.244.75.75 0 00.298-1.205 8.217 8.217 0 01-2.118-5.52V9A6.75 6.75 0 0012 2.25zM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 004.496 0l.002.1a2.25 2.25 0 11-4.5 0z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <div
-                                class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
+                            <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
                                 6</div>
                             <ion-icon :icon="ioniconsNotificationsOutline" class="sm:hidden text-2xl"></ion-icon>
                         </button>
@@ -285,9 +280,8 @@
                                 <h3 class="font-bold text-xl"> Notifications </h3>
 
                                 <div class="flex gap-2.5">
-                                    <button type="button"
-                                        class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> <ion-icon
-                                            class="text-xl" :icon="ioniconsEllipsisHorizontal"></ion-icon> </button>
+                                    <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white">
+                                        <ion-icon class="text-xl" :icon="ioniconsEllipsisHorizontal"></ion-icon> </button>
                                     <div class="w-[280px] group"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                                         <nav class="text-sm">
@@ -318,8 +312,7 @@
                                                 Welcome him to your profile. 👋 </p>
                                             <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
                                                 ago </div>
-                                            <div
-                                                class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                                            <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
                                             </div>
                                         </div>
                                     </a>
@@ -370,8 +363,7 @@
                                                 wants to chat with you. 💖 </p>
                                             <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
                                                 ago </div>
-                                            <div
-                                                class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                                            <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
                                             </div>
                                         </div>
                                     </a>
@@ -430,8 +422,7 @@
                         </div>
 
                         <!-- messages -->
-                        <button type="button"
-                            class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
+                        <button type="button" class="sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white"
                             uk-tooltip="title: Messages; pos: bottom; offset:6">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 max-sm:hidden">
@@ -455,8 +446,7 @@
                             </div>
 
                             <div class="relative w-full p-2 px-3 ">
-                                <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10"
-                                    placeholder="Search">
+                                <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10" placeholder="Search">
                                 <ion-icon :icon="ioniconsSearchOutline"
                                     class="dark:text-white absolute left-7 -translate-y-1/2 top-1/2"></ion-icon>
                             </div>
@@ -606,7 +596,7 @@
                                     <img src="assets/images/avatars/avatar-2.jpg" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
-                                        <h4 class="text-sm font-medium text-black">Stell johnson</h4>
+                                        <h4 class="text-sm font-medium text-black"> Stell johnson</h4>
                                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
                                             @mohnson</div>
                                     </div>
@@ -649,8 +639,8 @@
                                 <a @click="handleLogout()" class="cursor-pointer">
                                     <div
                                         class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
-                                        <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                                             </path>
@@ -665,15 +655,13 @@
 
                         <div class="flex items-center gap-2 hidden">
 
-                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
-                                class="w-9 h-9 rounded-full shadow">
+                            <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-9 h-9 rounded-full shadow">
 
                             <div class="w-20 font-semibold text-gray-600"> Hamse </div>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                             </svg>
 
                         </div>
@@ -689,10 +677,18 @@
     </header>
 </template>
 <script setup>
+import { useGlobalAuthStore } from '@/stores/useGobalStateAuthStore';
 const store = useGlobalAuthStore();
 
 function handleLogout() {
     store.logout()
+
+    const data = reactive({
+        firstName: store.firstName,
+        lastName: store.lastName,
+        nickname: store.nickname,
+
+    })
 
     navigateTo('/auth')
 }

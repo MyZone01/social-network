@@ -26,6 +26,7 @@ var HandleAll = func(app *octopus.App) {
 		http.MethodGet:  app.GET,
 		http.MethodDelete:  app.DELETE,
 		http.MethodPost: app.POST,
+		http.MethodPut:  app.PUT,
 	}
 	for _, v := range AllHandler {
 		mapConstructors[v.method](v.path, v.middlewareAndHandler...)
