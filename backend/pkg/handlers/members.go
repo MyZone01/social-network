@@ -54,7 +54,7 @@ var sendInvitationRoute = route{
 }
 
 func acceptIntegrationHandler(ctx *octopus.Context) {
-	member := ctx.Values["member"].(models.GroupMember)
+	member := ctx.Values["member"].(*models.GroupMember)
 	member.Status = models.MemberStatusAccepted
 	err := member.UpdateMember(ctx.Db.Conn)
 	if err != nil {
@@ -76,7 +76,7 @@ var acceptIntegrationRoute = route{
 }
 
 func declineIntegrationHandler(ctx *octopus.Context) {
-	member := ctx.Values["member"].(models.GroupMember)
+	member := ctx.Values["member"].(*models.GroupMember)
 	member.Status = models.MemberStatusDeclined
 	err := member.UpdateMember(ctx.Db.Conn)
 	if err != nil {
@@ -103,7 +103,7 @@ func askAccessHandler(ctx *octopus.Context) {
 		Role:   models.MemberRoleUser,
 	}
 
-	group := ctx.Values["group"].(models.Group)
+	group := ctx.Values["group"].(*models.Group)
 	requestingUserId := ctx.Values["userId"].(uuid.UUID)
 	err := newMember.CreateMember(ctx.Db.Conn, requestingUserId, group.ID)
 	if err != nil {
