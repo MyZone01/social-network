@@ -16,9 +16,9 @@ type Event struct {
 	ID           uuid.UUID `sql:"type:uuid;primary key"`
 	GroupID      uuid.UUID `sql:"type:uuid"`
 	CreatorID    uuid.UUID `sql:"type:uuid"`
-	Title        string    `sql:"type:varchar(255)"`
-	Description  string    `sql:"type:text"`
-	DateTime     time.Time
+	Title        string    `sql:"type:varchar(255)" json:"title"`
+	Description  string    `sql:"type:text" json:"description"`
+	DateTime     time.Time `json:"date_time"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    sql.NullTime
@@ -33,9 +33,9 @@ const (
 )
 
 type EventParticipant struct {
-	ID        uuid.UUID `sql:"type:uuid;primary key"`
-	MemberID  uuid.UUID `sql:"type:uuid"`
-	EventID   uuid.UUID `sql:"type:uuid"`
+	ID        uuid.UUID     `sql:"type:uuid;primary key"`
+	MemberID  uuid.UUID     `sql:"type:uuid"`
+	EventID   uuid.UUID     `sql:"type:uuid"`
 	Response  EventResponse `json:"response"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -49,7 +49,7 @@ func (e *Event) Create(db *sql.DB) error {
 	e.UpdatedAt = time.Now()
 
 	query := `INSERT INTO events (id, group_id, creator_id, title, description, date_time, created_at, updated_at) 
-		VALUES ($1, $2, $3, $4, $5, $6, $7)`
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -151,7 +151,7 @@ func (p *EventParticipant) CreateParticipant(db *sql.DB, eventID, memberID uuid.
 	return nil
 }
 
-func (p *EventParticipant) GetParticipant(db *sql.DB, eventID, memberID uuid.UUID, getUser bool) error {
+func (p *EventParticipant) GetParticipant(db *sql.DB, eventID, memberID, UserID uuid.UUID, getUser bool) error {
 	query := `SELECT id, event_id, member_id, response, created_at, updated_at FROM event_participants WHERE event_id = $1 AND member_id = $2`
 
 	stm, err := db.Prepare(query)
@@ -167,7 +167,7 @@ func (p *EventParticipant) GetParticipant(db *sql.DB, eventID, memberID uuid.UUI
 
 	if getUser {
 		u := User{}
-		if err := u.Get(db, p.MemberID); err != nil {
+		if err := u.Get(db, UserID); err != nil {
 			return err
 		}
 		p.User = u
@@ -234,11 +234,12 @@ func (p *EventParticipants) GetEventParticipants(db *sql.DB, eventID uuid.UUID, 
 		}
 
 		if getUser {
-			u := User{}
-			if err := u.Get(db, participant.MemberID); err != nil {
+			m := GroupMember{}
+			if err := m.GetMemberById(db, participant.MemberID, true); err != nil {
 				return err
 			}
-			participant.User = u
+
+			participant.User = m.User
 		}
 
 		*p = append(*p, participant)
@@ -248,7 +249,7 @@ func (p *EventParticipants) GetEventParticipants(db *sql.DB, eventID uuid.UUID, 
 }
 
 func (e *Events) GetGroupEvents(db *sql.DB, groupID uuid.UUID, getParticipants, getUser bool) error {
-	query := `SELECT id, group_id, title, description, date_time, created_at, updated_at FROM events WHERE group_id = $1`
+	query := `SELECT id, group_id, creator_id, title, description, date_time, created_at, updated_at FROM events WHERE group_id = $1`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -264,7 +265,7 @@ func (e *Events) GetGroupEvents(db *sql.DB, groupID uuid.UUID, getParticipants, 
 
 	for rows.Next() {
 		event := Event{}
-		err = rows.Scan(&event.ID, &event.GroupID, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt)
+		err = rows.Scan(&event.ID, &event.GroupID, &event.CreatorID, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt)
 		if err != nil {
 			return fmt.Errorf("error scanning group events: %v", err)
 		}

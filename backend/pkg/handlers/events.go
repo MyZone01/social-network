@@ -45,7 +45,9 @@ var createEventRoute = route{
 func getAllEventByGroup(ctx *octopus.Context) {
 	events := models.Events{}
 	groupId := ctx.Values["group_id"].(uuid.UUID)
-	err := events.GetGroupEvents(ctx.Db.Conn, groupId, true, true)
+	isParticipantNeeded := ctx.Request.URL.Query().Get("isParticipantNeeded") == "true"
+	isUserNeeded := ctx.Request.URL.Query().Get("isUserNeeded") == "true"
+	err := events.GetGroupEvents(ctx.Db.Conn, groupId, isParticipantNeeded, isUserNeeded)
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
 		log.Println(err)
@@ -67,8 +69,9 @@ var getAllEventRoute = route{
 }
 
 func respondEventHandler(ctx *octopus.Context) {
-	event := ctx.Values["event"].(models.Event)
-	member := ctx.Values["member"].(models.GroupMember)
+	event := ctx.Values["event"].(*models.Event)
+	member := ctx.Values["member"].(*models.GroupMember)
+
 	participant := models.EventParticipant{}
 	_participant := models.EventParticipant{}
 	if err := ctx.BodyParser(&_participant); err != nil {
@@ -76,7 +79,11 @@ func respondEventHandler(ctx *octopus.Context) {
 		log.Println(err)
 		return
 	}
-	err := participant.GetParticipant(ctx.Db.Conn, event.ID, member.ID, false)
+	if _participant.Response != "not_going" && _participant.Response != "going" {
+		ctx.Status(http.StatusBadRequest).JSON("Invalid response")
+		return
+	}
+	err := participant.GetParticipant(ctx.Db.Conn, event.ID, member.ID, member.MemberID, false)
 	participant.Response = _participant.Response
 	if err != nil {
 		err := participant.CreateParticipant(ctx.Db.Conn, event.ID, member.ID)
@@ -94,12 +101,9 @@ func respondEventHandler(ctx *octopus.Context) {
 		}
 	}
 
-
-
 	ctx.Status(http.StatusOK).JSON(participant)
 }
 
-// TODO: Check if the event is not passed
 var respondEventRoute = route{
 	path:   "/response-event",
 	method: http.MethodPost,

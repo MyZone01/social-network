@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
 
 	"html"
 	"time"
@@ -167,7 +166,6 @@ func (user *User) Delete(db *sql.DB) error {
 
 func (user *User) CheckCredentials(ctx *octopus.Context) bool {
 	query := `SELECT id,password FROM users WHERE (email = ? OR nickname = ?)`
-	log.Println("✅>>>>>>>>>>>>>>>>>>>>", user.Email, user.Password)
 
 	var realPassword string
 	err := ctx.Db.Conn.QueryRow(query, user.Email, user.Email).Scan(&user.ID, &realPassword)

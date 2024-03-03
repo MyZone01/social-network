@@ -266,6 +266,7 @@ func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuse
 		if err != nil {
 			return fmt.Errorf("unable to get user. %v", err)
 		}
+		gm.User = *user
 	}
 
 	return nil
@@ -301,6 +302,7 @@ func (gm *GroupMember) GetMemberById(db *sql.DB, id uuid.UUID, getuser bool) err
 		if err != nil {
 			return fmt.Errorf("unable to get user. %v", err)
 		}
+		gm.User = *user
 	}
 
 	return nil

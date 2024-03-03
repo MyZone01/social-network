@@ -103,9 +103,22 @@ func askAccessHandler(ctx *octopus.Context) {
 		Role:   models.MemberRoleUser,
 	}
 
-	groupId := ctx.Values["group_id"].(uuid.UUID)
+	group := ctx.Values["group"].(models.Group)
 	requestingUserId := ctx.Values["userId"].(uuid.UUID)
-	err := newMember.CreateMember(ctx.Db.Conn, requestingUserId, groupId)
+	err := newMember.CreateMember(ctx.Db.Conn, requestingUserId, group.ID)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	notification := models.Notification{
+		ConcernID: newMember.ID,
+		UserID:    group.CreatorID,
+		Type:      models.TypeGroupInvitation,
+		Message:   "You have been invited to join a group",
+	}
+	err = notification.Create(ctx.Db.Conn)
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
 		log.Println(err)
