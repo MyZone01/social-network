@@ -11,6 +11,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -284,6 +285,7 @@ func IsGroupExist(c *octopus.Context) {
 	}
 
 	c.Values["group_id"] = groupId
+	c.Values["group"] = group
 	c.Next()
 }
 
@@ -398,6 +400,13 @@ func IsEventExist(c *octopus.Context) {
 	if err := event.Get(c.Db.Conn, eventId, false, false); err != nil {
 		c.Status(http.StatusNotFound).JSON(map[string]string{
 			"error": "Event not found",
+		})
+		return
+	}
+
+	if event.DateTime.Before(time.Now()) {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Event is passed",
 		})
 		return
 	}

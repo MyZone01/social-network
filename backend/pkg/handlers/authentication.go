@@ -15,9 +15,6 @@ type credentials struct {
 	Password string `json:"password"`
 }
 
-// loginHandler is a function that handles user login requests.
-// It attempts to unmarshal the form data from the client into a User instance,
-// checks if the credentials are valid, and if successful, starts a new session for the user.
 var loginHandler = func(ctx *octopus.Context) {
 	log.Println("Host: [" + ctx.Request.RemoteAddr + "] reach login route")
 	var credentials = credentials{}
@@ -49,9 +46,6 @@ var loginHandler = func(ctx *octopus.Context) {
 	ctx.JSON(idSession)
 }
 
-// loginRoute is a structure that defines the login route for the API.
-// It specifies that the HTTP POST method should be used and gives the route path.
-// It also associates the middlewares and the route handler.
 var loginRoute = route{
 	method: http.MethodPost,
 	path:   "/login",
@@ -61,9 +55,6 @@ var loginRoute = route{
 	},
 }
 
-// registrationHandler is a function that handles account creation requests.
-// It reads the submitted form data from the client, creates a new user in the database,
-// and starts a new session for the user.
 var registrationHandler = func(ctx *octopus.Context) {
 	log.Println(" Host:  [ " + ctx.Request.RemoteAddr + " ] " + "reach registration route")
 
@@ -92,9 +83,6 @@ var registrationHandler = func(ctx *octopus.Context) {
 	ctx.JSON(idSession)
 }
 
-// registrationRoute is a structure that defines the registration route for the API.
-// It specifies that the HTTP POST method should be used and gives the route path.
-// It also associates the middlewares and the route handler.
 var registrationRoute = route{
 	method: http.MethodPost,
 	path:   "/registration",
@@ -116,8 +104,32 @@ var healthRoute = route{
 	},
 }
 
+func LogoutHandler(ctx *octopus.Context) {
+	token := ctx.Values["token"].(string)
+	err := config.Sess.Start(ctx).Delete(token)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]string{
+			"error": "Error while deleting session",
+		})
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}
+
+var logoutRoute = route{
+	method: http.MethodDelete,
+	path:   "/logout",
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		LogoutHandler,
+	},
+}
+
 func init() {
 	AllHandler[loginRoute.path] = loginRoute
+	AllHandler[logoutRoute.path] = logoutRoute
 	AllHandler[registrationRoute.path] = registrationRoute
 	AllHandler[healthRoute.path] = healthRoute
 }

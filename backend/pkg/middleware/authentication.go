@@ -30,6 +30,7 @@ func AuthRequired(ctx *octopus.Context) {
 	}
 
 	ctx.Values["userId"] = userId
+	ctx.Values["token"] = token
 	ctx.Next()
 }
 
