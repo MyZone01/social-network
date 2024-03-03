@@ -7,8 +7,6 @@ import (
 	"backend/pkg/models"
 	"log"
 	"net/http"
-
-	"github.com/google/uuid"
 )
 
 func insertPostHandler(ctx *octopus.Context) {
@@ -24,7 +22,7 @@ func insertPostHandler(ctx *octopus.Context) {
 	log.Println(newPost)
 	newPost.UserID = userPostOwnerId
 	if err := newPost.Create(ctx.Db.Conn); err != nil {
-		log.Println(err ,"dfl")
+		log.Println(err, "dfl")
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"error": "error while creating new post",
 		})
@@ -46,16 +44,6 @@ func feedHandler(ctx *octopus.Context) {
 		return
 	}
 	ctx.JSON(feedPosts.ExploitForRendering(ctx.Db.Conn))
-
-	_userID := ctx.Values["userId"].(uuid.UUID)
-
-	if err := newPost.Create(ctx.Db.Conn, _userID); err != nil {
-		ctx.Status(http.StatusInternalServerError)
-		log.Println(err)
-		return
-	}
-
-	ctx.Status(http.StatusCreated).JSON(newPost)
 }
 
 // AuthenticationHandler defines the structure for handling authentication requests.

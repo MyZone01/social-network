@@ -7,10 +7,12 @@ import (
 	"backend/pkg/models"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/google/uuid"
 	"net/mail"
+
+	"github.com/google/uuid"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -186,7 +188,7 @@ var healthHandler = func(ctx *octopus.Context) {
 
 var healthRoute = route{
 	method: http.MethodGet,
-	path: "/health",
+	path:   "/health",
 	middlewareAndHandler: []octopus.HandlerFunc{
 		healthHandler,
 	},
