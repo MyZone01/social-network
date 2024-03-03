@@ -61,7 +61,6 @@ func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string
 	app.routes = append(app.routes, route)
 }
 
-// Use adds a middleware to the application
 func (a *App) Use(handlers ...HandlerFunc) {
 	a.globalMiddleware = append(a.globalMiddleware, handlers...)
 }

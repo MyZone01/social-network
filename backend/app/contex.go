@@ -1,9 +1,11 @@
 package octopus
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"html/template"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -22,7 +24,19 @@ type Context struct {
 }
 
 func (c *Context) BodyParser(out interface{}) error {
-	return json.NewDecoder(c.Request.Body).Decode(&out)
+	body, err := io.ReadAll(c.Request.Body)
+	defer c.Request.Body.Close()
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(body, &out)
+	if err != nil {
+		return err
+	}
+
+	c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+	return nil
 }
 
 func (c *Context) JSON(data interface{}) error {

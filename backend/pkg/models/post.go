@@ -99,7 +99,7 @@ func (p *Post) Create(db *sql.DB) error {
 	)
 
 	if err != nil {
-		return fmt.Errorf("unable to execute the query. %v", err)
+		return fmt.Errorf("unable to execute the query. %v, privacy %v", err, p.Privacy)
 	}
 	if p.Privacy != PrivacyAlmostPrivate {
 		return nil

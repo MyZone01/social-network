@@ -7,8 +7,12 @@ import (
 	"backend/pkg/models"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
+
 	"net/mail"
+
+	"github.com/google/uuid"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -30,14 +34,9 @@ func (c *credentials) Validate() error {
 	return nil
 }
 
-// loginHandler is a function that handles user login requests.
-// It attempts to unmarshal the form data from the client into a User instance,
-// checks if the credentials are valid, and if successful, starts a new session for the user.
 var loginHandler = func(ctx *octopus.Context) {
-	// Log the client's IP address that reached the login route.
 	var credentials = credentials{}
 
-	// Try to deserialize the form data into the User instance.
 	if err := ctx.BodyParser(&credentials); err != nil {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
@@ -72,7 +71,6 @@ var loginHandler = func(ctx *octopus.Context) {
 
 	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
 
-	// Check if the user's credentials are valid.
 	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
 			"session": "",
@@ -83,9 +81,7 @@ var loginHandler = func(ctx *octopus.Context) {
 	}
 
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
-	// Start a new session for the user and set the user's ID as the session key.
 	if err != nil {
-		// If starting the session fails, log the error and return an HTTP status  500.
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while starting the session.",
@@ -101,21 +97,17 @@ var loginHandler = func(ctx *octopus.Context) {
 	})
 }
 
-// loginRoute is a structure that defines the login route for the API.
-// It specifies that the HTTP POST method should be used and gives the route path.
-// It also associates the middlewares and the route handler.
 var loginRoute = route{
 	method: http.MethodPost,
 	path:   "/login",
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
-		loginHandler,              // The route handler that will be executed when the route is called.
+		middleware.NoAuthRequired,
+		loginHandler,
 	},
 }
 
 var registrationHandler = func(ctx *octopus.Context) {
 	var newUser = models.User{}
-	// Attempts to deserialize the form data into the User instance.
 	if err := ctx.BodyParser(&newUser); err != nil {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"session": "",
@@ -145,9 +137,8 @@ var registrationHandler = func(ctx *octopus.Context) {
 		return
 	}
 	newUser.Password = string(newHash)
-	// Attempts to create a new user in the database with the provided data.
-	if newUser.Create(ctx.Db.Conn) != nil {
-		// If user creation fails, logs the error and returns an HTTP status  500.
+	if err := newUser.Create(ctx.Db.Conn); err != nil {
+		log.Println(err.Error())
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while creating the user.",
@@ -156,10 +147,8 @@ var registrationHandler = func(ctx *octopus.Context) {
 		return
 	}
 
-	// Starts a new session for the user and sets the user's ID as the session key.
 	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	if err != nil {
-		// If starting the session fails, logs the error and returns an HTTP status  500.
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while starting the session.",
@@ -175,20 +164,75 @@ var registrationHandler = func(ctx *octopus.Context) {
 	})
 }
 
-// registrationRoute is a structure that defines the registration route for the API.
-// It specifies that the HTTP POST method should be used and gives the route path.
-// It also associates the middlewares and the route handler.
 var registrationRoute = route{
 	method: http.MethodPost,
 	path:   "/registration",
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.NoAuthRequired, // Middleware indicating that no authentication is required for this route.
-		registrationHandler,       // The route handler that will be executed when the route is called.
+		middleware.NoAuthRequired,
+		registrationHandler,
+	},
+}
+
+var healthHandler = func(ctx *octopus.Context) {
+	ctx.WriteString("💻Server is Ok!")
+}
+
+var healthRoute = route{
+	method: http.MethodGet,
+	path:   "/health",
+	middlewareAndHandler: []octopus.HandlerFunc{
+		healthHandler,
+	},
+}
+
+func LogoutHandler(ctx *octopus.Context) {
+	token := ctx.Values["token"].(string)
+	err := config.Sess.Start(ctx).Delete(token)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]string{
+			"error": "Error while deleting session",
+		})
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}
+
+var logoutRoute = route{
+	method: http.MethodDelete,
+	path:   "/logout",
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		LogoutHandler,
+	},
+}
+
+func meHandler(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+	user := models.User{}
+	err := user.Get(ctx.Db.Conn, userId)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	ctx.Status(http.StatusOK).JSON(user)
+}
+
+var meRoute = route{
+	method: http.MethodGet,
+	path:   "/me",
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		meHandler,
 	},
 }
 
 func init() {
-	// Register the login and registration routes with the global AllHandler map.
 	AllHandler[loginRoute.path] = loginRoute
+	AllHandler[logoutRoute.path] = logoutRoute
+	AllHandler[meRoute.path] = meRoute
 	AllHandler[registrationRoute.path] = registrationRoute
+	AllHandler[healthRoute.path] = healthRoute
 }

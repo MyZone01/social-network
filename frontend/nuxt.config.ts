@@ -59,14 +59,22 @@ export default defineNuxtConfig({
   //     icons: true,
   //   },
   // },
+  runtimeConfig: {
+    app: {
+      devtools: {
+        iframeProps: {
+          allow: 'cross-origin-isolated',
+          credentialless: true,
+        },
+      },
+    },
+    apiSecret: "thisisthesecretsauce",
+  },
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',
     },
     storage: 'sessionStorage'
-  },
-  runtimeConfig: {
-    apiSecret: "thisisthesecretsauce",
   },
   image: {
     domains: ['localhost:8081'],

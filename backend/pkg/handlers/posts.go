@@ -22,7 +22,7 @@ func insertPostHandler(ctx *octopus.Context) {
 	log.Println(newPost)
 	newPost.UserID = userPostOwnerId
 	if err := newPost.Create(ctx.Db.Conn); err != nil {
-		log.Println(err ,"dfl")
+		log.Println(err, "dfl")
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"error": "error while creating new post",
 		})
@@ -44,7 +44,6 @@ func feedHandler(ctx *octopus.Context) {
 		return
 	}
 	ctx.JSON(feedPosts.ExploitForRendering(ctx.Db.Conn))
-
 }
 
 // AuthenticationHandler defines the structure for handling authentication requests.

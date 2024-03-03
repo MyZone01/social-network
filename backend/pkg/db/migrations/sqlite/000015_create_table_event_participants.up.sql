@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS events_participants (
+CREATE TABLE IF NOT EXISTS event_participants (
     id UUID PRIMARY KEY,
     event_id UUID REFERENCES events(id),
     member_id UUID REFERENCES users(id),

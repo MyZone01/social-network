@@ -49,7 +49,6 @@ func main() {
 		} else {
 			migrate.Migration = false
 		}
-		break
 	}
 
 	//initialisation of the backend application
