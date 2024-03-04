@@ -3,9 +3,9 @@ definePageMeta({
     middleware: ["pages-guard"]
 })
 
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore'
-import { editeUser, updatePassword } from '@/composables/userEditor.js';
+import { editUser, updatePassword } from '@/composables/userEditor.js';
 
 const { data, error } = await useAsyncData(() => {
     return useGlobalAuthStore().user
@@ -44,7 +44,7 @@ const saveChanges = async () => {
     // isLoading.value = true;
     userInfos.message = ''
     try {
-        const result = await editeUser(userInfos)
+        const result = await editUser(userInfos)
         if (result) {
             userInfos.message = result
         }
@@ -73,7 +73,7 @@ const changePassword = async () => {
     try {
         const result = await updatePassword(password)
         if (result) {
-            userInfos.message = result.message
+            password.message = result.message
         }
     } catch (error) {
         password.message = error
@@ -316,8 +316,6 @@ const changePassword = async () => {
                             <hr class="border-gray-100 dark:border-gray-700">
 
                         </div>
-
-                        <h2>{{ password }}</h2>
 
                         <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ password.message }}</h2>
 

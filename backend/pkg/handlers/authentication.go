@@ -6,6 +6,7 @@ import (
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"errors"
+	"log"
 	"net/http"
 
 	"net/mail"

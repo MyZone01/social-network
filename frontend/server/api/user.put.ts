@@ -18,6 +18,8 @@ export default defineEventHandler(async (event) => {
         name: "server-store",
     })
 
+    console.log("FROM STORE",body)
+    console.log("FROM H3",session.data)
     // console.log(session.data.sessionToken, "<===>", token)
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
@@ -26,7 +28,8 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
-            body.password = session.data.user.password
+            body["password"] = session.data.userInfos.password
+            console.log(body)
             const response = await fetch('http://localhost:8081/edituser', {
                 method: 'PUT',
                 headers: {

@@ -8,7 +8,7 @@ import { useGlobalAuthStore } from "@/stores/useGlobalStateAuthStore";
 //   return store;
 // };
 
-export const editeUser = async (user) => {
+export const editUser = async (user) => {
   const store = useGlobalAuthStore();
 
   const error = validateUserInfo(user);
@@ -20,6 +20,7 @@ export const editeUser = async (user) => {
     // const required = [user.email, ]
     const data = {
       email: user.email.trim(),
+      password: "",
       firstName: user.firstName.trim(),
       lastName: user.lastName.trim(),
       dateOfBirth: new Date(user.dateOfBirth),
