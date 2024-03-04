@@ -92,6 +92,8 @@ func (g *Group) Create(db *sql.DB) error {
 		return fmt.Errorf("unable to create group member. %v", err)
 	}
 
+	g.GroupMembers = append(g.GroupMembers, gm)
+
 	return nil
 }
 
@@ -121,7 +123,7 @@ func (g *Group) Get(db *sql.DB, id uuid.UUID, getmembers, getuser bool) error {
 	}
 
 	if getmembers {
-		err = g.GetMembers(db, getuser)
+		err = g.GetMembers(db, GroupMemberStatus(StatusAccepted), getuser)
 		if err != nil {
 			return fmt.Errorf("unable to get group members. %v", err)
 		}
@@ -199,7 +201,7 @@ func (gs *Groups) GetAllGroups(db *sql.DB, getmembers, getuser bool) error {
 		}
 
 		if getmembers {
-			err = g.GetMembers(db, getuser)
+			err = g.GetMembers(db, GroupMemberStatus(StatusAccepted),getuser)
 			if err != nil {
 				return fmt.Errorf("unable to get group members. %v", err)
 			}
@@ -218,14 +220,14 @@ func (gm *GroupMember) CreateMember(db *sql.DB, memberID, groupID uuid.UUID) err
 	gm.MemberID = memberID
 	gm.CreatedAt = time.Now()
 	gm.UpdatedAt = time.Now()
-	query := `INSERT INTO group_members (id, group_id, member_id, status, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)`
+	query := `INSERT INTO group_members (id, group_id, member_id, status, role, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return fmt.Errorf("unable to prepare the query. %v", err)
 	}
 
-	_, err = stmt.Exec(gm.ID, gm.GroupID, gm.MemberID, gm.Status, gm.CreatedAt, gm.UpdatedAt)
+	_, err = stmt.Exec(gm.ID, gm.GroupID, gm.MemberID, gm.Status, gm.Role, gm.CreatedAt, gm.UpdatedAt)
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
@@ -235,7 +237,7 @@ func (gm *GroupMember) CreateMember(db *sql.DB, memberID, groupID uuid.UUID) err
 
 // GetMember retrieves a member from the group in the database
 func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuser bool) error {
-	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND member_id=$2 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND member_id=$2 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -249,6 +251,7 @@ func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuse
 		&gm.GroupID,
 		&gm.MemberID,
 		&gm.Status,
+		&gm.Role,
 		&gm.CreatedAt,
 		&gm.UpdatedAt,
 		&gm.DeletedAt,
@@ -263,6 +266,43 @@ func (gm *GroupMember) GetMember(db *sql.DB, memberID, groupID uuid.UUID, getuse
 		if err != nil {
 			return fmt.Errorf("unable to get user. %v", err)
 		}
+		gm.User = *user
+	}
+
+	return nil
+}
+
+func (gm *GroupMember) GetMemberById(db *sql.DB, id uuid.UUID, getuser bool) error {
+	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE id=$1 AND deleted_at IS NULL`
+
+	stm, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stm.Close()
+
+	row := stm.QueryRow(id)
+	err = row.Scan(
+		&gm.ID,
+		&gm.GroupID,
+		&gm.MemberID,
+		&gm.Status,
+		&gm.Role,
+		&gm.CreatedAt,
+		&gm.UpdatedAt,
+		&gm.DeletedAt,
+	)
+	if err != nil {
+		return fmt.Errorf("unable to scan the row. %v", err)
+	}
+
+	if getuser {
+		var user = new(User)
+		err = user.Get(db, gm.MemberID)
+		if err != nil {
+			return fmt.Errorf("unable to get user. %v", err)
+		}
+		gm.User = *user
 	}
 
 	return nil
@@ -306,8 +346,8 @@ func (gm *GroupMember) DeleteMember(db *sql.DB) error {
 }
 
 // GetMembers retrieves all members of the group from the database
-func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
-	query := `SELECT id, group_id, member_id, status, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND deleted_at IS NULL`
+func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) error {
+	query := `SELECT id, group_id, member_id, status, role, created_at, updated_at, deleted_at FROM group_members WHERE group_id=$1 AND status=$2 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -315,7 +355,7 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 	}
 	defer stm.Close()
 
-	rows, err := stm.Query(g.ID)
+	rows, err := stm.Query(g.ID, status)
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
@@ -328,6 +368,7 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 			&gm.GroupID,
 			&gm.MemberID,
 			&gm.Status,
+			&gm.Role,
 			&gm.CreatedAt,
 			&gm.UpdatedAt,
 			&gm.DeletedAt,
@@ -352,21 +393,19 @@ func (g *Group) GetMembers(db *sql.DB, getusers bool) error {
 }
 
 // CreatePost inserts a new post into the group in the database
-func (gp *GroupPost) CreatePost(db *sql.DB,) error {
+func (gp *GroupPost) CreatePost(db *sql.DB) error {
 	// Define the group post default properties
 	gp.ID = uuid.New()
 	gp.CreatedAt = time.Now()
 	gp.UpdatedAt = time.Now()
 	gp.Post.CreatedAt = time.Now()
 	gp.Post.UpdatedAt = time.Now()
-	gp.Post.ID = uuid.New()
-	gp.Post.UserID = gp.ID
-	gp.PostID = gp.Post.ID
 
-	if err := gp.Post.Create(db, gp.CreatorID); err != nil {
+	if err := gp.Post.Create(db); err != nil {
 		return fmt.Errorf("unable to create the post. %v", err)
 	}
 
+	gp.PostID = gp.Post.ID
 	query := `INSERT INTO group_posts (id, group_id, post_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
 
 	stmt, err := db.Prepare(query)
@@ -413,6 +452,8 @@ func (gp *GroupPost) GetPost(db *sql.DB, groupID, groupPostID uuid.UUID, getpost
 			return fmt.Errorf("unable to get post. %v", err)
 		}
 	}
+
+	gp.CreatorID = gp.Post.UserID
 
 	return nil
 }

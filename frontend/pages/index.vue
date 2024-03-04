@@ -41,18 +41,18 @@
             </div>
 
           </div>
-
           <!--  post image-->
-          <post-card-img />
-
+          <post-card-img v-for="post in useFeedStore().posts" :key="post.id" :post="post" />
           <!--  post image with slider-->
-
-
-          <!-- post text-->
-          <post-card-text />
-
           <!-- placeholder -->
-          <post-placeholder />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
 
         </div>
 
@@ -60,10 +60,12 @@
     </main>
   </NuxtLayout>
 </template>
+<script >
 
-<script setup>
-definePageMeta({
-    middleware: ["pages-guard"]
-})
+export default {
+  async setup() {
+    useFeedStore().getUserFeed()
+  }
+}
 
 </script>

@@ -5,13 +5,14 @@
 
     <!-- post heading -->
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-      <a href="timeline.html"> <img src="assets/images/avatars/avatar-3.jpg" alt="" class="w-9 h-9 rounded-full">
+      <a href="timeline.html">
+        <nuxt-img :src="'http://localhost:8081/'+post.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
       </a>
       <div class="flex-1">
         <a href="timeline.html">
-          <h4 class="text-black dark:text-white"> Monroe Parker </h4>
+          <h4 class="text-black dark:text-white"> {{ post.userCompletName }}</h4>
         </a>
-        <div class="text-xs text-gray-500 dark:text-white/80"> 2 hours ago</div>
+        <div class="text-xs text-gray-500 dark:text-white/80"> {{ post.createdAt }}</div>
       </div>
 
       <div class="-mr-1">
@@ -33,42 +34,20 @@
         </div>
       </div>
     </div>
-
+    <div class="sm:px-4 p-2.5 pt-0">
+      <p class="font-normal"> {{ post.content }} </p>
+    </div>
     <!-- post image -->
-    <a href="#preview_modal" uk-toggle>
+
+    <a href="#preview_modal" uk-toggle  v-if="post.imageUrl">
       <div class="relative w-full lg:h-96 h-full sm:px-4">
-        <img src="assets/images/post/img-2.jpg" alt="" class="sm:rounded-lg w-full h-full object-cover">
+        <nuxt-img :src="'http://localhost:8081/'+post.imageUrl" class="sm:rounded-lg w-full h-full object-cover" />
       </div>
     </a>
 
     <!-- post icons -->
     <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700"> <ion-icon class="text-lg"
-              name="heart"></ion-icon> </button>
-          <a href="#">1,300</a>
-        </div>
-        <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-          uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
 
-          <div class="flex gap-2" uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
-            <button type="button" class="text-red-600 hover:scale-125 duration-300">
-              <span> 👍 </span></button>
-            <button type="button" class="text-red-600 hover:scale-125 duration-300">
-              <span> ❤️ </span></button>
-            <button type="button" class="text-red-600 hover:scale-125 duration-300">
-              <span> 😂 </span></button>
-            <button type="button" class="text-red-600 hover:scale-125 duration-300">
-              <span> 😯 </span></button>
-            <button type="button" class="text-red-600 hover:scale-125 duration-300">
-              <span> 😢 </span></button>
-          </div>
-
-          <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden">
-          </div>
-        </div>
-      </div>
       <div class="flex items-center gap-3">
         <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
           <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
@@ -141,3 +120,16 @@
 
   </div>
 </template>
+<script>
+export default {
+  mounted(){
+    
+  },
+  props: {
+    post: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
