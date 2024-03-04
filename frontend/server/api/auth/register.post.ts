@@ -41,7 +41,6 @@ export default defineEventHandler(async (event) => {
 
   const body = new FormData();
   body.append('file', new Blob([file.data]), file.filename);
-  console.log(response)
 
   const response2 = await fetcher("http://localhost:8081/upload", "POST", body, response.session)
   if (!response2.imageurl) {
@@ -51,7 +50,6 @@ export default defineEventHandler(async (event) => {
   register.avatarImage = response2.imageurl;
   const response3 = await fetcher("http://localhost:8081/updateuser", "PUT", JSON.stringify(register), response.session)
   if (response3.status !== 200) {
-    console.log("Here is the INTERNAL ERROR ===> error updating")
     return { status: 200, body: response3.message, session: response.session, ok: false }
   }
 

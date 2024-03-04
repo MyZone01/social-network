@@ -1,16 +1,15 @@
 import { useGlobalAuthStore } from "@/stores/useGlobalStateAuthStore";
 
-export const loadUserInfos = async () => {
-  const store = useGlobalAuthStore();
+// export const loadUserInfos = async () => {
+//   const store = useGlobalAuthStore();
 
-  console.log("FROM STORE by LoadUserInfos function", store.user);
+//   console.log("FROM STORE by LoadUserInfos function", store.user);
 
-  return store;
-};
+//   return store;
+// };
 
 export const editeUser = async (user) => {
   const store = useGlobalAuthStore();
-  console.log(user)
 
   const error = validateUserInfo(user);
   if (error) {

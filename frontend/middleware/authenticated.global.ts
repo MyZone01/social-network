@@ -23,7 +23,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   .then((res) => {
     checker = res ? true : false
     const isAuthenticated = authStore.isAuthenticated && checker;
-    console.log(isAuthenticated)
+    
     if (!isAuthenticated && to.path !== "/auth") {
       authStore.logout();
       return navigateTo("/auth");

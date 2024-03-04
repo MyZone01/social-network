@@ -29,10 +29,10 @@ const userInfos = reactive({
     message: "",
 })
 
-function selector() {
-    const index = store.isPublic ? 0 : 1
-    console.log(ref("isPublic")[index])
-}
+// function selector() {
+//     const index = store.isPublic ? 0 : 1
+//     console.log(ref("isPublic")[index])
+// }
 
 function changer(event) {
     const value = event.target.value
@@ -51,7 +51,7 @@ const saveChanges = async () => {
     } catch (error) {
         userInfos.message = error
     } finally {
-        console.log("DONE")
+        console.log("changes processed")
     }
 }
 
@@ -74,13 +74,11 @@ const changePassword = async () => {
         const result = await updatePassword(password)
         if (result) {
             userInfos.message = result.message
-            console.log("SAVED CHANGE")
         }
     } catch (error) {
         password.message = error
-        console.log(error)
     } finally {
-        console.log("DONE")
+        console.log("changes processed")
     }
 }
 </script>

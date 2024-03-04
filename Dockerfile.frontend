@@ -9,9 +9,10 @@ COPY frontend/package*.json ./
 
 # Install dependencies
 RUN npm install
+RUN npm install execa
 
 # Copy the rest of the application source code
-COPY . .
+COPY ./frontend/ .
 
 # Build the Nuxt application
 RUN npm run build

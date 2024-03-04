@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         name: "server-store",
     })
 
-    console.log(session.data.sessionToken, "<===>", token)
+    // console.log(session.data.sessionToken, "<===>", token)
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
             statusCode: 400,
