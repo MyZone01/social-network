@@ -8,6 +8,5 @@ export default defineEventHandler(async (event) => {
     }
 
   })
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>from api", groups);
   return { groups }
 })

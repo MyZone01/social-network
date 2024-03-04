@@ -12,7 +12,7 @@ const props = defineProps(['group'])
     </NuxtLink>
     <div class="card-body z-10 relative w-full">
       <NuxtLink :href="'/groups/' + props.group.ID">
-        <h4 class="card-title text-xl font-bold text-ellipsis w-full">
+        <h4 class="card-title text-xl text-black font-bold text-ellipsis w-full">
           {{ props.group.Title }}
         </h4>
       </NuxtLink>

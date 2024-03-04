@@ -22,8 +22,8 @@
                 <div class="space-y-5 mt-3 p-2">
                     <input
                         class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl   dark:!text-white-100 dark:placeholder:!text-red-500 dark:!bg-slate-800"
-                        name="Title" id="" type="text" placeholder="name"/>
-                        <textarea class="resize-none w-full" id="" cols="30" rows="10" name="Description" placeholder="Description"></textarea>
+                        name="title" id="" type="text" placeholder="name"/>
+                        <textarea class="resize-none w-full" id="" cols="30" rows="10" name="description" placeholder="Description"></textarea>
                 </div>
  
 
@@ -43,6 +43,7 @@
     </div>
 
 </template>
+
 <script>
 export default {
     mounted() {
@@ -52,18 +53,19 @@ export default {
         async submitData(e) {
             e.preventDefault()
             const store = useGlobalAuthStore()
-            const data = new FormData(e.target)
-            const response = await $fetch('/api/group/create', {
+            const formData = new FormData(e.target)
+            const { data, pending, error, refresh } = await useFetch('/api/group/create', {
                 method: 'post',
                 headers: {
                     Authorization: `Bearer ${store.token}`,
                 },
-                body: JSON.stringify(Object.fromEntries(data.entries()))
+                body: JSON.stringify(Object.fromEntries(formData.entries())),
+                onResponse({ request, response, options }) {
+                    const data = JSON.parse(response._data)
+                    const gid = data.ID
+                    navigateTo(`/groups/${gid}`)
+                },
             })
-            const gid = response.ID
-            navigateTo(`/groups/${gid}`)
-
-
 
         }
     }
@@ -72,6 +74,7 @@ export default {
 
 
 </script>
+
 <style lang="">
 
-</style>    
+</style>
