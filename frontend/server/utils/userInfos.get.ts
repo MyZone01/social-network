@@ -1,4 +1,4 @@
-import { getSession, sendError } from "h3"
+import { getSession, sendError, defineEventHandler } from "h3"
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     const sessionId = await getSession(event, {
         password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
         name: "server-store",
-        generateId: () => { return '' }
     })
     if (token == sessionId.id) {
         return { user: sessionId.data.userInfos }

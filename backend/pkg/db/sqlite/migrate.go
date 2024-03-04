@@ -29,7 +29,7 @@ func Migration(DB *sql.DB, migration Migrations) {
 	databasePath := currentDir + "/pkg/db/sqlite/social-network.db"
 	m, err := migrate.New("file://"+migrationDir, "sqlite://"+databasePath)
 	if err != nil {
-		fmt.Println(databasePath, m, err)
+		// fmt.Println(databasePath, m, err)
 		log.Fatal(err)
 	}
 
@@ -41,7 +41,6 @@ func Migration(DB *sql.DB, migration Migrations) {
 
 	switch strings.ToLower(migration.Action) {
 	case "-up":
-		fmt.Println("here")
 		// Apply one migration (1 Up)
 		// if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		// 	fmt.Println(err)

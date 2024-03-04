@@ -23,7 +23,7 @@ export const secure = (user: UserInfos) => {
         email: user.email,
         firstName: user.firstName, 
         lastName: user.lastName,
-        password: user.password,
+        // password: user.password,
         dateOfBirth: user.dateOfBirth.split("T00:00:00Z")[0],
         avatarImage: user.avatarImage, 
         nickname: user.nickname, 

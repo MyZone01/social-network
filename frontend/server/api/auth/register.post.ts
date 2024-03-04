@@ -56,20 +56,21 @@ export default defineEventHandler(async (event) => {
   }
 
   response.user.avatarImage = register.avatarImage
-  const serverSession = await useSession(event, {
-    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
-    name: "server-store",
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    },
-    maxAge: 60 * 60 * 24 * 7,
-    generateId: () => { return response.session }
-  })
-  await serverSession.update({
-    userInfos: response.user
-  })
+  await sessionCreator(response.session, response.user, event)
+  // const serverSession = await useSession(event, {
+  //   password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
+  //   name: "server-store",
+  //   cookie: {
+  //     httpOnly: true,
+  //     secure: true,
+  //     sameSite: "strict",
+  //   },
+  //   maxAge: 60 * 60 * 24 * 7,
+  //   generateId: () => { return response.session }
+  // })
+  // await serverSession.update({
+  //   userInfos: response.user
+  // })
   return {
     status: 200,
     body: "User registered successfully",

@@ -1,11 +1,21 @@
 <script setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
+
 import { ref } from 'vue'
 import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore'
 import { editeUser, updatePassword } from '@/composables/userEditor.js';
 
-const status = ["public", "private"] 
-const baseStore = useGlobalAuthStore()
-const store = reactive(baseStore.user)//reactiveOmit(useGlobalAuthStore().user)
+const { data, error } = await useAsyncData(() => {
+    return useGlobalAuthStore().user
+})
+
+// const baseStore = useGlobalAuthStore()
+const store = reactive(useGlobalAuthStore().user)
+const onDisplay = reactive(data)
+const status = ["public", "private"]
+
 const userInfos = reactive({
     email: store.email,
     password: store.password,
@@ -36,7 +46,7 @@ const saveChanges = async () => {
     try {
         const result = await editeUser(userInfos)
         if (result) {
-            userInfos.message = result.message
+            userInfos.message = result
         }
     } catch (error) {
         userInfos.message = error
@@ -93,10 +103,15 @@ const changePassword = async () => {
 
                 <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
 
-                    <label for="file" class="cursor-pointer">
-                        <img id="img" :src="`http://localhost:8081/${store.avatarImage}`" class=" w-full h-full rounded-full" alt=""/>
+                    <!-- <label for="file" class="cursor-pointer">
+                        <img id="img" src="assets/images/avatars/avatar-3.jpg" class="object-cover w-full h-full rounded-full" alt="" />
+                        <input type="file" id="file" class="hidden" />
+                    </label> -->
+                    
+                    <label for="file" class="cursor-pointer" v-if="data.avatarImage">
+                        <nuxt-img id="img" :src="`http://localhost:8081/${data.avatarImage}`" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                         <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
-                        <!-- <input type="file" id="file" class="hidden" /> -->
+                        <input type="file" id="file" class="hidden" />
                     </label>
 
                     <label for="file"
@@ -117,14 +132,14 @@ const changePassword = async () => {
                 </div>
 
                 <div class="flex-1">
-                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ store.firstName }} {{ store.lastName }}</h3>
-                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ store.nickname }}</p>
+                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ data.firstName }} {{ data.lastName }}</h3>
+                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ data.nickname }}</p>
                 </div>
 
                 <!-- <button
                     class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700"
                     type="button" aria-haspopup="true" aria-expanded="false">
-                    <ion-icon :icon="ioniconsFlashOutline"
+                    <ion-icon name="flash-outline"
                         class="text-base duration-500 group-aria-expanded:rotate-180 md hydrated" role="img"
                         aria-label="chevron down outline"></ion-icon>
                     <span class="font-medium text-sm"> Donate </span>
@@ -178,16 +193,16 @@ const changePassword = async () => {
                         <div class="space-y-6">
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right text-white"> Nickname </label>
+                                <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value="store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
+                                    <input :value=store.email type="text" class="w-full" readonly>
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right text-white"> Email </label>
+                                <label class="md:w-32 text-right text-white"> Nickname </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value=store.email type="text" class="w-full" readonly>
+                                    <input :value="store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
                                 </div>
                             </div>
 
@@ -726,6 +741,7 @@ const changePassword = async () => {
 </div>
       </NuxtLayout>
 </template>
+
 <style lang="">
-    
+
 </style>@/stores/useGlobalStateAuthStore@/composables/userEditor

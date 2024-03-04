@@ -1,6 +1,6 @@
 import { useSession, H3Event, sendError } from 'h3'
 
-export const sessionCreator = async (token: string, user: Object, event: H3Event) => {
+export const sessionCreator = async (token: string, user: object, event: H3Event) => {
   // const data = 
   const serverSession = await useSession(event, {
     password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
@@ -14,13 +14,14 @@ export const sessionCreator = async (token: string, user: Object, event: H3Event
     generateId: () => { return token }
   })
   await serverSession.update({
-    userInfos: user
+    userInfos: user,
+    sessionToken: token
   })
 
   return serverSession
 }
 
-export const sessionUpdater = async (token: string, user: Object, event: H3Event) => {
+export const sessionUpdater = async (token: string, user: object, event: H3Event) => {
   const currentSession = await useSession(event, {
     password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
     name: "server-store",
@@ -39,7 +40,8 @@ export const sessionUpdater = async (token: string, user: Object, event: H3Event
     generateId: () => { return token }
   })
   await newSession.update({
-    userInfos: user
+    userInfos: user,
+    sessionToken: token
   })
 
   return newSession

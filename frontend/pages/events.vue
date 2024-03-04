@@ -467,3 +467,9 @@
     </main>
   </NuxtLayout>
 </template>
+
+<script setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
+</script>

@@ -1,4 +1,4 @@
-import { sendError, getSession, useSession } from 'h3'
+import { sendError, getSession, defineEventHandler, useSession } from 'h3'
 import { sessionUpdater } from '../utils/createSession'
 import { secure } from '../utils/transformer'
 
@@ -16,10 +16,10 @@ export default defineEventHandler(async (event) => {
     const session = await getSession(event, {
         password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
         name: "server-store",
-        generateId: () => { return '' }
     })
 
-    if (session.id != token) {
+    console.log(session.data.sessionToken, "<===>", token)
+    if (session.data.sessionToken != token) {
         return sendError(event, createError({
             statusCode: 400,
             statusMessage: 'No user session available'

@@ -9,7 +9,8 @@
 
             <div class="flex items-center md:gap-3 gap-1">
 
-              <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
+              <div
+                class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
                 uk-toggle="target: #create-status">
                 <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
               </div>
@@ -57,8 +58,12 @@
 
       </div>
     </main>
-</NuxtLayout></template>
+  </NuxtLayout>
+</template>
+
 <script setup>
-// const imageError = 
+definePageMeta({
+    middleware: ["pages-guard"]
+})
 
 </script>

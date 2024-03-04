@@ -6,7 +6,6 @@ import (
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/mail"
 
@@ -70,8 +69,6 @@ var loginHandler = func(ctx *octopus.Context) {
 		return
 	}
 
-	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
-
 	// Check if the user's credentials are valid.
 	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
@@ -95,7 +92,7 @@ var loginHandler = func(ctx *octopus.Context) {
 	}
 	ctx.JSON(map[string]interface{}{
 		"session": idSession,
-		"user": newUser,
+		"user":    newUser,
 		"message": "User successfully logged.",
 		"status":  "200",
 	})
@@ -169,7 +166,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 	}
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
 		"session": idSession,
-		"user": newUser,
+		"user":    newUser,
 		"message": "User successfully registered and logged.",
 		"status":  "200",
 	})

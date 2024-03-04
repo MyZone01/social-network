@@ -22,16 +22,20 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   })
   .then((res) => {
     checker = res ? true : false
-    const isAuthenticated = authStore.isAuthenticated && checker;  
+    const isAuthenticated = authStore.isAuthenticated && checker;
+    console.log(isAuthenticated)
     if (!isAuthenticated && to.path !== "/auth") {
       authStore.logout();
       return navigateTo("/auth");
+    } else {
+      return navigateTo(to.path);
     }
-    if (isAuthenticated && to.path === '/auth') {
-      return navigateTo(from.path)
-    }
+    // if (isAuthenticated && to.path === '/auth') {
+    //   return navigateTo('/auth')
+    // }
   })
   .catch((error) => {
-    return
+    authStore.logout();
+    return navigateTo("/auth");
   } )
 });

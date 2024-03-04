@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  mode: 'spa',
   app: {
     head: {
       script: [
@@ -20,6 +21,9 @@ export default defineNuxtConfig({
       //   {href : '~/assets/css/style.css',}
       // ]
     }
+  },
+  image: {
+    domains: ["localhost:8081"],
   },
   ssr: true,
   devtools: { enabled: true },
