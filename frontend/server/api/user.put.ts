@@ -26,6 +26,7 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
+            body.password = session.data.user.password
             const response = await fetch('http://localhost:8081/edituser', {
                 method: 'PUT',
                 headers: {
