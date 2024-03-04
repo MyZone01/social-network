@@ -33,7 +33,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     'nuxt-og-image',
     '@nuxtjs/tailwindcss',
-    // '@nuxtjs/ionic',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
   ],
@@ -41,6 +40,9 @@ export default defineNuxtConfig({
     icons: ['heroicons', 'simple-icons']
   },
   nitro: {
+    experimental: {
+      websocket: true,
+    },
     routeRules: {
       '/**': {
         headers: {
