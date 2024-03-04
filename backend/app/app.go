@@ -61,7 +61,6 @@ func (app *App) handle(pattern string, handlers []HandlerFunc, methods ...string
 	app.routes = append(app.routes, route)
 }
 
-// Use adds a middleware to the application
 func (a *App) Use(handlers ...HandlerFunc) {
 	a.globalMiddleware = append(a.globalMiddleware, handlers...)
 }
@@ -98,7 +97,6 @@ func (app *App) NotAllowed(c *Context) {
 }
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
 	c := &Context{ResponseWriter: w, Request: r, Db: app.Db, Values: make(map[any]any)}
 	for _, route := range app.routes {
 		if strings.HasSuffix(route.pattern, "*") {

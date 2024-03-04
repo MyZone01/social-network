@@ -49,7 +49,6 @@ func main() {
 		} else {
 			migrate.Migration = false
 		}
-		break
 	}
 
 	//initialisation of the backend application
@@ -57,18 +56,16 @@ func main() {
 	app := octopus.New()
 	database := sqlite.OpenDB(migrate)
 	app.UseDb(database)
-
-	app.Static("/uploads", middleware.DirName)
-
-	// lunch all handlers
 	app.Use(cors.New(cors.Config{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
 		AllowCredentials: true,
 		ExposedHeaders:   []string{},
-		MaxAge:           86400,
-	}))
+		MaxAge:           86400}))
+	app.Static("/uploads", middleware.DirName)
+
+	// lunch all handlers
 	handlers.HandleAll(app)
 	config.Sess.UseDB(app.Db.Conn)
 

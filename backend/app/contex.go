@@ -1,10 +1,13 @@
 package octopus
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"html/template"
+	"io"
 	"net/http"
+	"strings"
 )
 
 type db struct {
@@ -20,8 +23,20 @@ type Context struct {
 	Values         map[any]any
 }
 
-func (c *Context) 	BodyParser(out interface{}) error {
-	return json.NewDecoder(c.Request.Body).Decode(&out)
+func (c *Context) BodyParser(out interface{}) error {
+	body, err := io.ReadAll(c.Request.Body)
+	defer c.Request.Body.Close()
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(body, &out)
+	if err != nil {
+		return err
+	}
+
+	c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+	return nil
 }
 
 func (c *Context) JSON(data interface{}) error {
@@ -52,4 +67,13 @@ func (c *Context) Status(code int) *Context {
 
 func (c *Context) WriteString(s string) (int, error) {
 	return c.ResponseWriter.Write([]byte(s))
+}
+
+func (c *Context) GetBearerToken() string {
+	var token string
+	headerBearer := c.Request.Header.Get("Authorization")
+	if strings.HasPrefix(headerBearer, "Bearer ") {
+		token = strings.TrimPrefix(headerBearer, "Bearer ")
+	}
+	return token
 }

@@ -40,18 +40,18 @@
             </div>
 
           </div>
-
           <!--  post image-->
-          <post-card-img />
-
+          <post-card-img v-for="post in useFeedStore().posts" :key="post.id" :post="post" />
           <!--  post image with slider-->
-
-
-          <!-- post text-->
-          <post-card-text />
-
           <!-- placeholder -->
-          <post-placeholder />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
+          <post-placeholder v-if="useFeedStore().posts.length == 0" />
 
         </div>
 
@@ -59,8 +59,14 @@
       <!-- create post  -->
       <post-input />
     </main>
-</NuxtLayout></template>
-<script setup>
-// const imageError = 
+  </NuxtLayout>
+</template>
+<script >
+
+export default {
+  async setup() {
+    useFeedStore().getUserFeed()
+  }
+}
 
 </script>
