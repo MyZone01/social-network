@@ -25,14 +25,14 @@ type GroupMessage struct {
 	ID        uuid.UUID `sql:"type:uuid;primary key"`
 	GroupID   uuid.UUID `sql:"type:uuid"`
 	SenderID  uuid.UUID `sql:"type:uuid"`
-	Content   string    `sql:"type:text"`
+	Content   string    `sql:"type:text" json:"content"`
+	Sender User `json:"sender"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
 }
 
 func (m *PrivateMessage) Create(db *sql.DB) error {
-
 	m.ID = uuid.New()
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
@@ -53,7 +53,6 @@ func (m *PrivateMessage) Create(db *sql.DB) error {
 }
 
 func (m *GroupMessage) Create(db *sql.DB) error {
-
 	m.ID = uuid.New()
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
@@ -204,6 +203,16 @@ func (ms *GroupMessages) GetGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 		}
 		*ms = append(*ms, m)
 	}
+
+	// Get user infos
+	for i, m := range *ms {
+		member := GroupMember{}
+		if err := member.GetMemberById(db, m.SenderID, true); err != nil {
+			return err
+		}
+		(*ms)[i].Sender = member.User
+	}
+
 	return nil
 }
 

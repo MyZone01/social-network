@@ -12,12 +12,13 @@ import (
 func TestPostObject(t *testing.T) {
 
 	post := models.Post{
+		ID:      uuid.New(),
 		Title:   "hello world",
 		Content: "hello senegal",
 		Privacy: models.PrivacyPublic,
 		//ect ........
 	}
-	if err := post.Create(octopus.AppTest.Db.Conn, uuid.New()); err != nil {
+	if err := post.Create(octopus.AppTest.Db.Conn,); err != nil {
 		t.Errorf(err.Error())
 		t.FailNow()
 	}

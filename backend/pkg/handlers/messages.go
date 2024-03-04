@@ -3,29 +3,69 @@ package handlers
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
+	"backend/pkg/models"
+	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
-// handleMessages is the core function that processes the messages request.
-// It receives a Context object containing the request and response writer, along with additional methods for handling the request.
-// Use the Context object to implement the messages logic, such as sending or receiving messages.
-// After successful operation, you can send a response back to the client using methods like ctx.JSON().
-func handleMessages(ctx *octopus.Context) {
-	// TODO: Implement the messages logic here.
+func getAllMessagesByGroup(ctx *octopus.Context) {
+	messages := models.GroupMessages{}
+	groupId := ctx.Values["group_id"].(uuid.UUID)
+	err := messages.GetGroupMessages(ctx.Db.Conn, groupId)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusAccepted).JSON(messages)
 }
 
-// MessagesHandler defines the structure for handling messages requests.
-// It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
-var messagesRoutes = route{
-	path:   "/messages",
+var getAllMessagesByGroupRoutes = route{
+	path:   "/group/messages",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.AuthRequired, // Middleware to check if the request is authenticated.
-		handleMessages,          // Handler function to process the messages request.
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		getAllMessagesByGroup,
+	},
+}
+
+func addMessageToGroup(ctx *octopus.Context) {
+	newMessage := models.GroupMessage{}
+
+	if err := ctx.BodyParser(&newMessage); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	newMessage.SenderID = ctx.Values["member"].(*models.GroupMember).ID
+	newMessage.GroupID = ctx.Values["group_id"].(uuid.UUID)
+	if err := newMessage.Create(ctx.Db.Conn); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusCreated).JSON(newMessage)
+}
+
+var addMessageToGroupRoutes = route{
+	path:   "/group/messages/new",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		addMessageToGroup,
 	},
 }
 
 func init() {
-	// Register the messages route with the global AllHandler map.
-	AllHandler[messagesRoutes.path] = messagesRoutes
+	AllHandler[getAllMessagesByGroupRoutes.path] = getAllMessagesByGroupRoutes
+	AllHandler[addMessageToGroupRoutes.path] = addMessageToGroupRoutes
 }
