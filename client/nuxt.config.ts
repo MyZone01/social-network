@@ -31,6 +31,9 @@ export default defineNuxtConfig({
       resolve('~/utils'), '~/utils'
     ],
   },
+  image: {
+    domains: ['localhost:8081'],
+  },
   pinia: {
     storesDirs: ['~/stores/**', '#/stores/**', '@/stores/**'],
   },
