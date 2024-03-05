@@ -14,12 +14,17 @@ interface UserInfos {
     deletedAt: { Time: '0001-01-01T00:00:00Z', Valid: false }
 }
 
+
+id: "0c1a0f8c-98f4-448b-a2dd-2f33c6bcec48"
+password: "$2a$10$VqY6ytlW.9.qx40BZNa5uuTtaw7Anse0kxoBUtoTboA36b8sysm1O"
+
 export const secure = (user: UserInfos) => {
     return {
         email: user.email,
         firstName: user.firstName, 
-        lastName: user.lastName, 
-        dateOfBirth: (user.dateOfBirth).split('T')[0], 
+        lastName: user.lastName,
+        // password: user.password,
+        dateOfBirth: user.dateOfBirth.split("T00:00:00Z")[0],
         avatarImage: user.avatarImage, 
         nickname: user.nickname, 
         aboutMe: user.aboutMe, 

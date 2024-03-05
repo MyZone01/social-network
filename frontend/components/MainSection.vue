@@ -22,7 +22,7 @@
                                     <li class="md:pr-3" uk-scrollspy-class="uk-animation-fade">
                                         <div class="md:w-16 md:h-16 w-12 h-12 rounded-full relative border-2 border-dashed grid place-items-center bg-slate-200 border-slate-300 dark:border-slate-700 dark:bg-dark2 shrink-0"
                                             uk-toggle="target: #create-story">
-                                            <ion-icon :icon="ioniconsCamera" class="text-2xl"></ion-icon>
+                                            <ion-icon name="camera" class="text-2xl"></ion-icon>
                                         </div>
                                     </li>
                                     <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
@@ -128,11 +128,11 @@
 
                                 <button type="button"
                                     class="absolute -translate-y-1/2 bg-white shadow rounded-full top-1/2 -left-3.5 grid w-8 h-8 place-items-center dark:bg-dark3"
-                                    uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                                    uk-slider-item="previous"> <ion-icon name="chevron-back"
                                         class="text-2xl"></ion-icon></button>
                                 <button type="button"
                                     class="absolute -right-2 -translate-y-1/2 bg-white shadow rounded-full top-1/2 grid w-8 h-8 place-items-center dark:bg-dark3"
-                                    uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward" class="text-2xl"></ion-icon>
+                                    uk-slider-item="next"> <ion-icon name="chevron-forward" class="text-2xl"></ion-icon>
                                 </button>
 
                             </div>
@@ -198,21 +198,21 @@
 
                                 <div class="-mr-1">
                                     <button type="button" class="button-icon w-8 h-8"> <ion-icon class="text-xl"
-                                            :icon="ioniconsEllipsisHorizontal"></ion-icon> </button>
+                                            name="ellipsis-horizontal"></ion-icon> </button>
                                     <div class="w-[245px]"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
                                         <nav>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsBookmarkOutline"></ion-icon> Add to favorites </a>
+                                                    name="bookmark-outline"></ion-icon> Add to favorites </a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsNotificationsOffOutline"></ion-icon> Mute Notification </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsFlagOutline"></ion-icon>
+                                                    name="notifications-off-outline"></ion-icon> Mute Notification </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon>
                                                 Report this post </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsShareOutline"></ion-icon>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon>
                                                 Share your profile </a>
                                             <hr>
                                             <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                                                <ion-icon class="text-xl shrink-0" :icon="ioniconsStopCircleOutline"></ion-icon>
+                                                <ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon>
                                                 Unfollow </a>
                                         </nav>
                                     </div>
@@ -232,7 +232,7 @@
                                 <div>
                                     <div class="flex items-center gap-2.5">
                                         <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                                            <ion-icon class="text-lg" :icon="ioniconsHeart"></ion-icon> </button>
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
                                         <a href="#">1,300</a>
                                     </div>
                                     <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
@@ -258,13 +258,13 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                                        <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses"></ion-icon> </button>
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
                                     <span>260</span>
                                 </div>
                                 <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
-                                        :icon="ioniconsPaperPlaneOutline"></ion-icon> </button>
+                                        name="paper-plane-outline"></ion-icon> </button>
                                 <button type="button" class="button-icon"> <ion-icon class="text-xl"
-                                        :icon="ioniconsShareOutline"></ion-icon> </button>
+                                        name="share-outline"></ion-icon> </button>
                             </div>
 
                             <!-- comments -->
@@ -352,22 +352,23 @@
 
                                 <div class="-mr-1">
                                     <button type="button" class="button-icon w-8 h-8"> <ion-icon class="text-xl"
-                                            :icon="ioniconsEllipsisHorizontal"></ion-icon> </button>
+                                            name="ellipsis-horizontal"></ion-icon> </button>
                                     <div class="w-[245px]"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
                                         <nav>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsBookmarkOutline"></ion-icon> Add to favorites </a>
+                                                    name="bookmark-outline"></ion-icon> Add to favorites </a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0"
-                                                    :icon="ioniconsNotificationsOffOutline"></ion-icon> Mute Notification </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsFlagOutline"></ion-icon>
+                                                    name="notifications-off-outline"></ion-icon> Mute Notification </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon>
                                                 Report this post </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsShareOutline"></ion-icon>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon>
                                                 Share your profile </a>
                                             <hr>
                                             <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                                                <ion-icon class="text-xl shrink-0" :icon="ioniconsStopCircleOutline"></ion-icon>
-                                                Unfollow </a>:icon="ionicons                                   </nav>
+                                                <ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon>
+                                                Unfollow </a>
+                                            </nav>
                                     </div>
                                 </div>
                             </div>
@@ -401,9 +402,9 @@
                                 </ul>
 
                                 <a class="nav-prev left-6" href="#" uk-slideshow-item="previous"> <ion-icon
-                                        :icon="ioniconsChevronBack" class="text-2xl"></ion-icon> </a>
+                                        name="chevron-back" class="text-2xl"></ion-icon> </a>
                                 <a class="nav-next right-6" href="#" uk-slideshow-item="next"> <ion-icon
-                                        :icon="ioniconsChevronForward" class="text-2xl"></ion-icon></a>
+                                        name="chevron-forward" class="text-2xl"></ion-icon></a>
 
                             </div>
 
@@ -412,7 +413,7 @@
                                 <div>
                                     <div class="flex items-center gap-2.5">
                                         <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                                            <ion-icon class="text-lg" :icon="ioniconsHeart"></ion-icon> </button>
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
                                         <a href="#">1,300</a>
                                     </div>
                                     <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
@@ -438,13 +439,13 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                                        <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses"></ion-icon> </button>
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
                                     <span>260</span>
                                 </div>
                                 <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
-                                        :icon="ioniconsPaperPlaneOutline"></ion-icon> </button>
+                                        name="paper-plane-outline"></ion-icon> </button>
                                 <button type="button" class="button-icon"> <ion-icon class="text-xl"
-                                        :icon="ioniconsShareOutline"></ion-icon> </button>
+                                        name="share-outline"></ion-icon> </button>
                             </div>
 
                             <!-- comments -->
@@ -472,7 +473,7 @@
 
                                 <button type="button"
                                     class="flex items-center gap-1.5 text-gray-500 hover:text-blue-500 mt-2">
-                                    <ion-icon :icon="ioniconsChevronDownOutline"
+                                    <ion-icon name="chevron-down-outline"
                                         class="ml-auto duration-200 group-aria-expanded:rotate-180"></ion-icon>
                                     More Comment
                                 </button>
@@ -533,27 +534,27 @@
                                 <div class="-mr-1">
                                     <button type="button" class="button__ico w-8 h-8" aria-haspopup="true"
                                         aria-expanded="false"> <ion-icon class="text-xl md hydrated"
-                                            :icon="ioniconsEllipsisHorizontal" role="img"
+                                            name="ellipsis-horizontal" role="img"
                                             aria-label="ellipsis horizontal"></ion-icon> </button>
                                     <div class="w-[245px] uk-dropdown"
                                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
                                         <nav>
                                             <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated"
-                                                    :icon="ioniconsBookmarkOutline" role="img"
+                                                    name="bookmark-outline" role="img"
                                                     aria-label="bookmark outline"></ion-icon> Add to favorites </a>
                                             <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated"
-                                                    :icon="ioniconsNotificationsOffOutline" role="img"
+                                                    name="notifications-off-outline" role="img"
                                                     aria-label="notifications off outline"></ion-icon> Mute Notification
                                             </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" :icon="ioniconsFlagOutline"
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" name="flag-outline"
                                                     role="img" aria-label="flag outline"></ion-icon>
                                                 Report this post </a>
-                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" :icon="ioniconsShareOutline"
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" name="share-outline"
                                                     role="img" aria-label="share outline"></ion-icon> Share your profile
                                             </a>
                                             <hr>
                                             <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                                                <ion-icon class="text-xl shrink-0 md hydrated" :icon="ioniconsStopCircleOutline"
+                                                <ion-icon class="text-xl shrink-0 md hydrated" name="stop-circle-outline"
                                                     role="img" aria-label="stop circle outline"></ion-icon> Unfollow </a>
                                         </nav>
                                     </div>
@@ -572,7 +573,7 @@
                                 <div>
                                     <div class="flex items-center gap-2.5">
                                         <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                                            <ion-icon class="text-lg" :icon="ioniconsHeart"></ion-icon> </button>
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
                                         <a href="#">1,300</a>
                                     </div>
                                     <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
@@ -598,13 +599,13 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                                        <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses"></ion-icon> </button>
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
                                     <span>260</span>
                                 </div>
                                 <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
-                                        :icon="ioniconsPaperPlaneOutline"></ion-icon> </button>
+                                        name="paper-plane-outline"></ion-icon> </button>
                                 <button type="button" class="button-icon"> <ion-icon class="text-xl"
-                                        :icon="ioniconsShareOutline"></ion-icon> </button>
+                                        name="share-outline"></ion-icon> </button>
                             </div>
 
                             <!-- comments -->
@@ -805,7 +806,7 @@
 
                             <div class="flex justify-between text-black dark:text-white">
                                 <h3 class="font-bold text-base"> Peaple You might know </h3>
-                                <button type="button"> <ion-icon :icon="ioniconsSyncOutline" class="text-xl"></ion-icon>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
                                 </button>
                             </div>
 
@@ -902,7 +903,7 @@
 
                             <div class="flex justify-between text-black dark:text-white">
                                 <h3 class="font-bold text-base"> Premium Photos </h3>
-                                <button type="button"> <ion-icon :icon="ioniconsSyncOutline" class="text-xl"></ion-icon>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
                                 </button>
                             </div>
 
@@ -965,11 +966,11 @@
 
                                     <button type="button"
                                         class="absolute bg-white rounded-full top-16 -left-4 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
-                                        uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                                        uk-slider-item="previous"> <ion-icon name="chevron-back"
                                             class="text-2xl"></ion-icon></button>
                                     <button type="button"
                                         class="absolute -right-4 bg-white rounded-full top-16 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
-                                        uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
+                                        uk-slider-item="next"> <ion-icon name="chevron-forward"
                                             class="text-2xl"></ion-icon></button>
 
                                 </div>
@@ -984,7 +985,7 @@
 
                             <div class="flex justify-between text-black dark:text-white">
                                 <h3 class="font-bold text-base"> Online Friends </h3>
-                                <button type="button"> <ion-icon n:icon="ioniconsSyncOutline" class="text-xl"></ion-icon>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
                                 </button>
                             </div>
 
@@ -1126,11 +1127,11 @@
 
                                     <button type="button"
                                         class="absolute -translate-y-1/2 bg-slate-100 rounded-full top-1/2 -left-4 grid w-9 h-9 place-items-center dark:bg-dark3"
-                                        uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                                        uk-slider-item="previous"> <ion-icon name="chevron-back"
                                             class="text-2xl"></ion-icon></button>
                                     <button type="button"
                                         class="absolute -right-4 -translate-y-1/2 bg-slate-100 rounded-full top-1/2 grid w-9 h-9 place-items-center dark:bg-dark3"
-                                        uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
+                                        uk-slider-item="next"> <ion-icon name="chevron-forward"
                                             class="text-2xl"></ion-icon></button>
 
                                 </div>
@@ -1145,7 +1146,7 @@
 
                             <div class="flex justify-between text-black dark:text-white">
                                 <h3 class="font-bold text-base"> Trends for you </h3>
-                                <button type="button"> <ion-icon :icon="ioniconsSyncOutline" class="text-xl"></ion-icon>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
                                 </button>
                             </div>
 

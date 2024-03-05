@@ -1,26 +1,86 @@
 <script setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
 
+// import { ref } from 'vue'
+import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore'
+import { editUser, updatePassword } from '@/composables/userEditor.js';
 
-let FormFeedbackType = null;
+const { data, error } = await useAsyncData(() => {
+    return useGlobalAuthStore().user
+})
 
-const isLoading = ref(false);
-// const formFeedback: Ref<FormFeedbackType> = ref(null);
+// const baseStore = useGlobalAuthStore()
+const store = reactive(useGlobalAuthStore().user)
+const onDisplay = reactive(data)
+const status = ["public", "private"]
 
-const name = ref('');
-const email = ref('');
-const consent = ref(false);
-const success = ref(true);
+const userInfos = reactive({
+    email: store.email,
+    password: store.password,
+    firstName: store.firstName,
+    lastName: store.lastName,
+    dateOfBirth: store.dateOfBirth,
+    avatarImage: store.avatarImage,
+    nickname: store.nickname,
+    aboutMe: store.aboutMe,
+    isPublic: store.isPublic ? "public" : "private",
+    message: "",
+})
 
-const saveChanges = async () => {
-    isLoading.value = true;
-    console.log("SAVED CHANGE")
-    // formFeedback.value = null;
+// function selector() {
+//     const index = store.isPublic ? 0 : 1
+//     console.log(ref("isPublic")[index])
+// }
 
-    // await editeUser({ data.firstName, })
-
-
+function changer(event) {
+    const value = event.target.value
+    userInfos[`${event.target.id}`] = value
+    // event.target.value = value
 }
 
+const saveChanges = async () => {
+    // isLoading.value = true;
+    userInfos.message = ''
+    try {
+        const result = await editUser(userInfos)
+        if (result) {
+            userInfos.message = result
+        }
+    } catch (error) {
+        userInfos.message = error
+    } finally {
+        console.log("changes processed")
+    }
+}
+
+const password = reactive({
+    currentPassword: "",
+    newPassword: "",
+    repeatNewPassword: "",
+    message: "",
+})
+
+function passwordChanger(event) {
+    const value = event.target.value
+    password[`${event.target.id}`] = value
+    // event.target.value = value
+}
+
+const changePassword = async () => {
+    password.message = ''
+    try {
+        const result = await updatePassword(password)
+        if (result) {
+            password.message = result.message
+        }
+    } catch (error) {
+        password.message = error
+    } finally {
+        console.log("changes processed")
+    }
+}
 </script>
 
 <template lang="">
@@ -41,10 +101,14 @@ const saveChanges = async () => {
 
                 <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
 
-                    <label for="file" class="cursor-pointer">
-                        <nuxt-image id="img" :src="data.avatar" class="object-cover w-full h-full rounded-full" alt=""></nuxt-image>
-                        <!-- <img id="img" :src=data.avatar
-                            class="object-cover w-full h-full rounded-full" alt="" /> -->
+                    <!-- <label for="file" class="cursor-pointer">
+                        <img id="img" src="assets/images/avatars/avatar-3.jpg" class="object-cover w-full h-full rounded-full" alt="" />
+                        <input type="file" id="file" class="hidden" />
+                    </label> -->
+                    
+                    <label for="file" class="cursor-pointer" v-if="data.avatarImage">
+                        <nuxt-img id="img" :src="`http://localhost:8081/${data.avatarImage}`" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                        <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
 
@@ -66,23 +130,23 @@ const saveChanges = async () => {
                 </div>
 
                 <div class="flex-1">
-                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> first & last name </h3>
-                    <p class="text-sm text-blue-600 mt-1 font-normal">@nickname</p>
+                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ data.firstName }} {{ data.lastName }}</h3>
+                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ data.nickname }}</p>
                 </div>
 
                 <!-- <button
                     class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700"
                     type="button" aria-haspopup="true" aria-expanded="false">
-                    <ion-icon :icon="ioniconsFlashOutline"
+                    <ion-icon name="flash-outline"
                         class="text-base duration-500 group-aria-expanded:rotate-180 md hydrated" role="img"
                         aria-label="chevron down outline"></ion-icon>
                     <span class="font-medium text-sm"> Donate </span>
                 </button> -->
             </div>
-
+            
             <!-- nav tabs -->
             <div class="relative border-b" tabindex="-1" uk-slider="finite: true">
-
+                
                 <nav
                     class="uk-slider-container overflow-hidden nav__underline px-6 p-0 border-transparent -mb-px">
 
@@ -107,10 +171,10 @@ const saveChanges = async () => {
                 </nav>
 
                 <a class="absolute -translate-y-1/2 top-1/2 left-0 flex items-center w-20 h-full p-2 py-1 justify-start bg-gradient-to-r from-white via-white dark:from-slate-800 dark:via-slate-800"
-                    href="#" uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                    href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
                         class="text-2xl ml-1"></ion-icon> </a>
                 <a class="absolute right-0 -translate-y-1/2 top-1/2 flex items-center w-20 h-full p-2 py-1 justify-end bg-gradient-to-l from-white via-white dark:from-slate-800 dark:via-slate-800"
-                    href="#" uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
+                    href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
                         class="text-2xl mr-1"></ion-icon> </a>
 
             </div>
@@ -127,51 +191,71 @@ const saveChanges = async () => {
                         <div class="space-y-6">
 
                             <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right text-white"> Nickname </label>
-                                <div class="flex-1 max-md:mt-4">
-                                    <input type="text" :placeholder="data.nickname" class="lg:w-1/2 w-full" readonly>
-                                </div>
-                            </div>
-
-                            <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" :placeholder="data.email" class="w-full" readonly>
+                                    <input :value=store.email type="text" class="w-full" readonly>
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
+                                <label class="md:w-32 text-right text-white"> Nickname </label>
+                                <div class="flex-1 max-md:mt-4">
+                                    <input :value="store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
+                                </div>
+                            </div>
+
+                            <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Last Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" :placeholder="data.lastName" class="lg:w-1/2 w-full">
+                                    <input id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : store.lastName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-10">
+                            <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> First Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="text" :placeholder="data.firstName" class="lg:w-1/2 w-full">
+                                    <input id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : store.firstName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-10">
+                            <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Date Of Birth </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="date" placeholder="Monroe" class="lg:w-1/2 w-full">
+                                    <input id="dateOfBirth" v-bind:v-model="userInfos.dateOfBirth" :value="userInfos.dateOfBirth ? userInfos.dateOfBirth : store.dateOfBirth" type="date" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
-                            <!-- <div class="md:flex items-center gap-10">
-                                <label class="md:w-32 text-right text-white"> Gender </label>
+                            <div @change="changer" class="md:flex items-center gap-10">
+                                <label class="md:w-32 text-right text-white"> Profile Status</label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <select class="!border-0 !rounded-md lg:w-1/2 w-full">
-                                        <option value="1"> Prefer Not to Say </option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
+                                    <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
+                                        <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
+                                        <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
+                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic === account">
+                                            {{ account }}
+                                        </option>
                                     </select>
                                 </div>
-                            </div> -->
+                            </div>
 
+                        
+                            <div @change="changer" class="md:flex items-start gap-10">
+                                <label class="md:w-32 text-right text-white"> About Me </label>
+                                <div class="flex-1 max-md:mt-4">
+                                    <textarea id="aboutMe" v-bind:v-model="userInfos.aboutMe" :value="userInfos.aboutMe ? userInfos.aboutMe : store.aboutMe || 'Tell friends a bit about you ... '" class="w-full" rows="5" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.message }}</h2>
+
+                        <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
+                            <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
+                                Cancel</button> -->
+                            <button type="submit" @click.prevent="saveChanges()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
+                                Save
+                                <span class="ripple-overlay"></span></button>
+                        </div>
                             <!-- <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Relationship </label>
                                 <div class="flex-1 max-md:mt-4">
@@ -185,12 +269,6 @@ const saveChanges = async () => {
                                 </div>
                             </div> -->
 
-                            <div class="md:flex items-start gap-10">
-                                <label class="md:w-32 text-right text-white"> About Me </label>
-                                <div class="flex-1 max-md:mt-4">
-                                    <textarea class="w-full" rows="5" placeholder="Inter your Bio"></textarea>
-                                </div>
-                            </div>
 
                             <!-- <div class="md:flex items-start gap-10 ">
                                 <label class="md:w-32 text-right text-white"> Avatar </label>
@@ -202,15 +280,6 @@ const saveChanges = async () => {
                                         Change</button>
                                 </div>
                             </div> -->
-                        </div>
-
-                        <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
-                            <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
-                                Cancel</button> -->
-                            <button type="submit" @click.prevent="saveChanges()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
-                                Save
-                                <span class="ripple-overlay"></span></button>
-                        </div>
 
                     </div>
 
@@ -219,45 +288,36 @@ const saveChanges = async () => {
                 <!-- tab settings-->
                 <div>
 
-                    <form @submit.prevent="changePassword()">
+                    <form @submit="changePassword()">
 
                         <div class="space-y-6 max-w-lg mx-auto">
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Current Password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full">
+                                    <input id="currentPassword" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> New password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full text-black">
+                                    <input id="newPassword" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
                                 </div>
                             </div>
 
-                            <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Repeat password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input type="password" placeholder="" class="w-full">
+                                    <input id="repeatNewPassword" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <hr class="border-gray-100 dark:border-gray-700">
 
-                            <div class="md:flex items-center gap-16 justify-between">
-                                <label class="md:w-40 text-right text-white"> Profile Type </label>
-                                <div class="flex-1 max-md:mt-4">
-                                    <select class="w-full !border-0 !rounded-md">
-                                        <option value="2">Public</option>
-                                        <option value="1">Private</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
                         </div>
+
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ password.message }}</h2>
 
                         <div class="flex items-center justify-center gap-4 mt-16">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
@@ -677,6 +737,7 @@ const saveChanges = async () => {
 </div>
       </NuxtLayout>
 </template>
+
 <style lang="">
-    
-</style>
+
+</style>@/stores/useGlobalStateAuthStore@/composables/userEditor

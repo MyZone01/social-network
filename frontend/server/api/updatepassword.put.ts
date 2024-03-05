@@ -1,4 +1,4 @@
-import { sendError, getSession, defineEventHandler, useSession } from 'h3'
+import { sendError, getSession, useSession } from 'h3'
 import { sessionUpdater } from '../utils/createSession'
 import { secure } from '../utils/transformer'
 
@@ -16,11 +16,9 @@ export default defineEventHandler(async (event) => {
     const session = await getSession(event, {
         password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
         name: "server-store",
+        // generateId: () => { return '' }
     })
-
-    console.log("FROM STORE",body)
-    console.log("FROM H3",session.data)
-    // console.log(session.data.sessionToken, "<===>", token)
+    
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
             statusCode: 400,
@@ -28,16 +26,13 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
-            body["password"] = session.data.userInfos.password
-            console.log(body)
-            const response = await fetch('http://localhost:8081/edituser', {
+            const response = await fetch('http://localhost:8081/updatepassword', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
-
             })
             const result = await response.json()
             await sessionUpdater(result.session, result.user, event)

@@ -82,7 +82,7 @@
                         class="rounded-lg bg-secondery flex px-2.5 py-2 dark:bg-dark2"
                       >
                         <ion-icon
-                          :icon="ioniconsEllipsisHorizontal"
+                          name="ellipsis-horizontal"
                           class="text-xl"
                         ></ion-icon>
                       </button>
@@ -94,7 +94,7 @@
                           <a href="#">
                             <ion-icon
                               class="text-xl"
-                              :icon="ioniconsLinkOutline"
+                              name="link-outline"
                             ></ion-icon>
                             Copy link
                           </a>
@@ -104,7 +104,7 @@
                           >
                             <ion-icon
                               class="text-xl"
-                              :icon="ioniconsStopCircleOutline"
+                              name="stop-circle-outline"
                             ></ion-icon>
                             Block
                           </a>
@@ -136,7 +136,7 @@
             <div
               class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5"
             >
-              <ion-icon :icon="ioniconsSearch" class="text-lg"></ion-icon>
+              <ion-icon name="search" class="text-lg"></ion-icon>
               <input placeholder="Search .." class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500" />
             </div>
           </div>
@@ -213,6 +213,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
 </script>
 
 <style></style>

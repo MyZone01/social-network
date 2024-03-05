@@ -372,9 +372,9 @@
                     </div>
 
                     <!-- slide nav icons -->
-                    <a class="nav-prev" href="#" uk-slider-item="previous"> <ion-icon :icon="ioniconsChevronBack"
+                    <a class="nav-prev" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
                             class="text-2xl"></ion-icon> </a>
-                    <a class="nav-next" href="#" uk-slider-item="next"> <ion-icon :icon="ioniconsChevronForward"
+                    <a class="nav-next" href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
                             class="text-2xl"></ion-icon></a>
 
                 </div>
@@ -416,7 +416,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -444,7 +444,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -472,7 +472,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -500,7 +500,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -528,7 +528,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
                     <div class="flex md:items-center space-x-4 p-4 rounded-md box">
@@ -556,7 +556,7 @@
                         </div>
                         <button type="button"
                             class="button bg-primary-soft text-primary dark:text-white gap-1 max-md:hidden"> <ion-icon
-                                :icon="ioniconsAddCircle" class="text-xl -ml-1"></ion-icon> Join</button>
+                                name="add-circle" class="text-xl -ml-1"></ion-icon> Join</button>
 
                     </div>
 
@@ -576,4 +576,7 @@
     </NuxtLayout>
 </template>
 <script setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
 </script>
