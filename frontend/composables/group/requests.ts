@@ -30,3 +30,32 @@ export async function getJoinRequests(groupId: string): Promise<any> {
     })
     return { data }
 }
+
+export async function acceptJoinRequest(gId: string, rId: string): Promise<any> {
+    const store = useGlobalAuthStore()
+    const data = await $fetch("/api/group/request/accept", {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${store.token}`
+        },
+        query: {
+            gId,
+            rId
+        }
+    })
+    return { data }
+}
+export async function declneJoinRequest(gId: string, rId: string): Promise<any> {
+    const store = useGlobalAuthStore()
+    const data = await $fetch("/api/group/request/decline", {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${store.token}`
+        },
+        query: {
+            gId,
+            rId
+        }
+    })
+    return { data }
+}

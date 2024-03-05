@@ -1,6 +1,6 @@
 <template>
     <div class="px-10  h-12 w-full flex flex-row justify-between">
-        <div class="h-full flex-2 bg-blue-700">
+        <div class="h-full flex-1 bg-blue-700">
             <div class="flex flex-row gap-3">
                 <img src="http://localhost:8081/uploads/default-avatar.png" />
                 <div>
@@ -9,10 +9,10 @@
                 </div>
             </div>
         </div>
-        <div class="h-full ">
+        <div class="h-full flex-1 text-left">
             {{ props.member?.Role }}
         </div>
-        <div class="h-full">
+        <div class="h-full flex-3 w-max">
             <UButton  v-if="props.member?.Role !== 'admin'"  class="text-red-400">Delete</UButton>
         </div>
 

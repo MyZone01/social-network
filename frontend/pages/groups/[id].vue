@@ -20,6 +20,7 @@ const group = ref<Group>()
 const joinRequests = ref<Member[]>()
 const route = useRoute()
 const gid = route.params.id
+
 onMounted(async () => {
   const store = useGlobalAuthStore()
   const response = await $fetch(`/api/group/${gid}`, {
@@ -33,9 +34,7 @@ onMounted(async () => {
   })
   group.value = response as Group
 
-
   const { data } = await getJoinRequests(group.value.ID)
-  console.log("fromm comp request", data);
   joinRequests.value = data
 
 })
