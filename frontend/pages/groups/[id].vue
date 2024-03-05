@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { user } from '@/composables/editeUser';
 
 
 type Member = {
@@ -121,7 +120,7 @@ onMounted(async () => {
 
             <div
               class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5">
-              <ion-icon :icon="ioniconsSearch" class="text-lg"></ion-icon>
+              <UIcon name="i-heroicons-magnifying-glass" class="text-lg" />
               <input placeholder="Search .."
                 class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500" />
             </div>

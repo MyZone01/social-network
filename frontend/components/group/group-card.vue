@@ -1,4 +1,6 @@
 <script setup>
+import { joinRequest } from '@/composables/group/requests';
+
 const props = defineProps(['group'])
 </script>
 
@@ -20,7 +22,7 @@ const props = defineProps(['group'])
         <div class="md:block hidden" />
         <div> 16k members </div>
       </div>
-      <div class="flex flex-row gap-2 justify-center w-full">
+      <div @click="joinRequest(props.group.ID)"  class="flex flex-row gap-2 justify-center w-full">
         <UButton class="items-center bg-blue-500 justify-center flex-1">
           Join
         </UButton>
