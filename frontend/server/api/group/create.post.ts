@@ -1,5 +1,5 @@
 export default defineEventHandler(async event => {
-    const token = event.headers.get('Authorization')
+    const token = getHeader(event,'Authorization')
 
     try {
         const payload = await readBody(event)

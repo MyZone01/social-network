@@ -84,5 +84,6 @@ export default defineNuxtConfig({
   },
   image: {
     domains: ['localhost:8081'],
+
   },
 })

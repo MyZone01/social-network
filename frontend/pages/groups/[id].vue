@@ -1,10 +1,17 @@
-
 <script lang="ts" setup>
+import type { user } from '@/composables/editeUser';
+
+
+type Member = {
+  role: String,
+  accepted: boolean,
+  User: any
+}
 
 type Group = {
   Title: string,
   Description: string,
-  GroupMembers: [],
+  GroupMembers: Member[],
 }
 
 
@@ -37,7 +44,8 @@ onMounted(async () => {
             <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10 z-10"></div>
             <div class="absolute bottom-0 right-0 m-a z-20">
               <div class="flex items-center gap-3 px-2">
-                <UButton class="button bg-white/10 text-white flex items-center gap-2 back-drop-blur-small">Edit</UButton>
+                <UButton class="button bg-white/10 text-white flex items-center gap-2 back-drop-blur-small">Edit
+                </UButton>
               </div>
             </div>
           </div>
@@ -50,7 +58,7 @@ onMounted(async () => {
                     <span class="max-lg:hidden"> Public group </span>
                     <span class="max-lg:hidden"> • </span>
                     <span>
-                      <b class="font-medium text-black dark:text-white">{{group?.GroupMembers.length}}</b>
+                      <b class="font-medium text-black dark:text-white">{{ group?.GroupMembers.length }}</b>
                       members
                     </span>
                   </p>
@@ -72,17 +80,17 @@ onMounted(async () => {
                     </div>
                     <div>
                       <button type="button" class="rounded-lg bg-slate-100 flex px-2.5 py-2 dark:bg-dark2">
-                        <UIcon name="i-heroicons-ellipsis-horizontal" class="text-xl"/>
+                        <UIcon name="i-heroicons-ellipsis-horizontal" class="text-xl" />
                       </button>
                       <div class="w-[100px] shadow-lg"
                         uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click;offset:10">
                         <nav class="bg-slate-200">
                           <a href="#">
-                            <UIcon class="text-xl" name="i-heroicons-link"/>
+                            <UIcon class="text-xl" name="i-heroicons-link" />
                             Copy link
                           </a>
                           <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                            <UIcon class="text-xl" name="i-heroicons-no-symbol"/>
+                            <UIcon class="text-xl" name="i-heroicons-no-symbol" />
                             Block
                           </a>
                         </nav>
@@ -98,58 +106,87 @@ onMounted(async () => {
           </div>
 
           <div class="flex items-center justify-between border-t border-gray-100 px-2 dark:border-slate-700">
-            <nav
-              class="flex gap-0.5 rounded-xl overflow-hidden -mb-px text-gray-500 font-medium text-sm overflow-x-auto dark:text-white">
-              <a href="#" class="inline-block py-3 leading-8 px-3.5 border-b-2 border-blue-600 text-blue-600">Posts</a>
-              <a href="#" class="inline-block py-3 leading-8 px-3.5">Events</a>
-              <a href="#" class="inline-block py-3 leading-8 px-3.5">Members</a>
-              <a href="#" class="inline-block py-3 leading-8 px-3.5">Media</a>
+            <nav>
+              <ul
+                class=" uk-subnav uk-subnav-pill flex gap-0.5 rounded-xl overflow-hidden -mb-px text-gray-500 font-medium text-sm overflow-x-auto dark:text-white"
+                uk-switcher="connect: #group-menus ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
+                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Posts</a></li>
+                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Events</a></li>
+                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Members</a></li>
+                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Media</a></li>
+                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Requests</a></li>
+              </ul>
+
             </nav>
 
-            <div class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5">
+            <div
+              class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5">
               <ion-icon :icon="ioniconsSearch" class="text-lg"></ion-icon>
               <input placeholder="Search .."
                 class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500" />
             </div>
           </div>
         </div>
-        <div class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col" id="js-oversized">
-          <!-- add story -->
-          <div class="bg-white rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
-            <div class="flex items-center gap-3">
-              <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
-                uk-toggle="target: #create-status">
-                <div class="py-2.5 text-center dark:text-white">
-                  What do you have in mind?
+        <div id="group-menus" class="uk-switcher flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col">
+          <!-- post tab-->
+          <div class="w-full">
+            <div class="tab bg-white rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
+                  uk-toggle="target: #create-status">
+                  <div class="py-2.5 text-center dark:text-white">
+                    What do you have in mind?
+                  </div>
                 </div>
-              </div>
-              <div
-                class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-pink-100/60 hover:bg-pink-100"
-                uk-toggle="target: #create-status">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70"
-                  viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M15 8h.01" />
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                  <path d="M3.5 15.5l4.5 -4.5c.928 -.893 2.072 -.893 3 0l5 5" />
-                  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
-                </svg>
-              </div>
-              <div
-                class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-sky-100/60 hover:bg-sky-100"
-                uk-toggle="target: #create-status">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70" viewBox="0 0 24 24"
-                  stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
-                  <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
-                </svg>
+                <div
+                  class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-pink-100/60 hover:bg-pink-100"
+                  uk-toggle="target: #create-status">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 8h.01" />
+                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                    <path d="M3.5 15.5l4.5 -4.5c.928 -.893 2.072 -.893 3 0l5 5" />
+                    <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
+                  </svg>
+                </div>
+                <div
+                  class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-sky-100/60 hover:bg-sky-100"
+                  uk-toggle="target: #create-status">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                    <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
+          <!-- events tab-->
+          <div class="w-full"></div>
+          <!-- members tab-->
+          <div class="w-full">
+
+            <GroupMemberListItem v-for="member in group?.GroupMembers" :member="member"></GroupMemberListItem>
+          </div>
+          <!-- media tab-->
+          <div class="w-full"></div>
+          <!-- request tab-->
+          <div class="w-full"></div>
         </div>
       </div>
     </main>
   </NuxtLayout>
 </template>
+
+<style scoped>
+li.uk-active {
+  border-bottom: 2px solid rgb(37 99 235 / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+</style>

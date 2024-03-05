@@ -1,5 +1,4 @@
 export default defineEventHandler(async event => {
-
     try {
         const gid = getRouterParam(event, 'id')
         const token = getHeader(event,'Authorization')
