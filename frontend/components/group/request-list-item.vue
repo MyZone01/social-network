@@ -13,7 +13,8 @@
             {{ props.member?.Role }}
         </div>
         <div class="h-full">
-            <UButton  v-if="props.member?.Role !== 'admin'"  class="text-red-400">Delete</UButton>
+            <UButton  class="text-green-500">Accept</UButton>
+            <UButton  class="text-red-400">Decline</UButton>
         </div>
 
     </div>
@@ -29,6 +30,10 @@ type Member = {
 }
 const props = defineProps(['member'])
 
+onMounted(() => {
+    console.log("from requests &&&&&&&&&&&&&&&&&&&&&&\n",props.member);
+
+})
 
 </script>
 

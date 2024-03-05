@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { getJoinRequests } from '@/composables/group/requests';
 
 
 type Member = {
@@ -8,6 +9,7 @@ type Member = {
 }
 
 type Group = {
+  ID: string,
   Title: string,
   Description: string,
   GroupMembers: Member[],
@@ -15,6 +17,7 @@ type Group = {
 
 
 const group = ref<Group>()
+const joinRequests = ref<Member[]>()
 const route = useRoute()
 const gid = route.params.id
 onMounted(async () => {
@@ -29,6 +32,12 @@ onMounted(async () => {
     }
   })
   group.value = response as Group
+
+
+  const { data } = await getJoinRequests(group.value.ID)
+  console.log("fromm comp request", data);
+  joinRequests.value = data
+
 })
 </script>
 
@@ -175,7 +184,9 @@ onMounted(async () => {
           <!-- media tab-->
           <div class="w-full"></div>
           <!-- request tab-->
-          <div class="w-full"></div>
+          <div class="w-full">
+            <GroupRequestListItem v-for="member in joinRequests" :member="member" />
+          </div>
         </div>
       </div>
     </main>
