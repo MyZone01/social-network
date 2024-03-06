@@ -1,18 +1,18 @@
 <template>
   <div class="px-10  h-12 w-full flex flex-row justify-between">
-    <div class="h-full flex-1 bg-blue-700">
+    <div class="h-full  bg-blue-700">
       <div class="flex flex-row gap-3">
-        <img src="http://localhost:8081/uploads/default-avatar.png">
+        <img src="http://localhost:8081/uploads/default-avatar.png" class="w-10 h-8"/>
         <div>
           <div>{{ `${props.member.User?.firstName} ${props.member.User?.lastName}` }}</div>
         </div>
       </div>
     </div>
-    <div class="h-full flex-1 text-left">
+    <div class="h-full  text-left">
       {{ props.member?.Role }}
     </div>
-    <div class="h-full flex-3 w-max">
-      <UButton v-if="props.member?.Role !== 'admin'" class="text-red-400">
+    <div class="h-full  w-max">
+      <UButton v-if="props.member?.Role !== 'admin' && props.isAdmin" class="w-10 rounded-full text-red-500 border-4 border-white dark:border-slate-800">
         Delete
       </UButton>
     </div>
@@ -27,7 +27,9 @@ type Member = {
     role: String
 
 }
-const props = defineProps(['member'])
+const props = defineProps(['member','isAdmin'])
+console.log(props.member);
+
 
 
 </script>

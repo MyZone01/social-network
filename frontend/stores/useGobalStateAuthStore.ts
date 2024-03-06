@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 interface AuthState {
   isAuthenticated: Boolean
   token: String
-  user: Object
+  user: any
 }
 // Define store
 export const useGlobalAuthStore = defineStore('auth', {
@@ -16,7 +16,7 @@ export const useGlobalAuthStore = defineStore('auth', {
   }),
   persist: true,
   actions: {
-    async login(newToken: String, userInfos: Object) {
+    async login(newToken: String, userInfos: any) {
       // Perform authentication logic
       this.isAuthenticated = true
       this.token = newToken

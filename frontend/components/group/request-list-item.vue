@@ -2,7 +2,7 @@
   <div class="px-10  h-12 w-full flex flex-row justify-between">
     <div class="h-full flex-3 bg-blue-700">
       <div class="flex flex-row gap-3">
-        <img src="http://localhost:8081/uploads/default-avatar.png">
+        <NuxtImg src="http://localhost:8081/uploads/default-avatar.png" class="w-20 h-20"/>
         <div>
           <div>{{ `${props.member.User?.firstName} ${props.member.User?.lastName}` }}</div>
         </div>
@@ -44,6 +44,8 @@ type Member = {
     role: String
 
 }
+
+
 const props = defineProps(['member'])
 const status = ref<string>(props.member.Status)
 

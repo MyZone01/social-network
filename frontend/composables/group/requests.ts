@@ -1,6 +1,6 @@
-export async function joinRequest(groupId: string) {
+export async function joinRequest(groupId: string | undefined) {
     const store = useGlobalAuthStore()
-    const { error } = await useFetch('/api/group/request/join', {
+    const { data, error } = await useFetch('/api/group/request/join', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${store.token}`
@@ -9,15 +9,16 @@ export async function joinRequest(groupId: string) {
             gid: groupId
         },
         onResponseError({ }) {
-            return error
+            return { error }
         },
         onRequestError() {
-            return error
+            return { error }
         }
     })
+    return {data, error }
 }
 
-export async function getJoinRequests(groupId: string): Promise<any> {
+export async function getJoinRequests(groupId: string | undefined): Promise<any> {
     const store = useGlobalAuthStore()
     const data = await $fetch('/api/group/request/join-requests', {
         method: 'GET',

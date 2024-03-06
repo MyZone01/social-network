@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { getJoinRequests } from '@/composables/group/requests'
+import type { user } from '@/composables/editeUser';
+import { joinRequest, getJoinRequests } from '@/composables/group/requests'
 
 
 type Member = {
@@ -13,13 +14,30 @@ type Group = {
   Title: string,
   Description: string,
   GroupMembers: Member[],
+  CreatorID: string
+}
+
+const user = useGlobalAuthStore().user
+
+const group = ref<Group>()
+const isMember = ref(false)
+const joinRequests = ref<Member[]>()
+const isRequester = ref(false)
+
+
+const route = useRoute()
+const gid = route.params.id
+
+async function handleJoin(group: Group | undefined) {
+  await joinRequest(group?.ID).then((error) => {
+    if (!error) {
+      isRequester.value = true
+    }
+  })
 }
 
 
-const group = ref<Group>()
-const joinRequests = ref<Member[]>()
-const route = useRoute()
-const gid = route.params.id
+
 
 onMounted(async () => {
   const store = useGlobalAuthStore()
@@ -34,12 +52,14 @@ onMounted(async () => {
   })
   group.value = response as Group
 
+  isMember.value = group.value?.GroupMembers.some((member) => member.User.id === user.id)
+
   const { data } = await getJoinRequests(group.value.ID)
   joinRequests.value = data
+  isRequester.value = joinRequests.value?.some((member) => member.User.id === user.id) || false
 
 })
 </script>
-
 
 <template>
   <NuxtLayout>
@@ -77,35 +97,23 @@ onMounted(async () => {
                 <div>
                   <div class="flex items-center gap-2 mt-1">
                     <div class="flex -space-x-4 mr-3">
-                      <img
-                        src="assets/images/avatars/avatar-2.jpg" alt=""
-                        class="w-10 rounded-full border-4 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="assets/images/avatars/avatar-3.jpg" alt=""
-                        class="w-10 rounded-full border-4 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="assets/images/avatars/avatar-7.jpg" alt=""
-                        class="w-10 rounded-full border-4 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="assets/images/avatars/avatar-4.jpg" alt=""
-                        class="w-10 rounded-full border-4 border-white dark:border-slate-800"
-                      >
-                      <img
-                        src="assets/images/avatars/avatar-5.jpg" alt=""
-                        class="w-10 rounded-full border-4 border-white dark:border-slate-800"
-                      >
+                      <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                        class="w-10 rounded-full border-4 border-white dark:border-slate-800">
+                      <img src="assets/images/avatars/avatar-3.jpg" alt=""
+                        class="w-10 rounded-full border-4 border-white dark:border-slate-800">
+                      <img src="assets/images/avatars/avatar-7.jpg" alt=""
+                        class="w-10 rounded-full border-4 border-white dark:border-slate-800">
+                      <img src="assets/images/avatars/avatar-4.jpg" alt=""
+                        class="w-10 rounded-full border-4 border-white dark:border-slate-800">
+                      <img src="assets/images/avatars/avatar-5.jpg" alt=""
+                        class="w-10 rounded-full border-4 border-white dark:border-slate-800">
                     </div>
                     <div>
                       <button type="button" class="rounded-lg bg-slate-100 flex px-2.5 py-2 dark:bg-dark2">
                         <UIcon name="i-heroicons-ellipsis-horizontal" class="text-xl" />
                       </button>
-                      <div
-                        class="w-[100px] shadow-lg"
-                        uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click;offset:10"
-                      >
+                      <div class="w-[100px] shadow-lg"
+                        uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click;offset:10">
                         <nav class="bg-slate-200">
                           <a href="#">
                             <UIcon class="text-xl" name="i-heroicons-link" />
@@ -127,29 +135,35 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div class="flex items-center justify-between border-t border-gray-100 px-2 dark:border-slate-700">
+          <div v-if="isMember"
+            class="flex items-center justify-between border-t border-gray-100 px-2 dark:border-slate-700">
             <nav>
               <ul
                 class=" uk-subnav uk-subnav-pill flex gap-0.5 rounded-xl overflow-hidden -mb-px text-gray-500 font-medium text-sm overflow-x-auto dark:text-white"
-                uk-switcher="connect: #group-menus ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
-              >
+                uk-switcher="connect: #group-menus ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
                 <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Posts</a></li>
                 <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Events</a></li>
                 <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Members</a></li>
                 <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Media</a></li>
-                <li><a href="#" class="inline-block py-3 leading-8 px-3.5">Requests</a></li>
+                <li v-if="group?.CreatorID === user.id"><a href="#"
+                    class="inline-block py-3 leading-8 px-3.5">Requests</a></li>
               </ul>
             </nav>
 
             <div
-              class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5"
-            >
+              class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5">
               <UIcon name="i-heroicons-magnifying-glass" class="text-lg" />
-              <input
-                placeholder="Search .."
-                class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500"
-              >
+              <input placeholder="Search .."
+                class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500">
             </div>
+          </div>
+          <div v-else class="text-center">
+
+            <p class="text-xl"> You are not part of this group</p>
+            <UButton v-if="!isRequester" @click="handleJoin(group)" class="bg-blue-500 m-3">Request to Join
+            </UButton>
+            <p v-else class="text-blue-500 m-3">Request sent</p>
+
           </div>
         </div>
         <div id="group-menus" class="uk-switcher flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col">
@@ -159,21 +173,17 @@ onMounted(async () => {
               <div class="flex items-center gap-3">
                 <div
                   class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
-                  uk-toggle="target: #create-status"
-                >
+                  uk-toggle="target: #create-status">
                   <div class="py-2.5 text-center dark:text-white">
                     What do you have in mind?
                   </div>
                 </div>
                 <div
                   class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-pink-100/60 hover:bg-pink-100"
-                  uk-toggle="target: #create-status"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70"
+                  uk-toggle="target: #create-status">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70"
                     viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M15 8h.01" />
                     <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
@@ -183,13 +193,10 @@ onMounted(async () => {
                 </div>
                 <div
                   class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-lg transition-all bg-sky-100/60 hover:bg-sky-100"
-                  uk-toggle="target: #create-status"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70"
+                  uk-toggle="target: #create-status">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70"
                     viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
                     <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
@@ -202,7 +209,8 @@ onMounted(async () => {
           <div class="w-full" />
           <!-- members tab-->
           <div class="w-full">
-            <GroupMemberListItem v-for="member in group?.GroupMembers" :member="member" />
+            <GroupMemberListItem v-for="member in group?.GroupMembers" :isAdmin="group?.CreatorID === user.id"
+              :member="member" />
           </div>
           <!-- media tab-->
           <div class="w-full" />
