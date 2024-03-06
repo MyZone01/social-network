@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-6xl">Welcome to Social Network</h1>
-  <nuxt-img src="http://localhost:8081/uploads/default-avatar.png" />
+  <nuxt-img :src="'http://localhost:8081/' + currentUser?.avatarImage" />
   <p>
     {{ currentUser }}
   </p>

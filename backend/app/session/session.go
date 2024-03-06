@@ -276,9 +276,8 @@ func (s *starter) Valid(bearer string) bool {
 	db := session.database
 	tmpdata := session.data
 	cookie, err := s.Ctx.Request.Cookie(c.CookieName)
-	fmt.Println(cookie)
+
 	if err != nil {
-		// Le cookie n'existe pas
 		if bearer != "" {
 			cookie = &http.Cookie{
 				Name:     c.CookieName,

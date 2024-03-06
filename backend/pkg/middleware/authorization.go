@@ -77,7 +77,7 @@ func ImageUploadMiddleware(c *octopus.Context) {
 	err := c.Request.ParseMultipartForm(10 << 20) // 10 MB
 	if err != nil {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
-			"error": "Error Parsing the Form",
+			"error": "🚨 Error Parsing the Form",
 		})
 		return
 	}

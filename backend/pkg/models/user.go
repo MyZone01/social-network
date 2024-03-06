@@ -52,6 +52,10 @@ func (u *User) Validate() error {
 		return errors.New("Password must be at least 8 characters long")
 	}
 
+	if u.AvatarImage == "" {
+		u.AvatarImage = "uploads/default-avatar.png"
+	}
+
 	return nil
 }
 
@@ -62,7 +66,6 @@ func (user *User) Create(db *sql.DB) error {
 	user.ID = uuid.New()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
-
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)

@@ -110,14 +110,14 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 const state = reactive({
-  firstName: '',
-  lastName: '',
-  email: '',
-  nickname: '',
-  password: '',
-  confirmPassword: '',
-  dateOfBirth: '',
-  aboutMe: '',
+  firstName: 'Serigne Saliou',
+  lastName: 'Mbaye',
+  email: 'ssmm@gmail.com',
+  nickname: 'ssmm1',
+  password: '12345678',
+  confirmPassword: '12345678',
+  dateOfBirth: '2024-03-01',
+  aboutMe: 'asdfasdf',
   avatarImg: File,
   avatarLocalUrl: '',
   registerError: '',
@@ -137,6 +137,9 @@ const handleImageSelected = (event: Event) => {
 }
 
 async function handleRegister(event: FormSubmitEvent<Schema>) {
+  console.log(">>>>>>>>>>>>>>>>>>>>>>", event);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>", state);
+
   state.loading = true
   try {
     const fomData = JSON.stringify({
@@ -149,8 +152,9 @@ async function handleRegister(event: FormSubmitEvent<Schema>) {
       dateOfBirth: state.dateOfBirth,
       aboutMe: state.aboutMe.trim(),
     })
-    const idSession = await register(state.avatarImg, fomData)
-
+    await register(state.avatarImg, fomData)
+    const redirect = '/'
+    await navigateTo(redirect);
   } catch (error) {
     // @ts-ignore
     state.registerError = error.statusMessage

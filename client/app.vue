@@ -13,13 +13,15 @@ useHead({
 
 <template>
   <Html scroll-smooth snap-mandatory snap-y>
-    <Body w-screen h-screen flex overflow-hidden items-start>
-      <NuxtLoadingIndicator />
-      <NuxtLayout>
-        <NuxtPage />
-        <UNotifications max-w-md />
-      </NuxtLayout>
-    </Body>
+
+  <Body w-screen h-screen flex items-start>
+    <NuxtLoadingIndicator />
+    <NuxtLayout>
+      <NuxtPage />
+      <UNotifications max-w-md />
+    </NuxtLayout>
+  </Body>
+
   </Html>
 </template>
 
