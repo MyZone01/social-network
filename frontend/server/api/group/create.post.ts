@@ -6,19 +6,19 @@ export default defineEventHandler(async event => {
         const response = await $fetch('http://localhost:8081/create-group', {
             method:'POST',
             headers: {
-                'Authorization': `${token}`
+                Authorization: `${token}`
             },
             body: JSON.stringify(payload)
 
         })
-        console.log('from api/group/create');
+        console.log('from api/group/create')
         // event.node.res.writeHead(201, 'ok')
         return response
 
 
     } catch (e: any) {
-        console.log(e);
+        console.log(e)
         event.node.res.writeHead(500, e.message)
-    }   
+    }
 
 })

@@ -9,10 +9,10 @@ export default defineEventHandler(async event => {
         const isuser = queryObj.u === '1'
 
 
-        const response = await $fetch("http://localhost:8081/get-group", {
+        const response = await $fetch('http://localhost:8081/get-group', {
             method: 'GET',
             headers: {
-                'Authorization': `${token}`
+                Authorization: `${token}`
             },
             query: {
                 group_id: groupId,
@@ -23,7 +23,7 @@ export default defineEventHandler(async event => {
         return response
 
     } catch (e: any) {
-        console.log(e);
+        console.log(e)
         setResponseStatus(event,500,e.message)
     }
 

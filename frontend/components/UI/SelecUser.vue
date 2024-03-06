@@ -1,5 +1,5 @@
 <script>
-import { GetAllFollower } from '~/composables/getAllUser';
+import { GetAllFollower } from '~/composables/getAllUser'
 
 export default {
     data() {
@@ -8,20 +8,22 @@ export default {
         }
     },
     async mounted() {
-        this.userFollowers = await GetAllFollower();
+        this.userFollowers = await GetAllFollower()
         // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
-            placeholder: "Selec Followers .."
-        });
+            placeholder: 'Selec Followers ..'
+        })
 
     }
 }
 </script>
 
 <template>
-    <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
-        <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option>
-    </select>
+  <select id="selecUser" class="js-example-basic-multiple" style="width: 40%" name="states[]" multiple="multiple">
+    <option v-for="follower in userFollowers" :id="follower.id">
+      {{ follower.firstname }} {{ follower.lastname }}
+    </option>
+  </select>
 </template>
 
 

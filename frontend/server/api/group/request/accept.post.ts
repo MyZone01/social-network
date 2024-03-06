@@ -6,10 +6,10 @@ export default defineEventHandler(async event => {
         const rId = queryObj.rId
 
 
-        const response = await $fetch("http://localhost:8081/accept-access-demand", {
+        const response = await $fetch('http://localhost:8081/accept-access-demand', {
             method: 'POST',
             headers: {
-                'Authorization': `${token}`
+                Authorization: `${token}`
             },
 
         query:{
@@ -20,7 +20,7 @@ export default defineEventHandler(async event => {
         return response
 
     } catch (e: any) {
-        console.log(e);
+        console.log(e)
         setResponseStatus(event,500,e.message)
     }
 

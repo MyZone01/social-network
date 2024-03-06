@@ -1,7 +1,9 @@
 <template>
   <NuxtLayout>
-    <main id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
-      style="max-height: 100%; overflow-y: auto;">
+    <main
+      id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
+      style="max-height: 100%; overflow-y: auto;"
+    >
       <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
         <div class="page-heading">
           <h1 class="page-title">
@@ -9,8 +11,10 @@
           </h1>
 
           <nav class="nav__underline">
-            <ul uk-tab class="group"
-              uk-switcher="connect: #ttabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
+            <ul
+              uk-tab class="group"
+              uk-switcher="connect: #ttabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
+            >
               <li> <a href="#"> Suggestions </a> </li>
               <li> <a href="#"> Popular </a> </li>
               <li> <a href="#"> My events </a> </li>
@@ -206,10 +210,14 @@
           </div>
 
           <!-- slide nav icons -->
-          <a class="nav-prev !top-20" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
-              class="text-2xl" /> </a>
-          <a class="nav-next !top-20" href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
-              class="text-2xl" /></a>
+          <a class="nav-prev !top-20" href="#" uk-slider-item="previous"> <ion-icon
+            name="chevron-back"
+            class="text-2xl"
+          /> </a>
+          <a class="nav-next !top-20" href="#" uk-slider-item="next"> <ion-icon
+            name="chevron-forward"
+            class="text-2xl"
+          /></a>
         </div>
 
         <div class="sm:my-6 my-3 flex items-center justify-between md:mt-10">

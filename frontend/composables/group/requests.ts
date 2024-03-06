@@ -1,6 +1,6 @@
 export async function joinRequest(groupId: string) {
     const store = useGlobalAuthStore()
-    const { error } = await useFetch("/api/group/request/join", {
+    const { error } = await useFetch('/api/group/request/join', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${store.token}`
@@ -19,7 +19,7 @@ export async function joinRequest(groupId: string) {
 
 export async function getJoinRequests(groupId: string): Promise<any> {
     const store = useGlobalAuthStore()
-    const data = await $fetch("/api/group/request/join-requests", {
+    const data = await $fetch('/api/group/request/join-requests', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${store.token}`
@@ -33,7 +33,7 @@ export async function getJoinRequests(groupId: string): Promise<any> {
 
 export async function acceptJoinRequest(gId: string, rId: string): Promise<any> {
     const store = useGlobalAuthStore()
-    const data = await $fetch("/api/group/request/accept", {
+    const data = await $fetch('/api/group/request/accept', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${store.token}`
@@ -47,7 +47,7 @@ export async function acceptJoinRequest(gId: string, rId: string): Promise<any> 
 }
 export async function declneJoinRequest(gId: string, rId: string): Promise<any> {
     const store = useGlobalAuthStore()
-    const data = await $fetch("/api/group/request/decline", {
+    const data = await $fetch('/api/group/request/decline', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${store.token}`

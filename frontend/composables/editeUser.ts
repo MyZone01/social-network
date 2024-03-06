@@ -1,4 +1,4 @@
-import { useGlobalAuthStore } from "@/stores/useGobalStateAuthStore"
+import { useGlobalAuthStore } from '@/stores/useGobalStateAuthStore'
 
 export type user = {
     email: string,
@@ -16,14 +16,14 @@ export const loadUserInfos = async() => {
     const store = useGlobalAuthStore().user
 
     console.log(store)
-    
+
     return store
 }
 
 export const editeUser = async(user: user, token: string) => {
 
-    console.log(user, token);
-    
+    console.log(user, token)
+
     return fetch('/api/user', {
         method: 'PUT',
         headers: {
@@ -31,5 +31,5 @@ export const editeUser = async(user: user, token: string) => {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(user),
-    });
+    })
 }

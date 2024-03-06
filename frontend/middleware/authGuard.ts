@@ -1,12 +1,12 @@
-import { decoder } from "@/server/utils/transformer";
-import axios from "axios";
+import { decoder } from '@/server/utils/transformer'
+import axios from 'axios'
 
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const { token, isAuthenticated, user } = useGlobalAuthStore();
-  let tokenValid: Boolean;
+  const { token, isAuthenticated, user } = useGlobalAuthStore()
+  let tokenValid: Boolean
   let decodeToken: String
-  let cookie = useCookie('token')
+  const cookie = useCookie('token')
   console.log(cookie)
 
   // if (cookie.value !== token && to.path !== '/auth') {

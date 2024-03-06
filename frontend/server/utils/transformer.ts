@@ -17,15 +17,15 @@ interface UserInfos {
 export const secure = (user: UserInfos) => {
     return {
         email: user.email,
-        firstName: user.firstName, 
-        lastName: user.lastName, 
-        dateOfBirth: (user.dateOfBirth).split('T')[0], 
-        avatarImage: user.avatarImage, 
-        nickname: user.nickname, 
-        aboutMe: user.aboutMe, 
-        isPublic: user.isPublic, 
-        createdAt: user.createdAt, 
-        updatedAt: user.updatedAt, 
+        firstName: user.firstName,
+        lastName: user.lastName,
+        dateOfBirth: (user.dateOfBirth).split('T')[0],
+        avatarImage: user.avatarImage,
+        nickname: user.nickname,
+        aboutMe: user.aboutMe,
+        isPublic: user.isPublic,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
     }
 }
 

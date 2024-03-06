@@ -2,22 +2,28 @@
   <div class="dark:bg-gray-900 bg-white overflow-scroll">
     <div class="sm:flex">
       <div
-        class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10 overflow-y-scroll">
-
-        <div class="w-full lg:max-w-sm mx-auto space-y-10"
-          uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true  overflow-visible">
-
+        class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10 overflow-y-scroll"
+      >
+        <div
+          class="w-full lg:max-w-sm mx-auto space-y-10"
+          uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true  overflow-visible"
+        >
           <!-- logo image-->
           <a href="#"> <img src="assets/images/logo.png" class="w-28 absolute top-10 left-10 dark:hidden" alt=""></a>
-          <a href="#"> <img src="assets/images/logo-light.png" class="w-28 absolute top-10 left-10 hidden dark:!block"
-              alt=""></a>
+          <a href="#"> <img
+            src="assets/images/logo-light.png" class="w-28 absolute top-10 left-10 hidden dark:!block"
+            alt=""
+          ></a>
 
           <AuthLoginForm v-if="data.loginProcess">
             <!-- title -->
             <div>
-              <h2 class="text-2xl font-semibold mb-1.5"> Sign in to your account </h2>
-              <p class="text-sm text-gray-700 font-normal">If you haven’t signed up yet.
-                <a @click="handleProcess()" class="text-blue-700 cursor-pointer">Register here!</a>
+              <h2 class="text-2xl font-semibold mb-1.5">
+                Sign in to your account
+              </h2>
+              <p class="text-sm text-gray-700 font-normal">
+                If you haven’t signed up yet.
+                <a class="text-blue-700 cursor-pointer" @click="handleProcess()">Register here!</a>
               </p>
             </div>
           </AuthLoginForm>
@@ -28,14 +34,14 @@
                 Sign up to get started
               </h2>
               <p class="text-sm text-gray-700 font-normal">
-                If you already have an account, <a @click="handleProcess()" class="text-blue-700 cursor-pointer">Login
+                If you already have an account, <a class="text-blue-700 cursor-pointer" @click="handleProcess()">Login
                   here!</a>
               </p>
             </div>
           </AuthRegisterForm>
 
-            <!-- social login -->
-            <!-- <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
+          <!-- social login -->
+          <!-- <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
                         :icon="ioniconsLogoFacebook" class="text-lg"></ion-icon> facebook </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
@@ -47,13 +53,12 @@
       </div>
 
       <UIAuthSlider />
-
     </div>
   </div>
 </template>
 <script setup>
 useHead(() => ({
-  title: (title) => `Social - Authentication`,
+  title: (title) => 'Social - Authentication',
   meta: [
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -66,7 +71,7 @@ useHead(() => ({
   script: [
     { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' },
   ]
-}));
+}))
 
 const data = reactive({
   loginProcess: true

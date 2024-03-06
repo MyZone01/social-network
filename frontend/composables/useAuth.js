@@ -1,29 +1,29 @@
-import { useGlobalAuthStore } from "../stores/useGobalStateAuthStore";
-import FormData from "form-data";
+import { useGlobalAuthStore } from '../stores/useGobalStateAuthStore'
+import FormData from 'form-data'
 
 export default () => {
-  const store = useGlobalAuthStore();
+  const store = useGlobalAuthStore()
 
   const setUser = (access) => {
-    store.login(access.session, access.user);
+    store.login(access.session, access.user)
 
-    const cookie = useCookie("token");
+    const cookie = useCookie('token')
     // cookie.value = newToken;
-  };
+  }
 
   const register = async ({ avatarImage, data }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const body = new FormData();
+        const body = new FormData()
         if (avatarImage) {
-          body.append("file", avatarImage);
+          body.append('file', avatarImage)
         }
-        body.append("data", data);
+        body.append('data', data)
 
-        const response = await $fetch("/api/auth/register", {
-          method: "POST",
+        const response = await $fetch('/api/auth/register', {
+          method: 'POST',
           body: body,
-        });
+        })
 
         if (response.ok === false && response.status == 200) {
           // alert the user that the avatar does not upload correctly
@@ -32,34 +32,34 @@ export default () => {
           // and redirect to the index page
           // resolve(true);
         }
-        setUser(response);
-        resolve(true);
+        setUser(response)
+        resolve(true)
       } catch (err) {
-        reject(err);
+        reject(err)
       }
-    });
-  };
+    })
+  }
 
   const login = ({ email, password }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await $fetch("/api/auth/login", {
-          method: "POST",
+        const response = await $fetch('/api/auth/login', {
+          method: 'POST',
           body: JSON.stringify({ data: { email, password } }),
-        });
+        })
 
-        console.log(response);
-        setUser(response);
-        resolve(true);
+        console.log(response)
+        setUser(response)
+        resolve(true)
       } catch (err) {
-        console.log("ERROR SIDE");
-        reject(err);
+        console.log('ERROR SIDE')
+        reject(err)
       }
-    });
-  };
+    })
+  }
 
   return {
     login,
     register,
-  };
-};
+  }
+}

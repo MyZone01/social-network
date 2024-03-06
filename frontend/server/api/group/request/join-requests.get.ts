@@ -5,10 +5,10 @@ export default defineEventHandler(async event => {
         const groupId = queryObj.gid
 
 
-        const response = await $fetch("http://localhost:8081/get-all-access-demand", {
+        const response = await $fetch('http://localhost:8081/get-all-access-demand', {
             method: 'GET',
             headers: {
-                'Authorization': `${token}`
+                Authorization: `${token}`
             },
             query: {
                 group_id: groupId,
@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
         return response
 
     } catch (e: any) {
-        console.log(e);
+        console.log(e)
         setResponseStatus(event,500,e.message)
     }
 

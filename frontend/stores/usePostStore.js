@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-export const useFeedStore = defineStore("feed", {
+export const useFeedStore = defineStore('feed', {
     id: 'feed',
     state: () => ({
         posts: []
@@ -8,11 +8,11 @@ export const useFeedStore = defineStore("feed", {
     persist: true,
     actions: {
         addPost(post) {
-            this.posts.unshift(post);
+            this.posts.unshift(post)
         },
 
         async getUserFeed() {
-            let response = await fetch("http://localhost:8081/post/getfeed", {
+            let response = await fetch('http://localhost:8081/post/getfeed', {
                 headers: {
                     Authorization: `Bearer ${useGlobalAuthStore().token}`
                 },
@@ -23,4 +23,4 @@ export const useFeedStore = defineStore("feed", {
             this.posts = response
         }
     }
-});
+})

@@ -1,7 +1,7 @@
 
 export const sendFile = async (file:File, token: string) => {
-    const body = new FormData();
-    body.append('file', file, file.name);
+    const body = new FormData()
+    body.append('file', file, file.name)
 
     // Think of Using decoder on the token from /utils/transformer.js
     return await fetch('/api/upload', {
@@ -10,5 +10,5 @@ export const sendFile = async (file:File, token: string) => {
             Authorization: `Bearer ${token}`,
         },
         body,
-    });
+    })
 }

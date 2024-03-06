@@ -24,12 +24,10 @@ useSeoMeta({
 })
 </script>
 <template>
-
   <!-- INITIAL CONTENT -->
   <Html>
     <NuxtLoadingIndicator />
     <NuxtPage />
     <UNotifications />
   </Html>
-  
 </template>
