@@ -14,9 +14,7 @@
 		"**/*.inject.dart": true,
 		"**/*.inject.summary": true,
 		"**/node_modules": true,
-		"**/.nuxt": true,
-		"**/frontend": false
+		"**/.nuxt": true
 	},
-	"nuxtr.monorepoMode.DirectoryName": "frontend",
 	"explorerExclude.backup": {}
 }
