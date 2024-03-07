@@ -14,10 +14,9 @@ export interface User {
 
 export interface ServerResponse<T> {
   status: string;
-  session: string;
+  session?: string;
   message: string;
-  user: T;
+  data?: T;
 }
-
 
 export type UserWithoutPassword = Omit<User, "password">;

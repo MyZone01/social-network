@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const config = useRuntimeConfig();
-  const userWithPassword = response.user;
+  const userWithPassword = response.data;
   const session = serialize({ session: response.session });
   const signedSession = sign(session, config.cookieSecret);
 

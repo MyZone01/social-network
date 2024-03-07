@@ -104,7 +104,7 @@ func handleGetUser(ctx *octopus.Context) {
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
 			"message": "User fetched successfully",
 			"status":  http.StatusOK,
-			"user": map[string]interface{}{
+			"data": map[string]interface{}{
 				"id":           user.ID,
 				"firstname":    user.FirstName,
 				"lastname":     user.LastName,

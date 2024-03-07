@@ -23,6 +23,7 @@ func handleFollower(ctx *octopus.Context) {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"message": "Error while parsing the form data.",
 			"status":  http.StatusBadRequest,
+
 		})
 		return
 	}

@@ -6,8 +6,6 @@ import (
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"errors"
-	"fmt"
-	"log"
 	"net/http"
 
 	"net/mail"
@@ -42,6 +40,7 @@ var loginHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "Error while parsing the form data.",
 			"status":  http.StatusInternalServerError,
+			"data":    nil,
 		})
 		return
 	}
@@ -51,6 +50,7 @@ var loginHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": err.Error(),
 			"status":  http.StatusBadRequest,
+			"data":    nil,
 		})
 	}
 
@@ -65,17 +65,17 @@ var loginHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "invalid email.",
 			"status":  http.StatusUnauthorized,
+			"data":    nil,
 		})
 		return
 	}
-
-	fmt.Println(newUser.Password, bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)))
 
 	if err := bcrypt.CompareHashAndPassword([]byte(newUser.Password), []byte(credentials.Password)); err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Invalid credentials. Please try again.",
 			"status":  http.StatusUnauthorized,
+			"data":    nil,
 		})
 		return
 	}
@@ -86,14 +86,15 @@ var loginHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "Error while starting the session.",
 			"status":  http.StatusInternalServerError,
+			"data":    nil,
 		})
 		return
 	}
 	ctx.JSON(map[string]interface{}{
 		"session": idSession,
-		"user":    newUser,
 		"message": "User successfully logged.",
 		"status":  "200",
+		"data":    newUser,
 	})
 }
 
@@ -113,6 +114,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "Error while parsing the form data.",
 			"status":  http.StatusBadRequest,
+			"data":    nil,
 		})
 		return
 	}
@@ -123,6 +125,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": err.Error(),
 			"status":  http.StatusBadRequest,
+			"data":    nil,
 		})
 		return
 	}
@@ -133,16 +136,17 @@ var registrationHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "Error while hashing the password.",
 			"status":  http.StatusInternalServerError,
+			"data":    nil,
 		})
 		return
 	}
 	newUser.Password = string(newHash)
 	if err := newUser.Create(ctx.Db.Conn); err != nil {
-		log.Println(err.Error())
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
 			"message": "Error while creating the user.",
 			"status":  http.StatusInternalServerError,
+			"data":    nil,
 		})
 		return
 	}
@@ -153,14 +157,15 @@ var registrationHandler = func(ctx *octopus.Context) {
 			"session": "",
 			"message": "Error while starting the session.",
 			"status":  http.StatusInternalServerError,
+			"data":    nil,
 		})
 		return
 	}
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
 		"session": idSession,
-		"user":    newUser,
 		"message": "User successfully registered and logged.",
 		"status":  "200",
+		"data":    newUser,
 	})
 }
 
@@ -192,7 +197,6 @@ func LogoutHandler(ctx *octopus.Context) {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]string{
 			"error": "Error while deleting session",
 		})
-		log.Println(err)
 		return
 	}
 
@@ -214,7 +218,6 @@ func meHandler(ctx *octopus.Context) {
 	err := user.Get(ctx.Db.Conn, userId)
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
-		log.Println(err)
 		return
 	}
 	ctx.Status(http.StatusOK).JSON(user)

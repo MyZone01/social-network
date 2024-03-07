@@ -27,8 +27,7 @@
 
                         <div
                             class="flex items-center gap-1 text-sm p-3 bg-secondery py-2 mr-2 rounded-xl max-lg:hidden dark:bg-white/5">
-                            <ion-icon name="search" class="text-lg md hydrated" role="img"
-                                aria-label="search"></ion-icon>
+                            <i class='bx bx-search text-lg md hydrated'></i>
                             <input placeholder="Search .." class="!bg-transparent">
                         </div>
 
