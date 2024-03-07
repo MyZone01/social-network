@@ -48,6 +48,7 @@ export const useAuth = () => {
   const logout = async () => {
     const data = await $fetch<{ user: User }>("/api/auth/logout", {
       method: "DELETE",
+      headers: useRequestHeaders(["cookie"]) as HeadersInit,
     });
 
     setUser(null);
