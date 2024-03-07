@@ -7,7 +7,6 @@ export const getUser = async (nickname: string, action: string) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + "5d01ea4c-732e-43df-a76f-b493d1df3865",
         }
     }).then(async (res) => await res.json()).catch((err) => {
         return {

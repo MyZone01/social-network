@@ -2,7 +2,7 @@
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-    const token = event.headers.get('Authorization');
+    const token = event.context.token;
     if (!token) {
         return {
             status: 401,
@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         };
     }
     
-    const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), token);
+    const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), `Bearer ${token}`);
     if (response.status !== 200) {
         return {
             status: response.status,

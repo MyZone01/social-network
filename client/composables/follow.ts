@@ -3,7 +3,6 @@ export const useFollow = async (nickname: string, action: string) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': "5d01ea4c-732e-43df-a76f-b493d1df3865",
         },
         body: JSON.stringify({ action: action, nickname: nickname })
     })

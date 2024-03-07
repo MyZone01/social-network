@@ -3,18 +3,18 @@
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
-    const token = event.headers.get('Authorization');
+    const token = event.context.token;
     if (!token) {
         return {
             status: 401,
             body: 'Unauthorized',
         };
     }
-
+    
     const response = await fetch('http://localhost:8081/getuser', {
         method: 'POST',
         headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
     }).then(async (res) => await res.json()).catch((err) => {
@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
             body: 'Internal server error',
         };
     });
+    console.log("res from server", response)
     if (response.status !== 200) {
         return {
             status: response.status,
