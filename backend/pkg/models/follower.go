@@ -62,12 +62,16 @@ func (follower *Follower) Create(db *sql.DB) error {
 }
 
 // Get a follower
-func (follower *Follower) Get(db *sql.DB, id uuid.UUID) error {
+func (follower *Follower) Get(db *sql.DB, reverse ...bool) error {
+	if len(reverse) > 0 && reverse[0] {
+		follower.FollowerID, follower.FolloweeID = follower.FolloweeID, follower.FollowerID
+	}
+
 	// Define the query
-	query := `SELECT id, follower_id, followee_id, status, created_at, updated_at FROM followers WHERE id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, follower_id, followee_id, status, created_at, updated_at FROM followers WHERE follower_id = $1 AND followee_id = $2 AND deleted_at IS NULL`
 
 	// Execute the query
-	err := db.QueryRow(query, id).Scan(
+	err := db.QueryRow(query, follower.FollowerID, follower.FolloweeID).Scan(
 		&follower.ID,
 		&follower.FollowerID,
 		&follower.FolloweeID,
@@ -75,7 +79,6 @@ func (follower *Follower) Get(db *sql.DB, id uuid.UUID) error {
 		&follower.CreatedAt,
 		&follower.UpdatedAt,
 	)
-
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
@@ -157,6 +160,19 @@ func (followers *Followers) GetAllByFolloweeID(db *sql.DB, followeeID uuid.UUID)
 	return nil
 }
 
+// count all followers by followee id
+func (followers *Followers) CountAllByFolloweeID(db *sql.DB, followeeID uuid.UUID) int {
+	// Define the query
+	query := `SELECT COUNT(id) FROM followers WHERE followee_id = $1 AND status = $2 AND deleted_at IS NULL`
+	var count int
+	// Execute the query
+	err := db.QueryRow(query, followeeID, StatusAccepted).Scan(&count)
+	if err != nil {
+		return 0
+	}
+	return count
+}
+
 // Get all followers by follower id
 func (followers *Followers) GetAllByFollowerID(db *sql.DB, followerID uuid.UUID) error {
 	// Define the query
@@ -187,4 +203,17 @@ func (followers *Followers) GetAllByFollowerID(db *sql.DB, followerID uuid.UUID)
 	}
 
 	return nil
+}
+
+// count all followers by follower id
+func (followers *Followers) CountAllByFollowerID(db *sql.DB, followerID uuid.UUID) int {
+	// Define the query
+	query := `SELECT COUNT(id) FROM followers WHERE follower_id = $1 AND status = $2 AND deleted_at IS NULL`
+	var count int
+	// Execute the query
+	err := db.QueryRow(query, followerID, StatusAccepted).Scan(&count)
+	if err != nil {
+		return 0
+	}
+	return count
 }

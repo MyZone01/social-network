@@ -5,8 +5,6 @@ import (
 	"backend/pkg/models"
 	"fmt"
 	"testing"
-
-	"github.com/google/uuid"
 )
 
 func TestPostObject(t *testing.T) {
@@ -15,9 +13,9 @@ func TestPostObject(t *testing.T) {
 		Title:   "hello world",
 		Content: "hello senegal",
 		Privacy: models.PrivacyPublic,
-		//ect ........
+		//etc ........
 	}
-	if err := post.Create(octopus.AppTest.Db.Conn, uuid.New()); err != nil {
+	if err := post.Create(octopus.AppTest.Db.Conn); err != nil {
 		t.Errorf(err.Error())
 		t.FailNow()
 	}
