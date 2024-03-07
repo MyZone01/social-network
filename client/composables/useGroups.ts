@@ -10,7 +10,16 @@ export const useGroups = () => {
     return response;
   };
 
+  const getGroupByID = async (id: string) => {
+    const response = await $fetch<Group>("/api/groups/" + id, {
+      headers: useRequestHeaders(["cookie"]) as HeadersInit,
+    });
+
+    return response;
+  };
+
   return {
-    getAllGroups
+    getAllGroups,
+    getGroupByID
   };
 }
