@@ -1,5 +1,5 @@
 <template>
-  <h1>Group: </h1>
+  <h1>Group Chat: </h1>
   {{ $route.params.id }}
   {{ group }}
   <nuxt-link to="/">Back to home</nuxt-link>
