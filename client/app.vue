@@ -1,35 +1,55 @@
 <script setup lang="ts">
 useHead({
-  title: 'Home',
-  titleTemplate: `%s | ${'Social Network'}`,
   meta: [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0' },
-    { hid: 'description', name: 'description', content: 'An interactive programming education platform with embedded coding environments and immersive, hands-on videos.' },
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    // { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-})
+  link: [
+    { rel: "icon", href: "/favicon.ico" },
+    { rel: "stylesheet", href: "assets/css/style.css" },
+    { rel: "stylesheet", href: "assets/css/tailwind.css" },
+  ],
+  htmlAttrs: {
+    lang: "en",
+  },
+});
+
+useSeoMeta({
+  titleTemplate: "%s - Social Network",
+  ogSiteName: "Social Network",
+  twitterCard: "summary_large_image",
+});
+
+onMounted(() => {
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  if (
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+
+  // Whenever the user explicitly chooses light mode
+  localStorage.theme = "light";
+
+  // Whenever the user explicitly chooses dark mode
+  localStorage.theme = "dark";
+
+  // Whenever the user explicitly chooses to respect the OS preference
+  localStorage.removeItem("theme");
+});
 </script>
 
 <template>
-  <Html scroll-smooth snap-mandatory snap-y>
-    <Body w-screen h-screen flex overflow-hidden items-start>
-      <NuxtLoadingIndicator />
-      <NuxtLayout>
-        <NuxtPage />
-        <UNotifications max-w-md />
-      </NuxtLayout>
-    </Body>
+  <Html>
+    <NuxtLoadingIndicator />
+    <NuxtPage />
+    <UNotifications />
   </Html>
 </template>
 
-<style lang="css">
-body>#__nuxt {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-</style>
+<style lang="css"></style>

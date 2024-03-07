@@ -1,7 +1,10 @@
 <template>
-  <layout-header />
-  <main w-full flex flex-col overflow-hidden h-screen bg-gray-100 dark:bg-gray-950 py-6 px-8>
-    <slot />
-  </main>
-  <layout-footer />
+
+  <Body class="bg-15-23-42 overflow-x-hidden">
+    <Header />
+    <Sidebar />
+  </Body>
 </template>
+
+<script setup>
+</script>
