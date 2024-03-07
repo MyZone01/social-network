@@ -5,9 +5,6 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<{ username: string; password: string; rememberMe: boolean }>(event);
 
   const { username, password, rememberMe } = body;
-  console.log("username", username);
-  console.log("password", password);
-
 
   const response = await $fetch<ServerResponse<User>>("http://localhost:8081/login", {
     method: "POST",
@@ -23,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   if (response.status !== "200") {
     return sendError(event, createError({
-      statusCode: 400,
+      statusCode: 400 as number,
       statusMessage: response.message
     }))
   }
