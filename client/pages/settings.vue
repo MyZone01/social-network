@@ -1,58 +1,47 @@
-<script setup>
-definePageMeta({
-    middleware: ["pages-guard"]
-})
-
-// import { ref } from 'vue'
-import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore'
+<script setup lang="ts">
 import { editUser, updatePassword } from '@/composables/userEditor.js';
+import type { InputProvider } from '@nuxt/image';
+import type { InputHTMLAttributes, InputTypeHTMLAttribute } from 'vue';
+import type { input } from 'zod';
+import type { User } from '~/types';
 
-const { data, error } = await useAsyncData(() => {
-    return useGlobalAuthStore().user
-})
-
-// const baseStore = useGlobalAuthStore()
-const store = reactive(useGlobalAuthStore().user)
+const data = useAuthUser() || {} as User
+const store: any = useAuthUser()
 const onDisplay = reactive(data)
 const status = ["public", "private"]
 
-const userInfos = reactive({
-    email: store.email,
-    password: store.password,
-    firstName: store.firstName,
-    lastName: store.lastName,
-    dateOfBirth: store.dateOfBirth,
-    avatarImage: store.avatarImage,
-    nickname: store.nickname,
-    aboutMe: store.aboutMe,
-    isPublic: store.isPublic ? "public" : "private",
-    message: "",
-})
+const userInfos: User = reactive(store)
+const eventMessage = ""
 
 // function selector() {
 //     const index = store.isPublic ? 0 : 1
 //     console.log(ref("isPublic")[index])
 // }
 
-function changer(event) {
-    const value = event.target.value
-    userInfos[`${event.target.id}`] = value
+function changer(event: Event) {
+    const value = event.target as HTMLInputElement
+
+    console.log(value)
+    // userInfos[`${value.value.Att}`] = value
     // event.target.value = value
 }
 
 const saveChanges = async () => {
-    // isLoading.value = true;
-    userInfos.message = ''
-    try {
-        const result = await editUser(userInfos)
-        if (result) {
-            userInfos.message = result
-        }
-    } catch (error) {
-        userInfos.message = error
-    } finally {
-        console.log("changes processed")
-    }
+//     // isLoading.value = true;
+//     userInfos.message = ''
+//     try {
+//         const result = await editUser(userInfos)
+//         if (result) {
+//             userInfos.message = result
+//             data.nickname = userInfos.nickname
+//             data.firstName = userInfos.firstName
+//             data.lastName = userInfos.lastName
+//         }
+//     } catch (error) {
+//         userInfos.message = error
+//     } finally {
+//         console.log("changes processed")
+// }
 }
 
 const password = reactive({
@@ -62,34 +51,40 @@ const password = reactive({
     message: "",
 })
 
-function passwordChanger(event) {
-    const value = event.target.value
-    password[`${event.target.id}`] = value
-    // event.target.value = value
+function passwordChanger(event: Event) {
+    const value = event.target as HTMLInputElement
+//     password[`${event.target.id}`] = value
+//     // event.target.value = value
 }
 
 const changePassword = async () => {
-    password.message = ''
-    try {
-        const result = await updatePassword(password)
-        if (result) {
-            password.message = result.message
-        }
-    } catch (error) {
-        password.message = error
-    } finally {
-        console.log("changes processed")
-    }
+//     password.message = ''
+//     try {
+//         const result = await updatePassword(password)
+//         if (result) {
+//             // TO DISPLAY AS TOAST
+//             password.message = result.message
+//         }
+//     } catch (error) {
+//         password.message = error
+//     } finally {
+//         console.log("changes processed")
+//     }
 }
+
+definePageMeta({
+  alias: ["/"],
+  middleware: ["auth-only"],
+});
 </script>
 
-<template lang="">
-      <NuxtLayout>
-            <div id="wrapper">
+<template>
+    <NuxtLayout>
+        <div id="wrapper">
 
 <!-- main contents -->
 <main id="site__main"
-    class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
 
     <div class="max-w-3xl mx-auto">
 
@@ -106,8 +101,8 @@ const changePassword = async () => {
                         <input type="file" id="file" class="hidden" />
                     </label> -->
                     
-                    <label for="file" class="cursor-pointer" v-if="data.avatarImage">
-                        <nuxt-img id="img" :src="`http://localhost:8081/${data.avatarImage}`" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                    <label for="file" class="cursor-pointer" v-if="store.avatarImage">
+                        <nuxt-img id="img" :src="'http://localhost:8081/'+store.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                         <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
@@ -130,8 +125,8 @@ const changePassword = async () => {
                 </div>
 
                 <div class="flex-1">
-                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ data.firstName }} {{ data.lastName }}</h3>
-                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ data.nickname }}</p>
+                    <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{ store.firstName }} {{ store.lastName }}</h3>
+                    <p class="text-sm text-blue-600 mt-1 font-normal">@{{ store.nickname }}</p>
                 </div>
 
                 <!-- <button
@@ -170,12 +165,12 @@ const changePassword = async () => {
 
                 </nav>
 
-                <a class="absolute -translate-y-1/2 top-1/2 left-0 flex items-center w-20 h-full p-2 py-1 justify-start bg-gradient-to-r from-white via-white dark:from-slate-800 dark:via-slate-800"
-                    href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
+                <!-- <a class="absolute -translate-y-1/2 top-1/2 left-0 flex items-center w-20 h-full p-2 py-1 justify-start bg-gradient-to-r from-white via-white dark:from-slate-800 dark:via-slate-800"
+                    href="#" uk-slider-item="previous">  <ion-icon name="chevron-back"
                         class="text-2xl ml-1"></ion-icon> </a>
                 <a class="absolute right-0 -translate-y-1/2 top-1/2 flex items-center w-20 h-full p-2 py-1 justify-end bg-gradient-to-l from-white via-white dark:from-slate-800 dark:via-slate-800"
                     href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
-                        class="text-2xl mr-1"></ion-icon> </a>
+                        class="text-2xl mr-1"></ion-icon> </a> -->
 
             </div>
 
@@ -231,7 +226,7 @@ const changePassword = async () => {
                                     <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
                                         <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
                                         <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
-                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic === account">
+                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic && account === 'public' ? account == 'public' : account == 'private'">
                                             {{ account }}
                                         </option>
                                     </select>
@@ -247,7 +242,7 @@ const changePassword = async () => {
                             </div>
                         </div>
 
-                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.message }}</h2>
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ eventMessage }}</h2>
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">

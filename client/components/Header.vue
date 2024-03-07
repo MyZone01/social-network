@@ -312,11 +312,11 @@ const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
 
-onMounted(async () => {
-  if (!currentUser.value?.firstName) {
-    await me();
-  }
-});
+// onMounted(async () => {
+//   if (!currentUser.value?.firstName) {
+//     await me();
+//   }
+// });
 
 async function onLogoutClick() {
   try {

@@ -9,6 +9,7 @@ export interface User {
   email: string;
   password: string;
   dateOfBirth: string;
+  aboutMe: string;
 }
 
 export interface ServerResponse<T> {

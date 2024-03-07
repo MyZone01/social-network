@@ -86,5 +86,6 @@ export const useAuth = () => {
     register,
     logout,
     me,
+    setUser,
   };
 };
