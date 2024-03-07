@@ -5,7 +5,7 @@
         <div class="flex w-full items-start flex-col">
           <div class="flex justify-center mx-auto">
             <NuxtLink to="/">
-              <img class="w-auto h-5 mb-6" src="assets/images/logo-icon.png" alt="">
+              <img class="w-auto h-10 mb-2" src="assets/images/logo-icon.png" alt="">
             </NuxtLink>
           </div>
 
@@ -99,7 +99,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         path: "email",
       }, {
         message: "Invalid email or password",
-        path: "password",
+        path: "",
       }
     ])
   }

@@ -19,4 +19,28 @@ export interface ServerResponse<T> {
   data?: T;
 }
 
+export interface Group {
+  ID: string,
+  Title: string,
+  Description: string,
+  BannerURL: string,
+  CreatorID: string,
+  CreatedAt: string,
+  UpdatedAt: string,
+  DeletedAt: string,
+  GroupMembers: GroupMember[]
+}
+
+export interface GroupMember {
+  ID: string,
+  GroupID: string,
+  MemberID: string,
+  Status: string,
+  Role: string,
+  User: UserWithoutPassword,
+  CreatedAt: string,
+  UpdatedAt: string,
+  DeletedAt: string
+}
+
 export type UserWithoutPassword = Omit<User, "password">;

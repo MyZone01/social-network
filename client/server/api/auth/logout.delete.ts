@@ -3,20 +3,21 @@ import { ServerResponse } from "~/types";
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
 
-  const cookie = getCookie(event, config.cookieName);
-  if (!cookie) return null;
+  if (!event.context.token) {
+    return createError({
+      statusCode: 401,
+      message: "You don't have the rights to access this resource",
+    });
+  }
 
-  const unsignedToken = unsign(cookie, config.cookieSecret);
-  if (!unsignedToken) return null;
-
-  const token = deserialize(unsignedToken);
+  const token = event.context.token;
 
   const response = await $fetch<ServerResponse<{}>>("http://localhost:8081/logout", {
     method: "DELETE",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token.session}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
