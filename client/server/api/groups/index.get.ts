@@ -1,24 +1,21 @@
 import { User } from "~/types";
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
+  if (!event.context.token) {
+    return createError({
+      statusCode: 401,
+      message: "You don't have the rights to access this resource",
+    });
+  }
 
-  const cookie = getCookie(event, config.cookieName);
-
-  if (!cookie) return null;
-
-  const unsignedToken = unsign(cookie, config.cookieSecret);
-
-  if (!unsignedToken) return null;
-
-  const token = deserialize(unsignedToken);
+  const token = event.context.token;
 
   const response = await $fetch<User>("http://localhost:8081/get-all-groups?isMemberNeeded=true&isUserNeeded=true", {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token.session}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
