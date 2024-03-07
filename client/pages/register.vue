@@ -110,14 +110,14 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 const state = reactive({
-  firstName: 'Serigne Saliou',
-  lastName: 'Mbaye',
-  email: 'ssmm@gmail.com',
-  nickname: 'ssmm1',
-  password: '12345678',
-  confirmPassword: '12345678',
-  dateOfBirth: '2024-03-01',
-  aboutMe: 'asdfasdf',
+  firstName: '',
+  lastName: '',
+  email: '',
+  nickname: '',
+  password: '',
+  confirmPassword: '',
+  dateOfBirth: '',
+  aboutMe: '',
   avatarImg: File,
   avatarLocalUrl: '',
   registerError: '',

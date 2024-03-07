@@ -48,8 +48,8 @@ export default defineEventHandler(async (event) => {
       ? new Date(Date.now() + config.cookieRememberMeExpires)
       : new Date(Date.now() + config.cookieExpires),
   });
-  const userWithPassword = response.user;
-  const { password: _password, ...userWithoutPassword } = userWithPassword;
+  const user = response.user;
+  const { password: _password, ...userWithoutPassword } = user;
 
   if (!file) {
     console.log("No File given")
@@ -79,7 +79,8 @@ export default defineEventHandler(async (event) => {
     return { status: 200, body: response.message, session: response.session, ok: false };
   }
 
-  userWithPassword.avatarImage = response2.imageurl;
+  userWithoutPassword.avatarImage = response2.imageurl;
+  register.avatarImage = response2.imageurl;
 
   const _response3 = await fetch("http://localhost:8081/updateuser", {
     method: "PUT",

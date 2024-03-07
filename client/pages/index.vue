@@ -1,9 +1,11 @@
 <template>
   <h1 class="text-6xl">Welcome to Social Network</h1>
-  <nuxt-img :src="'http://localhost:8081/' + currentUser?.avatarImage" />
+  <img w-64 :src="'http://localhost:8081/' + currentUser?.avatarImage" />
+  <nuxt-img w-64 :src="'http://localhost:8081/' + currentUser?.avatarImage" />
   <p>
     {{ currentUser }}
   </p>
+  <nuxt-link to="/home">Home</nuxt-link>
 </template>
 
 <script setup lang="ts">
