@@ -5,7 +5,7 @@
         <div class="flex w-full items-start flex-col">
           <div class="flex justify-center mx-auto">
             <NuxtLink to="/">
-              <img class="w-auto h-15 mb-6" src="assets/images/logo-icon.png" alt="">
+              <img class="w-auto h-10 mb-2" src="assets/images/logo-icon.png" alt="">
             </NuxtLink>
           </div>
 
@@ -15,36 +15,47 @@
 
         <div class="mt-8 w-full flex items-center justify-center flex-col">
           <UForm ref="formEl" :schema="schema" :state="state" class="space-y-5 w-full" @submit="handleRegister">
-            <UFormGroup label="Firstname" name="firstname">
-              <UInput size="lg" v-model="state.firstName" placeholder="Enter your firstname" />
-            </UFormGroup>
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Firstname" name="firstname">
+                <UInput size="md" v-model="state.firstName" placeholder="Enter your firstname" />
+              </UFormGroup>
 
-            <UFormGroup label="Lastname" name="lastname">
-              <UInput size="lg" v-model="state.lastName" placeholder="Enter your lastname" />
-            </UFormGroup>
+              <UFormGroup label="Lastname" name="lastname">
+                <UInput size="md" v-model="state.lastName" placeholder="Enter your lastname" />
+              </UFormGroup>
+            </div>
 
-            <UFormGroup label="Email" name="email">
-              <UInput size="lg" v-model="state.email" placeholder="Enter your email" />
-            </UFormGroup>
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Nickname" name="nickname">
+                <UInput size="md" v-model="state.nickname" placeholder="Enter your nickname" />
+              </UFormGroup>
+              <UFormGroup label="Email" name="email">
+                <UInput size="md" v-model="state.email" placeholder="Enter your email" />
+              </UFormGroup>
+            </div>
 
-            <UFormGroup label="Password" name="password">
-              <UInput size="lg" v-model="state.password" type="password" placeholder="•••••••••" />
-            </UFormGroup>
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Password" name="password">
+                <UInput size="md" v-model="state.password" type="password" placeholder="•••••••••" />
+              </UFormGroup>
 
-            <UFormGroup label="Confirm Password" name="confirmPassword">
-              <UInput size="lg" v-model="state.confirmPassword" type="password" placeholder="•••••••••" />
-            </UFormGroup>
+              <UFormGroup label="Confirm Password" name="confirmPassword">
+                <UInput size="md" v-model="state.confirmPassword" type="password" placeholder="•••••••••" />
+              </UFormGroup>
+            </div>
 
-            <UFormGroup label="Date Of Birth" name="dateOfBirth">
-              <UInput size="lg" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000" />
-            </UFormGroup>
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Date Of Birth" name="dateOfBirth">
+                <UInput size="md" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000" />
+              </UFormGroup>
 
-            <UFormGroup label="Avatar Image">
-              <UInput type="file" size="sm" @change="handleImageSelected" />
-              <div v-if="imageUrl" class="w-[100px]">
-                <img :src="imageUrl" alt="Uploaded Image">
-              </div>
-            </UFormGroup>
+              <UFormGroup label="Avatar Image">
+                <UInput type="file" size="md" @change="handleImageSelected" />
+                <div v-if="imageUrl" class="w-[100px]">
+                  <img :src="imageUrl" alt="Uploaded Image">
+                </div>
+              </UFormGroup>
+            </div>
 
             <UFormGroup label="About Me" name="aboutMe">
               <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
