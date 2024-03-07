@@ -1,5 +1,6 @@
 <template>
   <h1>Groups: </h1>
+  <input-group />
   <ul>
     <li v-for="group in groups" :key="group.ID">
       <nuxt-link :to="`/groups/${group.ID}`">{{ group.Title }}</nuxt-link>
@@ -9,12 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Group } from '~/types';
-
-const { getAllGroups } = useGroups();
-const groups = ref<Group[]>([]);
+const { groups, getAllGroups } = useGroups();
 
 onMounted(async () => {
-  groups.value = await getAllGroups();
+  await getAllGroups();
 });
 </script>

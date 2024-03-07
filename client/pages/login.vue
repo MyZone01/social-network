@@ -99,7 +99,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         path: "email",
       }, {
         message: "Invalid email or password",
-        path: "password",
+        path: "",
       }
     ])
   }

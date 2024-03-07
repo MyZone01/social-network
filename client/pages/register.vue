@@ -148,9 +148,6 @@ const handleImageSelected = (event: Event) => {
 }
 
 async function handleRegister(event: FormSubmitEvent<Schema>) {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>", event);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>", state);
-
   state.loading = true
   try {
     const fomData = JSON.stringify({
