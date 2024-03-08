@@ -182,6 +182,7 @@
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
+const avatarImage = currentUser.avatarImage == "uploads/default-avatar.png" ? true : false
 
 onMounted(async () => {
   if (!currentUser.value?.firstName) {
