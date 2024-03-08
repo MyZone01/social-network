@@ -34,6 +34,7 @@
                     <input type="file" id="photo-input" name="photo" accept="image/*" style="display: none"
                         ref="fileInput">
 
+                        
 
                 </div>
                 
@@ -97,7 +98,6 @@
 </template>
 <script>
 import { ref } from 'vue';
-import { LoadImageAsBase64 } from '~/composables/getAllUser'
 
 export default {
     setup() {
@@ -167,4 +167,4 @@ export default {
 .custom-alert {
     background-color: red;
 }
-</style>     
+</style>

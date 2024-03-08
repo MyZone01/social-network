@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       // ]
     }
   },
-  ssr: true,
+  // ssr: true,
   devtools: { enabled: true },
   typescript: {
     includeWorkspace: true,
@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/content',
     'nuxt-og-image',
-    '@nuxtjs/tailwindcss',
+    // '@nuxtjs/tailwindcss',
     // '@nuxtjs/ionic',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
