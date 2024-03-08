@@ -6,30 +6,25 @@ const store = useAuthUser()
 const onDisplay = reactive(data)
 const status = ["public", "private"]
 const userInfos = reactive({
-    email: store.email,
-    password: store.password,
-    firstName: store.firstName,
-    lastName: store.lastName,
-    dateOfBirth: store.dateOfBirth,
-    avatarImage: store.avatarImage,
-    nickname: store.nickname,
-    aboutMe: store.aboutMe,
-    isPublic: store.isPublic ? "public" : "private",
+    email: store.value.email,
+    password: store.value.password,
+    firstName: store.value.firstName,
+    lastName: store.value.lastName,
+    dateOfBirth: store.value.dateOfBirth.split('T')[0],
+    avatarImage: store.value.avatarImage,
+    nickname: store.value.nickname,
+    aboutMe: store.value.aboutMe,
+    isPublic: store.value.isPublic ? "public" : "private",
     message: "",
 })
 
-console.log(store.value.dateOfBirth)
-// function selector() {
-//     const index = store.isPublic ? 0 : 1
-//     console.log(ref("isPublic")[index])
-// }
 function changer(event) {
     const value = event.target.value
     userInfos[`${event.target.id}`] = value
-    // event.target.value = value
 }
 const saveChanges = async () => {
     // isLoading.value = true;
+    console.log(userInfos)
     userInfos.message = ''
     try {
         const result = await editUser(userInfos)
@@ -58,7 +53,7 @@ const changePassword = async () => {
     try {
         const result = await updatePassword(password)
         if (result) {
-            password.message = result.message
+            password.message = result
         }
     } catch (error) {
         password.message = error
@@ -96,8 +91,8 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                         <input type="file" id="file" class="hidden" />
                     </label> -->
                     
-                    <label for="file" class="cursor-pointer" v-if="store.avatarImage">
-                        <nuxt-img id="img" :src="'http://localhost:8081/'+store.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                    <label for="file" class="cursor-pointer" v-if="data.avatarImage">
+                        <nuxt-img id="img" :src="'http://localhost:8081/'+data.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                         <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
@@ -190,7 +185,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Nickname </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value="store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
+                                    <input :value="userInfos.nickname ? userInfos.nickname : store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
                                 </div>
                             </div>
 
@@ -221,23 +216,24 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                                     <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
                                         <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
                                         <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
-                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic && account === 'public' ? account == 'public' : account == 'private'">
+                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic && account === 'public' ? true : false">
                                             {{ account }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
 
-                        
+                            
                             <div @change="changer" class="md:flex items-start gap-10">
                                 <label class="md:w-32 text-right text-white"> About Me </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <textarea id="aboutMe" v-bind:v-model="userInfos.aboutMe" :value="userInfos.aboutMe ? userInfos.aboutMe : store.aboutMe || 'Tell friends a bit about you ... '" class="w-full" rows="5" ></textarea>
+                                    <textarea id="aboutMe" v-bind:v-model="userInfos.aboutMe" :placeholder="userInfos.aboutMe ? userInfos.aboutMe : store.aboutMe || 'Tell friends a bit about you ... '" :value="userInfos.aboutMe" class="w-full" rows="5" ></textarea>
                                 </div>
                             </div>
                         </div>
-
+                        
                         <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.message }}</h2>
+                        <!-- <h2>{{ userInfos  }}</h2> -->
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">

@@ -1,6 +1,9 @@
 import { useSession, H3Event, sendError } from 'h3'
 
-export const sessionCreator = async (token: string, user: object, event: H3Event) => {
+export const sessionCreator = async (token: any, user: any, event: H3Event) => {
+  if (token != undefined) {
+    
+  }
   const serverSession = await useSession(event, {
     // PASSWORD TO change as .env variable
     password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
@@ -21,7 +24,7 @@ export const sessionCreator = async (token: string, user: object, event: H3Event
   return serverSession
 }
 
-export const sessionUpdater = async (token: string, user: object, event: H3Event) => {
+export const sessionUpdater = async (token: any, user: any, event: H3Event) => {
   const currentSession = await useSession(event, {
     // PASSWORD TO change as .env variable
     password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",

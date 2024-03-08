@@ -1,6 +1,7 @@
 export const editUser = async (user) => {
   const store = useAuth();
-
+  const currentUserInfos = useAuthUser()
+  
   const error = validateUserInfo(user);
   if (error) {
     return error;
@@ -14,11 +15,13 @@ export const editUser = async (user) => {
       firstName: user.firstName.trim(),
       lastName: user.lastName.trim(),
       dateOfBirth: new Date(user.dateOfBirth),
-      avatarImage: store.user.avatarImage,
+      avatarImage: currentUserInfos.avatarImage,
       nickname: user.nickname.trim(),
       aboutMe: user.aboutMe.trim(),
       isPublic: user.isPublic === "public" ? true : false,
     };
+
+    console.log(data.currentUserInfos)
 
     try {
       const response = await $fetch("/api/updateuser", {
@@ -39,6 +42,7 @@ export const editUser = async (user) => {
 
 export const updatePassword = async (password) => {
   const store = useAuth();
+  const user = useAuthUser();
 
   const error = validateUpdatePassword(password.currentPassword, password.newPassword, password.repeatNewPassword)
   if (error) {
@@ -47,7 +51,7 @@ export const updatePassword = async (password) => {
 
   return new Promise(async (resolve, reject) => {
     const data = {
-      email: store.user.email,
+      email: user.email,
       password: password.currentPassword.trim(),
       newPassword: password.newPassword.trim(),
     };
@@ -122,8 +126,8 @@ function validateUpdatePassword(
   if (!currentPassword.trim() || !newPassword.trim() || !repeatNewPassword.trim()) {
     return "All fields are required";
   }
-
-  // Check if new password matches the repeat new password
+  
+    // Check if new password matches the repeat new password
   if (newPassword !== repeatNewPassword) {
     return "New password and repeat new password do not match";
   }
@@ -132,12 +136,12 @@ function validateUpdatePassword(
   if (newPassword === currentPassword) {
     return "New password must be different from the current password";
   }
-
+  
   // Password length should be at least 8 characters
   if (newPassword.length < 8) {
     return "New password must be at least 8 characters long";
   }
-
+  
   // Password should contain at least one lowercase letter, one uppercase letter, one digit, and one special character
   // const regex =
   //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;

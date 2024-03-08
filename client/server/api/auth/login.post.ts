@@ -1,6 +1,6 @@
 import { ServerResponse, User } from "~/types";
 import { serialize, sign } from "~/server/utils/cookie";
-// import { sessionCreator } from "~/server/utils/createHandler";
+import { sessionCreator } from "~/server/utils/createHandler";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ username: string; password: string; rememberMe: boolean }>(event);
@@ -42,7 +42,8 @@ export default defineEventHandler(async (event) => {
   });
 
   const { password: _password, ...userWithoutPassword } = userWithPassword;
-
+  const sessionServer = await sessionCreator(response.session, userWithPassword, event)
+  console.log(sessionServer)
   return {
     user: userWithoutPassword,
   };

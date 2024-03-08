@@ -1,6 +1,7 @@
 import { processParts } from "~/server/utils/processParts";
 import { Register } from "~/server/models/register";
 import { ServerResponse, User } from "~/types";
+import { sessionCreator } from "~/server/utils/createHandler";
 
 export default defineEventHandler(async (event) => {
   const reader = await readMultipartFormData(event);
@@ -48,11 +49,13 @@ export default defineEventHandler(async (event) => {
       ? new Date(Date.now() + config.cookieRememberMeExpires)
       : new Date(Date.now() + config.cookieExpires),
   });
-  const user = response.user;
+  const user = response.data;
   const { password: _password, ...userWithoutPassword } = user;
-
+  
   if (!file) {
-    console.log("No File given")
+    // create a server Session
+    await sessionCreator(response.session, user, event)
+    console.log(user)
     return {
       status: 200,
       body: 'No file uploaded',
@@ -98,6 +101,9 @@ export default defineEventHandler(async (event) => {
     return { status: 200, body: response3.message, session: response.session, ok: false }
   }
 
+  // create a server Session
+  const userWithAvatar = user
+  await sessionCreator(response.session, userWithoutPassword, event)
   return {
     status: 200,
     body: "User registered successfully",

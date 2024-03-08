@@ -291,7 +291,7 @@
 
     </header>
     <!-- create post  -->
-    <post-input />
+    <!-- <post-input /> -->
 </template>
 
 <script setup>
