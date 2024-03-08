@@ -7,6 +7,8 @@ import (
 	"backend/pkg/models"
 	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 func insertPostHandler(ctx *octopus.Context) {
@@ -19,7 +21,6 @@ func insertPostHandler(ctx *octopus.Context) {
 		return
 	}
 	userPostOwnerId, _ := config.Sess.Start(ctx).Get(ctx.GetBearerToken())
-	log.Println(newPost)
 	newPost.UserID = userPostOwnerId
 	if err := newPost.Create(ctx.Db.Conn); err != nil {
 		log.Println(err, "dfl")
@@ -34,7 +35,7 @@ func insertPostHandler(ctx *octopus.Context) {
 func feedHandler(ctx *octopus.Context) {
 	log.Println("feedHandler")
 	feedPosts := models.Posts{}
-	user, _ := config.Sess.Start(ctx).Get(ctx.GetBearerToken())
+	user := ctx.Values["userId"].(uuid.UUID)
 
 	if err := feedPosts.GetAvailablePostForUser(ctx.Db.Conn, user); err != nil {
 		log.Println(err)
@@ -43,7 +44,10 @@ func feedHandler(ctx *octopus.Context) {
 		})
 		return
 	}
-	ctx.JSON(feedPosts.ExploitForRendering(ctx.Db.Conn))
+	ctx.JSON(map[string]interface{}{
+		"status":  http.StatusOK,
+		"data":    feedPosts.ExploitForRendering(ctx.Db.Conn),
+	})
 }
 
 // AuthenticationHandler defines the structure for handling authentication requests.
@@ -60,7 +64,7 @@ var insertPostRoute = route{
 }
 
 var getFeedPostsRoute = route{
-	path:   "/post/getfeed",
+	path:   "/post/getFeed",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired, // Middleware to check if the request is authenticated.

@@ -328,10 +328,10 @@ async function onLogoutClick() {
 // const data = useAuthUser() || {} as User
 
 
-definePageMeta({
-    alias: ["/"],
-    middleware: ["auth-only"],
-});
+// definePageMeta({
+//     alias: ["/"],
+//     middleware: ["auth-only"],
+// });
 
 
 </script>

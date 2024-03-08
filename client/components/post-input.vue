@@ -78,7 +78,7 @@
                     </div>
 
                     
-                    <!-- <UISelecUser /> -->
+                    <UISelecUser />
                     <div class="flex items-center gap-2">
                         <button ref= "creatPostButon" type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">
                             Create</button>
@@ -154,7 +154,6 @@ export default {
             this.$refs.privateCheck.checked = false
         },
         resetSelectMenu() {
-            console.log("fdkkfdk");
             $('.js-example-basic-multiple').val([]).change()
         },
     }
@@ -164,4 +163,4 @@ export default {
 .custom-alert {
     background-color: red;
 }
-</style>     
+</style>
