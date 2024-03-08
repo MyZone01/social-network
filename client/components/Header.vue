@@ -314,12 +314,4 @@ const onLogoutClick = async () => {
 }
 
 // const data = useAuthUser() || {} as User
-
-
-definePageMeta({
-    alias: ["/"],
-    middleware: ["auth-only"],
-});
-
-
 </script>

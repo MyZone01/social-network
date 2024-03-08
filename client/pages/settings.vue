@@ -1,10 +1,10 @@
 <script setup>
 import { editUser, updatePassword } from '@/composables/userEditor.js';
+const { me } = useAuth()
 
-const data = useAuthUser()
+const data = await me()
 const store = useAuthUser()
-const onDisplay = reactive(data)
-const newValue = store
+const onDisplay = reactive(data.value)
 const status = ["public", "private"]
 const userInfos = reactive({
     email: store.value.email,
@@ -12,7 +12,7 @@ const userInfos = reactive({
     firstName: store.value.firstName,
     lastName: store.value.lastName,
     dateOfBirth: store.value.dateOfBirth.split('T')[0],
-    avatarImage: store.value.avatarImage,
+    avatarImage: store.avatarImage,
     nickname: store.value.nickname,
     aboutMe: store.value.aboutMe,
     isPublic: store.value.isPublic ? "public" : "private",
@@ -92,8 +92,8 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                         <input type="file" id="file" class="hidden" />
                     </label> -->
                     
-                    <label for="file" class="cursor-pointer" v-if="data.avatarImage">
-                        <nuxt-img id="img" :src="'http://localhost:8081/'+data.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                    <label for="file" class="cursor-pointer" v-if="store.avatarImage">
+                        <nuxt-img id="img" :src="'http://localhost:8081/'+store.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                         <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
@@ -179,7 +179,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input name="email" :value="newValue.email" type="text" class="w-full" readonly>
+                                    <input name="email" :value="store.email" type="text" class="w-full" readonly>
                                 </div>
                             </div>
 
@@ -193,14 +193,14 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Last Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input name="lastName" id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : newValue.lastName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="lastName" id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : store.lastName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> First Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input name="firstName" id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : newValue.firstName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="firstName" id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : store.firstName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 

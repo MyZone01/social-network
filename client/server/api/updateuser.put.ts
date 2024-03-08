@@ -11,6 +11,9 @@ export default defineEventHandler(async (event) => {
         name: "server-store",
     })
     
+    console.log("Body from Client", body, token)
+    console.log(token, "<=====>" , session.data.sessionToken)
+    console.log("Body from Server", session.data.userInfos)
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
             statusCode: 400,
@@ -18,8 +21,8 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
-            // body["password"] = session.data.userInfos.password
-            console.log(body)
+            body["password"] = session.data.userInfos.password
+            console.log("Response", body)
             const response = await fetch('http://localhost:8081/edituser', {
                 method: 'PUT',
                 headers: {
@@ -27,14 +30,13 @@ export default defineEventHandler(async (event) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
-
             })
             const result = await response.json()
-            // await sessionUpdater(result.session, result.user, event)
+            await sessionUpdater(result.session, result.user, event)
             const cleanInfos = {
                 session: result.session,
                 message: result.message,
-                user: secure(result.user),
+                user: result.user,
             }
             return cleanInfos
         } catch (err) {
