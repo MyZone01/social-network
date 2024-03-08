@@ -215,7 +215,7 @@
 
                         <!-- profile -->
                         <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
-                            <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                            <img :src="'http://localhost:8081/'+currentUser.avatarImage" alt=""
                                 class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
                         </div>
                         <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
@@ -223,13 +223,13 @@
 
                             <nuxt-link to="/profile">
                                 <div class="p-4 py-5 flex items-center gap-4">
-                                    <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                    <img :src="'http://localhost:8081/'+currentUser.avatarImage" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
-                                        <h4 class="text-sm font-medium text-black"> {{ data.firstName }} {{
-                                            data.lastName }} </h4>
+                                        <h4 class="text-sm font-medium text-black"> {{ currentUser.firstName }} {{
+                                            currentUser.lastName }} </h4>
                                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
-                                            @{{ data.nickname }}</div>
+                                            @{{ currentUser.nickname }}</div>
                                     </div>
                                 </div>
                             </nuxt-link>
@@ -294,31 +294,13 @@
     <post-input />
 </template>
 
-<script>
-const data = {
-    firstName: "name",
-    lastName: "name",
-}
-export default {
-    data() {
-        return {
-            data : data
-        }
-    }
-}
-
-
+<script setup>
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
 
-// onMounted(async () => {
-//   if (!currentUser.value?.firstName) {
-//     await me();
-//   }
-// });
-
-async function onLogoutClick() {
+const onLogoutClick = async () => {
+// async function onLogoutClick() {
   try {
     loading.value = true;
 
@@ -331,20 +313,5 @@ async function onLogoutClick() {
     loading.value = false;
   }
 }
-
-//import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore';
-// const { useAssets } = themeToogler()
-
-//const { data, error } = await useAsyncData(() => {
-//    return useGlobalAuthStore().user
-//})
-//const store = useGlobalAuthStore();
-//
-//function handleLogout() {
-//    store.logout()
-//
-//
-//    navigateTo('/auth')
-//}
 
 </script>
