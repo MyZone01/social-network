@@ -20,44 +20,38 @@
                   <!-- right action buttons -->
                   <div class="flex items-center gap-2.5">
                     <button class="group">
-                      <ion-icon :icon="ioniconsSettingsOutline" class="text-2xl flex group-aria-expanded:rotate-180" />
+                      <ion-icon name="settings-outline" class="text-2xl flex group-aria-expanded:rotate-180"></ion-icon>
                     </button>
                     <div
                       class="md:w-[270px] w-full"
                       uk-dropdown="pos: bottom-left; offset:10; animation: uk-animation-slide-bottom-small"
                     >
                       <nav>
-                        <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" :icon="ioniconsCheckmarkOutline" />
+                        <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" name="checkmark-outline"></ion-icon>
                           Mark all as read </a>
-                        <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" :icon="ioniconsNotificationsOutline" />
+                        <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" name="notifications-outline"></ion-icon>
                           notifications setting </a>
-                        <a href="#"> <ion-icon class="text-xl shrink-0 -ml-1" :icon="ioniconsVolumeMuteOutline" />
+                        <a href="#"> <ion-icon class="text-xl shrink-0 -ml-1" name="volume-mute-outline"></ion-icon>
                           Mute notifications </a>
                       </nav>
                     </div>
 
                     <button class="">
-                      <ion-icon :icon="ioniconsCheckmarkCircleOutline" class="text-2xl flex" />
+                      <ion-icon name="checkmark-circle-outline" class="text-2xl flex"></ion-icon>
                     </button>
 
                     <!-- mobile toggle menu -->
-                    <button
-                      type="button" class="md:hidden"
-                      uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full"
-                    >
-                      <ion-icon :icon="ioniconsChevronDownOutline" />
+                    <button type="button" class="md:hidden"
+                      uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
+                      <ion-icon name="chevron-down-outline"></ion-icon>
                     </button>
                   </div>
                 </div>
 
                 <!-- search -->
                 <div class="relative mt-4">
-                  <div class="absolute left-3 bottom-1/2 translate-y-1/2 flex">
-                    <ion-icon
-                      :icon="ioniconsSearch"
-                      class="text-xl"
-                    />
-                  </div>
+                  <div class="absolute left-3 bottom-1/2 translate-y-1/2 flex"><ion-icon name="search"
+                      class="text-xl"></ion-icon></div>
                   <input type="text" placeholder="Search" class="w-full !pl-10 !py-2 !rounded-lg">
                 </div>
               </div>
@@ -230,7 +224,7 @@
               <div class="flex items-center sm:gap-4 gap-2">
                 <!-- toggle for mobile -->
                 <button type="button" class="md:hidden" uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
-                  <ion-icon :icon="ioniconsChevronBackOutline" class="text-2xl -ml-4" />
+                  <ion-icon name="chevron-back-outline" class="text-2xl -ml-4" />
                 </button>
 
                 <div class="relative cursor-pointer max-md:hidden" uk-toggle="target: .rightt ; cls: hidden">
@@ -466,45 +460,34 @@
             <div class="flex items-center md:gap-4 gap-2 md:p-3 p-2 overflow-hidden">
               <div id="message__wrap" class="flex items-center gap-2 h-full dark:text-white -mt-1.5">
                 <button type="button" class="shrink-0">
-                  <ion-icon class="text-3xl flex" :icon="ioniconsAddCircleOutline" />
+                  <ion-icon class="text-3xl flex" name="add-circle-outline" />
                 </button>
                 <div
                   class="dropbar pt-36 h-60 bg-gradient-to-t via-white from-white via-30% from-30% dark:from-slate-900 dark:via-900"
-                  uk-drop="stretch: x; target: #message__wrap ;animation:  slide-bottom ;animate-out: true; pos: top-left; offset:10 ; mode: click ; duration: 200"
-                >
-                  <div
-                    class="sm:w-full p-3 flex justify-center gap-5"
-                    uk-scrollspy="target: > button; cls: uk-animation-slide-bottom-small; delay: 100;repeat:true"
-                  >
-                    <button
-                      type="button"
-                      class="bg-sky-50 text-sky-600 border border-sky-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0"
-                    >
-                      <ion-icon class="text-3xl flex" :icon="ioniconsImage" />
+                  uk-drop="stretch: x; target: #message__wrap ;animation:  slide-bottom ;animate-out: true; pos: top-left; offset:10 ; mode: click ; duration: 200">
+                  <div class="sm:w-full p-3 flex justify-center gap-5"
+                    uk-scrollspy="target: > button; cls: uk-animation-slide-bottom-small; delay: 100;repeat:true">
+                    <button type="button"
+                      class="bg-sky-50 text-sky-600 border border-sky-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
+                      <ion-icon class="text-3xl flex" name="image" />
                     </button>
-                    <button
-                      type="button"
-                      class="bg-green-50 text-green-600 border border-green-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0"
-                    >
-                      <ion-icon class="text-3xl flex" :icon="ioniconsImages" />
+                    <button type="button"
+                      class="bg-green-50 text-green-600 border border-green-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
+                      <ion-icon class="text-3xl flex" name="images" />
                     </button>
-                    <button
-                      type="button"
-                      class="bg-pink-50 text-pink-600 border border-pink-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0"
-                    >
-                      <ion-icon class="text-3xl flex" :icon="ioniconsDocumentText" />
+                    <button type="button"
+                      class="bg-pink-50 text-pink-600 border border-pink-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
+                      <ion-icon class="text-3xl flex" name="document-text" />
                     </button>
-                    <button
-                      type="button"
-                      class="bg-orange-50 text-orange-600 border border-orange-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0"
-                    >
-                      <ion-icon class="text-3xl flex" :icon="ioniconsGift" />
+                    <button type="button"
+                      class="bg-orange-50 text-orange-600 border border-orange-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
+                      <ion-icon class="text-3xl flex" name="gift" />
                     </button>
                   </div>
                 </div>
 
                 <button type="button" class="shrink-0">
-                  <ion-icon class="text-3xl flex" :icon="ioniconsHappyOutline" />
+                  <ion-icon class="text-3xl flex" name="happy-outline" />
                 </button>
                 <div
                   class="dropbar p-2"
@@ -588,12 +571,12 @@
                 />
 
                 <button type="button" class="text-white shrink-0 p-2 absolute right-0.5 top-0">
-                  <ion-icon class="text-xl flex" :icon="ioniconsSendOutline" />
+                  <ion-icon class="text-xl flex" name="send-outline" />
                 </button>
               </div>
 
               <button type="button" class="flex h-full dark:text-white">
-                <ion-icon class="text-3xl flex -mt-3" :icon="ioniconsHeartOutline" />
+                <ion-icon class="text-3xl flex -mt-3" name="heart-outline" />
               </button>
             </div>
           </div>
@@ -628,7 +611,7 @@
               <ul class="text-base font-medium p-3">
                 <li>
                   <div class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsNotificationsOffOutline" class="text-2xl" /> Mute Notification
+                    <ion-icon name="notifications-off-outline" class="text-2xl" /> Mute Notification
                     <label class="switch cursor-pointer ml-auto"> <input type="checkbox" checked><span
                       class="switch-button !relative"
                     /></label>
@@ -636,35 +619,31 @@
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsFlagOutline" class="text-2xl" /> Report
+                    <ion-icon name="flag-outline" class="text-2xl" /> Report
                   </button>
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsSettingsOutline" class="text-2xl" /> Ignore messages
+                    <ion-icon name="settings-outline" class="text-2xl" /> Ignore messages
                   </button>
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsStopCircleOutline" class="text-2xl" /> Block
+                    <ion-icon name="stop-circle-outline" class="text-2xl" /> Block
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-red-50 text-red-500"
-                  >
-                    <ion-icon :icon="ioniconsTrashOutline" class="text-2xl" /> Delete Chat
+                  <button type="button"
+                    class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-red-50 text-red-500">
+                    <ion-icon name="trash-outline" class="text-2xl" /> Delete Chat
                   </button>
                 </li>
               </ul>
 
               <!-- close button -->
-              <button
-                type="button" class="absolute top-0 right-0 m-4 p-2 bg-secondery rounded-full"
-                uk-toggle="target: .rightt ; cls: hidden"
-              >
-                <ion-icon :icon="ioniconsClose" class="text-2xl flex" />
+              <button type="button" class="absolute top-0 right-0 m-4 p-2 bg-secondery rounded-full"
+                uk-toggle="target: .rightt ; cls: hidden">
+                <ion-icon name="close" class="text-2xl flex" />
               </button>
             </div>
 
@@ -680,5 +659,8 @@
   </NuxtLayout>
 </template>
 
-<script>
+<script setup>
+definePageMeta({
+    middleware: ["pages-guard"]
+})
 </script>

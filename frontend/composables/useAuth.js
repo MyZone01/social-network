@@ -1,5 +1,5 @@
-import { useGlobalAuthStore } from '../stores/useGobalStateAuthStore'
-import FormData from 'form-data'
+import { useGlobalAuthStore } from "../stores/useGlobalStateAuthStore";
+import FormData from "form-data";
 
 export default () => {
   const store = useGlobalAuthStore()
@@ -32,8 +32,9 @@ export default () => {
           // and redirect to the index page
           // resolve(true);
         }
-        setUser(response)
-        resolve(true)
+        response.user.dateOfBirth = dateFormatter(response.user.dateOfBirth)
+        setUser(response);
+        resolve(true);
       } catch (err) {
         reject(err)
       }
@@ -46,14 +47,12 @@ export default () => {
         const response = await $fetch('/api/auth/login', {
           method: 'POST',
           body: JSON.stringify({ data: { email, password } }),
-        })
-
-        console.log(response)
-        setUser(response)
-        resolve(true)
+        });
+        response.user.dateOfBirth = dateFormatter(response.user.dateOfBirth)
+        setUser(response);
+        resolve(true);
       } catch (err) {
-        console.log('ERROR SIDE')
-        reject(err)
+        reject(err);
       }
     })
   }
@@ -62,4 +61,8 @@ export default () => {
     login,
     register,
   }
+}
+
+const dateFormatter = (date) => {
+  return date.split("T00:00:00Z")[0]
 }

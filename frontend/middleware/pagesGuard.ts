@@ -1,29 +1,30 @@
-import { decoder } from '@/server/utils/transformer'
-import axios from 'axios'
-
+import { useGlobalAuthStore } from "@/stores/useGlobalStateAuthStore";
+let checker: Boolean
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    const {token, isAuthenticated, user} = useGlobalAuthStore()
-    let tokenValid: Boolean
-    const decodeToken = decoder(String(token))
+  if (process.server) { return }
 
-    tokenValid = false
-    await axios
-      .get('http://localhost:8081/checksession', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(({ data }) => {
-        tokenValid = !data.error ? true : false
-      })
-      .catch((err) => {
-        tokenValid = false
-        return
-    })
-
-    const authenticated = isAuthenticated && tokenValid
-    if (authenticated === false) {
-      return navigateTo('/auth')
+  const authStore = useGlobalAuthStore();
+  const token = authStore.token
+  const response = await $fetch('/api/auth/session', {
+    method: 'POST',
+    body: {
+      token
     }
   })
+  .then((res) => {
+    checker = res ? true : false
+    const isAuthenticated = authStore.isAuthenticated && checker;
+    if (!isAuthenticated) {
+      authStore.logout();
+      return navigateTo("/auth");
+    }
+    // if (isAuthenticated && to.path === '/auth') {
+    //   return navigateTo('/auth')
+    // }
+  })
+  .catch((error) => {
+    authStore.logout();
+    return
+  } )
+});

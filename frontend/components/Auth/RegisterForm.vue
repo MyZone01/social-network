@@ -1,16 +1,14 @@
 <template>
   <slot />
 
-  <div
-    class="space-y-7 text-sm text-black font-medium dark:text-white"
-    uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
-  >
-    <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">
-      {{ data.registerError }}
-    </h2>
-    <div class="grid grid-cols-2 gap-4 gap-y-7">
-      <!-- last name -->
-      <UIInput v-model="data.firstName" label="Last Name" placeholder="Khoulé" />
+    <div class="space-y-7 text-sm text-black font-medium dark:text-white"
+        uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+
+        <h2 class="space-y-7 text-xl text-red-600 font-bold dark:text-red-600">{{ data.registerError }}</h2>
+        <div class="grid grid-cols-2 gap-4 gap-y-7">
+
+            <!-- last name -->
+            <UIInput v-model="data.firstName" label="Last Name" placeholder="Khoulé" />
 
       <!-- first name -->
       <UIInput v-model="data.lastName" label="First Name" placeholder="Serigne Mamadou" />

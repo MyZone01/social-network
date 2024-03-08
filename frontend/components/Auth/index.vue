@@ -40,15 +40,15 @@
             </div>
           </AuthRegisterForm>
 
-          <!-- social login -->
-          <!-- <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
+            <!-- social login -->
+            <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon
-                        :icon="ioniconsLogoFacebook" class="text-lg"></ion-icon> facebook </a>
+                        name="logo-facebook" class="text-lg"></ion-icon> facebook </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon
-                  :icon="ioniconsLogoTwitter"></ion-icon> twitter </a>
+                  name="logo-twitter"></ion-icon> twitter </a>
                 <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon
-                  :icon="ioniconsLogoGithub"></ion-icon> github </a>
-            </div> -->
+                  name="logo-github"></ion-icon> github </a>
+            </div>
         </div>
       </div>
 

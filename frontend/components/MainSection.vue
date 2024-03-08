@@ -13,169 +13,134 @@
               Stories
             </h3>
 
-            <div class="relative" tabindex="-1" uk-slider="auto play: true;finite: true" uk-lightbox="">
-              <div class="py-5 uk-slider-container">
-                <ul
-                  class="uk-slider-items w-[calc(100%+14px)]"
-                  uk-scrollspy="target: > li; cls: uk-animation-scale-up; delay: 20;repeat:true"
-                >
-                  <li class="md:pr-3" uk-scrollspy-class="uk-animation-fade">
-                    <div
-                      class="md:w-16 md:h-16 w-12 h-12 rounded-full relative border-2 border-dashed grid place-items-center bg-slate-200 border-slate-300 dark:border-slate-700 dark:bg-dark2 shrink-0"
-                      uk-toggle="target: #create-story"
-                    >
-                      <ion-icon :icon="ioniconsCamera" class="text-2xl" />
-                    </div>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-2.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-2.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-3.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-4.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-5.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-5.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-6.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-7.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-2.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-2.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-3.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-4.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-5.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-5.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-6.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                    <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
-                      <div
-                        class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700"
-                      >
-                        <img
-                          src="assets/images/avatars/avatar-7.jpg" alt=""
-                          class="absolute w-full h-full object-cover"
-                        >
-                      </div>
-                    </a>
-                  </li>
-                  <li class="md:pr-3 pr-2">
-                    <div
-                      class="md:w-16 md:h-16 w-12 h-12 bg-slate-200/60 rounded-full dark:bg-dark2 animate-pulse"
-                    />
-                  </li>
-                </ul>
-              </div>
+                        <div class="relative" tabindex="-1" uk-slider="auto play: true;finite: true" uk-lightbox="">
 
-              <div class="max-md:hidden">
-                <button
-                  type="button"
-                  class="absolute -translate-y-1/2 bg-white shadow rounded-full top-1/2 -left-3.5 grid w-8 h-8 place-items-center dark:bg-dark3"
-                  uk-slider-item="previous"
-                >
-                  <ion-icon
-                    :icon="ioniconsChevronBack"
-                    class="text-2xl"
-                  />
-                </button>
-                <button
-                  type="button"
-                  class="absolute -right-2 -translate-y-1/2 bg-white shadow rounded-full top-1/2 grid w-8 h-8 place-items-center dark:bg-dark3"
-                  uk-slider-item="next"
-                >
-                  <ion-icon :icon="ioniconsChevronForward" class="text-2xl" />
-                </button>
-              </div>
-            </div>
-          </div>
+                            <div class="py-5 uk-slider-container">
+
+                                <ul class="uk-slider-items w-[calc(100%+14px)]"
+                                    uk-scrollspy="target: > li; cls: uk-animation-scale-up; delay: 20;repeat:true">
+                                    <li class="md:pr-3" uk-scrollspy-class="uk-animation-fade">
+                                        <div class="md:w-16 md:h-16 w-12 h-12 rounded-full relative border-2 border-dashed grid place-items-center bg-slate-200 border-slate-300 dark:border-slate-700 dark:bg-dark2 shrink-0"
+                                            uk-toggle="target: #create-story">
+                                            <ion-icon name="camera" class="text-2xl"></ion-icon>
+                                        </div>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-2.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-4.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-5.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-5.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-6.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-7.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-2.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-2.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-4.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-5.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-5.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-6.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
+                                        <a href="assets/images/avatars/avatar-lg-1.jpg" data-caption="Caption 1">
+                                            <div
+                                                class="md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
+                                                <img src="assets/images/avatars/avatar-7.jpg" alt=""
+                                                    class="absolute w-full h-full object-cover">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="md:pr-3 pr-2">
+                                        <div
+                                            class="md:w-16 md:h-16 w-12 h-12 bg-slate-200/60 rounded-full dark:bg-dark2 animate-pulse">
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="max-md:hidden">
+
+                                <button type="button"
+                                    class="absolute -translate-y-1/2 bg-white shadow rounded-full top-1/2 -left-3.5 grid w-8 h-8 place-items-center dark:bg-dark3"
+                                    uk-slider-item="previous"> <ion-icon name="chevron-back"
+                                        class="text-2xl"></ion-icon></button>
+                                <button type="button"
+                                    class="absolute -right-2 -translate-y-1/2 bg-white shadow rounded-full top-1/2 grid w-8 h-8 place-items-center dark:bg-dark3"
+                                    uk-slider-item="next"> <ion-icon name="chevron-forward" class="text-2xl"></ion-icon>
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
 
           <!-- feed story -->
           <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
@@ -246,38 +211,28 @@
                   </div>
                 </div>
 
-                <div class="-mr-1">
-                  <button type="button" class="button-icon w-8 h-8">
-                    <ion-icon
-                      class="text-xl"
-                      :icon="ioniconsEllipsisHorizontal"
-                    />
-                  </button>
-                  <div
-                    class="w-[245px]"
-                    uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click"
-                  >
-                    <nav>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0"
-                        :icon="ioniconsBookmarkOutline"
-                      /> Add to favorites </a>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0"
-                        :icon="ioniconsNotificationsOffOutline"
-                      /> Mute Notification </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsFlagOutline" />
-                        Report this post </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsShareOutline" />
-                        Share your profile </a>
-                      <hr>
-                      <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                        <ion-icon class="text-xl shrink-0" :icon="ioniconsStopCircleOutline" />
-                        Unfollow </a>
-                    </nav>
-                  </div>
-                </div>
-              </div>
+                                <div class="-mr-1">
+                                    <button type="button" class="button-icon w-8 h-8"> <ion-icon class="text-xl"
+                                            name="ellipsis-horizontal"></ion-icon> </button>
+                                    <div class="w-[245px]"
+                                        uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
+                                        <nav>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0"
+                                                    name="bookmark-outline"></ion-icon> Add to favorites </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0"
+                                                    name="notifications-off-outline"></ion-icon> Mute Notification </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon>
+                                                Report this post </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon>
+                                                Share your profile </a>
+                                            <hr>
+                                            <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
+                                                <ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon>
+                                                Unfollow </a>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
 
               <!-- post image -->
               <a href="#preview_modal" uk-toggle>
@@ -289,62 +244,45 @@
                 </div>
               </a>
 
-              <!-- post icons -->
-              <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-                <div>
-                  <div class="flex items-center gap-2.5">
-                    <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                      <ion-icon class="text-lg" :icon="ioniconsHeart" />
-                    </button>
-                    <a href="#">1,300</a>
-                  </div>
-                  <div
-                    class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-                    uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left"
-                  >
-                    <div
-                      class="flex gap-2"
-                      uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
-                    >
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 👍 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> ❤️ </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😂 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😯 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😢 </span>
-                      </button>
-                    </div>
+                            <!-- post icons -->
+                            <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
+                                <div>
+                                    <div class="flex items-center gap-2.5">
+                                        <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
+                                        <a href="#">1,300</a>
+                                    </div>
+                                    <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
+                                        uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
 
-                    <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden" />
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                    <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses" />
-                  </button>
-                  <span>260</span>
-                </div>
-                <button type="button" class="button-icon ml-auto">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsPaperPlaneOutline"
-                  />
-                </button>
-                <button type="button" class="button-icon">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsShareOutline"
-                  />
-                </button>
-              </div>
+                                        <div class="flex gap-2"
+                                            uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 👍 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> ❤️ </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😂 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😯 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😢 </span></button>
+                                        </div>
+
+                                        <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
+                                    <span>260</span>
+                                </div>
+                                <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
+                                        name="paper-plane-outline"></ion-icon> </button>
+                                <button type="button" class="button-icon"> <ion-icon class="text-xl"
+                                        name="share-outline"></ion-icon> </button>
+                            </div>
 
               <!-- comments -->
               <div
@@ -452,38 +390,28 @@
                   </div>
                 </div>
 
-                <div class="-mr-1">
-                  <button type="button" class="button-icon w-8 h-8">
-                    <ion-icon
-                      class="text-xl"
-                      :icon="ioniconsEllipsisHorizontal"
-                    />
-                  </button>
-                  <div
-                    class="w-[245px]"
-                    uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click"
-                  >
-                    <nav>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0"
-                        :icon="ioniconsBookmarkOutline"
-                      /> Add to favorites </a>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0"
-                        :icon="ioniconsNotificationsOffOutline"
-                      /> Mute Notification </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsFlagOutline" />
-                        Report this post </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0" :icon="ioniconsShareOutline" />
-                        Share your profile </a>
-                      <hr>
-                      <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                        <ion-icon class="text-xl shrink-0" :icon="ioniconsStopCircleOutline" />
-                        Unfollow </a>:icon="ionicons
-                    </nav>
-                  </div>
-                </div>
-              </div>
+                                <div class="-mr-1">
+                                    <button type="button" class="button-icon w-8 h-8"> <ion-icon class="text-xl"
+                                            name="ellipsis-horizontal"></ion-icon> </button>
+                                    <div class="w-[245px]"
+                                        uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
+                                        <nav>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0"
+                                                    name="bookmark-outline"></ion-icon> Add to favorites </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0"
+                                                    name="notifications-off-outline"></ion-icon> Mute Notification </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon>
+                                                Report this post </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon>
+                                                Share your profile </a>
+                                            <hr>
+                                            <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
+                                                <ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon>
+                                                Unfollow </a>
+                                            </nav>
+                                    </div>
+                                </div>
+                            </div>
 
               <!-- post image -->
               <div
@@ -526,70 +454,52 @@
                   </li>
                 </ul>
 
-                <a class="nav-prev left-6" href="#" uk-slideshow-item="previous"> <ion-icon
-                  :icon="ioniconsChevronBack" class="text-2xl"
-                /> </a>
-                <a class="nav-next right-6" href="#" uk-slideshow-item="next"> <ion-icon
-                  :icon="ioniconsChevronForward" class="text-2xl"
-                /></a>
-              </div>
+                                <a class="nav-prev left-6" href="#" uk-slideshow-item="previous"> <ion-icon
+                                        name="chevron-back" class="text-2xl"></ion-icon> </a>
+                                <a class="nav-next right-6" href="#" uk-slideshow-item="next"> <ion-icon
+                                        name="chevron-forward" class="text-2xl"></ion-icon></a>
 
-              <!-- post icons -->
-              <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-                <div>
-                  <div class="flex items-center gap-2.5">
-                    <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                      <ion-icon class="text-lg" :icon="ioniconsHeart" />
-                    </button>
-                    <a href="#">1,300</a>
-                  </div>
-                  <div
-                    class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-                    uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left"
-                  >
-                    <div
-                      class="flex gap-2"
-                      uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
-                    >
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 👍 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> ❤️ </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😂 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😯 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😢 </span>
-                      </button>
-                    </div>
+                            </div>
 
-                    <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden" />
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                    <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses" />
-                  </button>
-                  <span>260</span>
-                </div>
-                <button type="button" class="button-icon ml-auto">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsPaperPlaneOutline"
-                  />
-                </button>
-                <button type="button" class="button-icon">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsShareOutline"
-                  />
-                </button>
-              </div>
+                            <!-- post icons -->
+                            <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
+                                <div>
+                                    <div class="flex items-center gap-2.5">
+                                        <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
+                                        <a href="#">1,300</a>
+                                    </div>
+                                    <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
+                                        uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
+
+                                        <div class="flex gap-2"
+                                            uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 👍 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> ❤️ </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😂 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😯 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😢 </span></button>
+                                        </div>
+
+                                        <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
+                                    <span>260</span>
+                                </div>
+                                <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
+                                        name="paper-plane-outline"></ion-icon> </button>
+                                <button type="button" class="button-icon"> <ion-icon class="text-xl"
+                                        name="share-outline"></ion-icon> </button>
+                            </div>
 
               <!-- comments -->
               <div
@@ -622,17 +532,14 @@
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  class="flex items-center gap-1.5 text-gray-500 hover:text-blue-500 mt-2"
-                >
-                  <ion-icon
-                    :icon="ioniconsChevronDownOutline"
-                    class="ml-auto duration-200 group-aria-expanded:rotate-180"
-                  />
-                  More Comment
-                </button>
-              </div>
+                                <button type="button"
+                                    class="flex items-center gap-1.5 text-gray-500 hover:text-blue-500 mt-2">
+                                    <ion-icon name="chevron-down-outline"
+                                        class="ml-auto duration-200 group-aria-expanded:rotate-180"></ion-icon>
+                                    More Comment
+                                </button>
+
+                            </div>
 
               <!-- add comment -->
               <div
@@ -697,53 +604,35 @@
                   </div>
                 </div>
 
-                <div class="-mr-1">
-                  <button
-                    type="button" class="button__ico w-8 h-8" aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <ion-icon
-                      class="text-xl md hydrated"
-                      :icon="ioniconsEllipsisHorizontal" role="img"
-                      aria-label="ellipsis horizontal"
-                    />
-                  </button>
-                  <div
-                    class="w-[245px] uk-dropdown"
-                    uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click"
-                  >
-                    <nav>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0 md hydrated"
-                        :icon="ioniconsBookmarkOutline" role="img"
-                        aria-label="bookmark outline"
-                      /> Add to favorites </a>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0 md hydrated"
-                        :icon="ioniconsNotificationsOffOutline" role="img"
-                        aria-label="notifications off outline"
-                      /> Mute Notification
-                      </a>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0 md hydrated" :icon="ioniconsFlagOutline"
-                        role="img" aria-label="flag outline"
-                      />
-                        Report this post </a>
-                      <a href="#"> <ion-icon
-                        class="text-xl shrink-0 md hydrated" :icon="ioniconsShareOutline"
-                        role="img" aria-label="share outline"
-                      /> Share your profile
-                      </a>
-                      <hr>
-                      <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                        <ion-icon
-                          class="text-xl shrink-0 md hydrated" :icon="ioniconsStopCircleOutline"
-                          role="img" aria-label="stop circle outline"
-                        /> Unfollow </a>
-                    </nav>
-                  </div>
-                </div>
-              </div>
+                                <div class="-mr-1">
+                                    <button type="button" class="button__ico w-8 h-8" aria-haspopup="true"
+                                        aria-expanded="false"> <ion-icon class="text-xl md hydrated"
+                                            name="ellipsis-horizontal" role="img"
+                                            aria-label="ellipsis horizontal"></ion-icon> </button>
+                                    <div class="w-[245px] uk-dropdown"
+                                        uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
+                                        <nav>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated"
+                                                    name="bookmark-outline" role="img"
+                                                    aria-label="bookmark outline"></ion-icon> Add to favorites </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated"
+                                                    name="notifications-off-outline" role="img"
+                                                    aria-label="notifications off outline"></ion-icon> Mute Notification
+                                            </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" name="flag-outline"
+                                                    role="img" aria-label="flag outline"></ion-icon>
+                                                Report this post </a>
+                                            <a href="#"> <ion-icon class="text-xl shrink-0 md hydrated" name="share-outline"
+                                                    role="img" aria-label="share outline"></ion-icon> Share your profile
+                                            </a>
+                                            <hr>
+                                            <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
+                                                <ion-icon class="text-xl shrink-0 md hydrated" name="stop-circle-outline"
+                                                    role="img" aria-label="stop circle outline"></ion-icon> Unfollow </a>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
 
               <div class="sm:px-4 p-2.5 pt-0">
                 <p class="font-normal">
@@ -754,62 +643,45 @@
                 </p>
               </div>
 
-              <!-- post icons -->
-              <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-                <div>
-                  <div class="flex items-center gap-2.5">
-                    <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
-                      <ion-icon class="text-lg" :icon="ioniconsHeart" />
-                    </button>
-                    <a href="#">1,300</a>
-                  </div>
-                  <div
-                    class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-                    uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left"
-                  >
-                    <div
-                      class="flex gap-2"
-                      uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
-                    >
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 👍 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> ❤️ </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😂 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😯 </span>
-                      </button>
-                      <button type="button" class="text-red-600 hover:scale-125 duration-300">
-                        <span> 😢 </span>
-                      </button>
-                    </div>
+                            <!-- post icons -->
+                            <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
+                                <div>
+                                    <div class="flex items-center gap-2.5">
+                                        <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700">
+                                            <ion-icon class="text-lg" name="heart"></ion-icon> </button>
+                                        <a href="#">1,300</a>
+                                    </div>
+                                    <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
+                                        uk-drop="offset:10;pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
 
-                    <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden" />
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-                    <ion-icon class="text-lg" :icon="ioniconsChatbubbleEllipses" />
-                  </button>
-                  <span>260</span>
-                </div>
-                <button type="button" class="button-icon ml-auto">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsPaperPlaneOutline"
-                  />
-                </button>
-                <button type="button" class="button-icon">
-                  <ion-icon
-                    class="text-xl"
-                    :icon="ioniconsShareOutline"
-                  />
-                </button>
-              </div>
+                                        <div class="flex gap-2"
+                                            uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 👍 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> ❤️ </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😂 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😯 </span></button>
+                                            <button type="button" class="text-red-600 hover:scale-125 duration-300">
+                                                <span> 😢 </span></button>
+                                        </div>
+
+                                        <div class="w-2.5 h-2.5 absolute -bottom-1 left-3 bg-white rotate-45 hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
+                                        <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
+                                    <span>260</span>
+                                </div>
+                                <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
+                                        name="paper-plane-outline"></ion-icon> </button>
+                                <button type="button" class="button-icon"> <ion-icon class="text-xl"
+                                        name="share-outline"></ion-icon> </button>
+                            </div>
 
               <!-- comments -->
               <div
@@ -1049,16 +921,14 @@
               </div>
             </div>
 
-            <!-- peaple you might know -->
-            <div class="box p-5 px-6 border1 dark:bg-dark2 hidden">
-              <div class="flex justify-between text-black dark:text-white">
-                <h3 class="font-bold text-base">
-                  Peaple You might know
-                </h3>
-                <button type="button">
-                  <ion-icon :icon="ioniconsSyncOutline" class="text-xl" />
-                </button>
-              </div>
+                        <!-- peaple you might know -->
+                        <div class="box p-5 px-6 border1 dark:bg-dark2 hidden">
+
+                            <div class="flex justify-between text-black dark:text-white">
+                                <h3 class="font-bold text-base"> Peaple You might know </h3>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
+                                </button>
+                            </div>
 
               <div
                 class="space-y-4 capitalize text-xs font-normal mt-5 mb-2 text-gray-500 dark:text-white/80"
@@ -1182,16 +1052,14 @@
             </div>
 
 
-            <!-- latest marketplace items -->
-            <div class="box p-5 px-6 border1 dark:bg-dark2">
-              <div class="flex justify-between text-black dark:text-white">
-                <h3 class="font-bold text-base">
-                  Premium Photos
-                </h3>
-                <button type="button">
-                  <ion-icon :icon="ioniconsSyncOutline" class="text-xl" />
-                </button>
-              </div>
+                        <!-- latest marketplace items -->
+                        <div class="box p-5 px-6 border1 dark:bg-dark2">
+
+                            <div class="flex justify-between text-black dark:text-white">
+                                <h3 class="font-bold text-base"> Premium Photos </h3>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
+                                </button>
+                            </div>
 
               <div
                 class="relative capitalize font-medium text-sm text-center mt-4 mb-2" tabindex="-1"
@@ -1252,40 +1120,30 @@
                     </li>
                   </ul>
 
-                  <button
-                    type="button"
-                    class="absolute bg-white rounded-full top-16 -left-4 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
-                    uk-slider-item="previous"
-                  >
-                    <ion-icon
-                      :icon="ioniconsChevronBack"
-                      class="text-2xl"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    class="absolute -right-4 bg-white rounded-full top-16 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
-                    uk-slider-item="next"
-                  >
-                    <ion-icon
-                      :icon="ioniconsChevronForward"
-                      class="text-2xl"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
+                                    <button type="button"
+                                        class="absolute bg-white rounded-full top-16 -left-4 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
+                                        uk-slider-item="previous"> <ion-icon name="chevron-back"
+                                            class="text-2xl"></ion-icon></button>
+                                    <button type="button"
+                                        class="absolute -right-4 bg-white rounded-full top-16 grid w-9 h-9 place-items-center shadow dark:bg-dark3"
+                                        uk-slider-item="next"> <ion-icon name="chevron-forward"
+                                            class="text-2xl"></ion-icon></button>
 
-            <!-- online friends -->
-            <div class="box p-5 px-6 border1 dark:bg-dark2">
-              <div class="flex justify-between text-black dark:text-white">
-                <h3 class="font-bold text-base">
-                  Online Friends
-                </h3>
-                <button type="button">
-                  <ion-icon n:icon="ioniconsSyncOutline" class="text-xl" />
-                </button>
-              </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- online friends -->
+                        <div class="box p-5 px-6 border1 dark:bg-dark2">
+
+                            <div class="flex justify-between text-black dark:text-white">
+                                <h3 class="font-bold text-base"> Online Friends </h3>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
+                                </button>
+                            </div>
 
               <div class="grid grid-cols-6 gap-3 mt-4">
                 <a href="timeline.html">
@@ -1439,40 +1297,30 @@
                     </li>
                   </ul>
 
-                  <button
-                    type="button"
-                    class="absolute -translate-y-1/2 bg-slate-100 rounded-full top-1/2 -left-4 grid w-9 h-9 place-items-center dark:bg-dark3"
-                    uk-slider-item="previous"
-                  >
-                    <ion-icon
-                      :icon="ioniconsChevronBack"
-                      class="text-2xl"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    class="absolute -right-4 -translate-y-1/2 bg-slate-100 rounded-full top-1/2 grid w-9 h-9 place-items-center dark:bg-dark3"
-                    uk-slider-item="next"
-                  >
-                    <ion-icon
-                      :icon="ioniconsChevronForward"
-                      class="text-2xl"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
+                                    <button type="button"
+                                        class="absolute -translate-y-1/2 bg-slate-100 rounded-full top-1/2 -left-4 grid w-9 h-9 place-items-center dark:bg-dark3"
+                                        uk-slider-item="previous"> <ion-icon name="chevron-back"
+                                            class="text-2xl"></ion-icon></button>
+                                    <button type="button"
+                                        class="absolute -right-4 -translate-y-1/2 bg-slate-100 rounded-full top-1/2 grid w-9 h-9 place-items-center dark:bg-dark3"
+                                        uk-slider-item="next"> <ion-icon name="chevron-forward"
+                                            class="text-2xl"></ion-icon></button>
 
-            <!-- Trends -->
-            <div class="box p-5 px-6 border1 dark:bg-dark2">
-              <div class="flex justify-between text-black dark:text-white">
-                <h3 class="font-bold text-base">
-                  Trends for you
-                </h3>
-                <button type="button">
-                  <ion-icon :icon="ioniconsSyncOutline" class="text-xl" />
-                </button>
-              </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- Trends -->
+                        <div class="box p-5 px-6 border1 dark:bg-dark2">
+
+                            <div class="flex justify-between text-black dark:text-white">
+                                <h3 class="font-bold text-base"> Trends for you </h3>
+                                <button type="button"> <ion-icon name="sync-outline" class="text-xl"></ion-icon>
+                                </button>
+                            </div>
 
               <div
                 class="space-y-3.5 capitalize text-xs font-normal mt-5 mb-2 text-gray-600 dark:text-white/80"
