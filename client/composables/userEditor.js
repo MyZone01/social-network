@@ -7,8 +7,8 @@ export const editUser = async (user) => {
     return error;
   }
 
+
   return new Promise(async (resolve, reject) => {
-    // const required = [user.email, ]
     const data = {
       email: user.email.trim(),
       password: "",
@@ -97,12 +97,12 @@ function validateUserInfo(userInfo) {
   }
 
   // Validate dateOfBirth
-  // const currentDate = new Date();
-  // const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
-  // const dateOfBirth = new Date(userInfo.dateOfBirth);
-  // if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
-  //     errors.dateOfBirth = 'You must be at least 10 years old';
-  // }
+  const currentDate = new Date();
+  const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+  const dateOfBirth = new Date(userInfo.dateOfBirth);
+  if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
+      errors.dateOfBirth = 'You must be at least 10 years old';
+  }
 
   if (typeof userInfo.aboutMe != "string") {
     return "About You must be text";

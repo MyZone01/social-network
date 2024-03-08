@@ -1,5 +1,5 @@
 <template>
-    <div class="lg:w-[700px]">
+    <div class="w-full">
 
         <div class="lg:space-y-4 lg:pb-8 max-lg:grid sm:grid-cols-2 max-lg:gap-6 uk-sticky"
             uk-sticky="media: 1024; end: #js-oversized; offset: 80" style="width: 100%;">

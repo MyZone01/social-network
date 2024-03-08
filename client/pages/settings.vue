@@ -4,6 +4,7 @@ import { editUser, updatePassword } from '@/composables/userEditor.js';
 const data = useAuthUser()
 const store = useAuthUser()
 const onDisplay = reactive(data)
+const newValue = store
 const status = ["public", "private"]
 const userInfos = reactive({
     email: store.value.email,
@@ -169,7 +170,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
 
 
                 <!-- tab user basic info -->
-                <form @submit.prevent="saveChanges()">
+                <form @submit.prevent="saveChanges">
 
                     <div>
 
@@ -178,7 +179,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value=store.email type="text" class="w-full" readonly>
+                                    <input name="email" :value="newValue.email" type="text" class="w-full" readonly>
                                 </div>
                             </div>
 
@@ -192,14 +193,14 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Last Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : store.lastName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="lastName" id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : newValue.lastName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> First Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : store.firstName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="firstName" id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : newValue.firstName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
@@ -213,7 +214,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Profile Status</label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
+                                    <select name="isPublic" id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
                                         <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
                                         <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
                                         <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic && account === 'public' ? true : false">
@@ -238,7 +239,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
                                 Cancel</button> -->
-                            <button type="submit" @click.prevent="saveChanges()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
+                            <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">
                                 Save
                                 <span class="ripple-overlay"></span></button>
                         </div>
@@ -270,7 +271,6 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                     </div>
 
                 </form>
-
                 <!-- tab settings-->
                 <div>
 

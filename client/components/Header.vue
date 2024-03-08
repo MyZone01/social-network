@@ -14,7 +14,7 @@
                         class="flex items-center justify-center w-8 h-8 text-xl rounded-full hover:bg-gray-100 xl:hidden dark:hover:bg-slate-600 group">
                         <i class='bx bx-menu text-2xl group-aria-expanded:hidden'></i>
                         <i class='bx bx-x hidden text-2xl group-aria-expanded:block'></i>
-                        
+
                     </button>
                     <div id="logo">
                         <nuxt-link to="/">
@@ -54,10 +54,9 @@
                             </nav>
                             <hr class="-mx-2 mt-2 hidden">
                             <div class="flex justify-end pr-2 text-sm font-medium text-red-500 hidden">
-                                <nuxt-link to="#"
-                                    class="flex hover:bg-red-50 dark:hover:bg-slate-700 p-1.5 rounded">
-                                    <i class='bx bx-trash bx-tada mr-2 text-lg' ></i>
-                                     Clear your
+                                <nuxt-link to="#" class="flex hover:bg-red-50 dark:hover:bg-slate-700 p-1.5 rounded">
+                                    <i class='bx bx-trash bx-tada mr-2 text-lg'></i>
+                                    Clear your
                                     history</nuxt-link>
                             </div>
                         </div>
@@ -134,7 +133,7 @@
                             </svg>
                             <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
                                 6</div>
-                                <i class='bx bx-bell sm:hidden text-2xl'></i>
+                            <i class='bx bx-bell sm:hidden text-2xl'></i>
                         </button>
                         <div class="hidden bg-white pr-1.5 rounded-lg drop-shadow-xl dark:bg-slate-700 md:w-[365px] w-screen border2"
                             uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right ">
@@ -188,7 +187,7 @@
                             <div class="relative w-full p-2 px-3 ">
                                 <input type="text" class="w-full !pl-10 !rounded-lg dark:!bg-white/10"
                                     placeholder="Search">
-                                    <i class='bx bx-search dark:text-white absolute left-7 -translate-y-1/2 top-1/2' ></i>
+                                <i class='bx bx-search dark:text-white absolute left-7 -translate-y-1/2 top-1/2'></i>
                             </div>
 
                             <div class="h-80 overflow-y-auto pr-2">
@@ -304,14 +303,23 @@ const onLogoutClick = async () => {
   try {
     loading.value = true;
 
-    await logout();
+        await logout();
 
-    navigateTo("/login");
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
+        navigateTo("/login");
+    } catch (error) {
+        console.error(error);
+    } finally {
+        loading.value = false;
+    }
 }
+
+// const data = useAuthUser() || {} as User
+
+
+definePageMeta({
+    alias: ["/"],
+    middleware: ["auth-only"],
+});
+
 
 </script>

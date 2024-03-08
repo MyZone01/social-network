@@ -2,9 +2,9 @@ package handlers
 
 import (
 	octopus "backend/app"
-	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
+	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -23,7 +23,6 @@ func handleFollower(ctx *octopus.Context) {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"message": "Error while parsing the form data.",
 			"status":  http.StatusBadRequest,
-
 		})
 		return
 	}
@@ -197,21 +196,19 @@ func createNotif(notif *models.Notification, ctx *octopus.Context) {
 }
 
 func handleGetAllFollowersRequest(ctx *octopus.Context) {
-	userUUID, err := config.Sess.Start(ctx).Get(ctx.GetBearerToken())
-	if err != nil {
-		ctx.Status(http.StatusInternalServerError)
-		return
-	}
-	userFolowers := models.Followers{}
-	userFolowers.GetAllByFolloweeID(ctx.Db.Conn, userUUID)
-	userFolowersJson := []map[string]interface{}{}
-	for _, follower := range userFolowers {
+
+	userUUID := ctx.Values["userId"].(uuid.UUID)
+	fmt.Println(userUUID, "lolo")
+	userFollowers := models.Followers{}
+	userFollowers.GetAllByFolloweeID(ctx.Db.Conn, userUUID)
+	userFollowersJson := []map[string]interface{}{}
+	for _, follower := range userFollowers {
 		newUser := models.User{}
 		if err := newUser.Get(ctx.Db.Conn, follower.FollowerID); err != nil {
 			ctx.Status(http.StatusInternalServerError)
 			return
 		}
-		userFolowersJson = append(userFolowersJson,
+		userFollowersJson = append(userFollowersJson,
 			map[string]interface{}{
 				"nickname":  newUser.Nickname,
 				"email":     newUser.Email,
@@ -221,7 +218,12 @@ func handleGetAllFollowersRequest(ctx *octopus.Context) {
 			},
 		)
 	}
-	ctx.JSON(userFolowersJson)
+	fmt.Println(userFollowersJson)
+	ctx.JSON(map[string]interface{}{
+		"message": "User fetched successfully",
+		"status":  http.StatusOK,
+		"data":    userFollowersJson,
+	})
 
 }
 
@@ -238,7 +240,7 @@ var FollowerRoute = route{
 
 var getAllFollowers = route{
 	path:   "/getAllFollowers",
-	method: http.MethodPost,
+	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,      // Middleware to check if the request is authenticated.
 		handleGetAllFollowersRequest, // Handler function to process the follower request.
