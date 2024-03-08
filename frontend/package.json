@@ -13,6 +13,7 @@
     "typecheck": "nuxt typecheck"
   },
   "devDependencies": {
+    "@nuxt/devtools": "^1.0.8",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/ionic": "^0.13.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",

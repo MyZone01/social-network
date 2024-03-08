@@ -8,40 +8,48 @@ import type { User } from '~/types';
 const data = useAuthUser() || {} as User
 const store: any = useAuthUser()
 const onDisplay = reactive(data)
+const newValue = store
 const status = ["public", "private"]
 
-const userInfos: User = reactive(store)
-const eventMessage = ""
-
-// function selector() {
-//     const index = store.isPublic ? 0 : 1
-//     console.log(ref("isPublic")[index])
-// }
+const userInfos: User = reactive({
+    email: store.email,
+    firstName: store.firstName || newValue.firstName,
+    lastName: store.lastName,
+    dateOfBirth: store.dateOfBirth,
+    avatarImage: store.avatarImage,
+    aboutMe: store.aboutMe, 
+    isPublic: store.isPublic?"public":"private",
+})
+let eventMessage = ref("")
+const isLoading = ref(false)
 
 function changer(event: Event) {
     const value = event.target as HTMLInputElement
 
-    console.log(value)
-    // userInfos[`${value.value.Att}`] = value
-    // event.target.value = value
+    console.log(value.id)
+    console.log()
+    userInfos[value.id] = value.value
+    event.target.value = value
 }
 
-const saveChanges = async () => {
-//     // isLoading.value = true;
-//     userInfos.message = ''
-//     try {
-//         const result = await editUser(userInfos)
-//         if (result) {
-//             userInfos.message = result
-//             data.nickname = userInfos.nickname
-//             data.firstName = userInfos.firstName
-//             data.lastName = userInfos.lastName
-//         }
-//     } catch (error) {
-//         userInfos.message = error
-//     } finally {
-//         console.log("changes processed")
-// }
+
+const saveChanges = async (event: Event) => {
+    isLoading.value = true;
+    eventMessage.message = ''
+    let form = new FormData(event.target as HTMLFormElement)
+    console.log(form)
+    
+    try {
+        const result = await editUser(form)
+        if (result) {
+            eventMessage = result
+        }
+    } catch (error) {
+        eventMessage.value = error
+    } finally {
+        console.log("changes processed")
+}
+
 }
 
 const password = reactive({
@@ -58,18 +66,18 @@ function passwordChanger(event: Event) {
 }
 
 const changePassword = async () => {
-//     password.message = ''
-//     try {
-//         const result = await updatePassword(password)
-//         if (result) {
-//             // TO DISPLAY AS TOAST
-//             password.message = result.message
-//         }
-//     } catch (error) {
-//         password.message = error
-//     } finally {
-//         console.log("changes processed")
-//     }
+    password.message = ''
+    try {
+        const result = await updatePassword(password)
+        if (result) {
+            // TO DISPLAY AS TOAST
+            password.message = result.message
+        }
+    } catch (error) {
+        password.message = error
+    } finally {
+        console.log("changes processed")
+    }
 }
 
 definePageMeta({
@@ -102,7 +110,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                     </label> -->
                     
                     <label for="file" class="cursor-pointer" v-if="store.avatarImage">
-                        <nuxt-img id="img" :src="'http://localhost:8081/'+store.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                        <nuxt-img id="img" :src="'http://11.11.90.127:8081/'+store.avatarImage" class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                         <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                         <input type="file" id="file" class="hidden" />
                     </label>
@@ -179,7 +187,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
 
 
                 <!-- tab user basic info -->
-                <form @submit.prevent="saveChanges()">
+                <form @submit.prevent="saveChanges">
 
                     <div>
 
@@ -188,45 +196,45 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Email </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value=store.email type="text" class="w-full" readonly>
+                                    <input name="email" :value="newValue.email" type="text" class="w-full" readonly>
                                 </div>
                             </div>
 
                             <div class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Nickname </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input :value="store.nickname" type="text" class="lg:w-1/2 w-full" readonly>
+                                    <input name="nickname" :value="newValue.nickname" type="text" class="lg:w-1/2 w-full" readonly>
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Last Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : store.lastName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="lastName" id="lastName" v-bind:v-model="userInfos.lastName" :value="userInfos.lastName ? userInfos.lastName : newValue.lastName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> First Name </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : store.firstName" type="text" class="lg:w-1/2 w-full">
+                                    <input name="firstName" id="firstName" v-bind:v-model="userInfos.firstName" :value="userInfos.firstName ? userInfos.firstName : newValue.firstName" type="text" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Date Of Birth </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="dateOfBirth" v-bind:v-model="userInfos.dateOfBirth" :value="userInfos.dateOfBirth ? userInfos.dateOfBirth : store.dateOfBirth" type="date" class="lg:w-1/2 w-full">
+                                    <input name="datOfBirth" id="dateOfBirth" v-bind:v-model="userInfos.dateOfBirth" :value="userInfos.dateOfBirth ? userInfos.dateOfBirth : newValue.dateOfBirth.split('T')[0]" type="date" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Profile Status</label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <select id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
+                                    <select name="isPublic" id="isPublic" ref="isPublic" class="!border-0 !rounded-md lg:w-1/2 w-full">    
                                         <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
                                         <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
-                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="userInfos.isPublic && account === 'public' ? account == 'public' : account == 'private'">
+                                        <option v-for="(account, index) in status" :key="index" :value="account" :selected="newValue.isPublic && account === 'public' ? account == 'public' : account == 'private'">
                                             {{ account }}
                                         </option>
                                     </select>
@@ -237,17 +245,18 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="changer" class="md:flex items-start gap-10">
                                 <label class="md:w-32 text-right text-white"> About Me </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <textarea id="aboutMe" v-bind:v-model="userInfos.aboutMe" :value="userInfos.aboutMe ? userInfos.aboutMe : store.aboutMe || 'Tell friends a bit about you ... '" class="w-full" rows="5" ></textarea>
+                                    <textarea name="aboutMe" id="aboutMe" v-bind:v-model="userInfos.aboutMe" :value="userInfos.aboutMe ? userInfos.aboutMe : newValue.aboutMe || 'Tell friends a bit about you ... '" class="w-full" rows="5" ></textarea>
                                 </div>
                             </div>
                         </div>
-
                         <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ eventMessage }}</h2>
+                        <h2>{{ userInfos }}</h2>
+                        <h2>{{ newValue }}</h2>
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
                                 Cancel</button> -->
-                            <button type="submit" @click.prevent="saveChanges()" class="button lg:px-10 bg-primary text-white max-md:flex-1">
+                            <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">
                                 Save
                                 <span class="ripple-overlay"></span></button>
                         </div>
@@ -279,7 +288,6 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                     </div>
 
                 </form>
-
                 <!-- tab settings-->
                 <div>
 
@@ -290,21 +298,21 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Current Password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="currentPassword" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
+                                    <input id="currentPassword" autocomplete="off" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> New password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="newPassword" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
+                                    <input id="newPassword" autocomplete="off" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
                                 </div>
                             </div>
 
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Repeat password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="repeatNewPassword" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
+                                    <input id="repeatNewPassword" autocomplete="off" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 

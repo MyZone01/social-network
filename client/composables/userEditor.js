@@ -1,21 +1,21 @@
-import type { User } from "~/types";
+export const editUser = async (user) => {
+  const store = useAuth();
 
-export const editUser = async (user: User) => {
-  const { setUser } = useAuth();
+  console.log(user)
 
   const error = validateUserInfo(user);
   if (error) {
     return error;
   }
 
+
   return new Promise(async (resolve, reject) => {
-    // const required = [user.email, ]
     const data = {
       email: user.email.trim(),
       password: "",
       firstName: user.firstName.trim(),
       lastName: user.lastName.trim(),
-      dateOfBirth: new Date(user.dateOfBirth),
+      dateOfBirth: new Date(user.dateOfBirth).split('T')[0],
       avatarImage: store.user.avatarImage,
       nickname: user.nickname.trim(),
       aboutMe: user.aboutMe.trim(),
@@ -32,7 +32,7 @@ export const editUser = async (user: User) => {
         body: JSON.stringify(data),
       });
 
-      await store.update(response.session, response.user);
+      await store.setUser(response.session, response.user);
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -73,7 +73,7 @@ export const updatePassword = async (password) => {
   });
 };
 
-function validateUserInfo(userInfo: User) {
+function validateUserInfo(userInfo) {
 
   // Validate nickname
   if (!userInfo.nickname || userInfo.nickname.trim() === "") {
@@ -97,12 +97,12 @@ function validateUserInfo(userInfo: User) {
   }
 
   // Validate dateOfBirth
-  // const currentDate = new Date();
-  // const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
-  // const dateOfBirth = new Date(userInfo.dateOfBirth);
-  // if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
-  //     errors.dateOfBirth = 'You must be at least 10 years old';
-  // }
+  const currentDate = new Date();
+  const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+  const dateOfBirth = new Date(userInfo.dateOfBirth);
+  if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
+      errors.dateOfBirth = 'You must be at least 10 years old';
+  }
 
   if (typeof userInfo.aboutMe != "string") {
     return "About You must be text";
