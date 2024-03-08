@@ -1,5 +1,6 @@
 import { ServerResponse, User } from "~/types";
 import { serialize, sign } from "~/server/utils/cookie";
+// import { sessionCreator } from "~/server/utils/createHandler";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ username: string; password: string; rememberMe: boolean }>(event);

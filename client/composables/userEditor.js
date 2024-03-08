@@ -1,7 +1,5 @@
-import type { User } from "~/types";
-
-export const editUser = async (user: User) => {
-  const { setUser } = useAuth();
+export const editUser = async (user) => {
+  const store = useAuth();
 
   const error = validateUserInfo(user);
   if (error) {
@@ -23,16 +21,15 @@ export const editUser = async (user: User) => {
     };
 
     try {
-      const response = await $fetch("/api/user", {
+      const response = await $fetch("/api/updateuser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${store.token}`,
         },
         body: JSON.stringify(data),
       });
 
-      await store.update(response.session, response.user);
+      // await store.setUser(response.session, response.user);
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -41,7 +38,7 @@ export const editUser = async (user: User) => {
 };
 
 export const updatePassword = async (password) => {
-  const store = useGlobalAuthStore();
+  const store = useAuth();
 
   const error = validateUpdatePassword(password.currentPassword, password.newPassword, password.repeatNewPassword)
   if (error) {
@@ -60,12 +57,11 @@ export const updatePassword = async (password) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${store.token}`,
         },
         body: JSON.stringify(data),
       });
       
-      await store.update(response.session, response.user);
+      // await store.update(response.session, response.user);
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -73,7 +69,7 @@ export const updatePassword = async (password) => {
   });
 };
 
-function validateUserInfo(userInfo: User) {
+function validateUserInfo(userInfo) {
 
   // Validate nickname
   if (!userInfo.nickname || userInfo.nickname.trim() === "") {

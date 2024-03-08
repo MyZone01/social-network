@@ -1,75 +1,70 @@
-<script setup lang="ts">
+<script setup>
 import { editUser, updatePassword } from '@/composables/userEditor.js';
-import type { InputProvider } from '@nuxt/image';
-import type { InputHTMLAttributes, InputTypeHTMLAttribute } from 'vue';
-import type { input } from 'zod';
-import type { User } from '~/types';
 
-const data = useAuthUser() || {} as User
-const store: any = useAuthUser()
+const data = useAuthUser()
+const store = useAuthUser()
 const onDisplay = reactive(data)
 const status = ["public", "private"]
+const userInfos = reactive({
+    email: store.email,
+    password: store.password,
+    firstName: store.firstName,
+    lastName: store.lastName,
+    dateOfBirth: store.dateOfBirth,
+    avatarImage: store.avatarImage,
+    nickname: store.nickname,
+    aboutMe: store.aboutMe,
+    isPublic: store.isPublic ? "public" : "private",
+    message: "",
+})
 
-const userInfos: User = reactive(store)
-const eventMessage = ""
-
+console.log(store.value.dateOfBirth)
 // function selector() {
 //     const index = store.isPublic ? 0 : 1
 //     console.log(ref("isPublic")[index])
 // }
-
-function changer(event: Event) {
-    const value = event.target as HTMLInputElement
-
-    console.log(value)
-    // userInfos[`${value.value.Att}`] = value
+function changer(event) {
+    const value = event.target.value
+    userInfos[`${event.target.id}`] = value
     // event.target.value = value
 }
-
 const saveChanges = async () => {
-//     // isLoading.value = true;
-//     userInfos.message = ''
-//     try {
-//         const result = await editUser(userInfos)
-//         if (result) {
-//             userInfos.message = result
-//             data.nickname = userInfos.nickname
-//             data.firstName = userInfos.firstName
-//             data.lastName = userInfos.lastName
-//         }
-//     } catch (error) {
-//         userInfos.message = error
-//     } finally {
-//         console.log("changes processed")
-// }
+    // isLoading.value = true;
+    userInfos.message = ''
+    try {
+        const result = await editUser(userInfos)
+        if (result) {
+            userInfos.message = result
+        }
+    } catch (error) {
+        userInfos.message = error
+    } finally {
+        console.log("changes processed")
+    }
 }
-
 const password = reactive({
     currentPassword: "",
     newPassword: "",
     repeatNewPassword: "",
     message: "",
 })
-
-function passwordChanger(event: Event) {
-    const value = event.target as HTMLInputElement
-//     password[`${event.target.id}`] = value
-//     // event.target.value = value
+function passwordChanger(event) {
+    const value = event.target.value
+    password[`${event.target.id}`] = value
+    // event.target.value = value
 }
-
 const changePassword = async () => {
-//     password.message = ''
-//     try {
-//         const result = await updatePassword(password)
-//         if (result) {
-//             // TO DISPLAY AS TOAST
-//             password.message = result.message
-//         }
-//     } catch (error) {
-//         password.message = error
-//     } finally {
-//         console.log("changes processed")
-//     }
+    password.message = ''
+    try {
+        const result = await updatePassword(password)
+        if (result) {
+            password.message = result.message
+        }
+    } catch (error) {
+        password.message = error
+    } finally {
+        console.log("changes processed")
+    }
 }
 
 definePageMeta({
@@ -216,7 +211,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="changer" class="md:flex items-center gap-10">
                                 <label class="md:w-32 text-right text-white"> Date Of Birth </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="dateOfBirth" v-bind:v-model="userInfos.dateOfBirth" :value="userInfos.dateOfBirth ? userInfos.dateOfBirth : store.dateOfBirth" type="date" class="lg:w-1/2 w-full">
+                                    <input id="dateOfBirth" v-bind:v-model="userInfos.dateOfBirth" :value="userInfos.dateOfBirth ? userInfos.dateOfBirth : store.dateOfBirth.split('T')[0]" type="date" class="lg:w-1/2 w-full">
                                 </div>
                             </div>
 
@@ -242,7 +237,7 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             </div>
                         </div>
 
-                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ eventMessage }}</h2>
+                        <h2 class="md:text-xl md:flex font-semibold text-red-600 dark:text-red-600 col-span-2">{{ userInfos.message }}</h2>
 
                         <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
                             <!-- <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1">
@@ -290,21 +285,21 @@ class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))]
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Current Password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="currentPassword" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
+                                    <input autocomplete="off" id="currentPassword" v-bind:v-model="password.currentPassword" :value="password.currentPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> New password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="newPassword" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
+                                    <input autocomplete="off" id="newPassword" v-bind:v-model="password.newPassword" :value="password.newPassword" type="password" placeholder="" class="w-full text-black">
                                 </div>
                             </div>
 
                             <div @change="passwordChanger" class="md:flex items-center gap-16 justify-between max-md:space-y-3">
                                 <label class="md:w-40 text-right text-white"> Repeat password </label>
                                 <div class="flex-1 max-md:mt-4">
-                                    <input id="repeatNewPassword" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
+                                    <input autocomplete="off" id="repeatNewPassword" v-bind:v-model="password.repeatNewPassword" :value="password.repeatNewPassword" type="password" placeholder="" class="w-full">
                                 </div>
                             </div>
 
