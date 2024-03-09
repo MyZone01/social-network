@@ -21,8 +21,6 @@ export const editUser = async (user) => {
       isPublic: user.isPublic === "public" ? true : false,
     };
 
-    console.log(data.currentUserInfos)
-
     try {
       const response = await $fetch("/api/updateuser", {
         method: "PUT",
@@ -32,7 +30,8 @@ export const editUser = async (user) => {
         body: JSON.stringify(data),
       });
 
-      // await store.setUser(response.session, response.user);
+      store.setUser(response.user);
+      store.setCookie(response.session);
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -64,8 +63,8 @@ export const updatePassword = async (password) => {
         },
         body: JSON.stringify(data),
       });
-      
-      // await store.update(response.session, response.user);
+      store.setUser(response.user);
+      store.setCookie(response.session);
       resolve(response.message);
     } catch (error) {
       reject(error);
