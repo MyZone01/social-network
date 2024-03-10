@@ -1,8 +1,8 @@
-import { useSession, H3Event, sendError } from 'h3'
+import { useSession, H3Event, sendError, getSession } from 'h3'
 
 export const sessionCreator = async (token: any, user: any, event: H3Event) => {
   if (token != undefined) {
-    
+
   }
   const serverSession = await useSession(event, {
     // PASSWORD TO change as .env variable
@@ -48,5 +48,36 @@ export const sessionUpdater = async (token: any, user: any, event: H3Event) => {
     sessionToken: token
   })
 
+  // const config = useRuntimeConfig();
+  // const userWithPassword = user;
+  // const session = serialize({ session: token });
+  // const signedSession = sign(session, config.cookieSecret);
+  // setCookie(event, config.cookieName, signedSession, {
+  //   httpOnly: true,
+  //   path: "/",
+  //   sameSite: "strict",
+  //   secure: process.env.NODE_ENV === "production",
+  //   expires: false
+  //     ? new Date(Date.now() + config.cookieRememberMeExpires)
+  //     : new Date(Date.now() + config.cookieExpires),
+  // });
+
   return newSession
+}
+
+export const sessionDeleter = async (event: H3Event) => {
+  const currentSession = await useSession(event, {
+    // PASSWORD TO change as .env variable
+    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
+    name: "server-store",
+  })
+  await currentSession.clear()
+}
+
+export const sessionGetter = async (event: H3Event) => {
+  const sessionServer = await getSession(event, {
+    password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
+    name: "server-store",
+  })
+  return sessionServer
 }

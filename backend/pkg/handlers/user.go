@@ -2,7 +2,6 @@ package handlers
 
 import (
 	octopus "backend/app"
-	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"fmt"
@@ -153,7 +152,6 @@ func handleGetUser(ctx *octopus.Context) {
 func handleUpdateUserInfos(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
 	user := new(models.User)
-	fmt.Println(ctx)
 	if err := ctx.BodyParser(user); err != nil {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"message": "Error while parsing the form data.",
@@ -176,21 +174,21 @@ func handleUpdateUserInfos(ctx *octopus.Context) {
 		})
 		return
 	}
-	idSession, err := config.Sess.Start(ctx).Set(user.ID)
-	// Start a new session for the user and set the user's ID as the session key.
-	if err != nil {
-		// If starting the session fails, log the error and return an HTTP status  500.
-		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
-			"session": "",
-			"message": "Error while starting the session.",
-			"status":  http.StatusInternalServerError,
-		})
-		return
-	}
+	// idSession, err := config.Sess.Start(ctx).Set(user.ID)
+	// // Start a new session for the user and set the user's ID as the session key.
+	// if err != nil {
+	// 	// If starting the session fails, log the error and return an HTTP status  500.
+	// 	ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+	// 		"session": "",
+	// 		"message": "Error while starting the session.",
+	// 		"status":  http.StatusInternalServerError,
+	// 	})
+	// 	return
+	// }
 	data := map[string]interface{}{
 		"message": "User updated successfully",
-		"session": idSession,
-		"user":    user,
+		"session": "",//idSession,
+		"data":    user,
 		"status":  http.StatusOK,
 	}
 	ctx.JSON(data)
@@ -208,6 +206,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
+	fmt.Println(newCredentials)
 	var credentials = credentials{
 		Email:    newCredentials.Email,
 		Password: newCredentials.Password,
@@ -260,25 +259,25 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
+	fmt.Println(ctx)
 	// Starts a new session for the user and sets the user's ID as the session key.
-	idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
-	if err != nil {
-		// If starting the session fails, logs the error and returns an HTTP status  500.
-		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
-			"session": "",
-			"message": "Error while starting the session.",
-			"status":  http.StatusInternalServerError,
-		})
-		return
-	}
+	// idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
+	// if err != nil {
+	// 	// If starting the session fails, logs the error and returns an HTTP status  500.
+	// 	ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+	// 		"session": "",
+	// 		"message": "Error while starting the session.",
+	// 		"status":  http.StatusInternalServerError,
+	// 	})
+	// 	return
+	// }
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
-		"session": idSession,
-		"user":    newUser,
+		"session": "", //idSession,
+		"data":    newUser,
 		"message": "User successfully registered and logged.",
 		"status":  "200",
 	})
 }
-
 
 // AuthenticationHandler defines the structure for handling authentication requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.

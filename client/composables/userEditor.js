@@ -30,8 +30,7 @@ export const editUser = async (user) => {
         body: JSON.stringify(data),
       });
 
-      store.setUser(response.user);
-      store.setCookie(response.session);
+      store.setUser({ ...response.user, isLoggedIn: true });
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -63,8 +62,8 @@ export const updatePassword = async (password) => {
         },
         body: JSON.stringify(data),
       });
-      store.setUser(response.user);
-      store.setCookie(response.session);
+
+      store.setUser({ ...response.user, isLoggedIn: true });
       resolve(response.message);
     } catch (error) {
       reject(error);

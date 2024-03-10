@@ -1,0 +1,23 @@
+version: '1.0'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=/pkg/db/sqlite/social-network.db
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+
+  db:
+    image: "sqlite:latest"
+    volumes:
+      - ./data:/data
+
+

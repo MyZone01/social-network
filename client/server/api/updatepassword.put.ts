@@ -1,6 +1,5 @@
 import { sendError, getSession, useSession } from 'h3'
-import { sessionUpdater } from '../utils/createHandler'
-import { secure } from '../utils/transformer'
+import { sessionUpdater } from '../utils/sessionHandler'
 import { fetcher } from '../utils/fetcher'
 
 export default defineEventHandler(async (event) => {
@@ -12,6 +11,7 @@ export default defineEventHandler(async (event) => {
         name: "server-store",
         // generateId: () => { return '' }
     })
+    console.log(session.data.sessionToken, "<======>", token)
     
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
@@ -21,11 +21,13 @@ export default defineEventHandler(async (event) => {
     } else {
         try {
             const result = await fetcher('http://localhost:8081/updatepassword', "PUT", JSON.stringify(body), token)
-            await sessionUpdater(result.session, result.user, event)
+            await sessionUpdater(token, result.data, event)
+
+            console.log(result)
+            const { password: _password, ...userWithoutPassword } = result.data;
             const cleanInfos = {
-                session: result.session,
                 message: result.message,
-                user: secure(result.user),
+                user: userWithoutPassword,
             }
             return cleanInfos
         } catch (err) {
