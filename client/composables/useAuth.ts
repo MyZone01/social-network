@@ -28,36 +28,30 @@ export const useAuth = () => {
   };
 
   const register = async (avatarImage: any, data: string) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const body = new FormData();
-        if (avatarImage) {
-          body.append("file", avatarImage);
-        }
-        body.append("data", data);
+    const body = new FormData();
+    if (avatarImage) {
+      body.append("file", avatarImage);
+    }
+    body.append("data", data);
 
-        const response = await $fetch<{ ok: boolean, status: number, user: User }>("/api/auth/register", {
-          method: "POST",
-          body: body,
-        });
-
-        if (response.ok === false && response.status == 200) {
-        }
-        const user = response.user;
-        setUser({ ...user, isLoggedIn: true });
-        resolve(true);
-      } catch (err) {
-        reject(err);
-      }
+    const response = await $fetch<{ ok: boolean, status: number, user: User }>("/api/auth/register", {
+      method: "POST",
+      body: body,
     });
-  };
+
+    if (response.ok === false && response.status == 200) {
+    }
+    const user = response.user;
+    setUser({ ...user, isLoggedIn: true });
+  }
 
   const logout = async () => {
+    setUser(null);
+
     const data = await $fetch<{ user: User }>("/api/auth/logout", {
       method: "DELETE",
+      headers: useRequestHeaders(["cookie"]) as HeadersInit,
     });
-
-    setUser(null);
   };
 
   const me = async () => {

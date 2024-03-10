@@ -5,10 +5,10 @@ export async function getUserFromToken(event: H3Event) {
   const config = useRuntimeConfig();
 
   const cookie = getCookie(event, config.cookieName);
-  if (!cookie) return null;
+  if (!cookie) return {user: null, token: null};;
 
   const unsignedToken = unsign(cookie, config.cookieSecret);
-  if (!unsignedToken) return null;
+  if (!unsignedToken) return {user: null, token: null};
 
   const token = deserialize(unsignedToken);
 
@@ -21,7 +21,7 @@ export async function getUserFromToken(event: H3Event) {
         Authorization: `Bearer ${token.session}`,
       },
     });
-    return response;
+    return { user: response, token: token.session };
   } catch (error) {
     deleteCookie(event, config.cookieName, {
       httpOnly: true,
@@ -29,6 +29,6 @@ export async function getUserFromToken(event: H3Event) {
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     });
-    return null;
+    return {user: null, token: null};;
   }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -40,6 +41,7 @@ func (c *Context) BodyParser(out interface{}) error {
 }
 
 func (c *Context) JSON(data interface{}) error {
+	log.Println("JSON -> ", data)
 	c.ResponseWriter.Header().Set("Content-Type", "application/json")
 	return json.NewEncoder(c.ResponseWriter).Encode(data)
 }

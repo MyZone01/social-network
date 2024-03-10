@@ -17,14 +17,16 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  const response = await $fetch<ServerResponse<User>>("http://localhost:8081/registration", {
+  const _response = await fetch("http://localhost:8081/registration", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: register,
+    body: JSON.stringify(register),
   });
+  // @ts-ignore
+  const response = JSON.parse(await _response.text()) as ServerResponse<User>;
 
   if (response.status !== "200") {
     return sendError(event, createError({
@@ -34,7 +36,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const config = useRuntimeConfig();
-  const userWithPassword = response.user;
   const session = serialize({ session: response.session });
   const signedSession = sign(session, config.cookieSecret);
 
@@ -47,8 +48,8 @@ export default defineEventHandler(async (event) => {
       ? new Date(Date.now() + config.cookieRememberMeExpires)
       : new Date(Date.now() + config.cookieExpires),
   });
-
-  const { password: _password, ...userWithoutPassword } = userWithPassword;
+  const user = response.user;
+  const { password: _password, ...userWithoutPassword } = user;
 
   if (!file) {
     console.log("No File given")
@@ -64,33 +65,39 @@ export default defineEventHandler(async (event) => {
   const body = new FormData();
   body.append('file', new Blob([file.data]), file.filename);
 
-  const response2 = await $fetch<{imageurl: string}>("http://localhost:8081/upload", {
+  const _response2 = await fetch("http://localhost:8081/upload", {
     method: "POST",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: `Bearer ${response.session}`,
     },
     body
   });
+
+  const response2 = JSON.parse(await _response2.text()) as { imageurl: string };
+
   if (!response2.imageurl) {
     return { status: 200, body: response.message, session: response.session, ok: false };
   }
 
+  userWithoutPassword.avatarImage = response2.imageurl;
   register.avatarImage = response2.imageurl;
 
-  const response3 = await $fetch<ServerResponse<{}>>("http://localhost:8081/updateuser", {
+  const _response3 = await fetch("http://localhost:8081/updateuser", {
     method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${response.session}`,
     },
-    body: register
+    body: JSON.stringify(register)
   });
-  if (response3.status !== "200") {
+
+  const response3 = JSON.parse(await _response3.text()) as { status: number, message: string };
+
+  if (response3.status !== 200) {
     return { status: 200, body: response3.message, session: response.session, ok: false }
   }
+
   return {
     status: 200,
     body: "User registered successfully",
