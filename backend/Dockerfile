@@ -10,10 +10,10 @@ RUN apt-get update && apt-get install -y gcc
 # Set the working directory inside the container
 WORKDIR /app
 # Copy the Go modules file and download dependencies
-COPY backend/go.mod backend/go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
 # Copy the rest of the application source code
-COPY backend/ .
+COPY ./ .
 # Set CGO_ENABLED to 1
 ENV CGO_ENABLED=1
 # Build the Go application
