@@ -27,7 +27,10 @@ func createGroup(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusCreated).JSON(newGroup)
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"message": "Group created successfully",
+		"data":    newGroup,
+	})
 }
 
 var createGroupRoute = route{
@@ -51,7 +54,10 @@ func getAllGroups(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(groups)
+	ctx.JSON(map[string]interface{}{
+		"message": "All groups",
+		"data":    groups,
+	})
 }
 
 var getAllGroupsRoute = route{
@@ -75,7 +81,10 @@ func getGroupById(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(group)
+	ctx.JSON(map[string]interface{}{
+		"message": "Group",
+		"data":    group,
+	})
 }
 
 var getGroupByIdRoute = route{
@@ -110,7 +119,9 @@ func createPostGroup(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusCreated).JSON(newPost)
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"data": newPost,
+	})
 }
 
 var createPostGroupRoute = route{
@@ -135,7 +146,9 @@ func getAllGroupPosts(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(posts)
+	ctx.JSON(map[string]interface{}{
+		"data": posts,
+	})
 }
 
 var getAllGroupPostsRoute = route{
@@ -168,7 +181,9 @@ func getGroupPostById(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(post)
+	ctx.JSON(map[string]interface{}{
+		"data": post,
+	})
 }
 
 var getGroupPostRoute = route{

@@ -28,7 +28,10 @@ func createEventHandler(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusCreated).JSON(newEvent)
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"message": "Event created successfully",
+		"data":    newEvent,
+	})
 }
 
 var createEventRoute = route{
@@ -54,7 +57,10 @@ func getAllEventByGroup(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusAccepted).JSON(events)
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "All events",
+		"data":    events,
+	})
 }
 
 var getAllEventRoute = route{
@@ -101,7 +107,10 @@ func respondEventHandler(ctx *octopus.Context) {
 		}
 	}
 
-	ctx.Status(http.StatusOK).JSON(participant)
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "Response updated",
+		"data":    participant,
+	})
 }
 
 var respondEventRoute = route{

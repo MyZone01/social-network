@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    
+
     const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), `Bearer ${token}`);
     if (response.status !== 200) {
         return {

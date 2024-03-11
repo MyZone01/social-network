@@ -1,10 +1,10 @@
-import type { Group } from "~/types";
+import type { Group, ServerResponse } from "~/types";
 
 export const useGroups = () => {
   const groups = ref<Group[]>([]);
 
   const createGroup = async (group: { title: string, description: string }) => {
-    const response = await $fetch<Group>("/api/groups", {
+    const response = await $fetch<ServerResponse<Group>>("/api/groups", {
       method: "POST",
       headers: useRequestHeaders(["cookie"]) as HeadersInit,
       body: {
@@ -13,23 +13,30 @@ export const useGroups = () => {
       },
     });
 
-    groups.value = [...groups.value, response];
+    if (response.data) {
+      groups.value = [...groups.value, response.data];
+    }
   };
 
   const getAllGroups = async () => {
-    const response = await $fetch<Group[]>("/api/groups", {
+    const response = await $fetch<ServerResponse<Group[]>>("/api/groups", {
       headers: useRequestHeaders(["cookie"]) as HeadersInit,
     });
-
-    groups.value = response;
+    if (response.data) {
+      groups.value = response.data;
+    }
   };
 
   const getGroupByID = async (id: string) => {
-    const response = await $fetch<Group>("/api/groups/" + id, {
+    const response = await $fetch<ServerResponse<Group>>("/api/groups/" + id, {
       headers: useRequestHeaders(["cookie"]) as HeadersInit,
     });
 
-    return response;
+    if (response.data) {
+      return response.data;
+    }
+
+    return null;
   };
 
   return {

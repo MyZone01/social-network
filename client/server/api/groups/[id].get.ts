@@ -1,4 +1,4 @@
-import { User } from "~/types";
+import { Group, ServerResponse } from "~/types";
 
 export default defineEventHandler(async (event) => {
   if (!event.context.token) {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const groupId = getRouterParam(event, "id");
   console.log(">>>>>>>>>>>>>>>>Endpoint hit", groupId);
 
-  const response = await $fetch<User>(`http://localhost:8081/get-group?group_id=${groupId}&isMemberNeeded=true&isUserNeeded=true`, {
+  const response = await $fetch<ServerResponse<Group>>(`http://localhost:8081/get-group?group_id=${groupId}&isMemberNeeded=true&isUserNeeded=true`, {
     method: "GET",
     headers: {
       Accept: "application/json",
