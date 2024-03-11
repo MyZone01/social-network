@@ -8,6 +8,11 @@
 <script lang="ts" setup>
 import type { Group } from '~/types';
 
+definePageMeta({
+  alias: ["/groups/[id]/chat"],
+  middleware: ["auth-only"],
+});
+
 const { getGroupByID } = useGroups();
 const route = useRoute();
 const id = route.params.id as string;

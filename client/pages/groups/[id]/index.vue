@@ -188,6 +188,11 @@ li.uk-active {
 <script lang="ts" setup>
 import type { Group, GroupMember } from '~/types';
 
+definePageMeta({
+  alias: ["/groups/[id]"],
+  middleware: ["auth-only"],
+});
+
 const { getGroupByID } = useGroups();
 const { getJoinRequests, joinRequest } = useGroupRequest()
 const route = useRoute();

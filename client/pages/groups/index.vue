@@ -92,6 +92,10 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
+definePageMeta({
+  alias: ["/groups"],
+  middleware: ["auth-only"],
+});
 const { groups, getAllGroups } = useGroups();
 onMounted(async () => {
   console.log(groups);
