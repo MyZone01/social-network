@@ -7,6 +7,8 @@ import (
 	"backend/pkg/db/sqlite"
 	"backend/pkg/handlers"
 	"backend/pkg/middleware"
+	"backend/pkg/tools"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -16,6 +18,7 @@ import (
 )
 
 func main() {
+	tools.LoadEnv(".env")
 	// define the directory name
 	_, err := os.Stat(middleware.DirName)
 
@@ -69,7 +72,8 @@ func main() {
 	handlers.HandleAll(app)
 	config.Sess.UseDB(app.Db.Conn)
 
-	if err := app.Run(":8081"); err != nil {
+	fmt.Println(":" + os.Getenv("PORT"))
+	if err := app.Run(":" + os.Getenv("PORT")); err != nil {
 		panic(err)
 	}
 

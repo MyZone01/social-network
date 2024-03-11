@@ -4,6 +4,7 @@ export const useAuth = () => {
   const authUser = useAuthUser();
 
   const setUser = (user: User | null) => {
+    console.log(user)
     authUser.value = user;
   };
 
@@ -81,5 +82,6 @@ export const useAuth = () => {
     logout,
     me,
     setUser,
+    setCookie
   };
 };

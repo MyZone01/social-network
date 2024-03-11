@@ -1,4 +1,5 @@
 import { ServerResponse } from "~/types";
+import { sessionDeleter } from "~/server/utils/sessionHandler";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -9,9 +10,8 @@ export default defineEventHandler(async (event) => {
       message: "You don't have the rights to access this resource",
     });
   }
-
+  
   const token = event.context.token;
-
   const response = await $fetch<ServerResponse<{}>>("http://localhost:8081/logout", {
     method: "DELETE",
     headers: {
@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
     sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
   });
+  await sessionDeleter(event)
 
   return {
     user: null,

@@ -1,20 +1,21 @@
 export const editUser = async (user) => {
   const store = useAuth();
-
+  const currentUserInfos = useAuthUser()
+  
   const error = validateUserInfo(user);
   if (error) {
     return error;
   }
 
+
   return new Promise(async (resolve, reject) => {
-    // const required = [user.email, ]
     const data = {
       email: user.email.trim(),
       password: "",
       firstName: user.firstName.trim(),
       lastName: user.lastName.trim(),
       dateOfBirth: new Date(user.dateOfBirth),
-      avatarImage: store.user.avatarImage,
+      avatarImage: currentUserInfos.avatarImage,
       nickname: user.nickname.trim(),
       aboutMe: user.aboutMe.trim(),
       isPublic: user.isPublic === "public" ? true : false,
@@ -29,7 +30,7 @@ export const editUser = async (user) => {
         body: JSON.stringify(data),
       });
 
-      // await store.setUser(response.session, response.user);
+      store.setUser({ ...response.user, isLoggedIn: true });
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -39,6 +40,7 @@ export const editUser = async (user) => {
 
 export const updatePassword = async (password) => {
   const store = useAuth();
+  const user = useAuthUser();
 
   const error = validateUpdatePassword(password.currentPassword, password.newPassword, password.repeatNewPassword)
   if (error) {
@@ -47,7 +49,7 @@ export const updatePassword = async (password) => {
 
   return new Promise(async (resolve, reject) => {
     const data = {
-      email: store.user.email,
+      email: user.email,
       password: password.currentPassword.trim(),
       newPassword: password.newPassword.trim(),
     };
@@ -60,8 +62,8 @@ export const updatePassword = async (password) => {
         },
         body: JSON.stringify(data),
       });
-      
-      // await store.update(response.session, response.user);
+
+      store.setUser({ ...response.user, isLoggedIn: true });
       resolve(response.message);
     } catch (error) {
       reject(error);
@@ -93,12 +95,12 @@ function validateUserInfo(userInfo) {
   }
 
   // Validate dateOfBirth
-  // const currentDate = new Date();
-  // const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
-  // const dateOfBirth = new Date(userInfo.dateOfBirth);
-  // if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
-  //     errors.dateOfBirth = 'You must be at least 10 years old';
-  // }
+  const currentDate = new Date();
+  const minDateOfBirth = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+  const dateOfBirth = new Date(userInfo.dateOfBirth);
+  if (!userInfo.dateOfBirth || dateOfBirth > minDateOfBirth) {
+      errors.dateOfBirth = 'You must be at least 10 years old';
+  }
 
   if (typeof userInfo.aboutMe != "string") {
     return "About You must be text";
@@ -122,8 +124,8 @@ function validateUpdatePassword(
   if (!currentPassword.trim() || !newPassword.trim() || !repeatNewPassword.trim()) {
     return "All fields are required";
   }
-
-  // Check if new password matches the repeat new password
+  
+    // Check if new password matches the repeat new password
   if (newPassword !== repeatNewPassword) {
     return "New password and repeat new password do not match";
   }
@@ -132,12 +134,12 @@ function validateUpdatePassword(
   if (newPassword === currentPassword) {
     return "New password must be different from the current password";
   }
-
+  
   // Password length should be at least 8 characters
   if (newPassword.length < 8) {
     return "New password must be at least 8 characters long";
   }
-
+  
   // Password should contain at least one lowercase letter, one uppercase letter, one digit, and one special character
   // const regex =
   //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;

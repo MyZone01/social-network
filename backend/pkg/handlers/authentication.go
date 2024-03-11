@@ -161,7 +161,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 		})
 		return
 	}
-	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
+	ctx.JSON(map[string]interface{}{
 		"session": idSession,
 		"message": "User successfully registered and logged.",
 		"status":  "200",

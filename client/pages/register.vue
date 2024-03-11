@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-gray-900 flex w-screen h-screen">
+  <div class="flex w-screen h-screen">
     <div class="flex items-center justify-center px-6 mx-auto w-full lg:w-1/2">
       <div class="flex flex-col lg:w-4/6 w-full min-w-[250px]">
         <div class="flex w-full items-start flex-col">
@@ -8,65 +8,78 @@
               <img class="w-auto h-10 mb-2" src="assets/images/logo-icon.png" alt="">
             </NuxtLink>
           </div>
-
+          
           <p class="mt-3 font-bold text-4xl mb-4">Register</p>
-          <p>Welcome back, please enter your credentials!</p>
+          <p>Sign up to get started</p>
         </div>
+        
+        <!-- <div class="mt-8 w-full flex items-center justify-center flex-col"> -->
+          
+          <div class="space-y-7 text-sm text-black font-medium dark:text-white"
+          uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+          <!-- <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">{{ data.registerError }}</h2> -->
+          <!-- <div class="grid grid-cols-2 gap-4 gap-y-7"> -->
+            <UForm ref="formEl" :schema="schema" :state="state" class="space-y-5 w-full" @submit="handleRegister">
+              <div class="flex w-full space-x-2">
+                <UFormGroup label="Firstname" name="firstname" class="mt-2.5">
+                  <UInput size="md" v-model="state.firstName" placeholder="Enter your firstname"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
 
-        <div class="mt-8 w-full flex items-center justify-center flex-col">
-          <UForm ref="formEl" :schema="schema" :state="state" class="space-y-5 w-full" @submit="handleRegister">
-            <div class="flex w-full space-x-2">
-              <UFormGroup label="Firstname" name="firstname">
-                <UInput size="md" v-model="state.firstName" placeholder="Enter your firstname" />
+                <UFormGroup label="Lastname" name="lastname" class="mt-2.5">
+                  <UInput size="md" v-model="state.lastName" placeholder="Enter your lastname"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+              </div>
+
+              <div class="flex w-full space-x-2">
+                <UFormGroup label="Nickname" name="nickname" class="mt-2.5">
+                  <UInput size="md" v-model="state.nickname" placeholder="Enter your nickname"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+                <UFormGroup label="Email" name="email" class="mt-2.5">
+                  <UInput size="md" v-model="state.email" placeholder="Enter your email"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+              </div>
+
+              <div class="flex w-full space-x-2">
+                <UFormGroup label="Password" name="password" class="mt-2.5">
+                  <UInput size="md" v-model="state.password" type="password" placeholder="•••••••••"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+
+                <UFormGroup label="Confirm Password" name="confirmPassword" class="mt-2.5">
+                  <UInput size="md" v-model="state.confirmPassword" type="password" placeholder="•••••••••"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+              </div>
+
+              <div class="flex w-full space-x-2">
+                <UFormGroup label="Date Of Birth" name="dateOfBirth" class="mt-2.5">
+                  <UInput size="md" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000"
+                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+                </UFormGroup>
+
+                <UFormGroup label="Avatar Image" class="mt-2.5">
+                  <UInput type="file" size="md" @change="handleImageSelected" />
+                  <div v-if="imageUrl" class="col-span-1">
+                    <img :src="imageUrl" alt="Uploaded Image">
+                  </div>
+                </UFormGroup>
+              </div>
+
+              <UFormGroup label="About Me" name="aboutMe" class="col-span-2">
+                <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
               </UFormGroup>
 
-              <UFormGroup label="Lastname" name="lastname">
-                <UInput size="md" v-model="state.lastName" placeholder="Enter your lastname" />
-              </UFormGroup>
-            </div>
-
-            <div class="flex w-full space-x-2">
-              <UFormGroup label="Nickname" name="nickname">
-                <UInput size="md" v-model="state.nickname" placeholder="Enter your nickname" />
-              </UFormGroup>
-              <UFormGroup label="Email" name="email">
-                <UInput size="md" v-model="state.email" placeholder="Enter your email" />
-              </UFormGroup>
-            </div>
-
-            <div class="flex w-full space-x-2">
-              <UFormGroup label="Password" name="password">
-                <UInput size="md" v-model="state.password" type="password" placeholder="•••••••••" />
-              </UFormGroup>
-
-              <UFormGroup label="Confirm Password" name="confirmPassword">
-                <UInput size="md" v-model="state.confirmPassword" type="password" placeholder="•••••••••" />
-              </UFormGroup>
-            </div>
-
-            <div class="flex w-full space-x-2">
-              <UFormGroup label="Date Of Birth" name="dateOfBirth">
-                <UInput size="md" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000" />
-              </UFormGroup>
-
-              <UFormGroup label="Avatar Image">
-                <UInput type="file" size="md" @change="handleImageSelected" />
-                <div v-if="imageUrl" class="w-[100px]">
-                  <img :src="imageUrl" alt="Uploaded Image">
-                </div>
-              </UFormGroup>
-            </div>
-
-            <UFormGroup label="About Me" name="aboutMe">
-              <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
-            </UFormGroup>
-
-            <UButton type="submit" size="lg" block>
-              Register
-            </UButton>
-          </UForm>
-          <p class="mt-8 text-md text-center text-secondary">Already with an account? <ULink to="/login"
-              active-class="text-primary">Sign in</ULink>.</p>
+              <UButton type="submit" size="lg" class="button bg-primary text-white w-full cursor-pointer" block>
+                Register
+              </UButton>
+            </UForm>
+          <!-- </div> -->
+            <p class="mt-8 text-md text-center text-secondary">Already with an account? <ULink to="/login"
+                active-class="text-primary">Sign in</ULink>.</p>
         </div>
       </div>
     </div>

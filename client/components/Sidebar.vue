@@ -182,6 +182,7 @@
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
+const avatarImage = currentUser.avatarImage == "uploads/default-avatar.png" ? true : false
 
 onMounted(async () => {
   if (!currentUser.value?.firstName) {
@@ -189,20 +190,6 @@ onMounted(async () => {
   }
 });
 
-//import { useGlobalAuthStore } from '@/stores/useGlobalStateAuthStore';
-//
-//const store = useGlobalAuthStore();
-//const props = defineProps({
-//    modelValue: {
-//        type: String,
-//        required: true
-//    },
-//})
-//
-// Temporary variable for avatar to Upload
-const avatarImage = false
-//const avatarImage = store.user.avatarImage === "uploads/default-avatar.png" ? true : false
-//
 async function onLogoutClick() {
   try {
     loading.value = true;

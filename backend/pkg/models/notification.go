@@ -16,6 +16,7 @@ const (
 	TypeFollowAccepted  NotificationType = "follow_accepted"
 	TypeFollowDeclined  NotificationType = "follow_declined"
 	TypeUnFollow        NotificationType = "unfollow"
+	TypeTest            NotificationType = "follow_test"
 	TypeGroupInvitation NotificationType = "group_invitation"
 	TypeNewMessage      NotificationType = "new_message"
 	TypeNewEvent        NotificationType = "new_event"

@@ -1,23 +1,17 @@
 import { sendError, getSession, useSession } from 'h3'
-import { sessionUpdater } from '../utils/createHandler'
-import { secure } from '../utils/transformer'
-
-interface Response {
-    message: string,
-    status: number,
-    user: object,
-    session: string
-}
+import { sessionUpdater } from '../utils/sessionHandler'
+import { fetcher } from '../utils/fetcher'
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    const token = event.headers.get('Authorization')
+    const token = event.context.token
 
     const session = await getSession(event, {
         password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
         name: "server-store",
         // generateId: () => { return '' }
     })
+    console.log(session.data.sessionToken, "<======>", token)
     
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
@@ -26,20 +20,14 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
-            const response = await fetch('http://localhost:8081/updatepassword', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(body),
-            })
-            const result = await response.json()
-            await sessionUpdater(result.session, result.user, event)
+            const result = await fetcher('http://localhost:8081/updatepassword', "PUT", JSON.stringify(body), token)
+            await sessionUpdater(token, result.data, event)
+
+            console.log(result)
+            const { password: _password, ...userWithoutPassword } = result.data;
             const cleanInfos = {
-                session: result.session,
                 message: result.message,
-                user: secure(result.user),
+                user: userWithoutPassword,
             }
             return cleanInfos
         } catch (err) {

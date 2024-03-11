@@ -31,7 +31,7 @@
             <!-- title -->
             <div>
               <h2 class="text-2xl font-semibold mb-1.5">
-                Sign up to get started
+                Fill up the form to get started
               </h2>
               <p class="text-sm text-gray-700 font-normal">
                 If you already have an account, <a class="text-blue-700 cursor-pointer" @click="handleProcess()">Login

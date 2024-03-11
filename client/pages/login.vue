@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-gray-900 flex w-screen h-screen">
+  <div class="flex w-screen h-screen">
     <div class="flex items-center justify-center px-6 mx-auto w-full lg:w-1/2">
       <div class="flex flex-col lg:w-4/6 w-full min-w-[250px]">
         <div class="flex w-full items-start flex-col">
@@ -20,7 +20,7 @@
             </UFormGroup>
 
             <UFormGroup label="Password" name="password">
-              <UInput size="lg" v-model="state.password" type="password" placeholder="•••••••••" />
+              <UInput size="lg" v-model="state.password" type="password" placeholder="•••••••••" autocomplete="on" />
             </UFormGroup>
 
             <div class="flex w-full justify-between">
@@ -28,7 +28,7 @@
               <ULink class="font-bold text-sm">Forgot your password?</ULink>
             </div>
 
-            <UButton type="submit" size="lg" block>
+            <UButton type="submit" size="lg"  class="button bg-primary text-white w-full cursor-pointer" block>
               Sign in
             </UButton>
           </UForm>
