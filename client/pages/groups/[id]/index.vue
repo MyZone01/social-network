@@ -16,7 +16,7 @@ const id = route.params.id as string;
 const group = ref<Group | null>(null);
 
 onMounted(async () => {
-  group.value = await getGroupByID(id);
+  group.value = await getGroupByID(id) || null;
 });
 </script>
 

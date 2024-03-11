@@ -8,78 +8,78 @@
               <img class="w-auto h-10 mb-2" src="assets/images/logo-icon.png" alt="">
             </NuxtLink>
           </div>
-          
+
           <p class="mt-3 font-bold text-4xl mb-4">Register</p>
           <p>Sign up to get started</p>
         </div>
-        
+
         <!-- <div class="mt-8 w-full flex items-center justify-center flex-col"> -->
-          
-          <div class="space-y-7 text-sm text-black font-medium dark:text-white"
+
+        <div class="space-y-7 text-sm text-black font-medium dark:text-white"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
           <!-- <h2 class="space-y-7 text-xl text-red-500 font-bold dark:text-red-500">{{ data.registerError }}</h2> -->
           <!-- <div class="grid grid-cols-2 gap-4 gap-y-7"> -->
-            <UForm ref="formEl" :schema="schema" :state="state" class="space-y-5 w-full" @submit="handleRegister">
-              <div class="flex w-full space-x-2">
-                <UFormGroup label="Firstname" name="firstname" class="mt-2.5">
-                  <UInput size="md" v-model="state.firstName" placeholder="Enter your firstname"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-
-                <UFormGroup label="Lastname" name="lastname" class="mt-2.5">
-                  <UInput size="md" v-model="state.lastName" placeholder="Enter your lastname"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-              </div>
-
-              <div class="flex w-full space-x-2">
-                <UFormGroup label="Nickname" name="nickname" class="mt-2.5">
-                  <UInput size="md" v-model="state.nickname" placeholder="Enter your nickname"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-                <UFormGroup label="Email" name="email" class="mt-2.5">
-                  <UInput size="md" v-model="state.email" placeholder="Enter your email"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-              </div>
-
-              <div class="flex w-full space-x-2">
-                <UFormGroup label="Password" name="password" class="mt-2.5">
-                  <UInput size="md" v-model="state.password" type="password" placeholder="•••••••••"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-
-                <UFormGroup label="Confirm Password" name="confirmPassword" class="mt-2.5">
-                  <UInput size="md" v-model="state.confirmPassword" type="password" placeholder="•••••••••"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-              </div>
-
-              <div class="flex w-full space-x-2">
-                <UFormGroup label="Date Of Birth" name="dateOfBirth" class="mt-2.5">
-                  <UInput size="md" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000"
-                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
-                </UFormGroup>
-
-                <UFormGroup label="Avatar Image" class="mt-2.5">
-                  <UInput type="file" size="md" @change="handleImageSelected" />
-                  <div v-if="imageUrl" class="col-span-1">
-                    <img :src="imageUrl" alt="Uploaded Image">
-                  </div>
-                </UFormGroup>
-              </div>
-
-              <UFormGroup label="About Me" name="aboutMe" class="col-span-2">
-                <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
+          <UForm ref="formEl" :schema="schema" :state="state" class="space-y-5 w-full" @submit="handleRegister">
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Firstname" name="firstname" class="mt-2.5">
+                <UInput size="md" v-model="state.firstName" placeholder="Enter your firstname"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
               </UFormGroup>
 
-              <UButton type="submit" size="lg" class="button bg-primary text-white w-full cursor-pointer" block>
-                Register
-              </UButton>
-            </UForm>
+              <UFormGroup label="Lastname" name="lastname" class="mt-2.5">
+                <UInput size="md" v-model="state.lastName" placeholder="Enter your lastname"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+            </div>
+
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Nickname" name="nickname" class="mt-2.5">
+                <UInput size="md" v-model="state.nickname" placeholder="Enter your nickname"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+              <UFormGroup label="Email" name="email" class="mt-2.5">
+                <UInput size="md" v-model="state.email" placeholder="Enter your email"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+            </div>
+
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Password" name="password" class="mt-2.5">
+                <UInput size="md" v-model="state.password" type="password" placeholder="•••••••••"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+
+              <UFormGroup label="Confirm Password" name="confirmPassword" class="mt-2.5">
+                <UInput size="md" v-model="state.confirmPassword" type="password" placeholder="•••••••••"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+            </div>
+
+            <div class="flex w-full space-x-2">
+              <UFormGroup label="Date Of Birth" name="dateOfBirth" class="mt-2.5">
+                <UInput size="md" v-model="state.dateOfBirth" type="date" placeholder="01/01/2000"
+                  class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5" />
+              </UFormGroup>
+
+              <UFormGroup label="Avatar Image" class="mt-2.5">
+                <UInput type="file" size="md" @change="handleImageSelected" />
+                <div v-if="imageUrl" class="col-span-1">
+                  <img :src="imageUrl" alt="Uploaded Image">
+                </div>
+              </UFormGroup>
+            </div>
+
+            <UFormGroup label="About Me" name="aboutMe" class="col-span-2">
+              <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
+            </UFormGroup>
+
+            <UButton type="submit" size="lg" class="button bg-primary text-white w-full cursor-pointer" block>
+              Register
+            </UButton>
+          </UForm>
           <!-- </div> -->
-            <p class="mt-8 text-md text-center text-secondary">Already with an account? <ULink to="/login"
-                active-class="text-primary">Sign in</ULink>.</p>
+          <p class="mt-8 text-md text-center text-secondary">Already with an account? <ULink to="/login"
+              active-class="text-primary">Sign in</ULink>.</p>
         </div>
       </div>
     </div>
@@ -118,10 +118,10 @@ definePageMeta({
 });
 
 const schema = z.object({
-  firstName: z.string().nonempty('First name is required'),
-  lastName: z.string().nonempty('Last name is required'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
-  nickname: z.string().nonempty('Nickname is required'),
+  nickname: z.string().min(1, 'Nickname is required'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string(),
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
