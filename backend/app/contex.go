@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -32,6 +33,9 @@ func (c *Context) BodyParser(out interface{}) error {
 
 	err = json.Unmarshal(body, &out)
 	if err != nil {
+		if e, ok := err.(*json.SyntaxError); ok {
+			log.Printf("syntax error at byte offset %d", e.Offset)
+		}
 		return err
 	}
 

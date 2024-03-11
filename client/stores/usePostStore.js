@@ -8,6 +8,7 @@ export const useFeedStore = defineStore("feed", {
     persist: true,
     actions: {
         addPost(post) {
+            console.log(post)
             this.posts.unshift(post);
         },
 

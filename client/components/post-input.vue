@@ -108,6 +108,7 @@ export default {
         openFileInput() {
             this.$refs.fileInput.click();
         },
+        
         async handleSubmitPost(e) {
             e.preventDefault();
             let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
@@ -127,26 +128,25 @@ export default {
                 body.append('file', formdata.get('photo'))
                 let response = await fetch("/api/upload", {
                     method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${useGlobalAuthStore().token}`
-                    },
                     body: body,
                 }).then(response => response.json()).catch(err => ({ errors: err }))
+                console.log(response);
                 if (response.data) jsonFormObject.image_url = response.data
             }
             try {
-                let response = await fetch("http://localhost:8081/post/insert", {
+                let response = await fetch("/api/post/insert", {
                     method: "POST",
+                    body: JSON.stringify(jsonFormObject),
                     headers: {
-                        Authorization: `Bearer ${useGlobalAuthStore().token}`
-                    },
-                    body: JSON.stringify(jsonFormObject)
+                        'Content-Type': 'application/json'
+                    }
                 }).then(response => response.json())
-                useFeedStore().addPost(response)
+                console.log(response)
+                useFeedStore().addPost(response.body.data)
                 UIkit.modal("#create-status").hide();
 
             } catch (err) {
-                console.log(err)
+                console.error(err)
             }
         },
         resetCheckbox() {

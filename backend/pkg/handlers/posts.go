@@ -29,7 +29,15 @@ func insertPostHandler(ctx *octopus.Context) {
 		})
 		return
 	}
-	ctx.JSON(newPost.ExploitForRendering(ctx.Db.Conn))
+	log.Println(map[string]interface{}{
+		"status": http.StatusOK,
+		"data":   newPost.ExploitForRendering(ctx.Db.Conn),
+	})
+	ctx.JSON(map[string]interface{}{
+		"status": http.StatusOK,
+		"data":   newPost.ExploitForRendering(ctx.Db.Conn),
+	})
+
 }
 
 func feedHandler(ctx *octopus.Context) {
@@ -45,8 +53,8 @@ func feedHandler(ctx *octopus.Context) {
 		return
 	}
 	ctx.JSON(map[string]interface{}{
-		"status":  http.StatusOK,
-		"data":    feedPosts.ExploitForRendering(ctx.Db.Conn),
+		"status": http.StatusOK,
+		"data":   feedPosts.ExploitForRendering(ctx.Db.Conn),
 	})
 }
 
