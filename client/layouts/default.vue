@@ -1,7 +1,11 @@
 <template>
-  <layout-header />
-  <main w-full flex flex-col items-start justify-start overflow-hidden h-screen bg-gray-100 dark:bg-gray-950 py-6 px-8>
+
+  <Body class="bg-15-23-42 overflow-x-hidden">
+    <Header />
+    <Sidebar />
     <slot />
-  </main>
-  <layout-footer />
+  </Body>
 </template>
+
+<script setup>
+</script>

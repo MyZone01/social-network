@@ -9,13 +9,14 @@ export interface User {
   email: string;
   password: string;
   dateOfBirth: string;
+  aboutMe: string;
 }
 
 export interface ServerResponse<T> {
   status: string;
-  session: string;
+  session?: string;
   message: string;
-  user: T;
+  data?: T;
 }
 
 export interface Group {
