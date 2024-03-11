@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <UCard class="card w-60 bg-gray-100 dark:bg-gray-950 p-0"
+  <UCard class="card w-60 bg-gray-100 dark:bg-gray-950 p-0 dark:bg-dark2 dark:border-slate-800"
     :ui="{ header: { padding: 'p-0 rounded-t-lg overflow-hidden' } }">
     <NuxtLink :href="'/groups/' + props.group.ID">
       <div class="card-media h-24 rounded-t-lg">
@@ -23,9 +23,9 @@ const props = defineProps({
     </NuxtLink>
     <div class="card-body z-10 relative w-full">
       <NuxtLink :href="'/groups/' + props.group.ID">
-        <h4 class="card-title text-xl text-black font-bold text-ellipsis w-full">
+        <h5 class="card-title text-xl h-min text-black font-bold text-ellipsis w-full">
           {{ props.group.Title }}
-        </h4>
+        </h5>
       </NuxtLink>
       <div class="flex mb-4 text-sm mt-2">
         <div class="md:block hidden" />

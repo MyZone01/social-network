@@ -2,7 +2,6 @@ package handlers
 
 import (
 	octopus "backend/app"
-	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"fmt"
@@ -188,7 +187,7 @@ func handleUpdateUserInfos(ctx *octopus.Context) {
 	// }
 	data := map[string]interface{}{
 		"message": "User updated successfully",
-		"session": "",//idSession,
+		"session": "", //idSession,
 		"data":    user,
 		"status":  http.StatusOK,
 	}

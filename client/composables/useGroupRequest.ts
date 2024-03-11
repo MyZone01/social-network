@@ -1,7 +1,7 @@
-import { GroupMember } from '~/types'
+import type { GroupMember } from '~/types';
 
 export const useGroupRequest = () => {
-    async function joinRequest(groupId: string | undefined): Promise<{ data: any; error: any; }> {
+    async function joinRequest(groupId: string | undefined): Promise<{data:any,error:any}> {
 
         const { data, error } = await useFetch("/api/group/request/join", {
             method: "POST",
@@ -11,6 +11,10 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
+
+
+        
+
         return { data, error };
     }
 
@@ -18,7 +22,7 @@ export const useGroupRequest = () => {
         groupId: string | undefined
     ): Promise<GroupMember[] | null> {
 
-        const data = await $fetch("/api/group/request/join-requests", {
+        const data = await $fetch("/api/groups/request/join-requests", {
             method: "GET",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
@@ -26,7 +30,9 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-        return data;
+        console.log('###################################\n',data,'###################################\n');
+
+        return data as GroupMember[] 
     }
 
     async function acceptJoinRequest(
@@ -34,7 +40,7 @@ export const useGroupRequest = () => {
         rId: string
     ): Promise<any> {
 
-        const data = await $fetch("/api/group/request/accept", {
+        const data = await $fetch("/api/groups/request/accept", {
             method: "POST",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
@@ -51,7 +57,7 @@ export const useGroupRequest = () => {
         rId: string
     ): Promise<any> {
 
-        const data = await $fetch("/api/group/request/decline", {
+        const data = await $fetch("/api/groups/request/decline", {
             method: "POST",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 

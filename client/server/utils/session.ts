@@ -1,5 +1,5 @@
 import type { H3Event } from "h3";
-import { User } from "~/types";
+import type { User } from "~/types";
 
 export async function getUserFromToken(event: H3Event) {
   const config = useRuntimeConfig();
