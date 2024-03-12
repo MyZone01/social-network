@@ -15,7 +15,7 @@ export default defineEventHandler(async event => {
         const response = await $fetch('http://localhost:8081/demand-access', {
             method: 'POST',
             headers: {
-                Authorization: `${token}`
+                Authorization: `Bearer ${token}`,
             },
             query: {
                 group_id: groupId,

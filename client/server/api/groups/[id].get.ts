@@ -1,4 +1,4 @@
-import { User } from "~/types";
+import type { User } from "~/types";
 
 export default defineEventHandler(async (event) => {
   if (!event.context.token) {

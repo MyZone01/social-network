@@ -84,7 +84,6 @@ var getGroupByIdRoute = route{
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
-		middleware.HaveGroupAccess,
 		getGroupById,
 	},
 }

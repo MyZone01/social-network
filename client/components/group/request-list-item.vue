@@ -1,17 +1,17 @@
 <template>
-  <div class="px-10  h-12 w-full flex flex-row justify-between">
+  <div class="px-10  h-12 w-full flex flex-row  items-center justify-between">
     <div class="h-full flex-3 bg-blue-700">
-      <div class="flex flex-row gap-3">
-        <NuxtImg src="http://localhost:8081/uploads/default-avatar.png" class="w-20 h-20"/>
+      <div class="flex flex-row gap-3 items-center">
+        <NuxtImg src="http://localhost:8081/uploads/default-avatar.png" class="w-10 h-8"/>
         <div>
           <div>{{ `${props.member.User?.firstName} ${props.member.User?.lastName}` }}</div>
         </div>
-      </div>
+      </div>  
     </div>
-    <div class="h-full flex-2">
+    <div class="h-full  text-left">
       {{ props.member?.Role }}
     </div>
-    <div class="h-full flex-1">
+    <div class="h-full">
       <div v-if="status === 'requesting'">
         <UButton class="text-green-500" @click="handleAccept">
           Accept

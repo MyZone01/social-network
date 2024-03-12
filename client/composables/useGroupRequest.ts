@@ -3,7 +3,7 @@ import type { GroupMember } from '~/types';
 export const useGroupRequest = () => {
     async function joinRequest(groupId: string | undefined): Promise<{data:any,error:any}> {
 
-        const { data, error } = await useFetch("/api/group/request/join", {
+        const { data, error } = await useFetch("/api/groups/request/join", {
             method: "POST",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
@@ -11,9 +11,6 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-
-
-        
 
         return { data, error };
     }

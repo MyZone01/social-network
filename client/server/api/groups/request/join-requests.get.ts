@@ -15,7 +15,7 @@ export default defineEventHandler(async event => {
         const response = await $fetch('http://localhost:8081/get-all-access-demand', {
             method: 'GET',
             headers: {
-                Authorization: `${token}`
+                Authorization: `Bearer ${token}`,
             },
             query: {
                 group_id: groupId,
