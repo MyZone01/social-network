@@ -38,7 +38,7 @@
     </div>
     <!-- post image -->
 
-    <a href="#preview_modal" uk-toggle v-if="post.imageUrl">
+    <a @click="showPostPreview" uk-toggle v-if="post.imageUrl">
       <div class="relative w-full lg:h-96 h-full sm:px-4">
         <nuxt-img :src="'http://localhost:8081/' + post.imageUrl" class="sm:rounded-lg w-full h-full object-cover" />
       </div>
@@ -50,7 +50,7 @@
       <div class="flex items-center gap-3">
         <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
           <ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon> </button>
-        <span>260</span>
+        <span>{{ post.comments.length }}</span>
       </div>
       <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
           name="paper-plane-outline"></ion-icon>
@@ -85,7 +85,7 @@
       </button>
 
     </div> -->
-    <Comments-snippets />
+    <Comments-snippets :comments ="post.comments" />
 
     <!-- add comment -->
 
@@ -94,6 +94,7 @@
   </div>
 </template>
 <script>
+import { passDataOnPostPreviewContent } from '~/composables/postPreview';
 export default {
   mounted() {
     console.log(this.post);
@@ -102,6 +103,12 @@ export default {
     post: {
       type: Object,
       required: true
+    }
+  },
+  methods : {
+    showPostPreview(){
+      passDataOnPostPreviewContent(this.post.id)
+      UIkit.modal("#preview_modal").show()
     }
   }
 }

@@ -33,6 +33,8 @@
 </template>
 
 <script>
+
+
 export default {
 
   props: {
@@ -47,10 +49,23 @@ export default {
       let formData = new FormData(e.target)
       let res = await FormImgUploader(formData)
       let jsonFormObject = {
+        post_id: this.postId,
         content: formData.get("content"),
-        image_url : res.data? res.data : null
+        image_url: res.data ? res.data : null
       }
-      console.log(jsonFormObject)
+      res = await fetch("/api/post/insertComment", { method: "POST", body: JSON.stringify(jsonFormObject) })
+      if (res.status != 200) {
+        //TODO: handle error
+        return
+      }
+      let commentContent = await res.json().catch(err =>({error: err}))
+      if (commentContent.error){
+        console.log(commentContent.error)
+        //TODO: handle error
+        return
+      }
+      console.log(commentContent.body)
+      useFeedStore().addComment(commentContent.body.data)
     }
   }
 }

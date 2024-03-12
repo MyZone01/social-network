@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>  
+  <NuxtLayout>
     <main id="site__main" class="ml-48 2xl:ml-0 py-5 px-6 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
       <div class="max-w-[680px] mx-auto">
         <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
@@ -9,7 +9,8 @@
 
             <div class="flex items-center md:gap-3 gap-1">
 
-              <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
+              <div
+                class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
                 uk-toggle="target: #create-status">
                 <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
               </div>
@@ -41,7 +42,7 @@
 
           </div>
           <!--  post image-->
-          <post-card-img v-for="post in useFeedStore().posts"  :post="post" />
+          <post-card-img v-for="post in useFeedStore().posts" :post="post" />
           <!--  post image with slider-->
           <!-- placeholder -->
           <!-- <post-placeholder v-if="useFeedStore().posts.length == 0" />
@@ -57,6 +58,8 @@
 
       </div>
     </main>
+    <Post-img-preview />
+    <Post-text-preview />
   </NuxtLayout>
 </template>
 

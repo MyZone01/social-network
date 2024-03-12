@@ -20,6 +20,16 @@ export const useFeedStore = defineStore("feed", {
                 })
                 .catch((error) => console.error(error))
             console.log(this.posts);
+        }, 
+        addComment(comment){
+            console.log("post added: " + comment.post_id);
+            for (let i = 0; i < this.posts.length; i++){
+                if (this.posts[i].id === comment.post_id) {
+                    this.posts[i].comments.unshift(comment);
+                    break
+                }
+               
+            }
         }
     }
 }); 
