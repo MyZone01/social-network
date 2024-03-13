@@ -191,13 +191,12 @@ func createNotif(notif *models.Notification, ctx *octopus.Context) {
 		})
 		return
 	}
-	return
 }
 
 func handleGetAllFollowersRequest(ctx *octopus.Context) {
 
 	userUUID := ctx.Values["userId"].(uuid.UUID)
-	// fmt.Println(userUUID, "lolo")
+
 	userFollowers := models.Followers{}
 	userFollowers.GetAllByFolloweeID(ctx.Db.Conn, userUUID)
 	userFollowersJson := []map[string]interface{}{}
@@ -219,7 +218,6 @@ func handleGetAllFollowersRequest(ctx *octopus.Context) {
 	}
 	// fmt.Println(userFollowersJson)
 	ctx.JSON(map[string]interface{}{
-		"message": "User fetched successfully",
 		"status":  http.StatusOK,
 		"data":    userFollowersJson,
 	})

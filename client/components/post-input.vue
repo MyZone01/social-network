@@ -78,7 +78,7 @@
                     </div>
 
                     
-                    <!-- <UISelecUser /> -->
+                    <UISelecUser />
                     <div class="flex items-center gap-2">
                         <button ref= "creatPostButon" type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">
                             Create</button>
@@ -108,6 +108,7 @@ export default {
         openFileInput() {
             this.$refs.fileInput.click();
         },
+        
         async handleSubmitPost(e) {
             e.preventDefault();
             let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
@@ -127,26 +128,25 @@ export default {
                 body.append('file', formdata.get('photo'))
                 let response = await fetch("/api/upload", {
                     method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${useGlobalAuthStore().token}`
-                    },
                     body: body,
                 }).then(response => response.json()).catch(err => ({ errors: err }))
+                console.log(response);
                 if (response.data) jsonFormObject.image_url = response.data
             }
             try {
-                let response = await fetch("http://localhost:8081/post/insert", {
+                let response = await fetch("/api/post/insert", {
                     method: "POST",
+                    body: JSON.stringify(jsonFormObject),
                     headers: {
-                        Authorization: `Bearer ${useGlobalAuthStore().token}`
-                    },
-                    body: JSON.stringify(jsonFormObject)
+                        'Content-Type': 'application/json'
+                    }
                 }).then(response => response.json())
-                useFeedStore().addPost(response)
+                console.log(response)
+                useFeedStore().addPost(response.body.data)
                 UIkit.modal("#create-status").hide();
 
             } catch (err) {
-                console.log(err)
+                console.error(err)
             }
         },
         resetCheckbox() {
@@ -154,7 +154,6 @@ export default {
             this.$refs.privateCheck.checked = false
         },
         resetSelectMenu() {
-            console.log("fdkkfdk");
             $('.js-example-basic-multiple').val([]).change()
         },
     }
@@ -164,4 +163,4 @@ export default {
 .custom-alert {
     background-color: red;
 }
-</style>     
+</style>

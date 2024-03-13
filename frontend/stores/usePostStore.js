@@ -10,7 +10,6 @@ export const useFeedStore = defineStore("feed", {
         addPost(post) {
             this.posts.unshift(post);
         },
-
         async getUserFeed() {
             let response = await fetch("http://localhost:8081/post/getfeed", {
                 headers: {

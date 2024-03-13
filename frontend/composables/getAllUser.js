@@ -9,4 +9,4 @@ const GetAllFollower = async () => {
 }
 
 
-export { GetAllFollower,LoadImageAsBase64 }
+export { GetAllFollower }

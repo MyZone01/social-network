@@ -6,8 +6,6 @@ useHead({
   ],
   link: [
     { rel: "icon", href: "/favicon.ico" },
-    { rel: "stylesheet", href: "assets/css/style.css" },
-    { rel: "stylesheet", href: "assets/css/tailwind.css" },
   ],
   htmlAttrs: {
     lang: "en",

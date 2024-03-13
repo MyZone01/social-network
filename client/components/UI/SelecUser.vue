@@ -1,5 +1,4 @@
 <script>
-import { GetAllFollower } from '~/composables/getAllUser';
 
 export default {
     data() {
@@ -9,6 +8,7 @@ export default {
     },
     async mounted() {
         this.userFollowers = await GetAllFollower();
+        console.log(this.userFollowers);
         // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
             placeholder: "Selec Followers .."
@@ -21,7 +21,8 @@ export default {
 <template>
     <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
         <option value="">lolo</option>
-        <!-- <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option> -->
+        <option value=""> opt</option>
+        <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option>
     </select>
 </template>
 

@@ -41,18 +41,7 @@
 
           </div>
           <!--  post image-->
-          <post-card-img v-for="post in useFeedStore().posts" :key="post.id" :post="post" />
-          <!--  post image with slider-->
-          <!-- placeholder -->
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-          <post-placeholder v-if="useFeedStore().posts.length == 0" />
-
+          
         </div>
 
       </div>
@@ -65,7 +54,7 @@
 
 export default {
   async setup() {
-    useFeedStore().getUserFeed()
+    // useFeedStore().getUserFeed()
   }
 }
 
