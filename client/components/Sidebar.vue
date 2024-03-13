@@ -80,7 +80,7 @@
 
                 <br>
                 <br>
-                <div v-if="avatarImage" id="toast-warning"
+                <div v-if="currentUser.avatarImage == 'uploads/default-avatar.png'" id="toast-warning"
                     class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 space-x-3"
                     role="alert">
                     <div
@@ -182,7 +182,6 @@
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
-const avatarImage = currentUser.avatarImage == "uploads/default-avatar.png" ? true : false
 
 onMounted(async () => {
   if (!currentUser.value?.firstName) {

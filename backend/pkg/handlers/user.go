@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -186,8 +185,8 @@ func handleUpdateUserInfos(ctx *octopus.Context) {
 	// 	return
 	// }
 	data := map[string]interface{}{
-		"message": "User updated successfully",
-		"session": "",//idSession,
+		"message": "User informations updated successfully.",
+		"session": "", //idSession,
 		"data":    user,
 		"status":  http.StatusOK,
 	}
@@ -206,7 +205,6 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
-	fmt.Println(newCredentials)
 	var credentials = credentials{
 		Email:    newCredentials.Email,
 		Password: newCredentials.Password,
@@ -250,7 +248,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		return
 	}
 	newUser.Password = string(newPasswordHash)
-	// Attempts to update a the user in the database with the provided data.
+	// Attempts to update the user in the database with the provided data.
 	if newUser.Update(ctx.Db.Conn) != nil {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
@@ -259,7 +257,6 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
-	fmt.Println(ctx)
 	// Starts a new session for the user and sets the user's ID as the session key.
 	// idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	// if err != nil {
@@ -274,7 +271,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
 		"session": "", //idSession,
 		"data":    newUser,
-		"message": "User successfully registered and logged.",
+		"message": "User password successfully updated.",
 		"status":  "200",
 	})
 }

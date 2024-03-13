@@ -89,7 +89,7 @@ func (s *session) tmp() {
 					if s.database != nil {
 						_, err := s.database.Exec(fmt.Sprintf(`DELETE FROM %s WHERE datetime(expiration_date) <= datetime('now')`, s.SessionName))
 						if err != nil {
-							fmt.Println(err)
+							// fmt.Println(err)
 							s.mu.Unlock()
 							return
 						}

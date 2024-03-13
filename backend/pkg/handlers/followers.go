@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -198,7 +197,7 @@ func createNotif(notif *models.Notification, ctx *octopus.Context) {
 func handleGetAllFollowersRequest(ctx *octopus.Context) {
 
 	userUUID := ctx.Values["userId"].(uuid.UUID)
-	fmt.Println(userUUID, "lolo")
+	// fmt.Println(userUUID, "lolo")
 	userFollowers := models.Followers{}
 	userFollowers.GetAllByFolloweeID(ctx.Db.Conn, userUUID)
 	userFollowersJson := []map[string]interface{}{}
@@ -218,7 +217,7 @@ func handleGetAllFollowersRequest(ctx *octopus.Context) {
 			},
 		)
 	}
-	fmt.Println(userFollowersJson)
+	// fmt.Println(userFollowersJson)
 	ctx.JSON(map[string]interface{}{
 		"message": "User fetched successfully",
 		"status":  http.StatusOK,
