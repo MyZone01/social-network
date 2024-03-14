@@ -45,6 +45,7 @@ func (n *Notification) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
+	Data.Store("notification", n)
 	return nil
 }
 
