@@ -2,7 +2,6 @@ package handlers
 
 import (
 	octopus "backend/app"
-	"backend/pkg/config"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"log"
@@ -20,28 +19,46 @@ func insertPostHandler(ctx *octopus.Context) {
 		})
 		return
 	}
-	userPostOwnerId, _ := config.Sess.Start(ctx).Get(ctx.GetBearerToken())
+	userPostOwnerId := ctx.Values["userId"].(uuid.UUID)
 	newPost.UserID = userPostOwnerId
 	if err := newPost.Create(ctx.Db.Conn); err != nil {
-		log.Println(err, "dfl")
+		log.Println(err)
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"error": "error while creating new post",
 		})
 		return
 	}
-	log.Println(map[string]interface{}{
-		"status": http.StatusOK,
-		"data":   newPost.ExploitForRendering(ctx.Db.Conn),
-	})
 	ctx.JSON(map[string]interface{}{
 		"status": http.StatusOK,
 		"data":   newPost.ExploitForRendering(ctx.Db.Conn),
 	})
+}
 
+func insertCommentHandler(ctx *octopus.Context) {
+	newComment := models.Comment{}
+	if err := ctx.BodyParser(&newComment); err != nil {
+		log.Println(err)
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"error": "error while  creating new comment",
+		})
+		return
+	}
+	newComment.UserID = ctx.Values["userId"].(uuid.UUID)
+	if err := newComment.Create(ctx.Db.Conn); err != nil {
+		log.Println(err)
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"error": "error while  creating new comment",
+		})
+		return
+	}
+	ctx.JSON(map[string]interface{}{
+		"status": http.StatusOK,
+		"data":   newComment.ExploitForRendering(ctx.Db.Conn),
+	})
 }
 
 func feedHandler(ctx *octopus.Context) {
-	log.Println("feedHandler")
+
 	feedPosts := models.Posts{}
 	user := ctx.Values["userId"].(uuid.UUID)
 
@@ -81,9 +98,20 @@ var getFeedPostsRoute = route{
 		feedHandler, // Handler function to process the authentication request.
 	},
 }
+var insertCommentRoot = route{
+	path:   "/post/insertComment",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		/* ... you can add other middleware here
+		   Note: Make sure to place your handler function at the end of the list. */
+		insertCommentHandler, // Handler function to process the authentication request.
+	},
+}
 
 func init() {
 	// Register the authentication route with the global AllHandler map.
+	AllHandler[insertCommentRoot.path] = insertCommentRoot
 	AllHandler[getFeedPostsRoute.path] = getFeedPostsRoute
 	AllHandler[insertPostRoute.path] = insertPostRoute
 }

@@ -2,8 +2,10 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"html"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -76,6 +78,9 @@ func PostPrivacyFromString(s string) (PostPrivacy, error) {
 // Create inserts a new post into the database
 func (p *Post) Create(db *sql.DB) error {
 	// Define the post default properties
+	if !p.IsValid() {
+		return errors.New("something wrong with the comment")
+	}
 	p.ID = uuid.New()
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
@@ -106,6 +111,17 @@ func (p *Post) Create(db *sql.DB) error {
 	}
 
 	return p.saveFolowersSelection(db)
+}
+func (p *Post) IsValid() bool {
+	if p.ID.String() != uuid.Nil.String() {
+		fmt.Println(p.ID.String(), "here")
+		return false
+	}
+	if p.Content == "" || strings.TrimSpace(p.Content) == "" {
+		return false
+	}
+
+	return true
 }
 
 // Get retrieves a post from the database
@@ -276,29 +292,12 @@ func (p *Post) saveFolowersSelection(db *sql.DB) error {
 	}
 	return nil
 }
+
 func (p *Posts) GetAvailablePostForUser(db *sql.DB, userID uuid.UUID) error {
-	// Récupérez tous les posts publics
-	query := `SELECT * FROM posts WHERE privacy = 'public' AND deleted_at IS NULL`
-	if err := p.getPostsFromQuery(db, query); err != nil {
+	query := `SELECT * FROM posts WHERE (privacy = 'public' OR (privacy = 'private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM followers f WHERE posts.user_id = f.followee_id AND f.follower_id = ? AND f.status = 'accepted'))) OR (privacy = 'almost private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM selected_users us WHERE posts.id = us.post_id AND us.user_id = ?)) AND deleted_at IS NULL ORDER BY created_at DESC`
+	if err := p.getPostsFromQuery(db, query, userID, userID); err != nil {
 		return err
 	}
-
-	// Récupérez les posts privés pour lesquels l'utilisateur est un abonné
-	query = `SELECT p.* FROM posts p
-             JOIN followers f ON p.user_id = f.followee_id
-             WHERE p.privacy = 'private' AND f.follower_id = ? AND f.status = 'accepted' AND p.deleted_at IS NULL`
-	if err := p.getPostsFromQuery(db, query, userID); err != nil {
-		return err
-	}
-
-	// Récupérez les posts presque privés pour lesquels l'utilisateur est sélectionné
-	query = `SELECT p.* FROM posts p
-             JOIN selected_users  us ON p.id = us.post_id
-             WHERE p.privacy = 'almost private' AND us.user_id = ? AND p.deleted_at IS NULL`
-	if err := p.getPostsFromQuery(db, query, userID); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -348,13 +347,17 @@ func (Posts *Posts) ExploitForRendering(db *sql.DB) []map[string]interface{} {
 func (p *Post) ExploitForRendering(db *sql.DB) map[string]interface{} {
 	user := User{}
 	user.Get(db, p.UserID)
+	postComments := Comments{}
+	postComments.GetCommentsForPost(db, p.ID)
+
 	return map[string]interface{}{
 		"id":                 p.ID,
-		"userCompletName":    user.FirstName + user.LastName,
+		"userCompleteName":   user.FirstName + " " + user.LastName,
 		"imageUrl":           p.ImageURL,
 		"content":            p.Content,
 		"userAvatarImageUrl": user.AvatarImage,
 		"createdAt":          timeAgo(p.CreatedAt),
+		"comments":           postComments.ExploitForRendering(db),
 	}
 }
 
@@ -378,7 +381,6 @@ func timeAgo(t time.Time) string {
 		return fmt.Sprintf("%d seconds ago", seconds)
 	}
 }
-
 func CountPostsByUser(db *sql.DB, userID uuid.UUID) (int, error) {
 	query := `SELECT COUNT(*) FROM posts WHERE user_id = $1 AND deleted_at IS NULL`
 
