@@ -10,17 +10,7 @@ export default defineEventHandler(async (event) => {
         };
     }
 
-    const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), `Bearer ${token}`);
-    if (response.status !== 200) {
-        return {
-            status: response.status,
-            body: response.message,
-        };
-    }
-    return {
-        status: 200,
-        body: response.message,
-    };
-
-
+    const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), token);
+    return response
+   
 });

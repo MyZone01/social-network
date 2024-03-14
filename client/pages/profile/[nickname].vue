@@ -34,7 +34,7 @@
 
       </div>
 
-      <div class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col" id="js-oversized">
+      <div class="flex 2xl:gap-12 gap-10 mb-8 max-lg:flex-col" id="js-oversized">
 
         <!-- feed story -->
         <FeedStory :status="status" :data="data" />
@@ -64,6 +64,7 @@ export default {
         avatar: "",
         followStatus: ""
       },
+      nickname:"",
       status: "posts"
     }
   },
@@ -72,6 +73,7 @@ export default {
     const response = await getUser(this.nickname, "get")
     if (response && response.status === 200) {
       this.data = response.body;
+      console.log('data', this.data);
     } else {
       console.error('Failed to get user data');
       navigateTo("/404")
@@ -87,18 +89,3 @@ export default {
   }
 }
 </script>
-
-<!-- <script>
-export default {
-    data() {
-        return {
-            nickname: null
-        }
-    },
-    async mounted() {
-        this.nickname = this.$route.params.nickname;
-        const response = await getUser(this.nickname,"get")
-        console.log(response);
-    }
-}
-</script> -->

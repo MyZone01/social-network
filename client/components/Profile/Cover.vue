@@ -79,19 +79,19 @@ export default {
             switch (this.data.followStatus) {
                 case 'none':
                     const ok1 = await useFollow(this.nickname, "follow");
-                    if (ok1) {
-                        this.data.followStatus = "requested"
+                    if (ok1.ok) {
+                        this.data.followStatus = ok1.action
                     }
                     break;
                 case 'requested':
                     const ok2 = await useFollow(this.nickname, "unfollow");
-                    if (ok2) {
+                    if (ok2.ok) {
                         this.data.followStatus = "none"
                     }
                     break;
                 case 'accepted':
                     const ok3 = await useFollow(this.nickname, "unfollow");
-                    if (ok3) {
+                    if (ok3.ok) {
                         this.data.followStatus = "none"
                     }
                     break;

@@ -378,3 +378,15 @@ func timeAgo(t time.Time) string {
 		return fmt.Sprintf("%d seconds ago", seconds)
 	}
 }
+
+func CountPostsByUser(db *sql.DB, userID uuid.UUID) (int, error) {
+	query := `SELECT COUNT(*) FROM posts WHERE user_id = $1 AND deleted_at IS NULL`
+
+	var count int
+	err := db.QueryRow(query, userID).Scan(&count)
+	if err != nil {
+		return 0, fmt.Errorf("unable to execute the query. %v", err)
+	}
+
+	return count, nil
+}

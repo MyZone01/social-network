@@ -97,7 +97,6 @@ func handleGetUser(ctx *octopus.Context) {
 		follower.FollowerID = userId
 		follower.FolloweeID = user.ID
 		follower.Get(ctx.Db.Conn)
-
 		if follower.Status == "" {
 			follower.Status = "none"
 		}
@@ -107,23 +106,25 @@ func handleGetUser(ctx *octopus.Context) {
 
 		follow := new(models.Followers).CountAllByFollowerID(ctx.Db.Conn, userId)
 		following := new(models.Followers).CountAllByFolloweeID(ctx.Db.Conn, userId)
+		numpost, _ := models.CountPostsByUser(ctx.Db.Conn, user.ID)
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
 			"message": "User fetched successfully",
 			"status":  http.StatusOK,
 			"data": map[string]interface{}{
-				"id":           user.ID,
-				"firstname":    user.FirstName,
-				"lastname":     user.LastName,
-				"email":        user.Email,
-				"nickname":     user.Nickname,
-				"birthday":     user.DateOfBirth,
-				"about":        user.AboutMe,
-				"avatar":       user.AvatarImage,
-				"created":      user.CreatedAt,
-				"updated":      user.UpdatedAt,
-				"follow":       follow,
-				"following":    following,
-				"followStatus": follower.Status,
+				"id":            user.ID,
+				"firstname":     user.FirstName,
+				"lastname":      user.LastName,
+				"email":         user.Email,
+				"nickname":      user.Nickname,
+				"birthday":      user.DateOfBirth,
+				"about":         user.AboutMe,
+				"avatar":        user.AvatarImage,
+				"created":       user.CreatedAt,
+				"updated":       user.UpdatedAt,
+				"follow":        follow,
+				"following":     following,
+				"followStatus":  follower.Status,
+				"NumberOfPosts": numpost,
 			},
 		})
 	case "posts":
