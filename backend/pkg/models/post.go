@@ -294,8 +294,14 @@ func (p *Post) saveFolowersSelection(db *sql.DB) error {
 }
 
 func (p *Posts) GetAvailablePostForUser(db *sql.DB, userID uuid.UUID) error {
-	query := `SELECT * FROM posts WHERE (privacy = 'public' OR (privacy = 'private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM followers f WHERE posts.user_id = f.followee_id AND f.follower_id = ? AND f.status = 'accepted'))) OR (privacy = 'almost private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM selected_users us WHERE posts.id = us.post_id AND us.user_id = ?)) AND deleted_at IS NULL ORDER BY created_at DESC`
-	if err := p.getPostsFromQuery(db, query, userID, userID); err != nil {
+	query := `SELECT * FROM posts WHERE 
+    (privacy = 'public' OR 
+    (privacy = 'private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM followers f WHERE posts.user_id = f.followee_id AND f.follower_id = ? AND f.status = 'accepted')) OR 
+    (privacy = 'almost private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM selected_users us WHERE posts.id = us.post_id AND us.user_id = ?)) OR 
+    user_id = ?) AND 
+    deleted_at IS NULL 
+    ORDER BY created_at DESC`
+	if err := p.getPostsFromQuery(db, query, userID, userID, userID); err != nil {
 		return err
 	}
 	return nil
@@ -358,6 +364,7 @@ func (p *Post) ExploitForRendering(db *sql.DB) map[string]interface{} {
 		"userAvatarImageUrl": user.AvatarImage,
 		"createdAt":          timeAgo(p.CreatedAt),
 		"comments":           postComments.ExploitForRendering(db),
+		"userOwnerNickname":   user.Nickname,
 	}
 }
 

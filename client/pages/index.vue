@@ -42,7 +42,7 @@
 
           </div>
           <!--  post image-->
-          <!-- <post-card-img v-for="post in useFeedStore().posts" :post="post" /> -->
+          <post-card-img v-for="post in useFeedStore().posts" :post="post" />
           <!--  post image with slider-->
           <!-- placeholder -->
           <!-- <post-placeholder v-if="useFeedStore().posts.length == 0" />
@@ -58,13 +58,12 @@
 
       </div>
     </main>
-    <Post-img-preview />
-    <Post-text-preview />
+   
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-// useFeedStore().getUserFeed()
+
 const currentUser = useAuthUser();
 
 

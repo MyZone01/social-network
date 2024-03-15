@@ -34,12 +34,12 @@
             <nuxt-img :src="'http://localhost:8081/' + postPreviewContent.userAvatarImageUrl" alt=""
               class="w-9 h-9 rounded-full" />
             <div class="flex-1">
-              <h4 class="text-black font-medium dark:text-white"> {{ postPreviewContent.userCompletName }} </h4>
+              <h4 class="text-black font-medium dark:text-white"> {{ postPreviewContent.userCompleteName }} </h4>
               <div class="text-gray-500 text-xs dark:text-white/80"> {{ postPreviewContent.createdAt }}</div>
             </div>
 
             <!-- dropdown -->
-            <div class="-m-1">
+            <!-- <div class="-m-1">
               <button type="button" class="button__ico w-8 h-8"> <ion-icon class="text-xl"
                   name="ellipsis-horizontal"></ion-icon> </button>
               <div class="w-[253px]"
@@ -59,7 +59,7 @@
                     Unfollow </a>
                 </nav>
               </div>
-            </div>
+            </div> -->
           </div>
           <p class="font-normal text-sm leading-6 mt-4">{{ postPreviewContent.content }}</p>
 
@@ -67,14 +67,14 @@
             <div class="flex items-center gap-4 text-xs font-semibold">
 
               <div class="flex items-center gap-3">
-                <button type="button" class="button__ico bg-slate-100 dark:bg-slate-700"> <ion-icon class="text-lg"
-                    name="chatbubble-ellipses"></ion-icon> </button>
+                <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
+          <i class="text-lg bx bxs-message-dots" ></i> </button>
                 <span>{{ postPreviewContent.comments.length }}</span>
               </div>
-              <button type="button" class="button__ico ml-auto"> <ion-icon class="text-xl"
+              <!-- <button type="button" class="button__ico ml-auto"> <ion-icon class="text-xl"
                   name="share-outline"></ion-icon> </button>
               <button type="button" class="button__ico"> <ion-icon class="text-xl" name="bookmark-outline"></ion-icon>
-              </button>
+              </button> -->
             </div>
           </div>
         </div>

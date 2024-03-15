@@ -38,8 +38,10 @@
 
         <!-- feed story -->
         <FeedStory :status="status" :data="data" />
+        <post-input />
 
       </div>
+
 
     </div>
 
@@ -65,7 +67,7 @@ export default {
         avatar: "",
         followStatus: ""
       },
-      nickname:"",
+      nickname: "",
       status: "posts"
     }
   },

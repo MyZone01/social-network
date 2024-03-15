@@ -214,7 +214,7 @@
 
                         <!-- profile -->
                         <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
-                            <img :src="'http://localhost:8081/'+currentUser.avatarImage" alt=""
+                            <img :src="'http://localhost:8081/' + currentUser.avatarImage" alt=""
                                 class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
                         </div>
                         <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
@@ -222,11 +222,11 @@
 
                             <nuxt-link to="/profile">
                                 <div class="p-4 py-5 flex items-center gap-4">
-                                    <img :src="'http://localhost:8081/'+currentUser.avatarImage" alt=""
+                                    <img :src="'http://localhost:8081/' + currentUser.avatarImage" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
                                         <h4 class="text-sm font-medium text-black"> {{ currentUser.firstName }} {{
-                                            currentUser.lastName }} </h4>
+                                currentUser.lastName }} </h4>
                                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
                                             @{{ currentUser.nickname }}</div>
                                     </div>
@@ -289,19 +289,19 @@
         </div>
 
     </header>
-    <!-- create post  -->
-    <post-input />
+    
 </template>
 
 <script setup>
 const currentUser = useAuthUser();
+console.log(currentUser);
 const loading = ref(false);
 const { logout, me } = useAuth();
 
 const onLogoutClick = async () => {
-// async function onLogoutClick() {
-  try {
-    loading.value = true;
+    // async function onLogoutClick() {
+    try {
+        loading.value = true;
 
         await logout();
 
