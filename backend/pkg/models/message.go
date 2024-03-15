@@ -170,9 +170,15 @@ func (m *GroupMessage) Delete(db *sql.DB) error {
 	return nil
 }
 
-func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID uuid.UUID) error {
-	query := `SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at FROM private_messages WHERE receiver_id = $1 AND deleted_at IS NULL`
-
+func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID uuid.UUID) error {
+	query := `
+        SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at 
+        FROM private_messages 
+        WHERE 
+            (receiver_id = $1 AND sender_id = $2) OR 
+            (receiver_id = $2 AND sender_id = $1) AND 
+            deleted_at IS NULL
+    `
 	rows, err := db.Query(query, receiverID)
 	if err != nil {
 		return err
