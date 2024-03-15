@@ -127,7 +127,7 @@ func demandAccessHandler(ctx *octopus.Context) {
 		ConcernID: newMember.ID,
 		UserID:    group.CreatorID,
 		Type:      models.TypeGroupInvitation,
-		Message:   "You have been invited to join a group",
+		Message:   "A user has requested to join your group",
 	}
 	err = notification.Create(ctx.Db.Conn)
 	if err != nil {

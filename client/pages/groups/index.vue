@@ -4,8 +4,14 @@
     <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
 
       <div class="page-heading">
-
-        <h1 class="page-title"> Groups </h1>
+        <h1>Groups: </h1>
+        <input-group />
+        <ul>
+          <li v-for="group in groups" :key="group.ID">
+            <nuxt-link :to="`/groups/${group.ID}`">{{ group.Title }}</nuxt-link>
+          </li>
+        </ul>
+        <nuxt-link to="/">Back to home</nuxt-link>
 
         <nav class="nav__underline">
 
@@ -550,8 +556,14 @@
 
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
+const { groups, getAllGroups } = useGroups();
+
 definePageMeta({
   middleware: ["auth-only"],
 })
+
+onMounted(async () => {
+  await getAllGroups();
+});
 </script>
