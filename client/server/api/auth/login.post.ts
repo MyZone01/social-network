@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
     },
   });
 
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
+
   if (response.status !== "200" || response.data === undefined) {
     return sendError(event, createError({
       statusCode: 400 as number,

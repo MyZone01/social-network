@@ -97,7 +97,7 @@ func (user *User) Create(db *sql.DB) error {
 }
 
 // Get a user by its ID
-func (user *User) Get(db *sql.DB, identifier interface{}, getPassword ...bool) error {
+func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) error {
 	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id=$1 OR email=$1 OR nickname=$1`
 
 	switch identifier.(type) {
@@ -119,7 +119,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, getPassword ...bool) e
 		if err != nil {
 			return fmt.Errorf("unable to execute the query. %v", err)
 		}
-		if len(getPassword) > 0 && getPassword[0] {
+		if (len(password) > 0 && password[0] == false) || len(password) == 0 {
 			user.Password = ""
 		}
 	case uuid.UUID:
@@ -140,7 +140,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, getPassword ...bool) e
 		if err != nil {
 			return fmt.Errorf("unable to execute the query. %v", err)
 		}
-		if len(getPassword) > 0 && getPassword[0] {
+		if len(password) > 0 && password[0] {
 			user.Password = ""
 		}
 	default:
