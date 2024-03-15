@@ -16,11 +16,16 @@
     "@nuxt/ui": "^2.14.1",
     "@nuxtjs/color-mode": "^3.3.2",
     "@pinia/nuxt": "^0.5.1",
+<<<<<<< HEAD
     "nitropack": "npm:nitropack-nightly@latest",
     "nuxi": "npm:nuxi-nightly@latest",
     "nuxt": "npm:nuxt-nightly@latest",
     "pinia": "^2.1.7",
     "sharp": "^0.33.2",
+=======
+    "nuxt": "^3.10.3",
+    "pinia": "^2.1.7",
+>>>>>>> group-timeline
     "vue": "^3.3.8",
     "vue-router": "^4.3.0",
     "zod": "^3.22.4"

@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { H3Event } from "h3";
 import { type User } from "~/types";
+=======
+import type { H3Event } from "h3";
+import type { User } from "~/types";
+>>>>>>> group-timeline
 
 export async function getUserFromToken(event: H3Event | string) {
   const config = useRuntimeConfig();

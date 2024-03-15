@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Group, ServerResponse, User } from "~/types";
+=======
+import type { User } from "~/types";
+>>>>>>> group-timeline
 
 export default defineEventHandler(async (event) => {
   if (!event.context.token) {

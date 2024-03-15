@@ -74,7 +74,16 @@
 <script lang="ts" setup>
 import type { Group, GroupMessage } from '~/types';
 
+<<<<<<< HEAD
 const { getGroupByID, getAllMessagesByGroup } = useGroups();
+=======
+definePageMeta({
+  alias: ["/groups/[id]/chat"],
+  middleware: ["auth-only"],
+});
+
+const { getGroupByID } = useGroups();
+>>>>>>> group-timeline
 const route = useRoute();
 const groupId = route.params.id as string;
 const group = ref<Group | null>(null);

@@ -1,15 +1,23 @@
 
 
 export default defineEventHandler(async (event) => {
+<<<<<<< HEAD:client/server/api/upload.post.ts
     const reader = await readMultipartFormData(event);
     const token = event.context.token;
     console.log(reader);
     if (!reader) return { status: 400, body: 'Bad request' };
     let file;
     for (let part of reader) {
+=======
+    const reader = await readMultipartFormData(event)
+    console.log(reader)
+    if (!reader) return { status: 400, body: 'Bad request' }
+    let file
+    for (const part of reader) {
+>>>>>>> group-timeline:frontend/server/api/upload.post.ts
         if (part.filename) { // assuming that the file part has a filename property
-            file = part;
-            break;
+            file = part
+            break
         }
     }
 
@@ -17,19 +25,23 @@ export default defineEventHandler(async (event) => {
         return {
             status: 400,
             body: 'No file uploaded',
-        };
+        }
     }
 
     // Create a new FormData instance
-    const body = new FormData();
+    const body = new FormData()
     // Append the file to the FormData instance
-    body.append('file', new Blob([file.data]), file.filename);
+    body.append('file', new Blob([file.data]), file.filename)
 
+<<<<<<< HEAD:client/server/api/upload.post.ts
+=======
+    const token = event.headers.get('Authorization')
+>>>>>>> group-timeline:frontend/server/api/upload.post.ts
     if (!token) {
         return {
             status: 401,
             body: 'Unauthorized',
-        };
+        }
     }
 
     const response = await fetch('http://localhost:8081/upload', {
@@ -39,17 +51,22 @@ export default defineEventHandler(async (event) => {
         },
         body,
     }).then(async (res) => await res.json()).catch((err) => {
-        console.log(err);
+        console.log(err)
         return {
             status: 500,
             body: 'Internal server error',
+<<<<<<< HEAD:client/server/api/upload.post.ts
         };
     });
     // console.log(response);
     
+=======
+        }
+    })
+>>>>>>> group-timeline:frontend/server/api/upload.post.ts
 
     return {
         status: 200,
         data: response.imageurl,
-    };
-});
+    }
+})

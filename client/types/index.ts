@@ -43,6 +43,7 @@ export interface GroupMember {
   DeletedAt: string
 }
 
+<<<<<<< HEAD
 export interface GroupMessage {
   ID: string,
   GroupID: string,
@@ -52,6 +53,17 @@ export interface GroupMessage {
   CreatedAt: string,
   UpdatedAt: string,
   DeletedAt: string
+=======
+export interface Event {
+  ID: string,
+  GroupID: string,
+  title: string,
+  description:string,
+  CreatorID: string,
+
+  
+
+>>>>>>> group-timeline
 }
 
 export type UserWithoutPassword = Omit<User, "password">;
