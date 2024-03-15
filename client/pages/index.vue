@@ -1,5 +1,4 @@
 <template>
-  <NuxtLayout>
     <main id="site__main" class="ml-48 2xl:ml-0 py-5 px-6 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
       <div class="max-w-[680px] mx-auto">
         <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
@@ -58,15 +57,13 @@
 
       </div>
     </main>
-   
-  </NuxtLayout>
+    <Post-img-preview />
+    <Post-text-preview />
 </template>
 
 <script setup lang="ts">
 
 const currentUser = useAuthUser();
-
-
 
 definePageMeta({
   alias: ["/"],
