@@ -66,5 +66,5 @@ export default defineNuxtConfig({
     cookieSecret: process.env.COOKIE_SECRET || "secret",
     cookieExpires: parseInt(process.env.COOKIE_REMEMBER_ME_EXPIRES || ONE_DAY.toString(), 10), // 1 day
     cookieRememberMeExpires: parseInt(process.env.COOKIE_REMEMBER_ME_EXPIRES || ONE_WEEK.toString(), 10), // 7 days
-  },
+  }
 })

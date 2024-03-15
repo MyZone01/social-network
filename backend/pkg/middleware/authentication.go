@@ -4,6 +4,7 @@ import (
 	octopus "backend/app"
 	"backend/pkg/config"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -45,6 +46,17 @@ func NoAuthRequired(ctx *octopus.Context) {
 	if config.Sess.Start(ctx).Valid(token) {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "You already have session",
+		})
+		return
+	}
+	ctx.Next()
+}
+
+func AllowedSever(ctx *octopus.Context) {
+	origin := ctx.Request.Header.Get("key")
+	if origin != os.Getenv("SERVER_KEY") {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
+			"error": "You are not allowed to access this server socket.",
 		})
 		return
 	}
