@@ -1,4 +1,4 @@
-import { ServerResponse, User } from "~/types";
+import type { ServerResponse, User } from "~/types";
 import { serialize, sign } from "~/server/utils/cookie";
 import { sessionCreator } from "~/server/utils/sessionHandler";
 

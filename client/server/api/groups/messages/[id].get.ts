@@ -1,4 +1,4 @@
-import type { Group, ServerResponse } from "~/types";
+import type { ServerResponse, GroupMessage } from "~/types";
 
 export default defineEventHandler(async (event) => {
   if (!event.context.token) {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const token = event.context.token;
   const groupId = getRouterParam(event, "id");
 
-  const response = await $fetch<ServerResponse<Group>>(`http://localhost:8081/get-group?group_id=${groupId}&isMemberNeeded=true&isUserNeeded=true`, {
+  const response = await $fetch<ServerResponse<GroupMessage[]>>(`http://localhost:8081/group/messages?group_id=${groupId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",

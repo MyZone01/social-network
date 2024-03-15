@@ -1,4 +1,4 @@
-import type { Group, ServerResponse } from "~/types";
+import type { Group, GroupMessage, ServerResponse } from "~/types";
 
 export const useGroups = () => {
   const groups = ref<Group[]>([]);
@@ -39,10 +39,23 @@ export const useGroups = () => {
     return null;
   };
 
+  const getAllMessagesByGroup = async (id: string) => {
+    const response = await $fetch<ServerResponse<GroupMessage[]>>("/api/groups/messages/" + id, {
+      headers: useRequestHeaders(["cookie"]) as HeadersInit,
+    });
+
+    if (response.data) {
+      return response.data;
+    }
+
+    return null;
+  };
+
   return {
     groups,
     createGroup,
     getAllGroups,
-    getGroupByID
+    getGroupByID,
+    getAllMessagesByGroup
   };
 }
