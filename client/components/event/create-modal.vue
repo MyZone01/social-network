@@ -26,7 +26,7 @@
               class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl   dark:!text-white-100 dark:placeholder:!text-red-500 dark:!bg-slate-800" name="title" type="text" placeholder="title"
             />
             <textarea id="" class="resize-none w-full" cols="30" rows="5" name="description" placeholder="Description" />
-            <input name="date" placeholder="01/01/2000" label="Date" type="datetime-local" required />
+            <input name="date_time" placeholder="01/01/2000" label="Date" type="datetime-local" required />
           </div>
   
   
@@ -41,36 +41,28 @@
       </div>
     </div>
   </template>
-  
-  <script setup>
-  const create_event_form = ref(null)
+
+<script setup>
+const create_event_form = ref(null)
+const { createEvent } = useEvents()
 const props = defineProps({
   groupId: String,
 });
 onMounted(() => {
-  this.create_group_form.addEventListener("submit", submitData);
+  create_event_form.value?.addEventListener("submit", submitData);
 });
 async function submitData(e) {
   e.preventDefault();
-  const store = useGlobalAuthStore();
-  const formData = new FormData(e.target);
-  await useFetch("/api/group/events/create", {
-    method: "post",
-    headers: {
-      Authorization: `Bearer ${store.token}`,
-    },
-    body: JSON.stringify(Object.fromEntries(formData.entries())),
-    query: {
-      gid: props.groupId,
-    },
-    onResponse({ request, response, options }) {
-      console.log(data);
-      const data = JSON.parse(response._data);
-      console.log(data);
-    },
-  });
+  const formData = new FormData(e.target)
+  const data = Object.fromEntries(formData.entries())
+  data.date_time = new Date(data.date_time)
+
+  const response = await createEvent(data, props.groupId)
+
+  
+
 }
 </script>
-  
-  <style lang="">
+
+<style lang="">
 </style>

@@ -151,7 +151,7 @@
           <div class="w-full">
             <EventCreateModal :groupId="group?.ID" />
             <div class="px-5 flex flex-row justify-between">
-              <h3>Events, {{ group?.GroupMembers.length }}</h3>
+              <h3>Events, {{ events?.length }}</h3>
               <div uk-toggle="target: #create-event-overlay" class="h-fit self-center">
                 <UButton class="bg-blue-500">New</UButton>
               </div>
@@ -193,7 +193,7 @@ li.uk-active {
 }
 </style>
 <script lang="ts" setup>
-import type { Group, GroupMember } from '~/types';
+import type { Group, GroupMember, Event } from '~/types';
 
 definePageMeta({
   alias: ["/groups/[id]"],
@@ -202,13 +202,17 @@ definePageMeta({
 
 const { getGroupByID } = useGroups();
 const { getJoinRequests, joinRequest } = useGroupRequest()
+const { getAllEvents } = useEvents()
+const user = useAuthUser()
 const route = useRoute();
-const id = route.params.id as string;
+
 const group = ref<Group | null>(null);
 const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
-const user = useAuthUser()
+const events = ref<Event[]>([])
+
+const id = route.params.id as string;
 
 async function handleJoin(group: Group | null) {
   await joinRequest(group?.ID).then((error) => {
@@ -224,7 +228,11 @@ isMember.value = group.value?.GroupMembers.some(
 );
 joinRequests.value = await getJoinRequests(id) || []
 
+events.value = await getAllEvents(id)
+
+console.log(events.value);
+
+
 isRequester.value =
   joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
 </script>
-<style></style>
