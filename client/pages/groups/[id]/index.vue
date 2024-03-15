@@ -169,9 +169,9 @@
             <hr class="border-slate-500 border-2 mb-3" />
             <GroupMemberListItem v-for="member in group?.GroupMembers" :isAdmin="group?.CreatorID === user?.id"
               :member="member" />
-              <div id="group-invite-overlay">
-                
-              </div>
+            <div id="group-invite-overlay">
+
+            </div>
           </div>
           <!-- media tab-->
           <div class="w-full" />
@@ -181,7 +181,7 @@
           </div>
         </div>
       </div>
-      <EventCreateModal/>
+      <EventCreateModal />
     </main>
   </NuxtLayout>
 </template>
@@ -218,15 +218,13 @@ async function handleJoin(group: Group | null) {
   });
 }
 
-onMounted(async () => {
-  group.value = await getGroupByID(id);
-  isMember.value = group.value?.GroupMembers.some(
-    (member) => member.User.id === user.value?.id
-  );
-  joinRequests.value = await getJoinRequests(id) || []
+group.value = await getGroupByID(id);
+isMember.value = group.value?.GroupMembers.some(
+  (member) => member.User.id === user.value?.id
+);
+joinRequests.value = await getJoinRequests(id) || []
 
-  isRequester.value =
-    joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
-});
+isRequester.value =
+  joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
 </script>
 <style></style>
