@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useFeedStore().getUserFeed()
+// useFeedStore().getUserFeed()
 useHead({
   meta: [
     { charset: "utf-8" },

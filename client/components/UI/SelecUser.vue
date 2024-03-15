@@ -1,8 +1,4 @@
 <script>
-<<<<<<< HEAD:client/components/UI/SelecUser.vue
-=======
-import { GetAllFollower } from '~/composables/getAllUser'
->>>>>>> group-timeline:frontend/components/UI/SelecUser.vue
 
 export default {
     data() {
@@ -11,12 +7,8 @@ export default {
         }
     },
     async mounted() {
-<<<<<<< HEAD:client/components/UI/SelecUser.vue
         this.userFollowers = await GetAllFollower();
         console.log(this.userFollowers);
-=======
-        this.userFollowers = await GetAllFollower()
->>>>>>> group-timeline:frontend/components/UI/SelecUser.vue
         // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
             placeholder: 'Selec Followers ..'
@@ -27,19 +19,12 @@ export default {
 </script>
 
 <template>
-<<<<<<< HEAD:client/components/UI/SelecUser.vue
     <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
         <option value="">lolo</option>
         <option value=""> opt</option>
-        <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option>
+        <option v-for="follower  in userFollowers" :id="follower.id">{{ follower.firstname }} {{ follower.lastname }}
+        </option>
     </select>
-=======
-  <select id="selecUser" class="js-example-basic-multiple" style="width: 40%" name="states[]" multiple="multiple">
-    <option v-for="follower in userFollowers" :id="follower.id">
-      {{ follower.firstname }} {{ follower.lastname }}
-    </option>
-  </select>
->>>>>>> group-timeline:frontend/components/UI/SelecUser.vue
 </template>
 
 
@@ -67,4 +52,3 @@ export default {
     background-color: rgb(51 65 85 / 1);
 }
 </style>
-
