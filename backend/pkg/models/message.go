@@ -26,6 +26,7 @@ type GroupMessage struct {
 	GroupID   uuid.UUID `sql:"type:uuid"`
 	SenderID  uuid.UUID `sql:"type:uuid"`
 	Content   string    `sql:"type:text"`
+	Sender    User      `sql:"type:text"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
@@ -204,6 +205,17 @@ func (ms *GroupMessages) GetGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 		}
 		*ms = append(*ms, m)
 	}
+
+	// get user of each message
+	for i, m := range *ms {
+		user := User{}
+		err := user.Get(db, m.SenderID)
+		if err != nil {
+			return err
+		}
+		(*ms)[i].Sender = user
+	}
+
 	return nil
 }
 
@@ -240,4 +252,3 @@ func (ms *GroupMessages) ClearGroupMessages(db *sql.DB, groupID uuid.UUID) error
 	}
 	return nil
 }
-
