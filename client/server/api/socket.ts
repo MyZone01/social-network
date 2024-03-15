@@ -1,25 +1,25 @@
 import type { Peer } from "crossws";
 import { getQuery } from "ufo";
-import { sessionGetter } from "~/server/utils/sessionHandler"
+import { server_socket } from "~/stores/socketCon";
 
-const users = new Map<string, { online: boolean }>();
+const conns = new Map<string, { conn: Peer }>();
 
 export default defineWebSocketHandler({
- async open(peer: Peer) {
+  async open(peer: Peer) {
     console.log(`[ws] open ${peer}`);
     const query = get(peer)
     const channel = query.channel as string
+    const userId = query.userId as string;
     // users.set(userId, { online: true });
-    console.log(channel);
-    
-    // const stats = getStats();
-    peer.send({
-      user: "server",
-      message: `Welcome to the server `,
-    });
+    console.log(channel, userId);
 
-    peer.subscribe("chat");
-    peer.publish("chat", { user: "server", message: `${peer} joined!` });
+    if (channel === "notif") {
+      conns.set(userId, { conn: peer });
+      server_socket!.onmessage = (event) => {
+        console.log(event);
+        // peer.send(event.data);
+      };
+    }
   },
   async message(peer: Peer, message) {
     console.log(`[ws] message ${peer} ${message.text()}`);
