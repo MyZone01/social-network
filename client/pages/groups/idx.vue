@@ -43,17 +43,17 @@
                   </div>
                   <div>
                     <button type="button" class="rounded-lg bg-secondery flex px-2.5 py-2 dark:bg-dark2">
-                      <ion-icon name="ellipsis-horizontal" class="text-xl"></ion-icon>
+                      <i class='bx bx-dots-horizontal-rounded text-xl' ></i>
                     </button>
                     <div class="w-[100px]"
                       uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click;offset:10">
                       <nav>
                         <a href="#">
-                          <ion-icon class="text-xl" name="link-outline"></ion-icon>
+                          <i class='bx bx-link text-xl' ></i>
                           Copy link
                         </a>
                         <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                          <ion-icon class="text-xl" name="stop-circle-outline"></ion-icon>
+                          <i class='bx bx-stop-circle text-xl' ></i>
                           Block
                         </a>
                       </nav>
@@ -75,7 +75,7 @@
           </nav>
 
           <div class="flex items-center  gap-1 text-sm p-3 bg-blue py-2 mr-2 rounded-xl max-md:hidden dark:bg-white/5">
-            <ion-icon name="search" class="text-lg"></ion-icon>
+            <i class='bx bx-search text-lg' ></i>
             <input placeholder="Search .."
               class="!bg-transparent outline-none focus:outline-none focus:border-b-blue-500" />
           </div>

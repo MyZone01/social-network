@@ -51,7 +51,7 @@
                       Intersted
                     </button>
                     <button type="button" class="button bg-secondery !w-auto">
-                      <ion-icon name="arrow-redo" class="text-lg" />
+                      <i class='bx bx-redo text-lg' ></i>
                     </button>
                   </div>
                 </div>
@@ -87,7 +87,7 @@
                       Intersted
                     </button>
                     <button type="button" class="button bg-secondery !w-auto">
-                      <ion-icon name="arrow-redo" class="text-lg" />
+                      <i class='bx bx-redo text-lg' ></i>
                     </button>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                       Intersted
                     </button>
                     <button type="button" class="button bg-secondery !w-auto">
-                      <ion-icon name="arrow-redo" class="text-lg" />
+                      <i class='bx bx-redo text-lg' ></i>
                     </button>
                   </div>
                 </div>
@@ -159,7 +159,7 @@
                       Intersted
                     </button>
                     <button type="button" class="button bg-secondery !w-auto">
-                      <ion-icon name="arrow-redo" class="text-lg" />
+                      <i class='bx bx-redo text-lg' ></i>
                     </button>
                   </div>
                 </div>
@@ -195,7 +195,7 @@
                       Intersted
                     </button>
                     <button type="button" class="button bg-secondery !w-auto">
-                      <ion-icon name="arrow-redo" class="text-lg" />
+                      <i class='bx bx-redo text-lg' ></i>
                     </button>
                   </div>
                 </div>
@@ -205,10 +205,8 @@
         </div>
 
         <!-- slide nav icons -->
-        <a class="nav-prev !top-20" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back"
-            class="text-2xl" /> </a>
-        <a class="nav-next !top-20" href="#" uk-slider-item="next"> <ion-icon name="chevron-forward"
-            class="text-2xl" /></a>
+        <a class="nav-prev !top-20" href="#" uk-slider-item="previous"> <i class='bx bx-chevron-left text-2xl' ></i> </a>
+        <a class="nav-next !top-20" href="#" uk-slider-item="next"> <i class='bx bx-chevron-right text-2xl' ></i> </a>
       </div>
 
       <div class="sm:my-6 my-3 flex items-center justify-between md:mt-10">
@@ -309,8 +307,8 @@
         </div>
 
         <!-- slide nav icons -->
-        <a class="nav-prev" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back" class="text-2xl" /> </a>
-        <a class="nav-next" href="#" uk-slider-item="next"> <ion-icon name="chevron-forward" class="text-2xl" /></a>
+        <a class="nav-prev" href="#" uk-slider-item="previous"> <i class='bx bx-chevron-left text-2xl' ></i> </a>
+        <a class="nav-next" href="#" uk-slider-item="next"> <i class='bx bx-chevron-right text-2xl' ></i> </a>
       </div>
 
       <div class="flex items-center justify-between text-black dark:text-white py-3 mt-6">
@@ -351,7 +349,7 @@
                 Intersted
               </button>
               <button type="button" class="button bg-secondery !w-auto">
-                <ion-icon name="arrow-redo" class="text-lg" />
+                <i class='bx bx-redo text-lg' ></i>
               </button>
             </div>
           </div>
@@ -386,7 +384,7 @@
                 Intersted
               </button>
               <button type="button" class="button bg-secondery !w-auto">
-                <ion-icon name="arrow-redo" class="text-lg" />
+                <i class='bx bx-redo text-lg' ></i>
               </button>
             </div>
           </div>
@@ -421,7 +419,7 @@
                 Intersted
               </button>
               <button type="button" class="button bg-secondery !w-auto">
-                <ion-icon name="arrow-redo" class="text-lg" />
+                <i class='bx bx-redo text-lg' ></i>
               </button>
             </div>
           </div>
@@ -456,7 +454,7 @@
                 Intersted
               </button>
               <button type="button" class="button bg-secondery !w-auto">
-                <ion-icon name="arrow-redo" class="text-lg" />
+                <i class='bx bx-redo text-lg' ></i>
               </button>
             </div>
           </div>

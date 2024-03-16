@@ -16,22 +16,21 @@
 
             <!-- dropdown -->
             <div class="-m-1">
-              <button type="button" class="button__ico w-8 h-8"> <ion-icon class="text-xl"
-                  name="ellipsis-horizontal"></ion-icon> </button>
+              <button type="button" class="button__ico w-8 h-8"> <i class='bx bx-dots-horizontal-rounded text-xl' ></i> </button>
               <div class="w-[253px]"
                 uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true">
                 <nav>
-                  <a href="#"> <ion-icon class="text-xl shrink-0" name="bookmark-outline"></ion-icon>
+                  <a href="#"> <i class='bx bx-bookmark text-xl shrink-0' ></i> 
                     Add to favorites </a>
-                  <a href="#"> <ion-icon class="text-xl shrink-0" name="notifications-off-outline"></ion-icon> Mute
-                    Notification </a>
-                  <a href="#"> <ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon>
+                  <a href="#"> <i class='bx bx-bell-off text-xl shrink-0' ></i> 
+                    Mute Notification </a>
+                  <a href="#"> <i class='bx bx-flag text-xl shrink-0' ></i> 
                     Report this post </a>
-                  <a href="#"> <ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon>
+                  <a href="#"> <i class='bx bx-share text-xl shrink-0' ></i>
                     Share your profile </a>
                   <hr>
                   <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50">
-                    <ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon>
+                    <i class='bx bx-stop-circle text-xl shrink-0' ></i>
                     Unfollow </a>
                 </nav>
               </div>
@@ -45,17 +44,18 @@
             <div class="flex items-center gap-4 text-xs font-semibold">
               <div class="flex items-center gap-2.5">
                 <button type="button" class="button__ico text-red-500 bg-red-100 dark:bg-slate-700">
-                  <ion-icon class="text-lg" name="heart"></ion-icon> </button>
+                  <i class='bx bx-heart text-lg' ></i>
+                  </button>
                 <a href="#">1,300</a>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="button__ico bg-slate-100 dark:bg-slate-700"> <ion-icon class="text-lg"
-                    name="chatbubble-ellipses"></ion-icon> </button>
+                <button type="button" class="button__ico bg-slate-100 dark:bg-slate-700"> <i class='bx bx-message-rounded-dots text-lg'>
+                </i> </button>
                 <span>260</span>
               </div>
-              <button type="button" class="button__ico ml-auto"> <ion-icon class="text-xl"
-                  name="share-outline"></ion-icon> </button>
-              <button type="button" class="button__ico"> <ion-icon class="text-xl" name="bookmark-outline"></ion-icon>
+              <button type="button" class="button__ico ml-auto"> <i class='bx bx-share text-xl' ></i> 
+              </button>
+              <button type="button" class="button__ico"> <i class='bx bx-bookmark text-xl' ></i>
               </button>
             </div>
           </div>
@@ -165,8 +165,8 @@
               class="w-full resize-  px-4 py-2 focus:!border-transparent focus:!ring-transparent resize-y"></textarea>
 
             <div class="flex items-center gap-2 absolute bottom-0.5 right-0 m-3">
-              <ion-icon class="text-xl flex text-blue-700" name="image"></ion-icon>
-              <ion-icon class="text-xl flex text-yellow-500" name="happy"></ion-icon>
+              <i class='bx bx-bookmark text-xl flex text-blue-700' ></i>
+              <i class='bx bx-happy-alt text-xl flex text-yellow-500' ></i>
             </div>
 
           </div>
@@ -181,8 +181,8 @@
   </div>
 </template>
 
-<script >
-
+<script>
 </script> 
 
-<style></style>
+<style>
+</style>
