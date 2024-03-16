@@ -178,7 +178,6 @@ var getAllAccessDemandRoute = route{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
 		middleware.HaveGroupAccess,
-		middleware.IsGroupAdmin,
 		getAllAccessDemand,
 	},
 }

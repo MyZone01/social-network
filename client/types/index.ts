@@ -59,7 +59,9 @@ export interface Event {
   GroupID: string,
   title: string,
   description: string,
-  CreatorID: string
+  CreatorID: string,
+  date_time: string
+
 }
 
 export type UserWithoutPassword = Omit<User, "password">;

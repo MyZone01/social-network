@@ -25,5 +25,21 @@ export const useEvents = () => {
 
         return response;
     };
+
+    async function joinEvent(eventid: string) {
+        const { data, error } = await useFetch("/api/groups/request/join", {
+            method: "POST",
+            headers: useRequestHeaders(["cookie"]) as HeadersInit,
+            query: {
+                eid: eventid,
+            },
+        });
+
+        return { data, error };
+    }
+
+
+
+
     return { createEvent, getAllEvents }
 }

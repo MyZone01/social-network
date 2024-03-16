@@ -156,6 +156,8 @@
             </div>
           </div>
           <hr class="border-slate-500 border-2 mb-3" />
+
+          <EventCard v-for="event in events.data" :event="event"/>
         </div>
         <!-- members tab-->
         <div class="w-full">
@@ -222,7 +224,7 @@ definePageMeta({
 const id = route.params.id as string;
 
 async function handleJoin(group: Group | null) {
-  await joinRequest(group?.ID).then((error) => {
+  await joinRequest(group?.ID).then(({error}) => {
     if (!error) {
       isRequester.value = true;
     }
@@ -241,7 +243,7 @@ onMounted(async () => {
 
   events.value = await getAllEvents(id)
 
-  console.log(events.value);
+  console.log("events /////////// \n",events.value);
 
   isRequester.value =
     joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;

@@ -19,7 +19,7 @@ export const useGroupRequest = () => {
         groupId: string | undefined
     ): Promise<GroupMember[] | null> {
 
-        const data = await $fetch("/api/groups/request/join-requests", {
+        const response = await $fetch("/api/groups/request/join-requests", {
             method: "GET",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
@@ -27,7 +27,7 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-        console.log('###################################\n',data,'###################################\n');
+        const data = JSON.parse(response as string).data        
 
         return data as GroupMember[] 
     }

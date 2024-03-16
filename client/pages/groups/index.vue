@@ -1,5 +1,4 @@
 <template>
-    <NuxtLayout>
         <main
           id="site__main"
           class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]"
@@ -82,7 +81,6 @@
           </div>
           <GroupCreateModal />
         </main>
-    </NuxtLayout>
 </template>
 <style scoped>
 li.uk-active {
@@ -92,14 +90,7 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
-<style scoped>
-li.uk-active {
-  border-bottom: 2px solid rgb(37 99 235 / var(--tw-text-opacity));
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-</style>
-<script setup lang="ts">
+
 definePageMeta({
   alias: ["/groups"],
   middleware: ["auth-only"],
