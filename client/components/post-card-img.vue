@@ -69,9 +69,6 @@
 <script>
 import { passDataOnPostPreviewContent } from '~/composables/postPreview';
 export default {
-  mounted() {
-    console.log(this.post);
-  },
   props: {
     post: {
       type: Object,

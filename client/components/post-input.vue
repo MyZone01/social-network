@@ -140,10 +140,8 @@ export default {
             'Content-Type': 'application/json'
           }
         }).then(response => response.json())
-        console.log(response)
         postStore.addPost(response.body.data)
         UIkit.modal("#create-status").hide();
-
       } catch (err) {
         console.error(err)
       }
