@@ -294,12 +294,10 @@
 
 <script setup>
 const currentUser = useAuthUser();
-console.log(currentUser);
 const loading = ref(false);
 const { logout, me } = useAuth();
 
 const onLogoutClick = async () => {
-    // async function onLogoutClick() {
     try {
         loading.value = true;
 
@@ -312,6 +310,4 @@ const onLogoutClick = async () => {
         loading.value = false;
     }
 }
-
-// const data = useAuthUser() || {} as User
 </script>

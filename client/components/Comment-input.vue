@@ -6,7 +6,7 @@
     <div class="flex-1 relative overflow-hidden h-10">
       <textarea placeholder="Add Comment...." rows="1"
         class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"
-        name="content" ref="commentInput" @keydown.enter= "handleEnterPress" ></textarea>
+        name="content" ref="commentInput" @keydown.enter="handleEnterPress"></textarea>
       <input type="file" id="photo-input" name="photo" accept="image/*" style="display: none" ref="fileInput">
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-sky-600"
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-
+import usePostStore from "~/stores/usePostStore.js";
+const postStore = usePostStore()
 
 export default {
 
@@ -55,7 +56,7 @@ export default {
         return
       }
       console.log(commentContent.body)
-      useFeedStore().addComment(commentContent.body.data)
+      postStore.addComment(commentContent.body.data)
       this.$refs.commentInput.value = ""
       this.$refs.fileInput.value = ""
     },

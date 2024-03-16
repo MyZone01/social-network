@@ -93,8 +93,8 @@
 
 </template>
 <script>
-import { ref } from 'vue';
-// import { LoadImageAsBase64 } from '~/composables/getAllUser'
+import usePostStore from "~/stores/usePostStore.js";
+const postStore = usePostStore()
 
 export default {
     setup() {
@@ -108,7 +108,7 @@ export default {
         openFileInput() {
             this.$refs.fileInput.click();
         },
-        
+
         async handleSubmitPost(e) {
             e.preventDefault();
             let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
@@ -142,7 +142,7 @@ export default {
                     }
                 }).then(response => response.json())
                 console.log(response)
-                useFeedStore().addPost(response.body.data)
+                postStore.addPost(response.body.data)
                 UIkit.modal("#create-status").hide();
 
             } catch (err) {
