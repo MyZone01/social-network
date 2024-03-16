@@ -4,6 +4,7 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
+	"log"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -63,11 +64,13 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
+		log.Println(user.IsPublic)
 		if user.IsPublic {
 			follow.Status = models.StatusAccepted
 		} else {
 			follow.Status = models.StatusRequested
 		}
+		log.Println(follow)
 		if err := follow.Create(ctx.Db.Conn); err != nil {
 			ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 				"message": err.Error(),

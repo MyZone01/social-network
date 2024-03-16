@@ -13,9 +13,9 @@ type GroupMessages []GroupMessage
 
 type PrivateMessage struct {
 	ID         uuid.UUID `sql:"type:uuid;primary key"`
-	SenderID   uuid.UUID `sql:"type:uuid"`
-	ReceiverID uuid.UUID `sql:"type:uuid"`
-	Content    string    `sql:"type:text"`
+	SenderID   uuid.UUID `sql:"type:uuid" json:"sender_id"`
+	ReceiverID uuid.UUID `sql:"type:uuid" json:"receiver_id"`
+	Content    string    `sql:"type:text" json:"content"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 	DeletedAt  sql.NullTime
@@ -38,18 +38,20 @@ func (m *PrivateMessage) Create(db *sql.DB) error {
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
 
-	query := `INSERT INTO private_messages (id, sender_id, receiver_id, content, created_at) 
-		VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO private_messages (id, sender_id, receiver_id, content, created_at, updated_at) 
+		VALUES ($1, $2, $3, $4, $5, $6)`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
 	defer stm.Close()
-	_, err = stm.Exec(m.ID, m.SenderID, m.ReceiverID, html.EscapeString(m.Content), m.CreatedAt)
+	_, err = stm.Exec(m.ID, m.SenderID, m.ReceiverID, html.EscapeString(m.Content), m.CreatedAt, m.UpdatedAt)
 	if err != nil {
 		return err
 	}
+	id := uuid.New().String()
+	Data.Store("private_message_id_"+id, m)
 	return nil
 }
 
@@ -59,8 +61,8 @@ func (m *GroupMessage) Create(db *sql.DB) error {
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
 
-	query := `INSERT INTO group_messages (id, group_id, sender_id, content, created_at) 
-		VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO group_messages (id, group_id, sender_id, content, created_at, updated_at) 
+		VALUES ($1, $2, $3, $4, $5, $6)`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -71,6 +73,7 @@ func (m *GroupMessage) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
+	Data.Store("group_message", m)
 	return nil
 }
 

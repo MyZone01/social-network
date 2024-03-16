@@ -73,7 +73,6 @@ export default {
     const response = await getUser(this.nickname, "get")
     if (response && response.status === 200) {
       this.data = response.body;
-      console.log('data', this.data);
     } else {
       console.error('Failed to get user data');
       navigateTo("/404")

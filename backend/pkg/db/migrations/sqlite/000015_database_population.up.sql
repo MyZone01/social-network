@@ -1,8 +1,8 @@
 INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public) VALUES 
 ('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
-('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 1),
+('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
 ('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
-('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 1);
+('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0);
 -- password: 12345678
 
 
