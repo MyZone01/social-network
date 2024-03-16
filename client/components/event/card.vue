@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const joined = ref(false)
+const status = ref("not going")
 const date = useDateFormat(new Date(props.event.date_time),'DD,MMMM HH:MM')
 
 
@@ -29,8 +29,13 @@ const date = useDateFormat(new Date(props.event.date_time),'DD,MMMM HH:MM')
     <div>
       <div>{{ date }}</div>
     </div>
-    <UButton v-if="!joined" class="bg-blue-500 ">Join</UButton>
-    <div v-else class="text-blue-500 ">joined</div>
+    <div class="flex gap-1 flex-row">
+      <UButton v-if="!(status === 'going')" class="bg-blue-500 ">going</UButton>
+      <div v-else class="text-blue-500 ">going</div>
+      <UButton v-if="(status === 'not going')" class="bg-blue-500 ">not going</UButton>
+      <div v-else class="text-blue-500 ">not going</div>
+    </div>
+
 
   </UCard>
 </template>

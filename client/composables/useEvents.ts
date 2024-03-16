@@ -14,7 +14,7 @@ export const useEvents = () => {
     }
 
     const getAllEvents = async (groupId: string) => {
-        const response = await $fetch<Event[]>("/api/groups/events", {
+        const response = await $fetch<any>("/api/groups/events", {
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
             query: {
                 q: 1,
@@ -23,7 +23,7 @@ export const useEvents = () => {
             }
         });
 
-        return response;
+        return response.data;
     };
 
     async function joinEvent(eventid: string) {
@@ -37,9 +37,6 @@ export const useEvents = () => {
 
         return { data, error };
     }
-
-
-
 
     return { createEvent, getAllEvents }
 }

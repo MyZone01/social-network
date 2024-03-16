@@ -157,7 +157,7 @@
           </div>
           <hr class="border-slate-500 border-2 mb-3" />
 
-          <EventCard v-for="event in events.data" :event="event"/>
+          <EventCard v-for="event in events" :event="event"/>
         </div>
         <!-- members tab-->
         <div class="w-full">
