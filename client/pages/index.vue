@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import usePostStore from "~/stores/usePostStore.js";
+import { usePostStore } from "~/stores/usePostStore.js";
 
 const postStore = usePostStore()
 

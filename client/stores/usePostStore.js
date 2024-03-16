@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export default defineStore("feed", {
+export const usePostStore = defineStore("feed", {
   state: () => ({
     posts: [],
     userPosts: []

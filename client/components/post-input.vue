@@ -97,70 +97,69 @@ import usePostStore from "~/stores/usePostStore.js";
 const postStore = usePostStore()
 
 export default {
-    setup() {
-        let showAlert = ref(false);;
-        return { showAlert };
+  setup() {
+    let showAlert = ref(false);;
+    return { showAlert };
+  },
+  mounted() {
+    $('.js-example-basic-multiple').on("select2:select", this.resetCheckbox)
+  },
+  methods: {
+    openFileInput() {
+      this.$refs.fileInput.click();
     },
-    mounted() {
-        $('.js-example-basic-multiple').on("select2:select", this.resetCheckbox)
+    async handleSubmitPost(e) {
+      e.preventDefault();
+      let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
+      let formdata = new FormData(e.target)
+      if (followersSelected.length == 0 && !formdata.get("radio-status")) {
+        this.showAlert = true
+        setTimeout(() => this.showAlert = false, 2000)
+        return
+      }
+      let jsonFormObject = {
+        content: formdata.get("post-content-text"),
+        privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
+        followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
+      }
+      if (formdata.get('photo').name) {
+        let body = new FormData()
+        body.append('file', formdata.get('photo'))
+        let response = await fetch("/api/upload", {
+          method: "POST",
+          body: body,
+        }).then(response => response.json()).catch(err => ({ errors: err }))
+        console.log(response);
+        if (response.data) jsonFormObject.image_url = response.data
+      }
+      try {
+        let response = await fetch("/api/post/insert", {
+          method: "POST",
+          body: JSON.stringify(jsonFormObject),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => response.json())
+        console.log(response)
+        postStore.addPost(response.body.data)
+        UIkit.modal("#create-status").hide();
+
+      } catch (err) {
+        console.error(err)
+      }
     },
-    methods: {
-        openFileInput() {
-            this.$refs.fileInput.click();
-        },
-
-        async handleSubmitPost(e) {
-            e.preventDefault();
-            let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
-            let formdata = new FormData(e.target)
-            if (followersSelected.length == 0 && !formdata.get("radio-status")) {
-                this.showAlert = true
-                setTimeout(() => this.showAlert = false, 2000)
-                return
-            }
-            let jsonFormObject = {
-                content: formdata.get("post-content-text"),
-                privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
-                followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
-            }
-            if (formdata.get('photo').name) {
-                let body = new FormData()
-                body.append('file', formdata.get('photo'))
-                let response = await fetch("/api/upload", {
-                    method: "POST",
-                    body: body,
-                }).then(response => response.json()).catch(err => ({ errors: err }))
-                console.log(response);
-                if (response.data) jsonFormObject.image_url = response.data
-            }
-            try {
-                let response = await fetch("/api/post/insert", {
-                    method: "POST",
-                    body: JSON.stringify(jsonFormObject),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => response.json())
-                console.log(response)
-                postStore.addPost(response.body.data)
-                UIkit.modal("#create-status").hide();
-
-            } catch (err) {
-                console.error(err)
-            }
-        },
-        resetCheckbox() {
-            this.$refs.publicCheck.checked = false
-            this.$refs.privateCheck.checked = false
-        },
-        resetSelectMenu() {
-            $('.js-example-basic-multiple').val([]).change()
-        },
-    }
+    resetCheckbox() {
+      this.$refs.publicCheck.checked = false
+      this.$refs.privateCheck.checked = false
+    },
+    resetSelectMenu() {
+      $('.js-example-basic-multiple').val([]).change()
+    },
+  }
 }
 </script>
 <style>
 .custom-alert {
-    background-color: red;
+  background-color: red;
 }
 </style>
