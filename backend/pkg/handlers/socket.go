@@ -2,9 +2,11 @@ package handlers
 
 import (
 	octopus "backend/app"
+	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -29,9 +31,8 @@ func handleSocket(ctx *octopus.Context) {
 			for {
 				models.Data.Range(func(key, value interface{}) bool {
 					if err := conn.WriteJSON(map[string]interface{}{
-						"status": http.StatusOK,
-						"data":   value,
-						"type":   key,
+						"data": value,
+						"type": strings.Split(key.(string), "_id_")[0],
 					}); err != nil {
 						log.Println(err)
 						return false
@@ -125,9 +126,7 @@ var handleSocketRoute = route{
 	path:   "/socket",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		// middleware.AuthRequired, // Middleware to check if the request is authenticated.
-		/* ... you can add other middleware here
-		   Note: Make sure to place your handler function at the end of the list. */
+		middleware.AllowedSever,
 		handleSocket, // Handler function to process the authentication request.
 	},
 }

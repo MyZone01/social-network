@@ -45,7 +45,8 @@ func (n *Notification) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-	Data.Store("notification", n)
+	id := uuid.New().String()
+	Data.Store("notification_id_"+id, n)
 	return nil
 }
 

@@ -50,7 +50,8 @@ func (m *PrivateMessage) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-	Data.Store("private_message", m)
+	id := uuid.New().String()
+	Data.Store("private_message_id_"+id, m)
 	return nil
 }
 
