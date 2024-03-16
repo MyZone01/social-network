@@ -3,6 +3,7 @@ export class WebSocketClient {
     private socket: WebSocket | null = null;
     private readonly url: string;
     private readonly reconnectInterval: number;
+    private seters: { [key: string]: (data: any) => void } = {}
 
     constructor(url: string, reconnectInterval = 5000) {
         this.url = url;
@@ -15,6 +16,7 @@ export class WebSocketClient {
 
         this.socket.onopen = (event: WebSocket.Event) => {
             console.log('WebSocket connection established');
+            this.message();
         };
 
         this.socket.onerror = (error: WebSocket.Event) => {
@@ -27,12 +29,27 @@ export class WebSocketClient {
         };
     }
 
-    public onmessage(handler: (params: WebSocket.MessageEvent) => void) {
+    private message() {
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-            this.socket.onmessage = handler;
+            this.socket.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data.toString());
+                    const type = data.type.split("_id_")?.[0];
+                    
+                    if (this.seters[type]) {
+                        this.seters[type](data.data)
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                    return;
+                }
+            };
         } else {
             console.error('Cannot set message handler, WebSocket is not open');
         }
+    }
+    public onmessage(type: string, seter: (data: any) => void) {
+        this.seters[type] = seter
     }
     public send(data: string) {
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {

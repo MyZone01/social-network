@@ -147,7 +147,20 @@
 
                                 <!-- contents list -->
                                 <div class="pl-2 p-1 text-sm font-normal dark:text-white">
-
+                                    <a href="#"
+                                        class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
+                                        <div class="relative w-12 h-12 shrink-0"> <img
+                                                src="assets/images/avatars/avatar-3.jpg" alt=""
+                                                class="object-cover w-full h-full rounded-full"></div>
+                                        <div class="flex-1 ">
+                                            <p> <b class="font-bold mr-1"> Alexa Gray</b> started following you.
+                                                Welcome him to your profile. 👋 </p>
+                                            <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
+                                                ago </div>
+                                            <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
 
                             </div>
@@ -214,7 +227,7 @@
 
                         <!-- profile -->
                         <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
-                            <img :src="'http://localhost:8081/' + currentUser?.avatarImage" alt=""
+                            <img :src="'http://localhost:8081/' + currentUser!.avatarImage" alt=""
                                 class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
                         </div>
                         <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
@@ -222,13 +235,13 @@
 
                             <nuxt-link to="/profile">
                                 <div class="p-4 py-5 flex items-center gap-4">
-                                    <img :src="'http://localhost:8081/' + currentUser?.avatarImage" alt=""
+                                    <img :src="'http://localhost:8081/' + currentUser!.avatarImage" alt=""
                                         class="w-10 h-10 rounded-full shadow">
                                     <div class="flex-1">
-                                        <h4 class="text-sm font-medium text-black"> {{ currentUser?.firstName }} {{
-                                currentUser?.lastName }} </h4>
+                                        <h4 class="text-sm font-medium text-black"> {{ currentUser!.firstName }} {{
+                                currentUser!.lastName }} </h4>
                                         <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
-                                            @{{ currentUser?.nickname }}</div>
+                                            @{{ currentUser!.nickname }}</div>
                                     </div>
                                 </div>
                             </nuxt-link>
@@ -292,7 +305,6 @@
 
 </template>
 
-
 <script setup lang="ts">
 import { connNotifSocket } from '../composables/notification';
 import { useAuth } from '../composables/useAuth'
@@ -325,6 +337,7 @@ onMounted(async () => {
     //     // id:1,
     //    })
     });
+
 });
 </script>
 

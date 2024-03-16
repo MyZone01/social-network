@@ -45,8 +45,17 @@ func (n *Notification) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
+	user := new(User)
+	user.Get(db, n.UserID)
+	user.Password = ""
 	id := uuid.New().String()
-	Data.Store("notification_id_"+id, n)
+	Data.Store("notification_id_"+id, map[string]interface{}{
+		"type":       n.Type,
+		"concernID":  n.ConcernID,
+		"user":       user,
+		"message":    n.Message,
+		"created_at": n.CreatedAt,
+	})
 	return nil
 }
 

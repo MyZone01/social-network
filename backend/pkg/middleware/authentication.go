@@ -53,8 +53,8 @@ func NoAuthRequired(ctx *octopus.Context) {
 }
 
 func AllowedSever(ctx *octopus.Context) {
-	origin := ctx.Request.Header.Get("key")
-	if origin != os.Getenv("SERVER_KEY") {
+	key := ctx.Request.URL.Query().Get("key")
+	if key != os.Getenv("SERVER_KEY") {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "You are not allowed to access this server socket.",
 		})

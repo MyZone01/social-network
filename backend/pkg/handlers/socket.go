@@ -6,7 +6,7 @@ import (
 	"backend/pkg/models"
 	"log"
 	"net/http"
-	"strings"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -18,10 +18,12 @@ var (
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
 	}
+	conns = new(sync.Map)
 )
 
 func handleSocket(ctx *octopus.Context) {
 	conn, err := upgrader.Upgrade(ctx.ResponseWriter, ctx.Request, nil)
+	conns.Store(uuid.New(), conn)
 	if err != nil {
 		log.Println(err)
 		return
@@ -30,13 +32,22 @@ func handleSocket(ctx *octopus.Context) {
 		go func() {
 			for {
 				models.Data.Range(func(key, value interface{}) bool {
-					if err := conn.WriteJSON(map[string]interface{}{
-						"data": value,
-						"type": strings.Split(key.(string), "_id_")[0],
-					}); err != nil {
-						log.Println(err)
-						return false
-					}
+					conns.Range(func(k, v interface{}) bool {
+						thisconn, ok := v.(*websocket.Conn)
+						if !ok || thisconn == nil {
+							conns.Delete(k)
+							return true
+						} else {
+							err := thisconn.WriteJSON(map[string]interface{}{
+								"data": value,
+								"type": key,
+							})
+							if err != nil {
+								conns.Delete(k)
+							}
+						}
+						return true
+					})
 					models.Data.Delete(key)
 					return true
 				})
@@ -47,7 +58,10 @@ func handleSocket(ctx *octopus.Context) {
 		// newMesssage := models.PrivateMessage{}
 		err := conn.ReadJSON(&data)
 		if err != nil {
-			log.Println(err)
+			conn.WriteJSON(map[string]interface{}{
+				"status":  http.StatusBadRequest,
+				"message": "Invalid message",
+			})
 			return
 		}
 

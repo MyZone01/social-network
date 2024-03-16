@@ -30,7 +30,6 @@ type Follower struct {
 func (follower *Follower) Create(db *sql.DB) error {
 	// Define the follow default properties
 	follower.ID = uuid.New()
-	follower.Status = StatusRequested
 	follower.CreatedAt = time.Now()
 	follower.UpdatedAt = time.Now()
 
