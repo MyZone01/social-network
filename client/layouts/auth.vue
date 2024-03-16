@@ -1,6 +1,5 @@
 <template>
-  <main>
+  <main class="overflow-hidden h-screen w-screen">
     <slot />
   </main>
-  <layout-footer absolute bottom-10 left-10 />
 </template>

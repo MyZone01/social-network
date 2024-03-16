@@ -49,7 +49,7 @@ export const useGroupRequest = () => {
         return { data };
     }
 
-    async function declneJoinRequest(
+    async function declineJoinRequest(
         gId: string,
         rId: string
     ): Promise<any> {
@@ -71,7 +71,6 @@ export const useGroupRequest = () => {
         const response = await $fetch("/api/user/groups", {
             method: "GET",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
-
         });
 
         return response
@@ -80,7 +79,7 @@ export const useGroupRequest = () => {
     return {
         joinRequest,
         getUserGroups,
-        declneJoinRequest,
+        declneJoinRequest: declineJoinRequest,
         acceptJoinRequest,
         getJoinRequests
     }

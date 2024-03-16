@@ -1,11 +1,15 @@
 <script setup>
-import { editUser, updatePassword } from '@/composables/userEditor.js';
 const { me } = useAuth()
 
 const data = await me()
 const store = useAuthUser()
 const onDisplay = reactive(data.value)
 const status = ["public", "private"]
+
+useHead({
+  title: "Settings",
+})
+
 const userInfos = reactive({
   email: store.value.email,
   password: store.value.password,
@@ -23,6 +27,7 @@ function changer(event) {
   const value = event.target.value
   userInfos[`${event.target.id}`] = value
 }
+
 const saveChanges = async () => {
   console.log(userInfos)
   userInfos.message = ''
@@ -37,17 +42,20 @@ const saveChanges = async () => {
     console.log("changes processed")
   }
 }
+
 const password = reactive({
   currentPassword: "",
   newPassword: "",
   repeatNewPassword: "",
   message: "",
 })
+
 function passwordChanger(event) {
   const value = event.target.value
   password[`${event.target.id}`] = value
   // event.target.value = value
 }
+
 const changePassword = async () => {
   password.message = ''
   try {
@@ -721,6 +729,3 @@ definePageMeta({
   </div>
 </template>
 
-<style lang="">
-
-</style>@/stores/useGlobalStateAuthStore@/composables/userEditor

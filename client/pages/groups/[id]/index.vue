@@ -211,7 +211,7 @@ const isRequester = ref(false);
 const events = ref<Event[]>([])
 
 useHead({
-  title: "Group",
+  title: "Groups",
 })
 
 definePageMeta({
@@ -229,17 +229,19 @@ async function handleJoin(group: Group | null) {
   });
 }
 
-group.value = await getGroupByID(id);
-isMember.value = group.value?.GroupMembers.some(
-  (member) => member.User.id === user.value?.id
-);
-joinRequests.value = await getJoinRequests(id) || []
+onMounted(async () => {
+  group.value = await getGroupByID(id);
+  if (group.value) {
+    isMember.value = group.value.GroupMembers.some(
+      (member) => member.User.id === user.value?.id
+    );
+  }
+  joinRequests.value = await getJoinRequests(id) || []
 
-events.value = await getAllEvents(id)
+  events.value = await getAllEvents(id)
 
-console.log(events.value);
+  isRequester.value =
+    joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
+})
 
-
-isRequester.value =
-  joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
 </script>

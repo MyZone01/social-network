@@ -467,6 +467,10 @@
 </template>
 
 <script setup>
+useHead({
+  title: "Events",
+})
+
 definePageMeta({
   middleware: ["auth-only"],
 })

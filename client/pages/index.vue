@@ -56,13 +56,15 @@
 
     </div>
   </main>
-  <Post-img-preview />
-  <Post-text-preview />
 </template>
 
 <script setup lang="ts">
 
 const currentUser = useAuthUser();
+
+useHead({
+  title: "Home",
+})
 
 definePageMeta({
   alias: ["/"],

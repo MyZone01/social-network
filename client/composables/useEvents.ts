@@ -1,3 +1,5 @@
+import type { Event } from '~/types';
+
 export const useEvents = () => {
     async function createEvent(eventDetail: any, groupId: string) {
         const { data } = await useFetch("/api/groups/events/create", {

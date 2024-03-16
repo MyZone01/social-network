@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-screen h-screen">
-    <div class="flex items-center justify-center px-6 mx-auto w-full lg:w-1/2">
+    <div class="flex items-center justify-center p-6 mx-auto w-full h-screen overflow-y-auto lg:w-1/2">
       <div class="flex flex-col lg:w-4/6 w-full min-w-[250px]">
         <div class="flex w-full items-start flex-col">
           <div class="flex justify-center mx-auto">

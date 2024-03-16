@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import type { Group } from '~/types';
+
 const { joinRequest } = useGroupRequest();
 
 const props = defineProps({
   group: {
-    type: Object,
+    type: Object as PropType<Group>,
     required: true
   },
   joined:{
     type: Boolean,
-    required: true
+    default: false
   }
 });
 </script>
