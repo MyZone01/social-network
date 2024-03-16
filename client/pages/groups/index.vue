@@ -58,6 +58,10 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
+useHead({
+  title: "Groups",
+})
+
 definePageMeta({
   alias: ["/groups"],
   middleware: ["auth-only"],

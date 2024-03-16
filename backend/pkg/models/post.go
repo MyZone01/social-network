@@ -364,7 +364,7 @@ func (p *Post) ExploitForRendering(db *sql.DB) map[string]interface{} {
 		"userAvatarImageUrl": user.AvatarImage,
 		"createdAt":          timeAgo(p.CreatedAt),
 		"comments":           postComments.ExploitForRendering(db),
-		"userOwnerNickname":   user.Nickname,
+		"userOwnerNickname":  user.Nickname,
 	}
 }
 

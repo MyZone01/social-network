@@ -1,12 +1,10 @@
 <template>
-  <main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+  <main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
 
     <div class="max-w-[1065px] mx-auto">
 
       <!-- Cover  -->
       <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2">
-
-        <!-- cover -->
         <Cover :nickname="nickname" :data="data" />
 
         <div class="flex items-center justify-between border-t border-gray-100 px-2 dark:border-slate-700">

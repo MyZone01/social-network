@@ -119,6 +119,7 @@ func createPostGroup(ctx *octopus.Context) {
 	}
 
 	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"message": "Post created successfully",
 		"data": newPost,
 	})
 }

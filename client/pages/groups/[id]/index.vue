@@ -10,6 +10,9 @@
               <UButton class="button bg-white/10 text-white flex items-center gap-2 back-drop-blur-small">
                 Edit
               </UButton>
+              <UButton :to="`/groups/${id}/chat`" >
+                Chat
+              </UButton>
             </div>
           </div>
         </div>
@@ -211,7 +214,7 @@ const isRequester = ref(false);
 const events = ref<Event[]>([])
 
 useHead({
-  title: "Group",
+  title: "Group " + group.value?.Title,
 })
 
 definePageMeta({
