@@ -1,5 +1,5 @@
 <template>
-  <div class=" lg:p-20 max-lg:!items-start uk-open" id="text_preview_modal" uk-modal="">
+  <div class=" lg:p-20 max-lg:!items-start " id="text_preview_modal" uk-modal="">
 
     <div
       class="lg:w-[600px] w-full bg-white h-full relative  overflow-y-auto shadow-xl dark:bg-dark2 flex flex-col justify-between">
