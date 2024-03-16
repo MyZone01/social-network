@@ -120,11 +120,9 @@ INSERT INTO events_participants (id, event_id, member_id, response) VALUES
 ('077e4b39-94b9-4daa-ac67-4ffe6fb2950c', '6e07c132-6490-4c20-a5eb-87bec6717732', 'c035df0d-8699-4880-a79e-1291915f70a9', 'not_going'),
 ('90042b0a-2310-4931-b35d-594e244f3c9c', 'a4515c02-8a5e-450a-adf5-83562eeef13c', '498e640d-78d2-4171-b060-369d75c380ed', 'going'),
 ('c76d37b7-a46f-4fcf-8696-319c4fa41e01', 'a4515c02-8a5e-450a-adf5-83562eeef13c', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going'),
--- ('a018d89f-9a89-4f8e-8b42-8ad861e42664', 'a4515c02-8a5e-450a-adf5-83562eeef13c', 'c035df0d-8699-4880-a79e-1291915f70a9', 'going'),
 ('24108e9f-9dee-48fd-abe8-86c58b9a3ea1', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'c035df0d-8699-4880-a79e-1291915f70a9', 'going'),
--- ('e5aaa81b-33ae-4e8d-bf04-daf9687440ff', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', '498e640d-78d2-4171-b060-369d75c380ed', 'going'),
 ('85374be0-f0b4-4213-8b4f-2b445f7a2424', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going');
--- 
+
 INSERT INTO private_messages (id, sender_id, receiver_id, content ) VALUES
 ('f115c834-09fe-4aba-8172-9e5034c48b34', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Hello Man, How is it?'), 
 ('b10fa83b-a742-4a9c-b04d-ad2dd84d5b39', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Hey, Im fine and you?'),
@@ -148,18 +146,8 @@ INSERT INTO group_messages (id, group_id, sender_id, content) VALUES
 ('fbd251b8-4091-416d-9e28-cd915e215d08', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'Great guys, lets do it'),
 ('6fc22ba9-22ed-41d5-b697-4850715df1f0', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Hello There ...');
 
-
--- INSERT INTO notifications (id, user_id, type, message, concern_id) VALUES
--- ('c80f2e97-0368-42ba-a6ab-b850f041f1bc', value2, ...),
--- (),
--- (),
--- ();
--- type TEXT CHECK(type = 'follow_request'OR type = 'follow_accepted' OR type = 'follow_declined' OR type = 'unfollow' OR type = 'group_invitation' OR type = 'new_message' OR type = 'new_event'),
-
-
 INSERT INTO comments (id, user_id, post_id, content, image_url) VALUES
 ('98cb3c47-056a-4b15-8a89-8fc89c547aae', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '9b77a08a-ff18-4022-97c7-4dc8f1a53230', 'Great Man, keep doing the good job!', '');
-
 
 INSERT INTO selected_users (id, user_id, post_id) VALUES
 ('2d00d01a-1882-41a1-97c0-58492472ea87', '498e640d-78d2-4171-b060-369d75c380ed', '9b77a08a-ff18-4022-97c7-4dc8f1a53230');

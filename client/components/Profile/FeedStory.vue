@@ -1,13 +1,9 @@
-import Detail from './Detail.vue';
-
 <template>
     <div class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col" id="js-oversized">
 
-        <!-- feed story -->
         <div class="flex-1 xl:space-y-6 space-y-3">
             <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
 
-                <!-- add story -->
                 <div
                     class="bg-white rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1 dark:bg-dark2">
 
@@ -34,7 +30,7 @@ import Detail from './Detail.vue';
 
                 </div>
 
-                <post-card-img v-for="post in useFeedStore().userPosts" :post="post" />
+                <post-card-img v-for="post in postStore.userPosts" :post="post" />
 
 
             </div>
@@ -46,26 +42,23 @@ import Detail from './Detail.vue';
     </div>
 </template>
 
-<script>
-import Detail from './Detail.vue';
-export default {
-    name: 'FeedStory',
-    components: {
-        Detail
+<script setup>
+import usePostStore from "~/stores/usePostStore.js";
+
+const postStore = usePostStore()
+
+onMounted(async () => {
+    await postStore.getUserFeed()
+});
+
+const props = defineProps({
+    status: {
+        type: String,
+        required: true
     },
-    props: {
-        status: {
-            type: String,
-            required: true
-        },
-        data: {
-            type: Object,
-            required: true
-        },
-        // posts: {
-        //     type: Array,
-        //     required: true
-        // }
-    },
-}
+    data: {
+        type: Object,
+        required: true
+    }
+})
 </script>
