@@ -16,7 +16,6 @@
         clip-rule="evenodd" />
     </svg>
 
-
     <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery" ref="commentSubmit">
       Replay </button>
   </form>
@@ -26,18 +25,23 @@
 import usePostStore from "~/stores/usePostStore.js";
 const postStore = usePostStore()
 
+const commentSubmit = ref(null)
+const commentInput = ref(null)
+const fileInput = ref(null)
+
 const props = defineProps({
   postId: {
     type: String,
     required: true
   }
 });
+
 const handleCommentSubmission = async (e) => {
   e.preventDefault()
   let formData = new FormData(e.target)
   let res = await FormImgUploader(formData)
   let jsonFormObject = {
-    post_id: this.postId,
+    post_id: props.postId,
     content: formData.get("content"),
     image_url: res.data ? res.data : null
   }
@@ -52,14 +56,14 @@ const handleCommentSubmission = async (e) => {
   }
   console.log(commentContent.body)
   postStore.addComment(commentContent.body.data)
-  this.$refs.commentInput.value = ""
-  this.$refs.fileInput.value = ""
+  commentInput.value.value = ""
+  fileInput.value = ""
 }
 
 const handleEnterPress = (event) => {
   if (event.keyCode === 13 && !event.shiftKey) {
     event.preventDefault(); // empêche le saut de ligne
-    this.$refs.commentSubmit.click() // soumet le commentaire
+    commentSubmit.value.click() // soumet le commentaire
   }
 }
 </script>
