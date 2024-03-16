@@ -92,6 +92,14 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
+<style scoped>
+li.uk-active {
+  border-bottom: 2px solid rgb(37 99 235 / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+</style>
+<script setup lang="ts">
 definePageMeta({
   alias: ["/groups"],
   middleware: ["auth-only"],

@@ -15,11 +15,12 @@ export const sessionCreator = async (token: any, user: any, event: H3Event) => {
     },
     maxAge: 60 * 60 * 24 * 7,
     generateId: () => { return token }
-  })
+  });
+
   await serverSession.update({
     userInfos: user,
     sessionToken: token
-  })
+  });
 
   return serverSession
 }
@@ -47,20 +48,6 @@ export const sessionUpdater = async (token: any, user: any, event: H3Event) => {
     userInfos: user,
     sessionToken: token
   })
-
-  // const config = useRuntimeConfig();
-  // const userWithPassword = user;
-  // const session = serialize({ session: token });
-  // const signedSession = sign(session, config.cookieSecret);
-  // setCookie(event, config.cookieName, signedSession, {
-  //   httpOnly: true,
-  //   path: "/",
-  //   sameSite: "strict",
-  //   secure: process.env.NODE_ENV === "production",
-  //   expires: false
-  //     ? new Date(Date.now() + config.cookieRememberMeExpires)
-  //     : new Date(Date.now() + config.cookieExpires),
-  // });
 
   return newSession
 }

@@ -90,7 +90,7 @@ func ImageUploadMiddleware(c *octopus.Context) {
 	}
 	defer file.Close()
 	// Check if the file is an image
-	ext := []string{".jpeg", ".jpg", ".png", ".svg+xml"}
+	ext := []string{".jpeg", ".jpg", ".png", ".svg+xml", ".gif"}
 
 	if !contains(ext, strings.ToLower(filepath.Ext(handler.Filename))) {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{

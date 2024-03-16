@@ -3,12 +3,9 @@ useHead({
   meta: [
     { charset: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
-    // { key: 'theme-color', name: 'theme-color', content: color }
   ],
   link: [
     { rel: "icon", href: "/favicon.ico" },
-    { rel: "stylesheet", href: "assets/css/style.css" },
-    { rel: "stylesheet", href: "assets/css/tailwind.css" },
   ],
   htmlAttrs: {
     lang: "en",
@@ -17,12 +14,9 @@ useHead({
 
 useSeoMeta({
   titleTemplate: "%s - Social Network",
-  ogSiteName: "Social Network",
-  twitterCard: "summary_large_image",
 });
 
 onMounted(() => {
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
   if (
     localStorage.theme === "dark" ||
     (!("theme" in localStorage) &&
@@ -32,14 +26,8 @@ onMounted(() => {
   } else {
     document.documentElement.classList.remove("dark");
   }
-
-  // Whenever the user explicitly chooses light mode
   localStorage.theme = "light";
-
-  // Whenever the user explicitly chooses dark mode
   localStorage.theme = "dark";
-
-  // Whenever the user explicitly chooses to respect the OS preference
   localStorage.removeItem("theme");
 });
 </script>
@@ -47,9 +35,10 @@ onMounted(() => {
 <template>
   <Html>
     <NuxtLoadingIndicator />
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
     <UNotifications />
   </Html>
 </template>
 
-<style lang="css"></style>

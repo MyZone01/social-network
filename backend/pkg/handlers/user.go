@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -98,7 +97,6 @@ func handleGetUser(ctx *octopus.Context) {
 		follower.FollowerID = userId
 		follower.FolloweeID = user.ID
 		follower.Get(ctx.Db.Conn)
-
 		if follower.Status == "" {
 			follower.Status = "none"
 		}
@@ -108,23 +106,25 @@ func handleGetUser(ctx *octopus.Context) {
 
 		follow := new(models.Followers).CountAllByFollowerID(ctx.Db.Conn, userId)
 		following := new(models.Followers).CountAllByFolloweeID(ctx.Db.Conn, userId)
+		numpost, _ := models.CountPostsByUser(ctx.Db.Conn, user.ID)
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
 			"message": "User fetched successfully",
 			"status":  http.StatusOK,
 			"data": map[string]interface{}{
-				"id":           user.ID,
-				"firstname":    user.FirstName,
-				"lastname":     user.LastName,
-				"email":        user.Email,
-				"nickname":     user.Nickname,
-				"birthday":     user.DateOfBirth,
-				"about":        user.AboutMe,
-				"avatar":       user.AvatarImage,
-				"created":      user.CreatedAt,
-				"updated":      user.UpdatedAt,
-				"follow":       follow,
-				"following":    following,
-				"followStatus": follower.Status,
+				"id":            user.ID,
+				"firstname":     user.FirstName,
+				"lastname":      user.LastName,
+				"email":         user.Email,
+				"nickname":      user.Nickname,
+				"birthday":      user.DateOfBirth,
+				"about":         user.AboutMe,
+				"avatar":        user.AvatarImage,
+				"created":       user.CreatedAt,
+				"updated":       user.UpdatedAt,
+				"follow":        follow,
+				"following":     following,
+				"followStatus":  follower.Status,
+				"NumberOfPosts": numpost,
 			},
 		})
 	case "posts":
@@ -186,7 +186,7 @@ func handleUpdateUserInfos(ctx *octopus.Context) {
 	// 	return
 	// }
 	data := map[string]interface{}{
-		"message": "User updated successfully",
+		"message": "User informations updated successfully.",
 		"session": "", //idSession,
 		"data":    user,
 		"status":  http.StatusOK,
@@ -206,7 +206,6 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
-	fmt.Println(newCredentials)
 	var credentials = credentials{
 		Email:    newCredentials.Email,
 		Password: newCredentials.Password,
@@ -250,7 +249,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		return
 	}
 	newUser.Password = string(newPasswordHash)
-	// Attempts to update a the user in the database with the provided data.
+	// Attempts to update the user in the database with the provided data.
 	if newUser.Update(ctx.Db.Conn) != nil {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
@@ -259,7 +258,6 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		})
 		return
 	}
-	fmt.Println(ctx)
 	// Starts a new session for the user and sets the user's ID as the session key.
 	// idSession, err := config.Sess.Start(ctx).Set(newUser.ID)
 	// if err != nil {
@@ -274,7 +272,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 	ctx.Status(http.StatusAccepted).JSON(map[string]interface{}{
 		"session": "", //idSession,
 		"data":    newUser,
-		"message": "User successfully registered and logged.",
+		"message": "User password successfully updated.",
 		"status":  "200",
 	})
 }

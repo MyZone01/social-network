@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -12,7 +11,6 @@ import (
 
 func handleFollower(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
-
 	type request struct {
 		Action string `json:"action"`
 		Id     string `json:"nickname"`
@@ -36,7 +34,6 @@ func handleFollower(ctx *octopus.Context) {
 		})
 		return
 	}
-
 	if user.ID == userId {
 		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 			"message": "Invalid request.",
@@ -66,6 +63,11 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
+		if user.IsPublic {
+			follow.Status = models.StatusAccepted
+		} else {
+			follow.Status = models.StatusRequested
+		}
 		if err := follow.Create(ctx.Db.Conn); err != nil {
 			ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 				"message": err.Error(),
@@ -74,12 +76,17 @@ func handleFollower(ctx *octopus.Context) {
 			return
 		}
 		notif.UserID = follow.FolloweeID
-		notif.Type = models.TypeFollowRequest
-		notif.Message = user.FirstName + " " + user.LastName + " " + "wants to follow you"
-		createNotif(notif, ctx)
+		if user.IsPublic {
+			notif.Type = models.TypeFollowAccepted
+			notif.Message = user.FirstName + " " + user.LastName + " " + "followed you"
+		} else {
+			notif.Type = models.TypeFollowRequest
+			notif.Message = user.FirstName + " " + user.LastName + " " + "sent you a follow request"
 
+		}
+		createNotif(notif, ctx)
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
-			"message": "Follow request sent successfully",
+			"message": string(follow.Status),
 			"status":  http.StatusOK,
 		})
 		return
@@ -192,13 +199,12 @@ func createNotif(notif *models.Notification, ctx *octopus.Context) {
 		})
 		return
 	}
-	return
 }
 
 func handleGetAllFollowersRequest(ctx *octopus.Context) {
 
 	userUUID := ctx.Values["userId"].(uuid.UUID)
-	fmt.Println(userUUID, "lolo")
+
 	userFollowers := models.Followers{}
 	userFollowers.GetAllByFolloweeID(ctx.Db.Conn, userUUID)
 	userFollowersJson := []map[string]interface{}{}
@@ -218,11 +224,10 @@ func handleGetAllFollowersRequest(ctx *octopus.Context) {
 			},
 		)
 	}
-	fmt.Println(userFollowersJson)
+	// fmt.Println(userFollowersJson)
 	ctx.JSON(map[string]interface{}{
-		"message": "User fetched successfully",
-		"status":  http.StatusOK,
-		"data":    userFollowersJson,
+		"status": http.StatusOK,
+		"data":   userFollowersJson,
 	})
 
 }

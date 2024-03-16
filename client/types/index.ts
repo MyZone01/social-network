@@ -43,15 +43,23 @@ export interface GroupMember {
   DeletedAt: string
 }
 
+export interface GroupMessage {
+  ID: string,
+  GroupID: string,
+  SenderID: string,
+  Sender: UserWithoutPassword,
+  Content: string,
+  CreatedAt: string,
+  UpdatedAt: string,
+  DeletedAt: string
+}
+
 export interface Event {
   ID: string,
   GroupID: string,
   title: string,
-  description:string,
-  CreatorID: string,
-
-  
-
+  description: string,
+  CreatorID: string
 }
 
 export type UserWithoutPassword = Omit<User, "password">;

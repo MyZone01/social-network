@@ -24,8 +24,8 @@ build-frontend:
 	docker build -t $(FRONTEND_IMAGE_NAME) ./client
 
 run-frontend: build-frontend
-	docker run -it \
-	--name frontend \
+	docker run \
+	-d --name frontend \
 	-p 3000:3000 \
 	$(FRONTEND_IMAGE_NAME)
 

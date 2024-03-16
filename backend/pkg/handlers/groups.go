@@ -27,7 +27,10 @@ func createGroup(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusCreated).JSON(newGroup)
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"message": "Group created successfully",
+		"data":    newGroup,
+	})
 }
 
 var createGroupRoute = route{
@@ -51,7 +54,10 @@ func getAllGroups(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(groups)
+	ctx.JSON(map[string]interface{}{
+		"message": "All groups",
+		"data":    groups,
+	})
 }
 
 var getAllGroupsRoute = route{
@@ -75,7 +81,10 @@ func getGroupById(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(group)
+	ctx.JSON(map[string]interface{}{
+		"message": "Group",
+		"data":    group,
+	})
 }
 
 var getGroupByIdRoute = route{
@@ -109,7 +118,9 @@ func createPostGroup(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.Status(http.StatusCreated).JSON(newPost)
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"data": newPost,
+	})
 }
 
 var createPostGroupRoute = route{
@@ -134,7 +145,9 @@ func getAllGroupPosts(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(posts)
+	ctx.JSON(map[string]interface{}{
+		"data": posts,
+	})
 }
 
 var getAllGroupPostsRoute = route{
@@ -167,7 +180,9 @@ func getGroupPostById(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(post)
+	ctx.JSON(map[string]interface{}{
+		"data": post,
+	})
 }
 
 var getGroupPostRoute = route{
@@ -182,6 +197,66 @@ var getGroupPostRoute = route{
 	},
 }
 
+func getAllGroupMessages(ctx *octopus.Context) {
+	groupID := ctx.Values["group_id"].(uuid.UUID)
+	messages := models.GroupMessages{}
+	err := messages.GetGroupMessages(ctx.Db.Conn, groupID)
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.JSON(map[string]interface{}{
+		"message": "All messages",
+		"data":    messages,
+	})
+}
+
+var getAllGroupMessagesRoute = route{
+	path:   "/group/messages",
+	method: http.MethodGet,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		getAllGroupMessages,
+	},
+}
+
+func addNewGroupMessage(ctx *octopus.Context) {
+	newMessage := models.GroupMessage{}
+	if err := ctx.BodyParser(&newMessage); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	newMessage.GroupID = ctx.Values["group_id"].(uuid.UUID)
+	newMessage.SenderID = ctx.Values["userId"].(uuid.UUID)
+	if err := newMessage.Create(ctx.Db.Conn); err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusCreated).JSON(map[string]interface{}{
+		"message": "Message sent",
+		"data":    newMessage,
+	})
+}
+
+var addNewGroupMessageRoute = route{
+	path:   "/group/messages/new",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		middleware.IsGroupExist,
+		middleware.HaveGroupAccess,
+		addNewGroupMessage,
+	},
+}
+
 func init() {
 	AllHandler[createGroupRoute.path] = createGroupRoute
 	AllHandler[getAllGroupsRoute.path] = getAllGroupsRoute
@@ -189,4 +264,6 @@ func init() {
 	AllHandler[createPostGroupRoute.path] = createPostGroupRoute
 	AllHandler[getAllGroupPostsRoute.path] = getAllGroupPostsRoute
 	AllHandler[getGroupPostRoute.path] = getGroupPostRoute
+	AllHandler[getAllGroupMessagesRoute.path] = getAllGroupMessagesRoute
+	AllHandler[addNewGroupMessageRoute.path] = addNewGroupMessageRoute
 }

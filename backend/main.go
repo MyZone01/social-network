@@ -8,7 +8,6 @@ import (
 	"backend/pkg/handlers"
 	"backend/pkg/middleware"
 	"backend/pkg/tools"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -72,7 +71,7 @@ func main() {
 	handlers.HandleAll(app)
 	config.Sess.UseDB(app.Db.Conn)
 
-	fmt.Println(":" + os.Getenv("PORT"))
+	// fmt.Println(":" + os.Getenv("PORT"))
 	if err := app.Run(":" + os.Getenv("PORT")); err != nil {
 		panic(err)
 	}

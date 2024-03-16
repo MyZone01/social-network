@@ -38,7 +38,10 @@ func sendInvitationHandler(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(newMember)
+	ctx.JSON(map[string]interface{}{
+		"message": "Invitation sent successfully",
+		"data":    newMember,
+	})
 }
 
 var sendInvitationRoute = route{
@@ -62,7 +65,11 @@ func acceptIntegrationHandler(ctx *octopus.Context) {
 		log.Println(err)
 		return
 	}
-	ctx.Status(http.StatusOK).JSON(member)
+
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "Invitation accepted successfully",
+		"data":    member,
+	})
 }
 
 var acceptIntegrationRoute = route{
@@ -84,7 +91,11 @@ func declineIntegrationHandler(ctx *octopus.Context) {
 		log.Println(err)
 		return
 	}
-	ctx.Status(http.StatusOK).JSON(member)
+
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "Invitation declined successfully",
+		"data":    member,
+	})
 }
 
 var declineIntegrationRoute = route{
@@ -116,7 +127,7 @@ func demandAccessHandler(ctx *octopus.Context) {
 		ConcernID: newMember.ID,
 		UserID:    group.CreatorID,
 		Type:      models.TypeGroupInvitation,
-		Message:   "You have been invited to join a group",
+		Message:   "A user has requested to join your group",
 	}
 	err = notification.Create(ctx.Db.Conn)
 	if err != nil {
@@ -125,7 +136,10 @@ func demandAccessHandler(ctx *octopus.Context) {
 		return
 	}
 
-	ctx.JSON(newMember)
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "Access demand sent successfully",
+		"data":    newMember,
+	})
 }
 
 var demandAccessRoute = route{
@@ -151,7 +165,10 @@ func getAllAccessDemand(ctx *octopus.Context) {
 	}
 	requestingUsers := group.GroupMembers
 
-	ctx.JSON(requestingUsers)
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "All access demand",
+		"data":    requestingUsers,
+	})
 }
 
 var getAllAccessDemandRoute = route{

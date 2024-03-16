@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
         name: "server-store",
         // generateId: () => { return '' }
     })
-    console.log(session.data.sessionToken, "<======>", token)
     
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
@@ -20,10 +19,10 @@ export default defineEventHandler(async (event) => {
         }))
     } else {
         try {
+            body['email'] = session.data.userInfos.email
             const result = await fetcher('http://localhost:8081/updatepassword', "PUT", JSON.stringify(body), token)
             await sessionUpdater(token, result.data, event)
-
-            console.log(result)
+            
             const { password: _password, ...userWithoutPassword } = result.data;
             const cleanInfos = {
                 message: result.message,
@@ -31,6 +30,7 @@ export default defineEventHandler(async (event) => {
             }
             return cleanInfos
         } catch (err) {
+            console.log(err)
             return sendError(event, createError({
                 statusCode: 500,
                 statusMessage: 'Internal server error' + err
