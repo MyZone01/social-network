@@ -1,4 +1,4 @@
-import { ServerResponse, User } from "~/types";
+import type { ServerResponse, User } from "~/types";
 import { serialize, sign } from "~/server/utils/cookie";
 import { sessionCreator } from "~/server/utils/sessionHandler";
 
@@ -18,6 +18,8 @@ export default defineEventHandler(async (event) => {
       password,
     },
   });
+
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
 
   if (response.status !== "200" || response.data === undefined) {
     return sendError(event, createError({

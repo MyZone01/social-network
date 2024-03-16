@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
     const reader = await readMultipartFormData(event);
     const token = event.context.token;
@@ -44,9 +42,7 @@ export default defineEventHandler(async (event) => {
             status: 500,
             body: 'Internal server error',
         };
-    });
-    // console.log(response);
-    
+    });    
 
     return {
         status: 200,

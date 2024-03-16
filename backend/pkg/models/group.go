@@ -359,7 +359,6 @@ func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) 
 	if err != nil {
 		return fmt.Errorf("unable to execute the query. %v", err)
 	}
-	defer rows.Close()
 
 	for rows.Next() {
 		var gm GroupMember
@@ -379,6 +378,7 @@ func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) 
 
 		if getusers {
 			var user = new(User)
+			
 			err = user.Get(db, gm.MemberID)
 			if err != nil {
 				return fmt.Errorf("unable to get user. %v", err)

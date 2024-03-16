@@ -335,7 +335,7 @@ func NoGroupAccess(c *octopus.Context) {
 	userUUID := c.Values["userId"].(uuid.UUID)
 
 	var mg = new(models.GroupMember)
-	if err := mg.GetMember(c.Db.Conn, userUUID, groupId, false); err == nil {
+	if err := mg.GetMember(c.Db.Conn, userUUID, groupId, false); err == nil && mg.Status != models.MemberStatusDeclined {
 		c.Status(http.StatusUnauthorized).JSON(map[string]string{
 			"error": "Vous êtes déjà membre de ce groupe.",
 		})

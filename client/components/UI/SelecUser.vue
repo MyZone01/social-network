@@ -11,8 +11,8 @@ export default {
         console.log(this.userFollowers);
         // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
-            placeholder: "Selec Followers .."
-        });
+            placeholder: 'Selec Followers ..'
+        })
 
     }
 }
@@ -22,7 +22,8 @@ export default {
     <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
         <option value="">lolo</option>
         <option value=""> opt</option>
-        <option v-for="follower  in userFollowers" :id="follower.id" >{{ follower.firstname }} {{follower.lastname }}</option>
+        <option v-for="follower  in userFollowers" :id="follower.id">{{ follower.firstname }} {{ follower.lastname }}
+        </option>
     </select>
 </template>
 
@@ -51,4 +52,3 @@ export default {
     background-color: rgb(51 65 85 / 1);
 }
 </style>
-
