@@ -28,15 +28,13 @@
       </div>
     </div>
   </main>
+  <Post-text-preview />
 </template>
 
 <script setup lang="ts">
 import usePostStore from "~/stores/usePostStore.js";
-
 const postStore = usePostStore()
-
 const currentUser = useAuthUser();
-
 useHead({
   title: "Home",
 })

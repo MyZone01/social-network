@@ -51,7 +51,7 @@ const handleCommentSubmission = async (e) => {
   }
   let commentContent = await res.json().catch(err => ({ error: err }))
   if (commentContent.error) {
-    console.error(commentContent.error)
+    console.log(commentContent.error)
     return
   }
   console.log(commentContent.body)
@@ -62,8 +62,8 @@ const handleCommentSubmission = async (e) => {
 
 const handleEnterPress = (event) => {
   if (event.keyCode === 13 && !event.shiftKey) {
-    event.preventDefault()
-    commentSubmit.value.click()
+    event.preventDefault(); // empêche le saut de ligne
+    commentSubmit.value.click() // soumet le commentaire
   }
 }
 </script>
