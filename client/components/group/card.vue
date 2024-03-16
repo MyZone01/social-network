@@ -8,7 +8,7 @@ const props = defineProps({
   },
   joined:{
     type: Boolean,
-    required: true
+    default: false
   }
 });
 </script>

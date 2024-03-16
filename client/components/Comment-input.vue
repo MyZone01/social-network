@@ -6,7 +6,7 @@
     <div class="flex-1 relative overflow-hidden h-10">
       <textarea placeholder="Add Comment...." rows="1"
         class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"
-        name="content" ref="commentInput" @keydown.enter= "handleEnterPress" ></textarea>
+        name="content" ref="commentInput" @keydown.enter="handleEnterPress"></textarea>
       <input type="file" id="photo-input" name="photo" accept="image/*" style="display: none" ref="fileInput">
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-sky-600"
@@ -22,49 +22,44 @@
   </form>
 </template>
 
-<script>
+<script setup>
+import usePostStore from "~/stores/usePostStore.js";
+const postStore = usePostStore()
 
+const props = defineProps({
+  postId: {
+    type: String,
+    required: true
+  }
+});
+const handleCommentSubmission = async (e) => {
+  e.preventDefault()
+  let formData = new FormData(e.target)
+  let res = await FormImgUploader(formData)
+  let jsonFormObject = {
+    post_id: this.postId,
+    content: formData.get("content"),
+    image_url: res.data ? res.data : null
+  }
+  res = await fetch("/api/post/insertComment", { method: "POST", body: JSON.stringify(jsonFormObject) })
+  if (res.status != 200) {
+    return
+  }
+  let commentContent = await res.json().catch(err => ({ error: err }))
+  if (commentContent.error) {
+    console.log(commentContent.error)
+    return
+  }
+  console.log(commentContent.body)
+  postStore.addComment(commentContent.body.data)
+  this.$refs.commentInput.value = ""
+  this.$refs.fileInput.value = ""
+}
 
-export default {
-
-  props: {
-    postId: {
-      type: String,
-      required: true
-    }
-  },
-  methods: {
-    async handleCommentSubmission(e) {
-      e.preventDefault()
-      let formData = new FormData(e.target)
-      let res = await FormImgUploader(formData)
-      let jsonFormObject = {
-        post_id: this.postId,
-        content: formData.get("content"),
-        image_url: res.data ? res.data : null
-      }
-      res = await fetch("/api/post/insertComment", { method: "POST", body: JSON.stringify(jsonFormObject) })
-      if (res.status != 200) {
-        //TODO: handle error
-        return
-      }
-      let commentContent = await res.json().catch(err => ({ error: err }))
-      if (commentContent.error) {
-        console.log(commentContent.error)
-        //TODO: handle error
-        return
-      }
-      console.log(commentContent.body)
-      useFeedStore().addComment(commentContent.body.data)
-      this.$refs.commentInput.value = ""
-      this.$refs.fileInput.value = ""
-    },
-    handleEnterPress(event) {
-      if (event.keyCode === 13 && !event.shiftKey) {
-        event.preventDefault(); // empêche le saut de ligne
-        this.$refs.commentSubmit.click() // soumet le commentaire
-      }
-    }
+const handleEnterPress = (event) => {
+  if (event.keyCode === 13 && !event.shiftKey) {
+    event.preventDefault(); // empêche le saut de ligne
+    this.$refs.commentSubmit.click() // soumet le commentaire
   }
 }
 </script>

@@ -62,7 +62,9 @@ definePageMeta({
   alias: ["/groups"],
   middleware: ["auth-only"],
 });
+
 const { groups, getAllGroups } = useGroups();
+
 onMounted(async () => {
   console.log(groups);
 
