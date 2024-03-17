@@ -86,7 +86,7 @@ func (p *Post) Create(db *sql.DB) error {
 	p.ID = uuid.New()
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
-	query := `INSERT INTO posts (id, user_id,title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
+	query := `INSERT INTO posts (id, user_id, group_id, title, content, image_url, privacy, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -97,6 +97,7 @@ func (p *Post) Create(db *sql.DB) error {
 	_, err = stmt.Exec(
 		p.ID,
 		p.UserID.String(),
+		p.GroupID.String(),
 		html.EscapeString(p.Title),
 		html.EscapeString(p.Content),
 		html.EscapeString(p.ImageURL),
@@ -114,6 +115,7 @@ func (p *Post) Create(db *sql.DB) error {
 
 	return p.saveFolowersSelection(db)
 }
+
 func (p *Post) IsValid() bool {
 	if p.ID.String() != uuid.Nil.String() {
 		fmt.Println(p.ID.String(), "here")

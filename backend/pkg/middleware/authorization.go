@@ -241,7 +241,7 @@ func IsGroupPostValid(c *octopus.Context) {
 	}
 
 	if data["title"] == nil || strings.TrimSpace(data["title"].(string)) == "" ||
-		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private" && data["privacy"] != "unlisted" && data["privacy"] != "almost private") {
+		data["content"] == nil || strings.TrimSpace(data["content"].(string)) == "" || data["privacy"] == nil || strings.TrimSpace(data["privacy"].(string)) == "" || (data["privacy"] != "public" && data["privacy"] != "private" && data["privacy"] != "group" && data["privacy"] != "almost private") {
 		c.Status(http.StatusBadRequest).JSON(map[string]string{
 			"error": "Invalid data",
 		})

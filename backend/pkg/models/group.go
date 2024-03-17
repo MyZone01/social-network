@@ -382,7 +382,7 @@ func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) 
 
 // GetPosts retrieves all posts of the group from the database
 func (p *Posts) GetGroupPosts(db *sql.DB, groupID uuid.UUID) error {
-	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND deleted_at IS NULL`
+	query := `SELECT id, group_id, title, content, image_url, privacy, created_at, updated_at, deleted_at FROM posts WHERE group_id=$1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
