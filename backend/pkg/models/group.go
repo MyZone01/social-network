@@ -11,7 +11,6 @@ import (
 
 type Groups []Group
 type GroupMembers []GroupMember
-type GroupPosts []GroupPost
 
 type Group struct {
 	ID           uuid.UUID `sql:"type:uuid;primary key"`
@@ -51,17 +50,6 @@ type GroupMember struct {
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
 	User      User
-}
-
-type GroupPost struct {
-	ID        uuid.UUID `sql:"type:uuid;primary key"`
-	CreatorID uuid.UUID `sql:"type:uuid"`
-	GroupID   uuid.UUID `sql:"type:uuid"`
-	PostID    uuid.UUID `sql:"type:uuid"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt sql.NullTime
-	Post      Post
 }
 
 // Create inserts a new group into the database
@@ -392,121 +380,8 @@ func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) 
 	return nil
 }
 
-// CreatePost inserts a new post into the group in the database
-func (gp *GroupPost) CreatePost(db *sql.DB) error {
-	// Define the group post default properties
-	gp.ID = uuid.New()
-	gp.CreatedAt = time.Now()
-	gp.UpdatedAt = time.Now()
-	gp.Post.CreatedAt = time.Now()
-	gp.Post.UpdatedAt = time.Now()
-
-	if err := gp.Post.Create(db); err != nil {
-		return fmt.Errorf("unable to create the post. %v", err)
-	}
-
-	gp.PostID = gp.Post.ID
-	query := `INSERT INTO group_posts (id, group_id, post_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`
-
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		return fmt.Errorf("unable to prepare the query. %v", err)
-	}
-
-	defer stmt.Close()
-
-	_, err = stmt.Exec(gp.ID, gp.GroupID, gp.PostID, gp.CreatedAt, gp.UpdatedAt)
-	if err != nil {
-		return fmt.Errorf("unable to execute the query. %v", err)
-	}
-
-	return nil
-}
-
-// GetPost retrieves a post from the group in the database
-func (gp *GroupPost) GetPost(db *sql.DB, groupID, groupPostID uuid.UUID, getpost bool) error {
-	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND post_id=$2 AND deleted_at IS NULL`
-
-	stm, err := db.Prepare(query)
-	if err != nil {
-		return fmt.Errorf("unable to prepare the query. %v", err)
-	}
-	defer stm.Close()
-
-	row := stm.QueryRow(groupID, groupPostID)
-	err = row.Scan(
-		&gp.ID,
-		&gp.GroupID,
-		&gp.PostID,
-		&gp.CreatedAt,
-		&gp.UpdatedAt,
-		&gp.DeletedAt,
-	)
-	if err != nil {
-		return fmt.Errorf("unable to scan the row. %v", err)
-	}
-
-	if getpost {
-		err = gp.Post.Get(db, gp.PostID)
-		if err != nil {
-			return fmt.Errorf("unable to get post. %v", err)
-		}
-	}
-
-	gp.CreatorID = gp.Post.UserID
-
-	return nil
-}
-
-// UpdatePost updates the post in the group in the database
-func (gp *GroupPost) UpdatePost(db *sql.DB) error {
-	gp.UpdatedAt = time.Now()
-	query := `UPDATE group_posts SET updated_at=$1 WHERE id=$2`
-
-	// Update the post
-	if err := gp.Post.Update(db); err != nil {
-		return fmt.Errorf("unable to update the post. %v", err)
-	}
-
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		return fmt.Errorf("unable to prepare the query. %v", err)
-	}
-	defer stmt.Close()
-
-	_, err = stmt.Exec(gp.UpdatedAt, gp.ID)
-	if err != nil {
-		return fmt.Errorf("unable to execute the query. %v", err)
-	}
-
-	return nil
-}
-
-// DeletePost removes the post from the group in the database
-func (gp *GroupPost) DeletePost(db *sql.DB) error {
-	query := `UPDATE group_posts SET deleted_at=$1 WHERE id=$2`
-
-	// Delete the post
-	if err := gp.Post.Delete(db); err != nil {
-		return fmt.Errorf("unable to delete the post. %v", err)
-	}
-
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		return fmt.Errorf("unable to prepare the query. %v", err)
-	}
-	defer stmt.Close()
-
-	_, err = stmt.Exec(time.Now(), gp.ID)
-	if err != nil {
-		return fmt.Errorf("unable to execute the query. %v", err)
-	}
-
-	return nil
-}
-
 // GetPosts retrieves all posts of the group from the database
-func (g *GroupPosts) GetPosts(db *sql.DB, groupID uuid.UUID, getpost bool) error {
+func (p *Posts) GetGroupPosts(db *sql.DB, groupID uuid.UUID) error {
 	query := `SELECT id, group_id, post_id, created_at, updated_at, deleted_at FROM group_posts WHERE group_id=$1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
@@ -522,27 +397,24 @@ func (g *GroupPosts) GetPosts(db *sql.DB, groupID uuid.UUID, getpost bool) error
 	defer rows.Close()
 
 	for rows.Next() {
-		var gp GroupPost
+		var post Post
 		err = rows.Scan(
-			&gp.ID,
-			&gp.GroupID,
-			&gp.PostID,
-			&gp.CreatedAt,
-			&gp.UpdatedAt,
-			&gp.DeletedAt,
+			&post.ID,
+			&post.GroupID,
+			&post.Title,
+			&post.Content,
+			&post.ImageURL,
+			&post.Privacy,
+			&post.CreatedAt,
+			&post.UpdatedAt,
+			&post.DeletedAt,
 		)
+
 		if err != nil {
 			return fmt.Errorf("unable to scan the row. %v", err)
 		}
 
-		if getpost {
-			err = gp.GetPost(db, gp.GroupID, gp.PostID, true)
-			if err != nil {
-				return fmt.Errorf("unable to get post. %v", err)
-			}
-		}
-
-		*g = append(*g, gp)
+		*p = append(*p, post)
 	}
 
 	return nil

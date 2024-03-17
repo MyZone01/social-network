@@ -195,6 +195,7 @@ li.uk-active {
 }
 </style>
 <script lang="ts" setup>
+import { useTitle } from '@vueuse/core';
 import type { Group, GroupMember, Event } from '~/types';
 
 definePageMeta({
@@ -213,10 +214,9 @@ const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
 const events = ref<Event[]>([])
+const title = computed(() => group.value?.Title)
 
-useHead({
-  title: "Group " + group.value?.Title,
-})
+useTitle(title, { titleTemplate: "%s | Social Network" })
 
 definePageMeta({
   alias: ["/groups/:id"],

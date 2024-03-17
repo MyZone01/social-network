@@ -347,7 +347,7 @@ func NoGroupAccess(c *octopus.Context) {
 func IsGroupPostExist(c *octopus.Context) {
 	groupId := c.Values["group_id"].(uuid.UUID)
 	_postId := c.Request.URL.Query().Get("post_id")
-	post := new(models.GroupPost)
+	post := new(models.Post)
 
 	postId, err := uuid.Parse(_postId)
 	if err != nil {
@@ -357,7 +357,14 @@ func IsGroupPostExist(c *octopus.Context) {
 		return
 	}
 
-	if err := post.GetPost(c.Db.Conn, groupId, postId, false); err != nil {
+	if err := post.Get(c.Db.Conn, postId); err != nil {
+		c.Status(http.StatusNotFound).JSON(map[string]string{
+			"error": "Post not found",
+		})
+		return
+	}
+
+	if post.GroupID != groupId {
 		c.Status(http.StatusNotFound).JSON(map[string]string{
 			"error": "Post not found",
 		})

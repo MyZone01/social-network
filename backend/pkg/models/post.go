@@ -15,6 +15,7 @@ type PostPrivacy string
 type Posts []Post
 
 const (
+	PrivacyGroup         PostPrivacy = "group"
 	PrivacyPublic        PostPrivacy = "public"
 	PrivacyPrivate       PostPrivacy = "private"
 	PrivacyAlmostPrivate PostPrivacy = "almost private"
@@ -23,6 +24,7 @@ const (
 
 type Post struct {
 	ID                uuid.UUID    `json:"id" sql:"type:uuid;primary key"`
+	GroupID           uuid.UUID    `sql:"type:uuid" json:"group_id"`
 	UserID            uuid.UUID    `json:"user_id" sql:"type:uuid"`
 	Title             string       `json:"title" sql:"type:varchar(255)"`
 	Content           string       `json:"content" sql:"type:text"`
