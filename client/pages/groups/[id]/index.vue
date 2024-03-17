@@ -25,7 +25,7 @@
                   {{ group?.Title }}
                 </h3>
                 <p class="font-normal text-gray-500 mt-2 flex gap-2 flex-wrap dark:text-white/80">
-                  <span class="max-lg:hidden"> Public group </span>
+                  <span class="max-lg:hidden"> Private group </span>
                   <span class="max-lg:hidden"> • </span>
                   <span>
                     <b class="font-medium text-black dark:text-white">{{
@@ -248,6 +248,8 @@ onMounted(async () => {
   events.value = await getAllEvents(id)
 
   console.log("events /////////// \n",events.value);
+
+
 
   isRequester.value =
     joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;

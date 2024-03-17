@@ -10,8 +10,10 @@ export default defineEventHandler(async (event) => {
 
     const token = event.context.token;
     const queryObject = getQuery(event)
-    const isParticipantNeeded = queryObject.p === '1'
-    const isUserNeeded = queryObject.u === '1'
+    console.log(queryObject);
+    
+    const isParticipantNeeded = queryObject.participants === '1'
+    const isUserNeeded = queryObject.user === '1'
     const group_id = queryObject.gid
 
     const response = await $fetch("http://localhost:8081/get-all-event-group", {

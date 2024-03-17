@@ -116,7 +116,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 			&user.CreatedAt,
 			&user.UpdatedAt,
 		)
-		if err != nil {
+		if err != nil && err != sql.ErrNoRows {
 			return fmt.Errorf("unable to execute the query. %v", err)
 		}
 		if (len(password) > 0 && password[0] == false) || len(password) == 0 {
@@ -137,14 +137,14 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 			&user.CreatedAt,
 			&user.UpdatedAt,
 		)
-		if err != nil {
+		if err != nil && err != sql.ErrNoRows {
 			return fmt.Errorf("unable to execute the query. %v", err)
 		}
 		if len(password) > 0 && password[0] {
 			user.Password = ""
 		}
 	default:
-		return fmt.Errorf("unable to execute the query. %v", errors.New("Invalid type"))
+		return fmt.Errorf("unable to execute the query. %v", errors.New("invalid type"))
 	}
 
 	return nil

@@ -134,7 +134,7 @@ func (p *EventParticipant) CreateParticipant(db *sql.DB, eventID, memberID uuid.
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
 
-	query := `INSERT INTO event_participants (id, event_id, member_id, response, created_at, updated_at)
+	query := `INSERT INTO events_participants (id, event_id, member_id, response, created_at, updated_at)
 		VALUES ($1, $2, $3, $4, $5, $6)`
 
 	stm, err := db.Prepare(query)
@@ -152,7 +152,7 @@ func (p *EventParticipant) CreateParticipant(db *sql.DB, eventID, memberID uuid.
 }
 
 func (p *EventParticipant) GetParticipant(db *sql.DB, eventID, memberID, UserID uuid.UUID, getUser bool) error {
-	query := `SELECT id, event_id, member_id, response, created_at, updated_at FROM event_participants WHERE event_id = $1 AND member_id = $2`
+	query := `SELECT id, event_id, member_id, response, created_at, updated_at FROM events_participants WHERE event_id = $1 AND member_id = $2`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -179,7 +179,7 @@ func (p *EventParticipant) GetParticipant(db *sql.DB, eventID, memberID, UserID 
 func (p *EventParticipant) UpdateParticipant(db *sql.DB) error {
 	p.UpdatedAt = time.Now()
 
-	query := `UPDATE event_participants SET response = $1, updated_at = $2 WHERE id = $3`
+	query := `UPDATE events_participants SET response = $1, updated_at = $2 WHERE id = $3`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -195,7 +195,7 @@ func (p *EventParticipant) UpdateParticipant(db *sql.DB) error {
 }
 
 func (p *EventParticipant) Delete(db *sql.DB) error {
-	query := `UPDATE event_participants SET deleted_at = $1 WHERE id = $2`
+	query := `UPDATE events_participants SET deleted_at = $1 WHERE id = $2`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -212,7 +212,7 @@ func (p *EventParticipant) Delete(db *sql.DB) error {
 }
 
 func (p *EventParticipants) GetEventParticipants(db *sql.DB, eventID uuid.UUID, getUser bool) error {
-	query := `SELECT id, event_id, member_id, response, created_at, updated_at FROM event_participants WHERE event_id = $1`
+	query := `SELECT id, event_id, member_id, response, created_at, updated_at FROM events_participants WHERE event_id = $1`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
@@ -229,7 +229,7 @@ func (p *EventParticipants) GetEventParticipants(db *sql.DB, eventID uuid.UUID, 
 	for rows.Next() {
 		participant := EventParticipant{}
 		err = rows.Scan(&participant.ID, &participant.EventID, &participant.MemberID, &participant.Response, &participant.CreatedAt, &participant.UpdatedAt)
-		if err != nil {
+		if err != nil && err != sql.ErrNoRows {
 			return fmt.Errorf("error scanning event participants: %v", err)
 		}
 
@@ -285,7 +285,7 @@ func (e *Events) GetGroupEvents(db *sql.DB, groupID uuid.UUID, getParticipants, 
 }
 
 func (p *EventParticipants) DeleteEventParticipants(db *sql.DB, eventID uuid.UUID) error {
-	query := `UPDATE event_participants SET deleted_at = $1 WHERE group_id = $2`
+	query := `UPDATE events_participants SET deleted_at = $1 WHERE group_id = $2`
 
 	stm, err := db.Prepare(query)
 	if err != nil {

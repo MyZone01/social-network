@@ -60,8 +60,17 @@ export interface Event {
   title: string,
   description: string,
   CreatorID: string,
-  date_time: string
+  date_time: string,
+  Participants: EventParticipant[]
 
+}
+
+export interface EventParticipant {
+  ID: string,
+  MemberID: string,
+  EventID: string,
+  response: string,
+  User: UserWithoutPassword
 }
 
 export type UserWithoutPassword = Omit<User, "password">;

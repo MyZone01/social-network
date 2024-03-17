@@ -280,7 +280,7 @@ func (gm *GroupMember) GetMemberById(db *sql.DB, id uuid.UUID, getuser bool) err
 		&gm.UpdatedAt,
 		&gm.DeletedAt,
 	)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		return fmt.Errorf("unable to scan the row. %v", err)
 	}
 
