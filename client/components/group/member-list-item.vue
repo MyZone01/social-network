@@ -28,7 +28,6 @@ type Member = {
 
 }
 const props = defineProps(['member','isAdmin'])
-console.log(props.member);
 
 
 

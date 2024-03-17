@@ -24,7 +24,6 @@ function changer(event) {
   userInfos[`${event.target.id}`] = value
 }
 const saveChanges = async () => {
-  console.log(userInfos)
   userInfos.message = ''
   try {
     const result = await editUser(userInfos)

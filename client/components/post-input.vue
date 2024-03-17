@@ -129,7 +129,6 @@ export default {
           method: "POST",
           body: body,
         }).then(response => response.json()).catch(err => ({ errors: err }))
-        console.log(response);
         if (response.data) jsonFormObject.image_url = response.data
       }
       try {

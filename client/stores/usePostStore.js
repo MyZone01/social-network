@@ -7,7 +7,6 @@ export default defineStore("feed", {
   }),
   actions: {
     addPost(post) {
-      console.log(post)
       this.posts.unshift(post);
       this.userPosts.unshift(post)
     },

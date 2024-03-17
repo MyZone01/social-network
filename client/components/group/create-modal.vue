@@ -53,7 +53,6 @@ export default {
         method: 'post',
         body: JSON.stringify(Object.fromEntries(formData.entries())),
         onResponse({ request, response, options }) {
-          console.log(response);
           const data = JSON.parse(response._data)
           const gid = data.data.ID
           navigateTo(`/groups/${gid}`)
