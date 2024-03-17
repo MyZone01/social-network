@@ -1,8 +1,8 @@
 INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public) VALUES 
 ('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
-('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 1),
+('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
 ('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
-('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 1);
+('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0);
 -- password: 12345678
 
 
@@ -97,17 +97,17 @@ INSERT INTO group_members (id, group_id, member_id, status, role) VALUES
 ('2f724f35-3648-4fea-84df-be12999ca83b', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'accepted', 'admin');
 
 
-INSERT INTO group_posts (id, group_id, title, content, image_url) VALUES
-('067d1e18-0669-4222-baed-4c65259be792', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'Discover the Latest in Sustainable Living', 'Join us as we explore eco-friendly products and tips to make a difference. #SustainableLiving #EcoFriendly', 'uploads/sustainable_living.jpeg'),
-('b542446a-4c13-4198-943f-6ace73475ed0', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'Healthy Recipes for a Healthier You', 'Dive into our collection of healthy recipes designed to boost your well-being. #HealthyRecipes #Wellness', 'uploads/fresh-fitness-food.avif'),
-('6fa2cc57-94d6-4296-a0f3-89032ed68ccd', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'Travel Tips for a Stress-Free Vacation', "Pack your bags and let's explore the best travel tips to ensure your vacation is as relaxing as it gets. #TravelTips #StressFree", ''),
-('2381ed9b-17fe-4d10-989d-ac57182ff626', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'Fashion Trends for the Season', 'Stay ahead of the curve with our latest fashion trends. #FashionTrends #SeasonalStyle', ''),
-('3ffd68e8-eb57-4f73-8f67-e8f9df316c5a', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'Tech Gadgets That Will Change Your Life', 'Discover the latest tech gadgets that can make your life easier and more enjoyable. #TechGadgets #Innovation', 'uploads/449c71d8f06a9b5daba236cfd4a37a7e.jpg'),
-('48da68ef-8a33-4255-9010-bf794a8cae6f', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'DIY Home Decor Ideas', 'Transform your space with these easy DIY home decor ideas. #DIY #HomeDecor', 'uploads/803eae848a2830191260cb36c2d29fd3.jpg'),
-('153cb034-2c3e-4047-897b-eb55db0ded4a', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'Books to Read This Summer', 'Escape into the world of books with our summer reading list. #SummerReads #Books', ''),
-('8849c7c6-09cd-4f44-a2cc-87b0c3b65022', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'Fitness Challenges for the New Year', 'Kickstart your fitness journey with our challenges designed to help you achieve your goals. #FitnessChallenges #NewYear', 'uploads/epic-cardio-challenge-intro.jpg'),
-('d4ba832b-dbf3-4eae-a689-7d5ef80da0d6', '9c206815-391a-434b-8d36-15fb3df4dffd', 'Cultural Events to Attend', 'Discover the best cultural events happening around you. #CulturalEvents #Explore', ''),
-('f2f6280f-4860-46a6-b0b8-5aff8ee88797', '9c206815-391a-434b-8d36-15fb3df4dffd', 'Eco-Friendly Products for Your Home', 'Make your home more sustainable with these eco-friendly products. #EcoFriendly #HomeSustainability', '');
+INSERT INTO posts (id, group_id, user_id, title, content, image_url, privacy) VALUES
+('067d1e18-0669-4222-baed-4c65259be792', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Discover the Latest in Sustainable Living', 'Join us as we explore eco-friendly products and tips to make a difference. #SustainableLiving #EcoFriendly', 'uploads/sustainable_living.jpeg', 'group'),
+('b542446a-4c13-4198-943f-6ace73475ed0', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Healthy Recipes for a Healthier You', 'Dive into our collection of healthy recipes designed to boost your well-being. #HealthyRecipes #Wellness', 'uploads/fresh-fitness-food.avif', 'group'),
+('6fa2cc57-94d6-4296-a0f3-89032ed68ccd', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Travel Tips for a Stress-Free Vacation', "Pack your bags and let's explore the best travel tips to ensure your vacation is as relaxing as it gets. #TravelTips #StressFree", '', 'group'),
+('2381ed9b-17fe-4d10-989d-ac57182ff626', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Fashion Trends for the Season', 'Stay ahead of the curve with our latest fashion trends. #FashionTrends #SeasonalStyle', '', 'group'),
+('3ffd68e8-eb57-4f73-8f67-e8f9df316c5a', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'Tech Gadgets That Will Change Your Life', 'Discover the latest tech gadgets that can make your life easier and more enjoyable. #TechGadgets #Innovation', 'uploads/449c71d8f06a9b5daba236cfd4a37a7e.jpg', 'group'),
+('48da68ef-8a33-4255-9010-bf794a8cae6f', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'DIY Home Decor Ideas', 'Transform your space with these easy DIY home decor ideas. #DIY #HomeDecor', 'uploads/803eae848a2830191260cb36c2d29fd3.jpg', 'group'),
+('153cb034-2c3e-4047-897b-eb55db0ded4a', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Books to Read This Summer', 'Escape into the world of books with our summer reading list. #SummerReads #Books', '', 'group'),
+('8849c7c6-09cd-4f44-a2cc-87b0c3b65022', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Fitness Challenges for the New Year', 'Kickstart your fitness journey with our challenges designed to help you achieve your goals. #FitnessChallenges #NewYear', 'uploads/epic-cardio-challenge-intro.jpg', 'group'),
+('d4ba832b-dbf3-4eae-a689-7d5ef80da0d6', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Cultural Events to Attend', 'Discover the best cultural events happening around you. #CulturalEvents #Explore', '', 'group'),
+('f2f6280f-4860-46a6-b0b8-5aff8ee88797', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Eco-Friendly Products for Your Home', 'Make your home more sustainable with these eco-friendly products. #EcoFriendly #HomeSustainability', '', 'group');
 
 INSERT INTO events (id, group_id, creator_id, title, description, date_time) VALUES
 ('6e07c132-6490-4c20-a5eb-87bec6717732', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Coding Session', 'This is a weekly coding session by "The Wizard"', '2024-05-05 00:00:00'),
@@ -120,11 +120,9 @@ INSERT INTO events_participants (id, event_id, member_id, response) VALUES
 ('077e4b39-94b9-4daa-ac67-4ffe6fb2950c', '6e07c132-6490-4c20-a5eb-87bec6717732', 'c035df0d-8699-4880-a79e-1291915f70a9', 'not_going'),
 ('90042b0a-2310-4931-b35d-594e244f3c9c', 'a4515c02-8a5e-450a-adf5-83562eeef13c', '498e640d-78d2-4171-b060-369d75c380ed', 'going'),
 ('c76d37b7-a46f-4fcf-8696-319c4fa41e01', 'a4515c02-8a5e-450a-adf5-83562eeef13c', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going'),
--- ('a018d89f-9a89-4f8e-8b42-8ad861e42664', 'a4515c02-8a5e-450a-adf5-83562eeef13c', 'c035df0d-8699-4880-a79e-1291915f70a9', 'going'),
 ('24108e9f-9dee-48fd-abe8-86c58b9a3ea1', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'c035df0d-8699-4880-a79e-1291915f70a9', 'going'),
--- ('e5aaa81b-33ae-4e8d-bf04-daf9687440ff', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', '498e640d-78d2-4171-b060-369d75c380ed', 'going'),
 ('85374be0-f0b4-4213-8b4f-2b445f7a2424', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going');
--- 
+
 INSERT INTO private_messages (id, sender_id, receiver_id, content ) VALUES
 ('f115c834-09fe-4aba-8172-9e5034c48b34', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Hello Man, How is it?'), 
 ('b10fa83b-a742-4a9c-b04d-ad2dd84d5b39', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Hey, Im fine and you?'),
@@ -148,18 +146,8 @@ INSERT INTO group_messages (id, group_id, sender_id, content) VALUES
 ('fbd251b8-4091-416d-9e28-cd915e215d08', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'Great guys, lets do it'),
 ('6fc22ba9-22ed-41d5-b697-4850715df1f0', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Hello There ...');
 
-
--- INSERT INTO notifications (id, user_id, type, message, concern_id) VALUES
--- ('c80f2e97-0368-42ba-a6ab-b850f041f1bc', value2, ...),
--- (),
--- (),
--- ();
--- type TEXT CHECK(type = 'follow_request'OR type = 'follow_accepted' OR type = 'follow_declined' OR type = 'unfollow' OR type = 'group_invitation' OR type = 'new_message' OR type = 'new_event'),
-
-
 INSERT INTO comments (id, user_id, post_id, content, image_url) VALUES
 ('98cb3c47-056a-4b15-8a89-8fc89c547aae', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '9b77a08a-ff18-4022-97c7-4dc8f1a53230', 'Great Man, keep doing the good job!', '');
-
 
 INSERT INTO selected_users (id, user_id, post_id) VALUES
 ('2d00d01a-1882-41a1-97c0-58492472ea87', '498e640d-78d2-4171-b060-369d75c380ed', '9b77a08a-ff18-4022-97c7-4dc8f1a53230');

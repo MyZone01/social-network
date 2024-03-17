@@ -8,7 +8,6 @@
           Create Group
         </h2>
 
-        <!-- close button -->
         <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
           <svg
             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -43,29 +42,25 @@
 
 <script>
 export default {
-    mounted() {
-        this.$refs.create_group_form.addEventListener('submit', this.submitData)
-    },
-    methods: {
-        async submitData(e) {
-            e.preventDefault()
-            const store = useGlobalAuthStore()
-            const formData = new FormData(e.target)
-            const { data, pending, error, refresh } = await useFetch('/api/group/create', {
-                method: 'post',
-                headers: {
-                    Authorization: `Bearer ${store.token}`,
-                },
-                body: JSON.stringify(Object.fromEntries(formData.entries())),
-                onResponse({ request, response, options }) {
-                    const data = JSON.parse(response._data)
-                    const gid = data.ID
-                    navigateTo(`/groups/${gid}`)
-                },
-            })
+  mounted() {
+    this.$refs.create_group_form.addEventListener('submit', this.submitData)
+  },
+  methods: {
+    async submitData(e) {
+      e.preventDefault()
+      const formData = new FormData(e.target)
+      const { data, pending, error, refresh } = await useFetch('/api/groups/', {
+        method: 'post',
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+        onResponse({ request, response, options }) {
+          const data = JSON.parse(response._data)
+          const gid = data.data.ID
+          navigateTo(`/groups/${gid}`)
+        },
+      })
 
-        }
     }
+  }
 }
 
 

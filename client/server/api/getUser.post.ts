@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
         },
         body: JSON.stringify(body),
     }).then(async (res) => await res.json()).catch((err) => {
-        console.log(err);
+        console.error(err);
         return {
             status: 500,
             body: 'Internal server error',

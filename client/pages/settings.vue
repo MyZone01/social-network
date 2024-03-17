@@ -24,7 +24,6 @@ function changer(event) {
   userInfos[`${event.target.id}`] = value
 }
 const saveChanges = async () => {
-  console.log(userInfos)
   userInfos.message = ''
   try {
     const result = await editUser(userInfos)
@@ -66,6 +65,10 @@ definePageMeta({
   alias: ["/"],
   middleware: ["auth-only"],
 });
+
+useHead({
+  title: "Setting",
+})
 </script>
 
 <template>
@@ -73,7 +76,7 @@ definePageMeta({
 
     <!-- main contents -->
     <main id="site__main"
-      class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+      class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] overflow-y-auto mt-[--m-top]">
 
       <div class="max-w-3xl mx-auto">
 

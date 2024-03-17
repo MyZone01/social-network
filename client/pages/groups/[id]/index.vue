@@ -1,5 +1,6 @@
 <template>
-  <main id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+  <main id="site__main"
+    class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
     <div class="max-w-[1065] mx-auto bg-slate-500">
       <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2 pt-2">
         <div class="relative overflow-hidden w-full lg:h-72 h-32">
@@ -9,6 +10,9 @@
             <div class="flex items-center gap-3 px-2">
               <UButton class="button bg-white/10 text-white flex items-center gap-2 back-drop-blur-small">
                 Edit
+              </UButton>
+              <UButton :to="`/groups/${id}/chat`">
+                Chat
               </UButton>
             </div>
           </div>
@@ -25,8 +29,8 @@
                   <span class="max-lg:hidden"> • </span>
                   <span>
                     <b class="font-medium text-black dark:text-white">{{
-                    group?.GroupMembers.length
-                  }}</b>
+                group?.GroupMembers.length
+              }}</b>
                     members
                   </span>
                 </p>
@@ -193,6 +197,7 @@ li.uk-active {
 }
 </style>
 <script lang="ts" setup>
+import { useTitle } from '@vueuse/core';
 import type { Group, GroupMember, Event } from '~/types';
 
 definePageMeta({
@@ -211,10 +216,9 @@ const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
 const events = ref<Event[]>([])
+const title = computed(() => group.value?.Title)
 
-useHead({
-  title: "Group",
-})
+useTitle(title, { titleTemplate: "%s | Social Network" })
 
 definePageMeta({
   alias: ["/groups/:id"],

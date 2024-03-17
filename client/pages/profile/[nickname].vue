@@ -1,5 +1,5 @@
 <template>
-  <main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+  <main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
 
     <div class="max-w-[1065px] mx-auto">
 
@@ -73,7 +73,6 @@ export default {
     const response = await getUser(this.nickname, "get")
     if (response && response.status === 200) {
       this.data = response.body;
-      console.log('data', this.data);
     } else {
       console.error('Failed to get user data');
       navigateTo("/404")

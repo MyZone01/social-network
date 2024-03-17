@@ -52,15 +52,11 @@
           <i class="text-lg bx bxs-message-dots" ></i> </button>
         <span>{{ post.comments ? post.comments.length: null }}</span>
       </div>
-      <!-- <button type="button" class="button-icon ml-auto"> <ion-icon class="text-xl"
-          name="paper-plane-outline"></ion-icon>
-      </button>
-      <button type="button" class="button-icon"> <ion-icon class="text-xl" name="share-outline"></ion-icon>
-      </button> -->
+
     </div>
 
     <!-- comments -->
-    <Comments-snippets :comments ="post.comments" />
+    <Comments-snippets :post ="post" />
     <!-- add comment -->
     <Comment-input :postId="post.id" />
 
@@ -69,9 +65,6 @@
 <script>
 import { passDataOnPostPreviewContent } from '~/composables/postPreview';
 export default {
-  mounted() {
-    console.log(this.post);
-  },
   props: {
     post: {
       type: Object,

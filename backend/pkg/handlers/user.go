@@ -221,7 +221,7 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 		Email:    credentials.Email,
 		Password: credentials.Password,
 	}
-	err := newUser.Get(ctx.Db.Conn, credentials.Email)
+	err := newUser.Get(ctx.Db.Conn, credentials.Email, true)
 	if err != nil {
 		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
 			"session": "",

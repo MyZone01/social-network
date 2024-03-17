@@ -54,7 +54,6 @@ const handleCommentSubmission = async (e) => {
     console.log(commentContent.error)
     return
   }
-  console.log(commentContent.body)
   postStore.addComment(commentContent.body.data)
   commentInput.value.value = ""
   fileInput.value = ""
