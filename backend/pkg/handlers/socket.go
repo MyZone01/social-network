@@ -23,11 +23,11 @@ var (
 
 func handleSocket(ctx *octopus.Context) {
 	conn, err := upgrader.Upgrade(ctx.ResponseWriter, ctx.Request, nil)
-	conns.Store(uuid.New(), conn)
 	if err != nil {
 		log.Println(err)
 		return
 	}
+	conns.Store(uuid.New(), conn)
 	for {
 		go func() {
 			for {

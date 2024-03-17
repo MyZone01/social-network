@@ -109,7 +109,7 @@ func (n *Notification) Delete(db *sql.DB) error {
 
 // Get all notifications for a user
 func (n *Notifications) GetByUser(db *sql.DB, userID uuid.UUID) error {
-	query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE user_id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE concern_id = $1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
