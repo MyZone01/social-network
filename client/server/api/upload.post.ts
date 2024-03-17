@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
     const reader = await readMultipartFormData(event);
     const token = event.context.token;
-    console.log(reader);
+    
     if (!reader) return { status: 400, body: 'Bad request' };
     let file;
     for (let part of reader) {

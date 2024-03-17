@@ -70,7 +70,6 @@ definePageMeta({
 const { groups, getAllGroups } = useGroups();
 
 onMounted(async () => {
-  console.log(groups);
 
   await getAllGroups();
 });

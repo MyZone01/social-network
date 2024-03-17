@@ -245,8 +245,6 @@ onMounted(async () => {
 
   events.value = await getAllEvents(id)
 
-  console.log(events.value);
-
   isRequester.value =
     joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
 })
