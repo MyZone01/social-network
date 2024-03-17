@@ -1,5 +1,6 @@
 <template>
-  <main id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+  <main id="site__main"
+    class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
     <div class="max-w-[1065] mx-auto bg-slate-500">
       <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2 pt-2">
         <div class="relative overflow-hidden w-full lg:h-72 h-32">
@@ -10,7 +11,7 @@
               <UButton class="button bg-white/10 text-white flex items-center gap-2 back-drop-blur-small">
                 Edit
               </UButton>
-              <UButton :to="`/groups/${id}/chat`" >
+              <UButton :to="`/groups/${id}/chat`">
                 Chat
               </UButton>
             </div>
@@ -28,8 +29,8 @@
                   <span class="max-lg:hidden"> • </span>
                   <span>
                     <b class="font-medium text-black dark:text-white">{{
-                    group?.GroupMembers.length
-                  }}</b>
+                group?.GroupMembers.length
+              }}</b>
                     members
                   </span>
                 </p>

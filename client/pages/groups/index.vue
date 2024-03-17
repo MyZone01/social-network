@@ -1,6 +1,6 @@
 <template>
   <main id="site__main"
-    class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+    class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
     <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto h-full">
       <div class="page-heading flex flex-row justify-between align-baseline flex-wrap">
         <h1 class="page-title">Groups</h1>

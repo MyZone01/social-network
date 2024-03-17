@@ -66,6 +66,10 @@ definePageMeta({
   alias: ["/"],
   middleware: ["auth-only"],
 });
+
+useHead({
+  title: "Setting",
+})
 </script>
 
 <template>

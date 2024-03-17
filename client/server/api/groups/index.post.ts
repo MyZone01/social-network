@@ -1,4 +1,4 @@
-import type { User } from "~/types";
+import type { Group, ServerResponse } from "~/types";
 
 export default defineEventHandler(async (event) => {
   if (!event.context.token) {

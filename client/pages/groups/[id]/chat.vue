@@ -1,6 +1,6 @@
 <template>
   <main id="site__main"
-    class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] py-10 p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+    class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top] overflow-y-auto">
     <div class="h-screen flex flex-col justify-between">
       <div class="page-heading">
         <h1>🗨️Group Chat: </h1>
