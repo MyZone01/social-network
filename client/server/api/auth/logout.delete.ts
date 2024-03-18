@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
   
   const token = event.context.token;
-  const response = await $fetch<ServerResponse<{}>>("http://localhost:8081/logout", {
+  const response = await $fetch<ServerResponse<{}>>(`${process.env.BACKEND_URL}`+"/logout", {
     method: "DELETE",
     headers: {
       Accept: "application/json",

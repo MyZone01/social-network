@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  const _response = await fetch("http://localhost:8081/registration", {
+  const _response = await fetch(`${process.env.BACKEND_URL}`+"/registration", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
   const body = new FormData();
   body.append('file', new Blob([file.data]), file.filename);
 
-  const _response2 = await fetch("http://localhost:8081/upload", {
+  const _response2 = await fetch(`${process.env.BACKEND_URL}`+"/upload", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${response.session}`,
@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
   userWithoutPassword.avatarImage = response2.imageurl;
   register.avatarImage = response2.imageurl;
 
-  const _response3 = await fetch("http://localhost:8081/updateuser", {
+  const _response3 = await fetch(`${process.env.BACKEND_URL}`+"/updateuser", {
     method: "PUT",
     headers: {
       Accept: "application/json",

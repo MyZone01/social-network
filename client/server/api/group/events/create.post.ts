@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const payload = await readBody(event);
     const group_id = getQuery(event).gid
-    const response = await $fetch("http://localhost:8081/create-event", {
+    const response = await $fetch(`${process.env.BACKEND_URL}`+"/create-event", {
       method: "POST",
       headers: {
         Authorization: `${token}`,
