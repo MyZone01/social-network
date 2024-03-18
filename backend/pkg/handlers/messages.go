@@ -1,58 +1,47 @@
 package handlers
-
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
+	"github.com/google/uuid"
 )
-
 func handleMessages(ctx *octopus.Context) {
-	
 }
 func GetUsers(ctx *octopus.Context) {
-
 	var users models.Users
-
 	err1 := users.GetAll(ctx.Db.Conn)
 	if err1 != nil {
-		fmt.Println(err1)
 		// HandleError(ctx.ResponseWriter, http.StatusInternalServerError, "Error getting users : "+err1.Error())
 		return
 	}
-	fmt.Println(users)
-
 	data := map[string]interface{}{
 		"list": users,
 	}
-
 	ctx.JSON(data)
-
 	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
-
 }
-func GetMessages(ctx *octopus.Context) {
-
+func handlerGetMessages(ctx *octopus.Context) {
+	var senderId = ctx.Values["userId"].(uuid.UUID)
 	var messages models.PrivateMessages
-
-	// err1 := messages.GetPrivateMessages(ctx.Db.Conn, receiverId)
-	// if err1 != nil {
-	// 	fmt.Println(err1)
-	// 	// HandleError(ctx.ResponseWriter, http.StatusInternalServerError, "Error getting users : "+err1.Error())
-	// 	return
-	// }
-
-	data := map[string]interface{}{
-		"messages_list": messages,
+	var receiverId map[string]string
+	if err := ctx.BodyParser(&receiverId); err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]string{"message": "bad request"})
+		return
 	}
-
+	err1 := messages.GetPrivateMessages(ctx.Db.Conn, uuid.MustParse(receiverId["receiver_id"]), senderId)
+	if err1 != nil {
+		// HandleError(ctx.ResponseWriter, http.StatusInternalServerError, "Error getting users : "+err1.Error())
+		ctx.Status(http.StatusBadRequest).JSON(map[string]string{"message": "bad request"})
+		return
+	}
+	data := map[string]interface{}{
+		"status": http.StatusOK,
+		"data":   messages,
+	}
 	ctx.JSON(data)
-
 	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
-
 }
-
 var messagesRoutes = route{
 	path:   "/groups/messages",
 	method: http.MethodGet,
@@ -61,7 +50,6 @@ var messagesRoutes = route{
 		handleMessages,
 	},
 }
-
 var getUsers = route{
 	path:   "/users",
 	method: http.MethodGet,
@@ -70,8 +58,16 @@ var getUsers = route{
 		GetUsers,                  // Handler function to process the messages request.
 	},
 }
-
+var getMessages = route{
+	path:   "/getMessages",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		handlerGetMessages,      // Handler function to process the messages request.
+	},
+}
 func init() {
 	// Register the events route with the global AllHandler map.
 	AllHandler[getUsers.path] = getUsers
+	AllHandler[getMessages.path] = getMessages
 }
