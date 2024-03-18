@@ -8,11 +8,11 @@ export default defineEventHandler(async (event) => {
         };
     }
 
-    const response = await fetch(`${process.env.BACKEND_URL}`+"/post/getFeed', {
+    const response = await fetch(`${process.env.BACKEND_URL}` + '/post/getFeed', {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        Authorization: `Bearer ${token}`,
+    },
     }).then(async (res) => {
         return await res.json();
     }).catch((err) => {
@@ -23,15 +23,15 @@ export default defineEventHandler(async (event) => {
         };
     });
 
-    if (response.status !== 200) {
-        return {
-            status: response.status,
-            body: response.message,
-        };
-    }
-
+if (response.status !== 200) {
     return {
-        status: 200,
-        body: response.data,
+        status: response.status,
+        body: response.message,
     };
+}
+
+return {
+    status: 200,
+    body: response.data,
+};
 });

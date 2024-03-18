@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     } else {
         try {
             body["password"] = sessionServer.data.userInfos.password
-            const result = await fetcher(`${process.env.BACKEND_URL}`+"/edituser', "PUT", JSON.stringify(body), token)
+            const result = await fetcher(`${process.env.BACKEND_URL}`+'/edituser', "PUT", JSON.stringify(body), token)
             await sessionUpdater(token, result.data, event)
             
             const { password: _password, ...userWithoutPassword } = result.data;

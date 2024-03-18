@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    const response = await fetch(`${process.env.BACKEND_URL}`+"/post/insertComment', {
+    const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insertComment', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

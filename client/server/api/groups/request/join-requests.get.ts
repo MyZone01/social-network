@@ -12,7 +12,7 @@ export default defineEventHandler(async event => {
         const groupId = queryObj.gid
 
 
-        const response = await $fetch(`${process.env.BACKEND_URL}`+"/get-all-access-demand', {
+        const response = await $fetch(`${process.env.BACKEND_URL}`+'/get-all-access-demand', {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
