@@ -5,7 +5,7 @@ export default defineEventHandler(async event => {
         const groupId = queryObj.gid
 
 
-        const response = await $fetch(`${process.env.BACKEND_URL}`+'/demand-access', {
+        const response = await $fetch(`${process.env.BACKEND_URL}`+"/demand-access", {
             method: 'POST',
             headers: {
                 Authorization: `${token}`

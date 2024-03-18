@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
         };
     }
 
-    const response = await fetch(`${process.env.BACKEND_URL}`+'/upload', {
+    const response = await fetch(`${process.env.BACKEND_URL}`+"/upload", {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
