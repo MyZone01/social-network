@@ -1,5 +1,6 @@
 import type { Peer } from "crossws";
 import { getQuery } from "ufo";
+import { server_socket } from "~/stores/socketCon"
 
 const notifconns = new Map<string, { conn: Peer, onLine: boolean }>();
 
@@ -21,24 +22,12 @@ export default defineWebSocketHandler({
       notifconns.set(userId, { conn: peer, onLine: true });
     }
   },
-  // async message(peer: Peer, message) {
-  //   console.log(`[ws] message ${peer} ${message.text()}`);
-
-
-  //   if (message.text() === "ping") {
-  //     peer.send({ user: "server", message: "pong" });
-  //     return
-  //   }
-
-  //   const _message = {
-  //     user: "TEST",
-  //     message: message.text(),
-  //   };
-  //   peer.send(_message); // echo back
-  //   peer.publish("chat", _message);
-
-  //   // Store message in database
-  // },
+  async message(peer: Peer, message) {
+    const data = JSON.parse(message.toString())
+    if (data.type && data.id) {
+      server_socket!.send(data)
+    }
+  },
 
   // close(peer: Peer, details) {
   //   console.log(`[ws] close ${peer}`);

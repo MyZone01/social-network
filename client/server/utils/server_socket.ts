@@ -35,7 +35,7 @@ export class WebSocketClient {
                 try {
                     const data = JSON.parse(event.data.toString());
                     const type = data.type.split("_id_")?.[0];
-                    
+
                     if (this.seters[type]) {
                         this.seters[type](data.data)
                     }
@@ -51,7 +51,7 @@ export class WebSocketClient {
     public onmessage(type: string, seter: (data: any) => void) {
         this.seters[type] = seter
     }
-    public send(data: string) {
+    public send(data: any) {
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
             this.socket.send(data);
         } else {

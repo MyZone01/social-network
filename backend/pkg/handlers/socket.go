@@ -31,23 +31,26 @@ func handleSocket(ctx *octopus.Context) {
 	for {
 		go func() {
 			for {
-				models.Data.Range(func(key, value interface{}) bool {
-					conns.Range(func(k, v interface{}) bool {
-						thisconn, ok := v.(*websocket.Conn)
-						if !ok || thisconn == nil {
-							conns.Delete(k)
-							return true
-						} else {
-							err := thisconn.WriteJSON(map[string]interface{}{
-								"data": value,
-								"type": key,
-							})
-							if err != nil {
-								conns.Delete(k)
+				models.Data.Range(func(kk, value interface{}) bool {
+					key, ok := kk.(string)
+					val, okval := value.(map[string]interface{})
+					if ok && okval {
+						conns.Range(func(k, v interface{}) bool {
+							if v, ok := v.(*websocket.Conn); ok {
+								err := v.WriteJSON(map[string]interface{}{
+									"data": val,
+									"type": key,
+								})
+								if err != nil {
+									conns.Delete(k)
+									if err := v.Close(); err != nil {
+										log.Println(err)
+									}
+								}
 							}
-						}
-						return true
-					})
+							return true
+						})
+					}
 					models.Data.Delete(key)
 					return true
 				})
@@ -58,10 +61,15 @@ func handleSocket(ctx *octopus.Context) {
 		// newMesssage := models.PrivateMessage{}
 		err := conn.ReadJSON(&data)
 		if err != nil {
-			conn.WriteJSON(map[string]interface{}{
+			err := conn.WriteJSON(map[string]interface{}{
 				"status":  http.StatusBadRequest,
 				"message": "Invalid message",
 			})
+			if err != nil {
+				if err := conn.Close(); err == nil {
+					log.Println(err)
+				}
+			}
 			return
 		}
 
@@ -74,32 +82,53 @@ func handleSocket(ctx *octopus.Context) {
 			newMesssage.SenderID = uuid.MustParse(msg["sender_id"].(string))
 			newMesssage.ReceiverID = uuid.MustParse(msg["receiver_id"].(string))
 			if newMesssage.Content == "" || newMesssage.SenderID == uuid.Nil || newMesssage.ReceiverID == uuid.Nil {
-				conn.WriteJSON(map[string]interface{}{
+				err := conn.WriteJSON(map[string]interface{}{
 					"status":  http.StatusBadRequest,
 					"message": "Invalid message",
 				})
+				if err != nil {
+					if err := conn.Close(); err == nil {
+						log.Println(err)
+					}
+				}
 				return
 			}
 			user := models.User{}
 			if user.Get(ctx.Db.Conn, newMesssage.ReceiverID) != nil {
-				conn.WriteJSON(map[string]interface{}{
+				err := conn.WriteJSON(map[string]interface{}{
 					"status":  http.StatusNotFound,
 					"message": "User not found",
 				})
+				if err != nil {
+					if err := conn.Close(); err == nil {
+						log.Println(err)
+					}
+				}
 				return
 			}
 			if user.Get(ctx.Db.Conn, newMesssage.SenderID) != nil {
-				conn.WriteJSON(map[string]interface{}{
+				err := conn.WriteJSON(map[string]interface{}{
 					"status":  http.StatusNotFound,
 					"message": "User not found",
 				})
+				if err != nil {
+					if err := conn.Close(); err == nil {
+						log.Println(err)
+					}
+				}
 				return
 			}
 			if err := newMesssage.Create(ctx.Db.Conn); err != nil {
-				conn.WriteJSON(map[string]interface{}{
+				err = conn.WriteJSON(map[string]interface{}{
 					"status":  http.StatusInternalServerError,
 					"message": "Internal server error",
 				})
+				if err != nil {
+					if err := conn.Close(); err == nil {
+						log.Println(err)
+					}
+				}
+				return
 			}
 			newNotification := models.Notification{
 				UserID:    newMesssage.SenderID,
@@ -108,10 +137,16 @@ func handleSocket(ctx *octopus.Context) {
 				Message:   newMesssage.Content,
 			}
 			if err := newNotification.Create(ctx.Db.Conn); err != nil {
-				conn.WriteJSON(map[string]interface{}{
+				err = conn.WriteJSON(map[string]interface{}{
 					"status":  http.StatusInternalServerError,
 					"message": "Internal server error",
 				})
+				if err != nil {
+					if err := conn.Close(); err == nil {
+						log.Println(err)
+					}
+				}
+				return
 			}
 		} else if data["type"] == "group_message" {
 			// newMesssage, ok := data["message"].(models.GroupMessage)

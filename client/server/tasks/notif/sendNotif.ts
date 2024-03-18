@@ -3,7 +3,7 @@ import { notifUser } from "~/server/api/socket"
 
 export default defineTask({
     async run() {
-        server_socket!.onmessage("notification",notifUser)
+        server_socket!.onmessage("notification", notifUser);
         return { result: 'ok' }
     }
 })
