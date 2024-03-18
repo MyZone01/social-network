@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const token = event.context.token;
 
-  const response = await $fetch<ServerResponse<Group[]>>("http://localhost:8081/get-all-groups?isMemberNeeded=true&isUserNeeded=true", {
+  const response = await $fetch<ServerResponse<Group[]>>(`${process.env.BACKEND_URL}`+"/get-all-groups?isMemberNeeded=true&isUserNeeded=true", {
     method: "GET",
     headers: {
       Accept: "application/json",

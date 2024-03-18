@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { username, password, rememberMe } = body;
 
-  const response = await $fetch<ServerResponse<User>>("http://localhost:8081/login", {
+  const response = await $fetch<ServerResponse<User>>(`${process.env.BACKEND_URL}`+"/login", {
     method: "POST",
     headers: {
       Accept: "application/json",
