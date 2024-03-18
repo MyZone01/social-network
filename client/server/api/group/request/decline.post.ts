@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
         const rId = queryObj.rId
 
 
-        const response = await $fetch('http://localhost:8081/decline-access-demand', {
+        const response = await $fetch(`${process.env.BACKEND_URL}`+"/decline-access-demand', {
             method: 'POST',
             headers: {
                 Authorization: `${token}`

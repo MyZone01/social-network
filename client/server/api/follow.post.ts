@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         };
     }
 
-    const response = await fetcher('http://localhost:8081/follower', 'POST', JSON.stringify(body), token);
+    const response = await fetcher(`${process.env.BACKEND_URL}`+"/follower', 'POST', JSON.stringify(body), token);
     return response
    
 });
