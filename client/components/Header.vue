@@ -145,13 +145,14 @@
                 <h3 class="font-bold text-xl"> Notifications </h3>
 
                 <div class="flex gap-2.5">
-                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> <ion-icon
-                      class="text-xl" name="ellipsis-horizontal"></ion-icon> </button>
+                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> 
+                    <i class='bx bx-dots-horizontal-rounded'></i> </button>
                   <div class="w-[280px] group"
                     uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                     <nav class="text-sm">
-                      <a @click="clearNotif(undefined, 'all')" href="#"> <ion-icon class="text-xl shrink-0"
-                          name="checkmark-circle-outline"></ion-icon> Mark
+                      <a @click="clearNotif(undefined, 'all')" href="#">
+                        <i class='bx bx-check-circle'></i> 
+                           Mark
                         all as read</a>
                     </nav>
                   </div>
@@ -358,107 +359,15 @@
 </template>
 
 <script setup lang="ts">
-import { array, set, string } from 'zod';
-import { connNotifSocket, useClearNotif } from '../composables/notification/notification';
+// import { array, set, string } from 'zod';
+import { clearNotif, notifications } from '../composables/notification/notification';
 import { useAuth } from '../composables/useAuth'
 import { useAuthUser } from '../composables/useAuthUser'
-import { getNotifications } from '~/composables/notification/getNotifications';
+import { connNotifSocket } from '~/composables/notification/socket';
 
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
-let ws: WebSocket | undefined
-export type Notif = {
-  id: number;
-  notifId: string;
-  type: string;
-  message: string;
-  user: any;
-  created_at: Date;
-}
-const notifications = useState<Notif[]>(() => []);
-
-const addNotif = (notif: any) => {
-  removeLasNotifType(notif)
-  notifications.value.push({
-    id: notifications.value.length + 1,
-    notifId: notif.id,
-    type: notif.type,
-    message: notif.message,
-    user: notif.user,
-    created_at: new Date(notif.created_at),
-  });
-}
-
-const removeLasNotifType = (notif: any) => {
-  notifications.value.forEach((n, index) => {
-    if (((notif.type === "follow_request"
-      || notif.type === "follow_accepted"
-      || notif.type === "follow_declined"
-      || notif.type === "unfollow")
-      && (
-        n.type === "follow_request"
-        || n.type === "follow_accepted"
-        || n.type === "follow_declined"
-        || n.type === "unfollow"))
-      && notif.user.id === n.user.id) {
-      notifications.value.splice(index, 1)
-    }
-  })
-}
-
-const deleteNotif = (id: string) => {
-  notifications.value.forEach((n, index) => {
-    if (n.notifId == id) {
-      notifications.value.splice(index, 1)
-    }
-  })
-}
-
-const clearNotif = async (notif: Notif | undefined, action: string, message?: string) => {
-  let type = 'clear'
-  let notifId = notif?.notifId || ''
-  if (action === 'all') {
-    type = 'clear_all'
-  }
-  const res = await useClearNotif(notifId, type);
-
-  if (action === 'redirect') {
-    deleteNotif(notif!.notifId)
-    navigateTo("/profile/" + notif!.user.nickname);
-  } else if (action === 'all') {
-    notifications.value = []
-    notifications.value.push(
-      {
-        id: 1,
-        notifId: '',
-        type: "clear",
-        message: "All notifications have been cleared",
-        user: 'accepted',
-        created_at: new Date()
-      }
-    )
-    setTimeout(() => {
-      notifications.value = []
-    }, 5000);
-  } else if (res.message) {
-    notifications.value[notif!.id - 1].message = message!
-    notifications.value[notif!.id - 1].type = "clear"
-    setTimeout(() => {
-      deleteNotif(notif!.notifId)
-    }, 5000);
-  }
-}
-
-if (!notifications.value.length) {
-  const notifs = await getNotifications();
-  if (!notifs.error && Array.isArray(notifs)) {
-    Array.from(notifs).forEach((notif: any) => {
-      addNotif(notif)
-    })
-    notifications.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-  }
-}
 
 const onLogoutClick = async () => {
   // async function onLogoutClick() {
@@ -492,11 +401,7 @@ function formatTimeAgo(date: Date): string {
 
 onMounted(async () => {
   const user = currentUser!.value!.id
-  ws = await connNotifSocket(ws, user)
-  ws.addEventListener('message', (event) => {
-    const notif = JSON.parse(event.data)
-    addNotif(notif)
-  });
+  await connNotifSocket(user)
 });
 
 
