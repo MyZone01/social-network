@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const token = event.context.token;
@@ -10,19 +8,22 @@ export default defineEventHandler(async (event) => {
         };
     }
     
-    const response = await fetch(`${process.env.BACKEND_URL}`+'/getuser', {
+    const response = await fetch('http://localhost:8081/getMessages', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
+       
     }).then(async (res) => await res.json()).catch((err) => {
-        console.error(err);
+        console.log(err);
         return {
             status: 500,
             body: 'Internal server error',
         };
     });
+   
+   
     if (response.status !== 200) {
         return {
             status: response.status,
@@ -34,5 +35,5 @@ export default defineEventHandler(async (event) => {
         status: 200,
         body: response.data,
     };
-    
+    console.log(response)
 });

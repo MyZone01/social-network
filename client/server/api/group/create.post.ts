@@ -3,7 +3,7 @@ export default defineEventHandler(async event => {
 
     try {
         const payload = await readBody(event)
-        const response = await $fetch(`${process.env.BACKEND_URL}`+"/create-group', {
+        const response = await $fetch(`${process.env.BACKEND_URL}`+'/create-group', {
             method:'POST',
             headers: {
                 Authorization: `${token}`

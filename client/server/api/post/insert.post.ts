@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
 
 
-    const response = await fetch(`${process.env.BACKEND_URL}`+"/post/insert', {
+    const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insert', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

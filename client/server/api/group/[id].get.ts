@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
         const isuser = queryObj.u === '1'
 
 
-        const response = await $fetch(`${process.env.BACKEND_URL}`+"/get-group', {
+        const response = await $fetch(`${process.env.BACKEND_URL}`+'/get-group', {
             method: 'GET',
             headers: {
                 Authorization: `${token}`
