@@ -36,7 +36,7 @@ async function handleResponseClick(response: string) {
 </script>
 
 <template>
-  <UCard class="w-full flex flex-row justify-between">
+  <UCard class="w-full flex flex-row justify-between dark:bg-slate-800">
     <div>
       <div class="text-lg text-blue-700">
         {{ props.event.title }}

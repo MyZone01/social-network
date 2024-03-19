@@ -120,7 +120,6 @@ var respondEventRoute = route{
 		middleware.AuthRequired,
 		middleware.IsGroupExist,
 		middleware.HaveGroupAccess,
-		middleware.IsGroupAdmin,
 		middleware.IsEventExist,
 		respondEventHandler,
 	},

@@ -111,8 +111,8 @@
       <div id="group-menus" class="uk-switcher flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col">
         <!-- post tab-->
         <div class="w-full">
-          <div class="tab bg-white rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
-            <div class="flex items-center gap-3">
+          <div class="tab bg-white  rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
+            <div class="flex w-1/2 items-center gap-3">
               <div
                 class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3"
                 uk-toggle="target: #create-status">
@@ -157,8 +157,9 @@
             </div>
           </div>
           <hr class="border-slate-500 border-2 mb-3" />
-
-          <EventCard v-for="event in events" :event="event"/>
+          <div class="flex flex-col w-full gap-2">
+            <EventCard v-for="event in events" :event="event" />
+          </div>
         </div>
         <!-- members tab-->
         <div class="w-full">
@@ -169,8 +170,10 @@
             </div>
           </div>
           <hr class="border-slate-500 border-2 mb-3" />
-          <GroupMemberListItem v-for="member in group?.GroupMembers" :isAdmin="group?.CreatorID === user?.id"
-            :member="member" />
+          <div class="flex flex-col w-full gap-2">
+            <GroupMemberListItem v-for="member in group?.GroupMembers" :isAdmin="group?.CreatorID === user?.id"
+              :member="member" />
+          </div>
           <div id="group-invite-overlay">
 
           </div>
@@ -223,7 +226,7 @@ definePageMeta({
 const id = route.params.id as string;
 
 async function handleJoin(group: Group | null) {
-  await joinRequest(group?.ID).then(({error}) => {
+  await joinRequest(group?.ID).then(({ error }) => {
     if (!error) {
       isRequester.value = true;
     }
@@ -242,7 +245,7 @@ onMounted(async () => {
 
   events.value = await getAllEvents(id)
 
-  console.log("events /////////// \n",events.value);
+  console.log("events /////////// \n", events.value);
 
 
 
