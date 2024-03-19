@@ -41,12 +41,12 @@
             <div id="group-tab" class="uk-switcher">
               <div>
                 <div
-                  v-if="groups.length"
+                  v-if="mygroups.length"
                   class="flex flex-row flex-wrap overflow-scroll gap-2"
                 >
                   <GroupCard
                     v-bind:key="group.ID"
-                    v-for="group in groups"
+                    v-for="group in mygroups"
                     :group="group"
                     :joined="true"
                   />
@@ -60,6 +60,7 @@
                   v-bind:key="group.ID"
                   v-for="group in groups"
                   :group="group"
+                  :joined="mygroups.some((g)=>g.ID === group.ID)"
                 />
               </div>
               <div v-else class="flex w-full flex-row justify-center align-middle">
@@ -90,15 +91,20 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
+import type { Group } from '~/types';
+
 
 definePageMeta({
   alias: ["/groups"],
   middleware: ["auth-only"],
 });
 const { groups, getAllGroups } = useGroups();
+const mygroups = ref<Group[]>([])
+const user = useAuthUser()
 onMounted(async () => {
   console.log(groups);
   
   await getAllGroups();
+  mygroups.value = groups.value.filter((group)=>group.GroupMembers.some((member)=>member.MemberID === user.value?.id))
 });
 </script>

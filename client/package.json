@@ -15,6 +15,7 @@
     "@nuxt/image": "^1.2.0",
     "@nuxt/ui": "^2.14.1",
     "@nuxtjs/color-mode": "^3.3.2",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "pinia": "^2.1.7",
     "zod": "^3.22.4"
