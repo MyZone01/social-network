@@ -17,28 +17,28 @@
                 <!-- right action buttons -->
                 <div class="flex items-center gap-2.5">
                   <button class="group">
-                    <ion-icon :icon="ioniconsSettingsOutline" class="text-2xl flex group-aria-expanded:rotate-180" />
+                    <i class='bx bx-cog text-2xl flex group-aria-expanded:rotate-180'></i>
                   </button>
                   <div class="md:w-[270px] w-full"
                     uk-dropdown="pos: bottom-left; offset:10; animation: uk-animation-slide-bottom-small">
                     <nav>
-                      <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" :icon="ioniconsCheckmarkOutline" />
+                      <a href="#"> <i class='bx bx-check text-2xl shrink-0 -ml-1'></i>
                         Mark all as read </a>
-                      <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" :icon="ioniconsNotificationsOutline" />
+                      <a href="#"> <i class='bx bx-bell text-2xl shrink-0 -ml-1'></i>
                         notifications setting </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0 -ml-1" :icon="ioniconsVolumeMuteOutline" />
+                      <a href="#"> <i class='bx bx-volume-mute text-xl shrink-0 -ml-1'></i>
                         Mute notifications </a>
                     </nav>
                   </div>
 
                   <button class="">
-                    <ion-icon :icon="ioniconsCheckmarkCircleOutline" class="text-2xl flex" />
+                    <i class='bx bx-check-circle text-2xl flex'></i>
                   </button>
 
                   <!-- mobile toggle menu -->
                   <button type="button" class="md:hidden"
                     uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
-                    <ion-icon :icon="ioniconsChevronDownOutline" />
+                    <i class='bx bx-chevron-down'></i>
                   </button>
                 </div>
               </div>
@@ -46,7 +46,7 @@
               <!-- search -->
               <div class="relative mt-4">
                 <div class="absolute left-3 bottom-1/2 translate-y-1/2 flex">
-                  <ion-icon :icon="ioniconsSearch" class="text-xl" />
+                  <i class='bx bx-search text-xl'></i>
                 </div>
                 <input type="text" placeholder="Search" class="w-full !pl-10 !py-2 !rounded-lg">
               </div>
@@ -70,7 +70,7 @@
                 <a href="#" class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 mb-1.5">
                     <div class="mr-auto text-sm text-black dark:text-white font-medium">{{ user.firstName }} {{
-                      user.lastName }}</div>
+                user.lastName }}</div>
                     <div class="text-xs font-light text-gray-500 dark:text-white/70"></div>
                   </div>
                   <div class="font-medium overflow-hidden text-ellipsis text-sm whitespace-nowrap">
@@ -99,7 +99,7 @@
               <div class="flex items-center sm:gap-4 gap-2">
                 <!-- toggle for mobile -->
                 <button type="button" class="md:hidden" uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
-                  <ion-icon :icon="ioniconsChevronBackOutline" class="text-2xl -ml-4" />
+                  <i class='bx bx-chevron-left text-2xl -ml-4'></i>
                 </button>
 
                 <div class="relative cursor-pointer max-md:hidden" uk-toggle="target: .rightt ; cls: hidden">
@@ -192,7 +192,7 @@
             <div class="flex items-center md:gap-4 gap-2 md:p-3 p-2 overflow-hidden">
               <div id="message__wrap" class="flex items-center gap-2 h-full dark:text-white -mt-1.5">
                 <button type="button" class="shrink-0">
-                  <ion-icon class="text-3xl flex" :icon="ioniconsAddCircleOutline" />
+                  <i class='text-3xl flex bx bx-x' style='transform: rotate(45deg)'></i>
                 </button>
                 <div
                   class="dropbar pt-36 h-60 bg-gradient-to-t via-white from-white via-30% from-30% dark:from-slate-900 dark:via-900"
@@ -201,25 +201,25 @@
                     uk-scrollspy="target: > button; cls: uk-animation-slide-bottom-small; delay: 100;repeat:true">
                     <button type="button"
                       class="bg-sky-50 text-sky-600 border border-sky-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
-                      <ion-icon class="text-3xl flex" :icon="ioniconsImage" />
+                      <i class='bx bx-image text-3xl flex'></i>
                     </button>
                     <button type="button"
                       class="bg-green-50 text-green-600 border border-green-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
-                      <ion-icon class="text-3xl flex" :icon="ioniconsImages" />
+                      <i class='bx bx-image text-3xl flex'></i>
                     </button>
                     <button type="button"
                       class="bg-pink-50 text-pink-600 border border-pink-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
-                      <ion-icon class="text-3xl flex" :icon="ioniconsDocumentText" />
+                      <i class='bx bx-file text-3xl flex'></i>
                     </button>
                     <button type="button"
                       class="bg-orange-50 text-orange-600 border border-orange-100 shadow-sm p-2.5 rounded-full shrink-0 duration-100 hover:scale-[1.15] dark:bg-dark3 dark:border-0">
-                      <ion-icon class="text-3xl flex" :icon="ioniconsGift" />
+                      <i class='bx bx-gift text-3xl flex'></i>
                     </button>
                   </div>
                 </div>
 
                 <button type="button" class="shrink-0">
-                  <ion-icon class="text-3xl flex" :icon="ioniconsHappyOutline" />
+                  <i class='bx bx-happy-alt text-3xl flex'></i>
                 </button>
                 <!-- <div class="dropbar p-2"
                     uk-drop="stretch: x; target: #message__wrap ;animation: uk-animation-scale-up uk-transform-origin-bottom-left ;animate-out: true; pos: top-left ; offset:2; mode: click ; duration: 200 ">
@@ -302,12 +302,12 @@
                 </button>
 
                 <!-- <button type="button" class="text-white shrink-0 p-2 absolute right-0.5 top-0">
-                    <ion-icon class="text-xl flex" :icon="ioniconsSendOutline" />
+                    <i class='bx bx-send text-xl flex' ></i>
                   </button> -->
               </div>
 
               <button type="button" class="flex h-full dark:text-white">
-                <ion-icon class="text-3xl flex -mt-3" :icon="ioniconsHeartOutline" />
+                <i class='bx bx-heart text-3xl flex -mt-3'></i>
               </button>
             </div>
           </div>
@@ -338,30 +338,30 @@
               <ul class="text-base font-medium p-3">
                 <li>
                   <div class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsNotificationsOffOutline" class="text-2xl" /> Mute Notification
+                    <i class='bx bx-bell-off text-2xl'></i> Mute Notification
                     <label class="switch cursor-pointer ml-auto"> <input type="checkbox" checked><span
                         class="switch-button !relative" /></label>
                   </div>
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsFlagOutline" class="text-2xl" /> Report
+                    <i class='bx bx-flag text-2xl'></i>
                   </button>
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsSettingsOutline" class="text-2xl" /> Ignore messages
+                    <i class='bx bx-cog text-2xl'></i>
                   </button>
                 </li>
                 <li>
                   <button type="button" class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-secondery">
-                    <ion-icon :icon="ioniconsStopCircleOutline" class="text-2xl" /> Block
+                    <i class='bx bx-stop-circle text-2xl'></i>
                   </button>
                 </li>
                 <li>
                   <button type="button"
                     class="flex items-center gap-5 rounded-md p-3 w-full hover:bg-red-50 text-red-500">
-                    <ion-icon :icon="ioniconsTrashOutline" class="text-2xl" /> Delete Chat
+                    <i class='bx bx-trash text-2xl'></i>
                   </button>
                 </li>
               </ul>
@@ -369,7 +369,7 @@
               <!-- close button -->
               <button type="button" class="absolute top-0 right-0 m-4 p-2 bg-secondery rounded-full"
                 uk-toggle="target: .rightt ; cls: hidden">
-                <ion-icon :icon="ioniconsClose" class="text-2xl flex" />
+                <i class='text-2xl flex bx bx-x' style='transform: rotate(45deg)'></i>
               </button>
             </div>
 
@@ -387,6 +387,11 @@
 </template>
 
 <script setup lang="ts">
+interface userType {
+  firstName: string | undefined,
+  lastName: string | undefined,
+  avatarImage: string | undefined
+}
 const currentUser = useAuthUser();
 
 const users = ref([])
@@ -399,8 +404,13 @@ useHead({
   title: "Message",
 })
 
-const userId = currentUser.value.id
-const user = `${currentUser.value.firstName} ${currentUser.value.lastName}`
+const userId = currentUser?.value?.id
+const user: userType = {
+  firstName: currentUser?.value?.firstName,
+  lastName: currentUser?.value?.lastName,
+  avatarImage: currentUser?.value?.avatarImage
+
+} //`${currentUser.value.firstName} ${currentUser.value.lastName}`
 
 const log = (user: string, ...args: string[]) => {
   console.log("[ws]", user, ...args);
@@ -415,7 +425,7 @@ const log = (user: string, ...args: string[]) => {
 
 const connect = async () => {
   const isSecure = location.protocol === "https:";
-  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/chat-ws?userId=" + userId.value;
+  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/chat-ws?userId=" + userId;
   if (ws) {
     log("ws", "Closing previous connection before reconnecting...");
     ws.close();
@@ -467,7 +477,7 @@ const send = () => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8081/users', {
+    const response = await fetch('/api/user/chatlist', {
       headers: {
         'Accept': 'application/json'
       }
@@ -482,7 +492,7 @@ onMounted(async () => {
 
     users.value = data.list;
     const sortUsersAlphabetically = (users) => {
-      users.value.sort((a, b) => {
+      users.value.sort((a: object, b: object) => {
         const usernameA = a.lastName.toLowerCase() + a.firstName.toLowerCase();;
         const usernameB = b.lastName.toLowerCase() + b.firstName.toLowerCase();
         return usernameA.localeCompare(usernameB);

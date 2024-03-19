@@ -16,7 +16,8 @@ func GetUsers(ctx *octopus.Context) {
 		return
 	}
 	data := map[string]interface{}{
-		"list": users,
+		"status": http.StatusOK,
+		"data": users,
 	}
 	ctx.JSON(data)
 	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
