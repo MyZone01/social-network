@@ -33,7 +33,6 @@ export default defineStore("feed", {
       }
     },
     getUserPosts(nickname) {
-
       for (let post of this.posts) {
         console.log(nickname, post)
         if (post.userOwnerNickname === nickname) {
