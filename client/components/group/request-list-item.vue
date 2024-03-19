@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-const  { acceptJoinRequest, declneJoinRequest } = useGroupRequest();
+const  { acceptJoinRequest, declineJoinRequest } = useGroupRequest();
 
 
 const props = defineProps(['member'])
@@ -51,7 +51,7 @@ async function handleAccept(){
 }
 
 async function handleDecline(){
-    const response =  await declneJoinRequest(props.member.GroupID,props.member.ID)
+    const response =  await declineJoinRequest(props.member.GroupID,props.member.ID)
    if (response) {
     const data = JSON.parse(response.data)
     status.value = data.Status

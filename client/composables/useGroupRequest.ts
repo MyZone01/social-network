@@ -49,7 +49,7 @@ export const useGroupRequest = () => {
         return { data };
     }
 
-    async function declneJoinRequest(
+    async function declineJoinRequest(
         gId: string,
         rId: string
     ): Promise<any> {
@@ -80,7 +80,7 @@ export const useGroupRequest = () => {
     return {
         joinRequest,
         getUserGroups,
-        declneJoinRequest,
+        declineJoinRequest,
         acceptJoinRequest,
         getJoinRequests
     }

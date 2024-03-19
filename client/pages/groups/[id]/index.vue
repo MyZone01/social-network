@@ -90,9 +90,6 @@
               <li>
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Members</a>
               </li>
-              <li>
-                <a href="#" class="inline-block py-3 leading-8 px-3.5">Media</a>
-              </li>
               <li v-if="group?.CreatorID === user?.id">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Requests</a>
               </li>
@@ -178,8 +175,6 @@
 
           </div>
         </div>
-        <!-- media tab-->
-        <div class="w-full" />
         <!-- request tab-->
         <div class="w-full">
           <GroupRequestListItem v-for="member in joinRequests" :member="member" />
