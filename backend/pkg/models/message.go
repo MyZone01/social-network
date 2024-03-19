@@ -51,7 +51,14 @@ func (m *PrivateMessage) Create(db *sql.DB) error {
 		return err
 	}
 	id := uuid.New().String()
-	Data.Store("private_message_id_"+id, m)
+
+	Data.Store("private_message_id_"+id, map[string]interface{}{
+		"ID":         m.ID,
+		"SenderID":   m.SenderID,
+		"ReceiverID": m.ReceiverID,
+		"Content":    m.Content,
+		"CreatedAt":  m.CreatedAt,
+	})
 	return nil
 }
 
@@ -73,7 +80,15 @@ func (m *GroupMessage) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-	Data.Store("group_message", m)
+	id := uuid.New().String()
+	Data.Store("group_message_id_"+id, map[string]interface{}{
+		"ID":        m.ID,
+		"GroupID":   m.GroupID,
+		"SenderID":  m.SenderID,
+		"Content":   m.Content,
+		"Sender":    m.Sender,
+		"CreatedAt": m.CreatedAt,
+	})
 	return nil
 }
 

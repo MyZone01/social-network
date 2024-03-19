@@ -145,14 +145,14 @@
                 <h3 class="font-bold text-xl"> Notifications </h3>
 
                 <div class="flex gap-2.5">
-                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> 
+                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white">
                     <i class='bx bx-dots-horizontal-rounded'></i> </button>
                   <div class="w-[280px] group"
                     uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
                     <nav class="text-sm">
                       <a @click="clearNotif(undefined, 'all')" href="#">
-                        <i class='bx bx-check-circle'></i> 
-                           Mark
+                        <i class='bx bx-check-circle'></i>
+                        Mark
                         all as read</a>
                     </nav>
                   </div>
@@ -240,6 +240,9 @@
                   d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
                   clip-rule="evenodd"></path>
               </svg>
+              <div v-if="messages.length !== 0"
+                class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
+                {{ formatFollowersCount(messages.length) }}</div>
               <i class='bx bx-message-alt-detail sm:hidden text-2xl'></i>
             </button>
             <div
@@ -249,6 +252,19 @@
               <!-- heading -->
               <div class="flex items-center justify-between gap-2 p-4 pb-1">
                 <h3 class="font-bold text-xl"> Chats </h3>
+                <div class="flex gap-2.5">
+                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white">
+                    <i class='bx bx-dots-horizontal-rounded'></i> </button>
+                  <div class="w-[280px] group"
+                    uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
+                    <nav class="text-sm">
+                      <a @click="clearMessages(undefined, 'all')" href="#">
+                        <i class='bx bx-check-circle'></i>
+                        Mark
+                        all as read</a>
+                    </nav>
+                  </div>
+                  </div> 
               </div>
 
               <div class="relative w-full p-2 px-3 ">
@@ -257,10 +273,37 @@
               </div>
 
               <div class="h-80 overflow-y-auto pr-2">
+                <div class="p-2 pt-0 pr-1 dark:text-white/80" v-for="ms in  messages " :key="ms.id">
 
-                <div class="p-2 pt-0 pr-1 dark:text-white/80">
+                  <!-- message for clear -->
+                  <a href="#" v-if="ms.type === 'clear'"
+                    :style="ms.user === 'accepted' ? 'background-color: rgba(0, 250, 0, 0.2);' : 'background-color: rgba(250, 0, 0, 0.2);'"
+                    class="relative flex items-center justify-center gap-3 p-2 duration-200 rounded-xl hover:bg-secondery dark:hover:bg-white/10">
+                    <div class="flex-1 text-center">
+                      <p>
+                        <b class="font-bold mr-1"></b>{{ ms.message }}
+                      </p>
+                    </div>
+                  </a>
 
-
+                  <a v-if="ms.type === 'new_message'" @click="clearMessages(ms, 'redirect')" href="#"
+                    class="relative flex items-center gap-4 p-2 py-3 duration-200 rounded-lg hover:bg-secondery dark:hover:bg-white/10">
+                    <div class="relative w-10 h-10 shrink-0">
+                      <img :src="'http://localhost:8081/' + ms.user.avatarImage" alt=""
+                        class="object-cover w-full h-full rounded-full">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 mb-1">
+                        <div class="mr-auto text-sm text-black dark:text-white font-medium">{{ ms.user.firstName + " "
+                + ms.user.lastName }}</div>
+                        <div class="text-xs text-gray-500 dark:text-white/80"> {{
+                formatTimeAgo(ms.created_at) }}
+                        </div>
+                      </div>
+                      <div class="font-normal overflow-hidden text-ellipsis text-xs whitespace-nowrap">
+                        {{ ms.message }}</div>
+                    </div>
+                  </a>
                 </div>
 
               </div>
@@ -361,6 +404,7 @@
 <script setup lang="ts">
 // import { array, set, string } from 'zod';
 import { clearNotif, notifications } from '../composables/notification/notification';
+import { clearMessages, messages } from '~/composables/notification/message';
 import { useAuth } from '../composables/useAuth'
 import { useAuthUser } from '../composables/useAuthUser'
 import { connNotifSocket } from '~/composables/notification/socket';
@@ -402,6 +446,8 @@ function formatTimeAgo(date: Date): string {
 onMounted(async () => {
   const user = currentUser!.value!.id
   await connNotifSocket(user)
+  console.log(messages.value);
+
 });
 
 
