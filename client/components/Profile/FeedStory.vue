@@ -30,7 +30,10 @@
 
                 </div>
 
-                <post-card-img v-for="post in postStore.userPosts" :post="post" />
+                <post-card-img
+                    v-for="post in potentialUser ? postStore.getUserPosts(potentialUser) : postStore.userPosts"
+                    :post="post" />
+
 
 
             </div>
@@ -43,10 +46,12 @@
 </template>
 
 <script setup>
+
 import usePostStore from "~/stores/usePostStore.js";
+let potentialUser = location.pathname.split('/')[2]
 
 const postStore = usePostStore()
-
+// console.log(Nickname)
 onMounted(async () => {
     await postStore.getUserFeed()
 });
