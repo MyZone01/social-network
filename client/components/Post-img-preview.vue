@@ -70,7 +70,7 @@
           <div class="shadow relative -mx-5 px-5 py-3 mt-3">
             <div class="flex items-center gap-4 text-xs font-semibold">
 
-              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3">
                 <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
                   <i class="text-lg bx bxs-message-dots"></i> </button>
                 <span>{{ postPreviewContent.comments.length }}</span>

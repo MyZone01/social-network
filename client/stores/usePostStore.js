@@ -15,17 +15,18 @@ export default defineStore("feed", {
         .then(async (response) => {
           const data = await response.json()
           this.posts = data.body
-          this.posts.forEach(post => {
-            if (post.userOwnerNickname === useAuthUser().value.nickname) {
-              this.userPosts.push(post);
+          for (let i = 0; i < this.posts.length; i++){
+            if (this.posts[i].userOwnerNickname === useAuthUser().value.nickname) {
+              this.userPosts.push(this.posts[i]);
             }
-          })
+          }
         })
         .catch((error) => console.error(error))
     },
     addComment(comment) {
       for (let i = 0; i < this.posts.length; i++) {
         if (this.posts[i].id === comment.post_id) {
+          console.log("i found the post");
           this.posts[i].comments.push(comment);
           break
         }

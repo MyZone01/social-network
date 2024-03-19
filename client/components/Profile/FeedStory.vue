@@ -52,9 +52,9 @@ let potentialUser = location.pathname.split('/')[2]
 
 const postStore = usePostStore()
 // console.log(Nickname)
-onMounted(async () => {
-    await postStore.getUserFeed()
-});
+// onMounted(async () => {
+//     await postStore.getUserFeed()
+// });
 
 const props = defineProps({
     status: {

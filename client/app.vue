@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import usePostStore from "~/stores/usePostStore.js";
+const postStore = usePostStore()
 useHead({
   meta: [
     { charset: "utf-8" },
@@ -17,6 +19,7 @@ useSeoMeta({
 });
 
 onMounted(() => {
+  postStore.getUserFeed()
   if (
     localStorage.theme === "dark" ||
     (!("theme" in localStorage) &&
@@ -34,11 +37,11 @@ onMounted(() => {
 
 <template>
   <Html>
-    <NuxtLoadingIndicator />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-    <UNotifications />
+  <NuxtLoadingIndicator />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+  <UNotifications />
+
   </Html>
 </template>
-

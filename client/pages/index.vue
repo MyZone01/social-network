@@ -39,9 +39,6 @@ useHead({
   title: "Home",
 })
 
-onMounted(async () => {
-  await postStore.getUserFeed()
-})
 
 definePageMeta({
   alias: ["/"],
