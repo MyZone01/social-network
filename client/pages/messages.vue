@@ -165,6 +165,7 @@
               <div id="messages" class="text-sm font-medium space-y-6">
                 <!-- received -->
                 <div v-if="chats">
+                  <div class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery" style="display: flex; justify-content: center;"> {{ chats[0].Day }}</div>
                   <div v-for="chat in chats" :key="chat.ID">
                     <div v-if="chat.SenderID === user.id" class="flex gap-3">
                       <nuxt-img v-if="user && user.avatarImage" :src="'http://localhost:8081/' + user.avatarImage"
@@ -173,7 +174,7 @@
                         {{ chat.Content }}
                       </div>
                     </div>
-                    <div v-if="chat.SenderID === user.id" class="flex">{{ chat.Hour }} </div>
+                    <div v-if="chat.SenderID === user.id" class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery" >{{ chat.Hour }} </div>
                     <div v-if="chat.SenderID === currentUser.id" class="flex gap-2 flex-row-reverse items-end">
                       <nuxt-img v-if="user && user.avatarImage"
                         :src="'http://localhost:8081/' + currentUser.avatarImage" class="w-9 h-9 rounded-full shadow" />
@@ -183,7 +184,7 @@
                       </div>
 
                     </div>
-                    <div v-if="chat.SenderID === currentUser.id" class="flex justify-end">{{ chat.Hour }} </div>
+                    <div v-if="chat.SenderID === currentUser.id" class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery " style="margin-left: 75%;">{{ chat.Hour }} </div>
 
                   </div>
                 </div>
@@ -328,8 +329,8 @@
                   </div>
                 </div>
                 <div class="mt-5">
-                  <a href="/profile/"
-                    class="inline-block rounded-full px-4 py-1.5 text-sm font-semibold bg-secondery">View profile</a>
+                  <nuxt-link to="/profile/{{ user.nickname }}"
+                    class="inline-block rounded-full px-4 py-1.5 text-sm font-semibold bg-secondery">View profile {{ user.nickname }}</nuxt-link>
                 </div>
               </div>
 
