@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     const isUserNeeded = queryObject.user === '1'
     const group_id = queryObject.gid
 
-    const response = await $fetch("http://localhost:8081/get-all-event-group", {
+    const response = await $fetch(`${process.env.BACKEND_URL}`+"/get-all-event-group", {
         method: "GET",
         headers: {
             Accept: "application/json",

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const token = event.context.token;
   const body = await readBody<{ title: string, description: string }>(event);
-  const response = await $fetch<ServerResponse<Group>>("http://localhost:8081/create-group", {
+  const response = await $fetch<ServerResponse<Group>>(`${process.env.BACKEND_URL}`+"/create-group", {
     method: "POST",
     headers: {
       Accept: "application/json",

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     }
     
     
-    const response = await fetch('http://localhost:8081/getAllFollowers', {
+    const response = await fetch(`${process.env.BACKEND_URL}`+"/getAllFollowers", {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,

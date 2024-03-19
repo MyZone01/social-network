@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
+    // console.log("fghgjhkjlmjkhjgfhdfnghjk")
     const body = await readBody(event)
-
     const token = event.context.token;
     if (!token) {
         return {
@@ -8,26 +8,23 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    let jsonBody = JSON.stringify(body);
-    console.log("jsonBody", jsonBody)
-
-
-
-    const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insert', {
+    
+    const response = await fetch('http://localhost:8081/getReceiver', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        body: jsonBody,
+        body: JSON.stringify(body),
+       
     }).then(async (res) => await res.json()).catch((err) => {
         console.log(err);
+        // console.log("fghgjhkjlmjkhjgfhdfnghjk")
         return {
             status: 500,
             body: 'Internal server error',
         };
     });
-
-    console.log("res from server for post insert ", response)
+   
     if (response.status !== 200) {
         return {
             status: response.status,
@@ -37,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
     return {
         status: 200,
-        body: response
+        body: response.data,
     };
-
+    console.log("ICIII la response",response)
 });

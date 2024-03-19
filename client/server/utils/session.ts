@@ -18,7 +18,7 @@ export async function getUserFromToken(event: H3Event | string) {
   const token = deserialize(unsignedToken);
 
   try {
-    const response = await $fetch("http://localhost:8081/me", {
+    const response = await $fetch(`${process.env.BACKEND_URL}`+"/me", {
       method: "GET",
       headers: {
         Accept: "application/json",

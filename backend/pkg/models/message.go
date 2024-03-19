@@ -1,26 +1,21 @@
 package models
-
 import (
 	"database/sql"
 	"html"
 	"time"
-
 	"github.com/google/uuid"
 )
-
 type PrivateMessages []PrivateMessage
 type GroupMessages []GroupMessage
-
 type PrivateMessage struct {
 	ID         uuid.UUID `sql:"type:uuid;primary key"`
-	SenderID   uuid.UUID `sql:"type:uuid" json:"sender_id"`
-	ReceiverID uuid.UUID `sql:"type:uuid" json:"receiver_id"`
-	Content    string    `sql:"type:text" json:"content"`
+	SenderID   uuid.UUID `sql:"type:uuid"`
+	ReceiverID uuid.UUID `sql:"type:uuid"`
+	Content    string    `sql:"type:text"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 	DeletedAt  sql.NullTime
 }
-
 type GroupMessage struct {
 	ID        uuid.UUID `sql:"type:uuid;primary key"`
 	GroupID   uuid.UUID `sql:"type:uuid"`
@@ -31,39 +26,29 @@ type GroupMessage struct {
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
 }
-
 func (m *PrivateMessage) Create(db *sql.DB) error {
-
 	m.ID = uuid.New()
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
-
-	query := `INSERT INTO private_messages (id, sender_id, receiver_id, content, created_at, updated_at) 
-		VALUES ($1, $2, $3, $4, $5, $6)`
-
+	query := `INSERT INTO private_messages (id, sender_id, receiver_id, content, created_at) 
+		VALUES ($1, $2, $3, $4, $5)`
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
 	defer stm.Close()
-	_, err = stm.Exec(m.ID, m.SenderID, m.ReceiverID, html.EscapeString(m.Content), m.CreatedAt, m.UpdatedAt)
+	_, err = stm.Exec(m.ID, m.SenderID, m.ReceiverID, html.EscapeString(m.Content), m.CreatedAt)
 	if err != nil {
 		return err
 	}
-	id := uuid.New().String()
-	Data.Store("private_message_id_"+id, m)
 	return nil
 }
-
 func (m *GroupMessage) Create(db *sql.DB) error {
-
 	m.ID = uuid.New()
 	m.CreatedAt = time.Now()
 	m.UpdatedAt = time.Now()
-
-	query := `INSERT INTO group_messages (id, group_id, sender_id, content, created_at, updated_at) 
-		VALUES ($1, $2, $3, $4, $5, $6)`
-
+	query := `INSERT INTO group_messages (id, group_id, sender_id, content, created_at) 
+		VALUES ($1, $2, $3, $4, $5)`
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -73,47 +58,37 @@ func (m *GroupMessage) Create(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-	Data.Store("group_message", m)
 	return nil
 }
-
 func (m *PrivateMessage) Get(db *sql.DB, id uuid.UUID) error {
 	query := `SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at FROM private_messages WHERE id = $1 AND deleted_at IS NULL`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
 	defer stm.Close()
-
 	err = stm.QueryRow(id).Scan(&m.ID, &m.SenderID, &m.ReceiverID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-
 func (m *GroupMessage) Get(db *sql.DB, id uuid.UUID) error {
 	query := `SELECT id, group_id, sender_id, content, created_at, updated_at, deleted_at FROM group_messages WHERE id = $1 AND deleted_at IS NULL`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
 	defer stm.Close()
-
 	err = stm.QueryRow(id).Scan(&m.ID, &m.GroupID, &m.SenderID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-
 func (m *PrivateMessage) Update(db *sql.DB) error {
 	m.UpdatedAt = time.Now()
-
 	query := `UPDATE private_messages SET content = $1, updated_at = $2 WHERE id = $3`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -125,12 +100,9 @@ func (m *PrivateMessage) Update(db *sql.DB) error {
 	}
 	return nil
 }
-
 func (m *GroupMessage) Update(db *sql.DB) error {
 	m.UpdatedAt = time.Now()
-
 	query := `UPDATE group_messages SET content = $1, updated_at = $2 WHERE id = $3`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -142,10 +114,8 @@ func (m *GroupMessage) Update(db *sql.DB) error {
 	}
 	return nil
 }
-
 func (m *PrivateMessage) Delete(db *sql.DB) error {
 	query := `UPDATE private_messages SET deleted_at = $1 WHERE id = $2`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -157,10 +127,8 @@ func (m *PrivateMessage) Delete(db *sql.DB) error {
 	}
 	return nil
 }
-
 func (m *GroupMessage) Delete(db *sql.DB) error {
 	query := `UPDATE group_messages SET deleted_at = $1 WHERE id = $2`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -172,7 +140,6 @@ func (m *GroupMessage) Delete(db *sql.DB) error {
 	}
 	return nil
 }
-
 func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID uuid.UUID) error {
 	query := `
         SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at 
@@ -182,12 +149,11 @@ func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID u
             (receiver_id = $2 AND sender_id = $1) AND 
             deleted_at IS NULL
     `
-	rows, err := db.Query(query, receiverID)
+	rows, err := db.Query(query, receiverID,senderID)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
-
 	for rows.Next() {
 		var m PrivateMessage
 		if err := rows.Scan(&m.ID, &m.SenderID, &m.ReceiverID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt); err != nil {
@@ -197,16 +163,13 @@ func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID u
 	}
 	return nil
 }
-
 func (ms *GroupMessages) GetGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 	query := `SELECT id, group_id, sender_id, content, created_at, updated_at, deleted_at FROM group_messages WHERE group_id = $1 AND deleted_at IS NULL`
-
 	rows, err := db.Query(query, groupID)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
-
 	for rows.Next() {
 		var m GroupMessage
 		if err := rows.Scan(&m.ID, &m.GroupID, &m.SenderID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt); err != nil {
@@ -214,7 +177,6 @@ func (ms *GroupMessages) GetGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 		}
 		*ms = append(*ms, m)
 	}
-
 	// get user of each message
 	for i, m := range *ms {
 		user := User{}
@@ -224,19 +186,15 @@ func (ms *GroupMessages) GetGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 		}
 		(*ms)[i].Sender = user
 	}
-
 	return nil
 }
-
 func (ms *PrivateMessages) GetPrivateMessagesBetween(db *sql.DB, senderID, receiverID uuid.UUID) error {
 	query := `SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at FROM private_messages WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1) AND deleted_at IS NULL`
-
 	rows, err := db.Query(query, senderID, receiverID)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
-
 	for rows.Next() {
 		var m PrivateMessage
 		if err := rows.Scan(&m.ID, &m.SenderID, &m.ReceiverID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt); err != nil {
@@ -246,10 +204,8 @@ func (ms *PrivateMessages) GetPrivateMessagesBetween(db *sql.DB, senderID, recei
 	}
 	return nil
 }
-
 func (ms *GroupMessages) ClearGroupMessages(db *sql.DB, groupID uuid.UUID) error {
 	query := `UPDATE group_messages SET deleted_at = $1 WHERE group_id = $2`
-
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return err

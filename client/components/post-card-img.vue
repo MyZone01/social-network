@@ -4,13 +4,15 @@
 
     <!-- post heading -->
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-      <a href="timeline.html">
+      <nuxt-link
+        :to="useAuthUser().value.nickname == post.userOwnerNickname ? `/profile` : `/profile/${post.userOwnerNickname}`">
         <nuxt-img :src="'http://localhost:8081/' + post.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
-      </a>
+      </nuxt-link>
       <div class="flex-1">
-        <a href="timeline.html">
+        <nuxt-link
+          :to="useAuthUser().value.nickname == post.userOwnerNickname ? `/profile` : `/profile/${post.userOwnerNickname}`">
           <h4 class="text-black dark:text-white"> {{ post.userCompleteName }}</h4>
-        </a>
+        </nuxt-link>
         <div class="text-xs text-gray-500 dark:text-white/80"> {{ post.createdAt }}</div>
       </div>
 
@@ -49,30 +51,34 @@
 
       <div class="flex items-center gap-3">
         <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700">
-          <i class="text-lg bx bxs-message-dots" ></i> </button>
-        <span>{{ post.comments ? post.comments.length: null }}</span>
+          <i class="text-lg bx bxs-message-dots"></i> </button>
+        <span>{{ post.comments ? post.comments.length : null }}</span>
       </div>
 
     </div>
 
     <!-- comments -->
-    <Comments-snippets :post ="post" />
+    <Comments-snippets :post="post" />
     <!-- add comment -->
     <Comment-input :postId="post.id" />
 
   </div>
 </template>
 <script>
+useAuthUser();
 import { passDataOnPostPreviewContent } from '~/composables/postPreview';
 export default {
+  mounted() {
+    console.log(useAuthUser().value.nickname)
+  },
   props: {
     post: {
       type: Object,
       required: true
     }
   },
-  methods : {
-    showPostPreview(){
+  methods: {
+    showPostPreview() {
       passDataOnPostPreviewContent(this.post.id)
       UIkit.modal("#preview_modal").show()
     }

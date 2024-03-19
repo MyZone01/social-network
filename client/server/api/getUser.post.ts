@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         };
     }
     
-    const response = await fetch('http://localhost:8081/getuser', {
+    const response = await fetch(`${process.env.BACKEND_URL}`+"/getuser", {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
