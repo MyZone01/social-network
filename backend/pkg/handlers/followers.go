@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"log"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -64,13 +63,11 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
-		log.Println(user.IsPublic)
 		if user.IsPublic {
 			follow.Status = models.StatusAccepted
 		} else {
 			follow.Status = models.StatusRequested
 		}
-		log.Println(follow)
 		if err := follow.Create(ctx.Db.Conn); err != nil {
 			ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 				"message": err.Error(),
@@ -78,13 +75,15 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
-		notif.UserID = follow.FolloweeID
+		notif.UserID = follow.FollowerID
+		notif.ConcernID = follow.FolloweeID
 		if user.IsPublic {
 			notif.Type = models.TypeFollowAccepted
-			notif.Message = user.FirstName + " " + user.LastName + " " + "followed you"
+			notif.Message = "follows you now."
+
 		} else {
 			notif.Type = models.TypeFollowRequest
-			notif.Message = user.FirstName + " " + user.LastName + " " + "sent you a follow request"
+			notif.Message = "wants to follow you."
 
 		}
 		createNotif(notif, ctx)
@@ -109,9 +108,10 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
-		notif.UserID = follow.FolloweeID
+		notif.UserID = follow.FollowerID
+		notif.ConcernID = follow.FolloweeID
 		notif.Type = models.TypeUnFollow
-		notif.Message = user.FirstName + " " + user.LastName + " " + "unfollow you"
+		notif.Message = "stopped following you."
 		createNotif(notif, ctx)
 
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -120,7 +120,6 @@ func handleFollower(ctx *octopus.Context) {
 		})
 		return
 	case "accept":
-
 		if follow.Status != models.StatusRequested {
 			ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 				"message": "Invalid request.",
@@ -136,9 +135,19 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
-		notif.UserID = follow.FollowerID
+
+		currentNotif := new(models.Notification)
+		currentNotif.UserID = follow.FollowerID
+		currentNotif.ConcernID = follow.FolloweeID
+		currentNotif.Type = models.TypeFollowRequest
+
+		currentNotif.Get(ctx.Db.Conn)
+		currentNotif.Delete(ctx.Db.Conn)
+
+		notif.UserID = follow.FolloweeID
+		notif.ConcernID = follow.FollowerID
 		notif.Type = models.TypeFollowAccepted
-		notif.Message = user.FirstName + " " + user.LastName + " " + "accepted your follow request"
+		notif.Message = "has accepted your follow-up request."
 		createNotif(notif, ctx)
 
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -147,6 +156,7 @@ func handleFollower(ctx *octopus.Context) {
 		})
 		return
 	case "decline":
+
 		if follow.Status != models.StatusRequested {
 			ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
 				"message": "Invalid request.",
@@ -162,9 +172,18 @@ func handleFollower(ctx *octopus.Context) {
 			})
 			return
 		}
-		notif.UserID = follow.FollowerID
+		currentNotif := new(models.Notification)
+		currentNotif.UserID = follow.FollowerID
+		currentNotif.ConcernID = follow.FolloweeID
+		currentNotif.Type = models.TypeFollowRequest
+
+		currentNotif.Get(ctx.Db.Conn)
+		currentNotif.Delete(ctx.Db.Conn)
+
+		notif.UserID = follow.FolloweeID
+		notif.ConcernID = follow.FollowerID
 		notif.Type = models.TypeFollowDeclined
-		notif.Message = user.FirstName + " " + user.LastName + " " + "declined your follow request"
+		notif.Message = "rejected your follow-up request."
 		createNotif(notif, ctx)
 		ctx.Status(http.StatusOK).JSON(map[string]interface{}{
 			"message": "Request declined successfully",
@@ -186,6 +205,7 @@ func createNotif(notif *models.Notification, ctx *octopus.Context) {
 		newNotif := new(models.Notification)
 		newNotif.Type = t
 		newNotif.UserID = notif.UserID
+		newNotif.ConcernID = notif.ConcernID
 		err := notif.Get(ctx.Db.Conn)
 		if err != nil {
 			continue

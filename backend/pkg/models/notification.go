@@ -16,7 +16,6 @@ const (
 	TypeFollowAccepted  NotificationType = "follow_accepted"
 	TypeFollowDeclined  NotificationType = "follow_declined"
 	TypeUnFollow        NotificationType = "unfollow"
-	TypeTest            NotificationType = "follow_test"
 	TypeGroupInvitation NotificationType = "group_invitation"
 	TypeNewMessage      NotificationType = "new_message"
 	TypeNewEvent        NotificationType = "new_event"
@@ -50,6 +49,7 @@ func (n *Notification) Create(db *sql.DB) error {
 	user.Password = ""
 	id := uuid.New().String()
 	Data.Store("notification_id_"+id, map[string]interface{}{
+		"id":         n.ID,
 		"type":       n.Type,
 		"concernID":  n.ConcernID,
 		"user":       user,
@@ -62,7 +62,7 @@ func (n *Notification) Create(db *sql.DB) error {
 // Get a notification by its ID
 func (n *Notification) Get(db *sql.DB, id ...uuid.UUID) error {
 	if len(id) > 0 {
-		query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE id = $1 AND deleted_at IS NULL`
+		query := `SELECT id, user_id, concern_id, type, message, created_at, deleted_at FROM notifications WHERE id = $1 AND deleted_at IS NULL`
 
 		stm, err := db.Prepare(query)
 
@@ -72,12 +72,12 @@ func (n *Notification) Get(db *sql.DB, id ...uuid.UUID) error {
 
 		defer stm.Close()
 
-		err = stm.QueryRow(id[0]).Scan(&n.ID, &n.UserID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
+		err = stm.QueryRow(id[0]).Scan(&n.ID, &n.UserID, &n.ConcernID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
 		if err != nil {
 			return err
 		}
 	} else {
-		query := `SELECT id, message, created_at, deleted_at FROM notifications WHERE user_id = $1 AND type = $2 AND deleted_at IS NULL`
+		query := `SELECT id, message, created_at, deleted_at FROM notifications WHERE user_id = $1 AND concern_id = $2  AND type = $3 AND deleted_at IS NULL`
 
 		stm, err := db.Prepare(query)
 
@@ -87,7 +87,7 @@ func (n *Notification) Get(db *sql.DB, id ...uuid.UUID) error {
 
 		defer stm.Close()
 
-		err = stm.QueryRow(n.UserID, n.Type).Scan(&n.ID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
+		err = stm.QueryRow(n.UserID, n.ConcernID, n.Type).Scan(&n.ID, &n.Type, &n.Message, &n.CreatedAt, &n.DeletedAt)
 		if err != nil {
 			return err
 		}
@@ -109,7 +109,7 @@ func (n *Notification) Delete(db *sql.DB) error {
 
 // Get all notifications for a user
 func (n *Notifications) GetByUser(db *sql.DB, userID uuid.UUID) error {
-	query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE user_id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, user_id, type, message, created_at, deleted_at FROM notifications WHERE concern_id = $1 AND deleted_at IS NULL`
 
 	stm, err := db.Prepare(query)
 	if err != nil {
