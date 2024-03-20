@@ -354,8 +354,7 @@
     </div>
 
   </header>
-  <!-- create post  -->
-  <post-input />
+
 </template>
 
 <script setup lang="ts">
