@@ -24,9 +24,10 @@ export default defineStore("feed", {
         .catch((error) => console.error(error))
     },
     addComment(comment) {
+      console.log(comment);
       for (let i = 0; i < this.posts.length; i++) {
         if (this.posts[i].id === comment.post_id) {
-          console.log("i found the post");
+          
           this.posts[i].comments.push(comment);
           break
         }

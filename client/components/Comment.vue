@@ -10,6 +10,7 @@
         class="text-black font-medium inline-block dark:text-white">
         {{ comment.userCompleteName }} </nuxt-link>
       <p class="mt-0.5"> {{ comment.content }} </p>
+      <nuxt-img v-if="comment.imageUrl" class="w-16 h-16 mt-1 " :src="'http://localhost:8081/' + comment.imageUrl" ></nuxt-img>
     </div>
   </div>
 </template>
