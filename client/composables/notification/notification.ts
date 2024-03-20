@@ -1,7 +1,5 @@
 import { getNotifications } from "./getNotifications";
 
-
-
 export const useClearNotif = async (id: string, action: string = "clear") => {
     const data = { type: action, id: id };
     const response = await fetch("/api/notification/clearnotification", {
@@ -102,12 +100,18 @@ export const clearNotif = async (notif: Notif | undefined, action: string, messa
     }
 }
 
-if (!notifications.value.length) {
+async function fetchNotifications() {
     const notifs = await getNotifications();
-    if (!notifs.error && Array.isArray(notifs)) {
-        Array.from(notifs).forEach((notif: any) => {
-            addNotif(notif)
-        })
-        notifications.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-    }
+	return notifs
+}
+
+if (!notifications.value.length) {
+    fetchNotifications().then((notifs) => {
+        if (!notifs.error && Array.isArray(notifs)) {
+            Array.from(notifs).forEach((notif: any) => {
+                addNotif(notif)
+            })
+            notifications.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+        }
+    });
 }
