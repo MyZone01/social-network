@@ -52,8 +52,10 @@ export class WebSocketClient {
         this.seters[type] = seter
     }
     public send(data: any) {
+        console.log(data);
+        
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-            this.socket.send(data);
+            this.socket.send(JSON.stringify(data));
         } else {
             console.error('Cannot send message, WebSocket is not open');
         }

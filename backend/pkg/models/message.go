@@ -1,10 +1,13 @@
 package models
+
 import (
 	"database/sql"
 	"html"
 	"time"
+
 	"github.com/google/uuid"
 )
+
 type PrivateMessages []PrivateMessage
 type GroupMessages []GroupMessage
 type PrivateMessage struct {
@@ -26,6 +29,7 @@ type GroupMessage struct {
 	UpdatedAt time.Time
 	DeletedAt sql.NullTime
 }
+
 func (m *PrivateMessage) Create(db *sql.DB) error {
 	m.ID = uuid.New()
 	m.CreatedAt = time.Now()
@@ -91,6 +95,21 @@ func (m *PrivateMessage) Get(db *sql.DB, id uuid.UUID) error {
 	}
 	return nil
 }
+
+func (m *PrivateMessage) GetLastMessage(db *sql.DB, senderID, receiverID uuid.UUID) error {
+	query := `SELECT id, sender_id, receiver_id, content, created_at, updated_at, deleted_at FROM private_messages WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1) AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 1`
+	stm, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stm.Close()
+	err = stm.QueryRow(senderID, receiverID).Scan(&m.ID, &m.SenderID, &m.ReceiverID, &m.Content, &m.CreatedAt, &m.UpdatedAt, &m.DeletedAt)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (m *GroupMessage) Get(db *sql.DB, id uuid.UUID) error {
 	query := `SELECT id, group_id, sender_id, content, created_at, updated_at, deleted_at FROM group_messages WHERE id = $1 AND deleted_at IS NULL`
 	stm, err := db.Prepare(query)
@@ -167,7 +186,7 @@ func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID u
             (receiver_id = $2 AND sender_id = $1) AND 
             deleted_at IS NULL
     `
-	rows, err := db.Query(query, receiverID,senderID)
+	rows, err := db.Query(query, receiverID, senderID)
 	if err != nil {
 		return err
 	}

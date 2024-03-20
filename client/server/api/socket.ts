@@ -11,7 +11,7 @@ export const notifUser = (data: any) => {
     if (user?.onLine) {
       if (data.type === 'new_message') {
         const otherId = messageconns.get(data.concernID)?.otherId
-        console.log(otherId, data.user.ID,"online message");
+        console.log(otherId, data.user.ID, "online message");
         if (!otherId || otherId !== data.user.ID) {
           user.conn.send(data)
         }
@@ -23,25 +23,14 @@ export const notifUser = (data: any) => {
 }
 
 export const messageUser = (data: any) => {
-  console.log('messageUser', data);
 
   const user = messageconns.get(data.ReceiverID)
   if (user) {
-    if (user.otherId === data.SenderID) {
-      const online = notifconns.get(data.SenderID)?.onLine
-      if (online) {
-        user.conn.send({ online: true, ...data })
-      } else {
-        user.conn.send({ online: false, ...data })
-      }
-    } //else {
-    //   const online = notifconns.get(data.SenderID)?.onLine
-    //   if (online) {
-    //     notifconns.get(data.SenderID)?.conn.send({ online: true, ...data })
-    //   } else {
-    //     notifconns.get(data.SenderID)?.conn.send({ online: false, ...data })
-    //   }
-    // }
+    user.conn.send({ type: 'new_message', data })
+  }
+  const sender = messageconns.get(data.SenderID)
+  if (sender) {
+    sender.conn.send({ type: 'new_message', data })
   }
 }
 
@@ -67,7 +56,18 @@ export default defineWebSocketHandler({
     //   notifUser(data)
     // }
     if (channel === "message") {
-      server_socket!.send(data)
+      if (data.type === 'online') {
+        const users = Array.from(data.users).map((user: any) => {
+          const online = notifconns.get(user.id)?.onLine
+          if (online) {
+            return { ...user, online: true }
+          }
+          return user
+        })
+        peer.send(JSON.stringify({ type: 'online', users }))
+      } else if (data.type === 'private_message') {
+        server_socket!.send(data)
+      }
     }
   },
 
