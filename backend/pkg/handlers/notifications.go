@@ -4,22 +4,129 @@ package handlers
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
+	"backend/pkg/models"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
-func sendInvitation(ctx *octopus.Context) {
-	// TODO: Implement the notifications logic here.
+func handlernotifications(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+
+	notifications := new(models.Notifications)
+	if err := notifications.GetByUser(ctx.Db.Conn, userId); err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"error": err,
+		})
+		return
+	}
+
+	AllNotification := []map[string]interface{}{}
+	for _, notification := range *notifications {
+		user := new(models.User)
+		user.Get(ctx.Db.Conn, notification.UserID)
+		user.Password = ""
+		AllNotification = append(AllNotification, map[string]interface{}{
+			"id":         notification.ID,
+			"type":       notification.Type,
+			"concernID":  notification.ConcernID,
+			"user":       user,
+			"message":    notification.Message,
+			"created_at": notification.CreatedAt,
+		})
+	}
+	ctx.JSON(AllNotification)
+}
+
+func handlerclearnotifications(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+
+	type request struct {
+		Type string `json:"type"`
+		Id   string `json:"id"`
+	}
+
+	req := new(request)
+	if err := ctx.BodyParser(req); err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"error": "Invalid request",
+		})
+		return
+	}
+
+	if req.Type == "clear" {
+		notification := new(models.Notification)
+		if err := notification.Get(ctx.Db.Conn, uuid.MustParse(req.Id)); err != nil {
+			ctx.Status(http.StatusNotFound).JSON(map[string]interface{}{
+				"error": "Notification not found",
+			})
+			return
+		}
+		if notification.ConcernID != userId {
+			ctx.Status(http.StatusForbidden).JSON(map[string]interface{}{
+				"error": "You are not authorized to clear this notification",
+			})
+			return
+		}
+		if err := notification.Delete(ctx.Db.Conn); err != nil {
+			ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+				"error": "something went wrong",
+			})
+			return
+		}
+		ctx.JSON(map[string]interface{}{
+			"message": "Notification cleared",
+		})
+		return
+	} else if req.Type == "clear_all" {
+		notifications := new(models.Notifications)
+		if err := notifications.GetByUser(ctx.Db.Conn, userId); err != nil {
+			ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+				"error": "something went wrong",
+			})
+			return
+		}
+		for _, notification := range *notifications {
+			if err := notification.Delete(ctx.Db.Conn); err != nil {
+				ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+					"error": "something went wrong",
+				})
+				return
+			}
+		}
+		ctx.JSON(map[string]interface{}{
+			"message": "Notifications cleared",
+		})
+		return
+
+	} else {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"error": "Invalid request",
+		})
+		return
+	}
 }
 
 var notificationsRoute = route{
-	path:   "/invitation",
+	path:   "/getnotifications",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
 		middleware.AuthRequired,
-		sendInvitation,
+		handlernotifications,
 	},
 }
 
+var clearnotificationsRoute = route{
+	path:   "/clearnotifications",
+	method: http.MethodPost,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		handlerclearnotifications,
+	},
+}
+
+// clearnotifications
 func init() {
 	AllHandler[notificationsRoute.path] = notificationsRoute
+	AllHandler[clearnotificationsRoute.path] = clearnotificationsRoute
 }

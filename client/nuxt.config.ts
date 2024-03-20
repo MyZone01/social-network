@@ -33,8 +33,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
     '@nuxt/image',
-    'nuxt-icon',
-    "@pinia-plugin-persistedstate/nuxt"
+    'nuxt-icon'
   ],
   colorMode: {
     classSuffix: '',

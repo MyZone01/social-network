@@ -1,13 +1,16 @@
 package handlers
+
 import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"net/http"
 	"github.com/google/uuid"
+	"net/http"
 )
+
 func handleMessages(ctx *octopus.Context) {
 }
+
 func GetUsers(ctx *octopus.Context) {
 	var users models.Users
 	err1 := users.GetAll(ctx.Db.Conn)
@@ -16,7 +19,8 @@ func GetUsers(ctx *octopus.Context) {
 		return
 	}
 	data := map[string]interface{}{
-		"list": users,
+		"status": http.StatusOK,
+		"data":   users,
 	}
 	ctx.JSON(data)
 	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
@@ -42,6 +46,7 @@ func handlerGetMessages(ctx *octopus.Context) {
 	ctx.JSON(data)
 	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
 }
+
 var messagesRoutes = route{
 	path:   "/groups/messages",
 	method: http.MethodGet,
@@ -66,6 +71,7 @@ var getMessages = route{
 		handlerGetMessages,      // Handler function to process the messages request.
 	},
 }
+
 func init() {
 	// Register the events route with the global AllHandler map.
 	AllHandler[getUsers.path] = getUsers
