@@ -15,6 +15,5 @@ export const getMessage = async (receiverId: string) => {
             body: 'Internal server error',
         };
     })
-    console.log(response)
     return response
 }

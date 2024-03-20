@@ -165,26 +165,27 @@
               <div id="messages" class="text-sm font-medium space-y-6">
                 <!-- received -->
                 <div v-if="chats">
-                  <div class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery" style="display: flex; justify-content: center;"> {{ chats[0].Day }}</div>
+
+                  <!-- <div class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery" style="display: flex; justify-content: center;"> {{ chats[0].Day }}</div> -->
                   <div v-for="chat in chats" :key="chat.ID">
-                    <div v-if="chat.SenderID === user.id" class="flex gap-3">
+                    <div v-if="chat.sender_id === user.id" class="flex gap-3">
                       <nuxt-img v-if="user && user.avatarImage" :src="'http://localhost:8081/' + user.avatarImage"
                         class="w-9 h-9 rounded-full shadow" />
                       <div class="px-4 py-2 rounded-[20px] max-w-sm bg-secondery">
-                        {{ chat.Content }}
+                        {{ chat.content }}
                       </div>
                     </div>
-                    <div v-if="chat.SenderID === user.id" class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery" >{{ chat.Hour }} </div>
-                    <div v-if="chat.SenderID === currentUser.id" class="flex gap-2 flex-row-reverse items-end">
+                    <div v-if="chat.sender_id === user.id" class="inline-block rounded-full px-3.5 py-0.5 text-xs font-semibold bg-secondery" >{{ chat.Hour }} </div>
+                    <div v-if="chat.sender_id === currentUser.id" class="flex gap-2 flex-row-reverse items-end">
                       <nuxt-img v-if="user && user.avatarImage"
                         :src="'http://localhost:8081/' + currentUser.avatarImage" class="w-9 h-9 rounded-full shadow" />
                       <div
                         class="px-4 py-2 rounded-[20px] max-w-sm bg-gradient-to-tr from-sky-500 to-blue-500 text-white shadow">
-                        {{ chat.Content }}
+                        {{ chat.content }}
                       </div>
 
                     </div>
-                    <div v-if="chat.SenderID === currentUser.id" class="inline-block rounded-full px-3.5 py-0.5 text-sm font-semibold bg-secondery " style="margin-left: 75%;">{{ chat.Hour }} </div>
+                    <div v-if="chat.sender_id === currentUser.id" class="inline-block rounded-full px-3.5 py-0.5 text-xs font-semibold bg-secondery " style="margin-left: 75%;">{{ chat.Hour }} </div>
 
                   </div>
                 </div>
@@ -478,32 +479,26 @@ const send = () => {
 
 onMounted(async () => {
   try {
-    const response = await fetch('/api/user/chatlist', {
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+    const response = await GetAllUsers()
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    if (!response?.status !) {
+      throw new Error(`HTTP error! Status: ${response?.status}`);
     }
 
 
-    const data = await response.json();
+    users.value = response.data
+    // const sortUsersAlphabetically = (users) => {
+    //   users.value.sort((a: object, b: object) => {
+    //     const usernameA = a.lastName.toLowerCase() + a.firstName.toLowerCase();;
+    //     const usernameB = b.lastName.toLowerCase() + b.firstName.toLowerCase();
+    //     return usernameA.localeCompare(usernameB);
+    //   });
+    // };
 
-    users.value = data.list;
-    const sortUsersAlphabetically = (users) => {
-      users.value.sort((a: object, b: object) => {
-        const usernameA = a.lastName.toLowerCase() + a.firstName.toLowerCase();;
-        const usernameB = b.lastName.toLowerCase() + b.firstName.toLowerCase();
-        return usernameA.localeCompare(usernameB);
-      });
-    };
-
-    // Appelez la fonction pour trier les utilisateurs au moment approprié
-    sortUsersAlphabetically(users);
+    // // Appelez la fonction pour trier les utilisateurs au moment approprié
+    // sortUsersAlphabetically(users);
   } catch (error) {
-    console.error('Error fetching users:', error.message);
+    console.error('Error fetching users:', error);
   }
   connect();
   scroll();
@@ -515,6 +510,7 @@ const selectUser = async (receiver) => {
   receiverid = receiver.id
   try {
     const data = await getMessage(receiverid)
+    
     chats.value = data.body
     chats.value.forEach(message => {
       const updatedAt = new Date(message.UpdatedAt);
@@ -525,7 +521,6 @@ const selectUser = async (receiver) => {
       message.Day = day;
       message.Hour = hour;
     });
-    console.log("messageeeeeee: ",)
   } catch (error) {
     console.log(error)
   }

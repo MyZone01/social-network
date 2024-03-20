@@ -166,7 +166,7 @@ func (ms *PrivateMessages) GetPrivateMessages(db *sql.DB, receiverID, senderID u
             (receiver_id = $2 AND sender_id = $1) AND 
             deleted_at IS NULL
     `
-	rows, err := db.Query(query, receiverID)
+	rows, err := db.Query(query, receiverID,senderID)
 	if err != nil {
 		return err
 	}

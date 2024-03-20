@@ -4,8 +4,9 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"github.com/google/uuid"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 func handleMessages(ctx *octopus.Context) {
@@ -13,7 +14,9 @@ func handleMessages(ctx *octopus.Context) {
 
 func GetUsers(ctx *octopus.Context) {
 	var users models.Users
-	err1 := users.GetAll(ctx.Db.Conn)
+	var userId = ctx.Values["userId"].(uuid.UUID)
+
+	err1 := users.GetFlow(ctx.Db.Conn, userId)
 	if err1 != nil {
 		// HandleError(ctx.ResponseWriter, http.StatusInternalServerError, "Error getting users : "+err1.Error())
 		return
@@ -28,12 +31,14 @@ func GetUsers(ctx *octopus.Context) {
 func handlerGetMessages(ctx *octopus.Context) {
 	var senderId = ctx.Values["userId"].(uuid.UUID)
 	var messages models.PrivateMessages
-	var receiverId map[string]string
+	var receiverId map[string]interface{}
 	if err := ctx.BodyParser(&receiverId); err != nil {
-		ctx.Status(http.StatusBadRequest).JSON(map[string]string{"message": "bad request"})
+		ctx.Status(http.StatusBadRequest).JSON(map[string]string{
+			"status":  "400",
+			"message": "bad request"})
 		return
 	}
-	err1 := messages.GetPrivateMessages(ctx.Db.Conn, uuid.MustParse(receiverId["receiver_id"]), senderId)
+	err1 := messages.GetPrivateMessages(ctx.Db.Conn, uuid.MustParse(receiverId["receiver_id"].(string)), senderId)
 	if err1 != nil {
 		// HandleError(ctx.ResponseWriter, http.StatusInternalServerError, "Error getting users : "+err1.Error())
 		ctx.Status(http.StatusBadRequest).JSON(map[string]string{"message": "bad request"})
@@ -56,11 +61,11 @@ var messagesRoutes = route{
 	},
 }
 var getUsers = route{
-	path:   "/users",
+	path:   "/chatlist",
 	method: http.MethodGet,
 	middlewareAndHandler: []octopus.HandlerFunc{
-		middleware.NoAuthRequired, // Middleware to check if the request is authenticated.
-		GetUsers,                  // Handler function to process the messages request.
+		middleware.AuthRequired, // Middleware to check if the request is authenticated.
+		GetUsers,                // Handler function to process the messages request.
 	},
 }
 var getMessages = route{

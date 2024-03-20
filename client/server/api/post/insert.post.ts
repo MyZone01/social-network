@@ -27,7 +27,6 @@ export default defineEventHandler(async (event) => {
         };
     });
 
-    console.log("res from server for post insert ", response)
     if (response.status !== 200) {
         return {
             status: response.status,
