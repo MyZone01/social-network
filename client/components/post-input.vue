@@ -77,7 +77,7 @@
                               <input type="radio" name="radio-status" ref="privateCheck"
                                     value = "almost private" class="peer appearance-none hidden"  @change="()=>{
                                       this.showSelectUser = true 
-                                      this.privacyState = 'almo st private'
+                                      this.privacyState = 'almost private'
                                     }"/>
                                 <div
                                     class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
@@ -145,37 +145,40 @@ export default {
       }
       let jsonFormObject = {
         content: formdata.get("post-content-text"),
-        privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
+        privacy: !this.path.includes("groups") ? 
+        (followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"))
+         : "group",
         followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
-        type: this.path == '/' || this.path == '/profile' ? "user" : "group",
+        groupId: this.path.includes("groups") ? this.path.split('/')[2] : null,
       }
       console.log(jsonFormObject);
-      // if (formdata.get('photo').name) {
-      //   let body = new FormData()
-      //   body.append('file', formdata.get('photo'))
-      //   let response = await fetch("/api/upload", {
-      //     method: "POST",
-      //     body: body,
-      //   }).then(response => response.json()).catch(err => ({ errors: err }))
-      //   if (response.data) jsonFormObject.image_url = response.data
-      // }
-      // try {
-      //   let response = await fetch("/api/post/insert", {
-      //     method: "POST",
-      //     body: JSON.stringify(jsonFormObject),
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   }).then(response => response.json())
-      //   postStore.addPost(response.body.data)
-      //   UIkit.modal("#create-status").hide();
-      // } catch (err) {
-      //   console.error(err)
-      // }
+      if (formdata.get('photo').name) {
+        let body = new FormData()
+        body.append('file', formdata.get('photo'))
+        let response = await fetch("/api/upload", {
+          method: "POST",
+          body: body,
+        }).then(response => response.json()).catch(err => ({ errors: err }))
+        if (response.data) jsonFormObject.image_url = response.data
+      }
+      try {
+        let response = await fetch("/api/post/insert", {
+          method: "POST",
+          body: JSON.stringify(jsonFormObject),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => response.json())
+        postStore.addPost(response.body.data)
+        UIkit.modal("#create-status").hide();
+      } catch (err) {
+        console.error(err)
+      }
     },
     resetCheckbox() {
       this.$refs.publicCheck.checked = false
       this.$refs.privateCheck.checked = false
+
     },
     resetSelectMenu() {
       $('.js-example-basic-multiple').val([]).change()

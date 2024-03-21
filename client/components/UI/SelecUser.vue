@@ -1,16 +1,14 @@
 <script>
 
 export default {
-    data() {
-        return {
-            userFollowers: null
-        }
+    async setup() {
+        let userFollowers = await GetAllFollower()
+        userFollowers = ref(userFollowers.body)
+        return { userFollowers }
     },
     async mounted() {
-        this.userFollowers = await GetAllFollower();
-        // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
-            placeholder: 'Selec Followers ..'
+            placeholder: 'Select Followers ..'
         })
 
     }
@@ -19,7 +17,6 @@ export default {
 
 <template>
     <select class="js-example-basic-multiple" id="selecUser" style="width: 100%" name="states[]" multiple="multiple">
-
         <option v-for="follower  in userFollowers" :id="follower.id">{{ follower.firstname }} {{ follower.lastname }}
         </option>
     </select>
