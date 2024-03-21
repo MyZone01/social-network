@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-    <select class="js-example-basic-multiple" id="selecUser" style="width: 40%" name="states[]" multiple="multiple">
+    <select class="js-example-basic-multiple" id="selecUser" style="width: 100%" name="states[]" multiple="multiple">
 
         <option v-for="follower  in userFollowers" :id="follower.id">{{ follower.firstname }} {{ follower.lastname }}
         </option>

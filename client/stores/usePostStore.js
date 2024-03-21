@@ -4,6 +4,7 @@ export default defineStore("feed", {
   state: () => ({
     posts: [],
     userPosts: []
+    
   }),
   actions: {
     addPost(post) {
