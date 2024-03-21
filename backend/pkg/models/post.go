@@ -34,6 +34,7 @@ type Post struct {
 	CreatedAt         time.Time    `json:"created_at"`
 	UpdatedAt         time.Time    `json:"updated_at"`
 	DeletedAt         sql.NullTime `json:"deleted_at"`
+
 }
 
 // IsPublic returns true if the post is public
@@ -303,7 +304,7 @@ func (p *Posts) GetAvailablePostForUser(db *sql.DB, userID uuid.UUID) error {
     (privacy = 'private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM followers f WHERE posts.user_id = f.followee_id AND f.follower_id = ? AND f.status = 'accepted')) OR 
     (privacy = 'almost private' AND deleted_at IS NULL AND EXISTS (SELECT 1 FROM selected_users us WHERE posts.id = us.post_id AND us.user_id = ?)) OR 
     user_id = ?) AND 
-    deleted_at IS NULL AND (group_id  IS NULL OR group_id = "00000000-0000-0000-0000-000000000000")
+    deleted_at IS NULL AND (group_id  IS NULL OR group_id = "00000000-0000-0000-0000-000000000000") AND privacy != 'group' 
     ORDER BY created_at DESC`
 	if err := p.getPostsFromQuery(db, query, userID, userID, userID); err != nil {
 		return err

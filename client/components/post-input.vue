@@ -37,25 +37,25 @@
 
                 </div>
                 
-                <UAlert v-if="showAlert" icon="ic:baseline-warning" class= "custom-alert" variant="solid" title="Error!" description = "Choose audiance for your post "> </UAlert>
+                <UAlert v-if="showAlert" icon="ic:baseline-warning" class= "custom-alert" variant="solid" title="Error!" :description = WarningMessage> </UAlert>
 
-                <div class="p-5 flex justify-between items-center">
-                    <div>
+                <div  class="p-5 flex justify-between items-center">
+                    <div v-if="path == '/' || path== '/profile'">
                         <button
                             class="inline-flex items-center py-1 px-2.5 gap-1 font-medium text-sm rounded-full bg-slate-50 border-2 border-slate-100 group aria-expanded:bg-slate-100 aria-expanded: dark:text-white dark:bg-slate-700 dark:border-slate-600"
                             type="button">
-                            Everyone
+                            {{privacyState}}
                             <i class='bx bx-chevron-down text-base duration-500 group-aria-expanded:rotate-180' ></i>
                         </button>
 
-                        <div class="p-2 bg-white rounded-lg shadow-lg text-black font-medium border border-slate-100 w-60 dark:bg-slate-700"
+                        <div  class="p-2 bg-white rounded-lg shadow-lg text-black font-medium border border-slate-100 w-60 dark:bg-slate-700"
                             uk-drop="offset:10;pos: bottom-left; reveal-left;animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left ; mode:click">
 
                             <!-- <form>
                         </form> -->
                             <label>
                                 <input type="radio" name="radio-status" ref="publicCheck"
-                                value = "public" class="peer appearance-none hidden" checked @change="resetSelectMenu"/>
+                                value = "public" class="peer appearance-none hidden" checked @change="()=>{resetSelectMenu();this.privacyState='Public' }"/>
                                 <div
                                     class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
                                     <div class="text-sm"> public </div>
@@ -64,7 +64,9 @@
                             </label>
                             <label>
                                 <input type="radio" name="radio-status" ref="privateCheck"
-                                    value = "private" class="peer appearance-none hidden"  @change="resetSelectMenu"/>
+                                    value = "private" class="peer appearance-none hidden"  @change="()=>{
+                                      resetSelectMenu()
+                                      this.privacyState='Private' }"/>
                                 <div
                                     class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
                                     <div class="text-sm"> private </div>
@@ -72,13 +74,25 @@
                                 </div>
                             </label>
                             <label>
+                              <input type="radio" name="radio-status" ref="privateCheck"
+                                    value = "almost private" class="peer appearance-none hidden"  @change="()=>{
+                                      this.showSelectUser = true 
+                                      this.privacyState = 'almost private'
+                                    }"/>
+                                <div
+                                    class=" relative flex items-center justify-between cursor-pointer rounded-md p-2 px-3 hover:bg-secondery peer-checked:[&_.active]:block dark:bg-dark3">
+                                    <div class="text-sm"> private </div>
+                                    <i class='bx bxs-check-circle hidden active absolute -translate-y-1/2 right-2 text-2xl text-blue-600 uk-animation-scale-up'></i>
+                                </div>
                             </label>
 
                         </div>
                     </div>
 
+                    <div v-if="showSelectUser &&(path == '/' || path== '/profile') " >
+                      <UISelecUser />
+                    </div>
                     
-                    <UISelecUser />
                     <div class="flex items-center gap-2">
                         <button ref= "creatPostButon" type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">
                             Create</button>
@@ -94,12 +108,17 @@
 </template>
 <script>
 import usePostStore from "~/stores/usePostStore.js";
+
 const postStore = usePostStore()
 
 export default {
   setup() {
-    let showAlert = ref(false);;
-    return { showAlert };
+    let showAlert = ref(false)
+    let showSelectUser = ref(false)
+    let path = ref(location.pathname)
+    let WarningMessage = ref("")
+    let privacyState = ref("Privacy")
+    return { showAlert, showSelectUser, path, WarningMessage, privacyState }
   },
   mounted() {
     $('.js-example-basic-multiple').on("select2:select", this.resetCheckbox)
@@ -112,16 +131,27 @@ export default {
       e.preventDefault();
       let followersSelected = Array.from($('.js-example-basic-multiple').find(':selected'))
       let formdata = new FormData(e.target)
-      if (followersSelected.length == 0 && !formdata.get("radio-status")) {
+      if (formdata.get("radio-status") == "almost private" && !followersSelected.length) {
+        this.WarningMessage = "bro please select some followers"
+        this.showAlert = true
+        setTimeout(() => this.showAlert = false, 2000)
+        return
+      }
+      if (followersSelected.length == 0 && !formdata.get("radio-status") && (this.path == '/' || this.path == '/profile')) {
+        this.WarningMessage = "Choose audiance for your post "
         this.showAlert = true
         setTimeout(() => this.showAlert = false, 2000)
         return
       }
       let jsonFormObject = {
         content: formdata.get("post-content-text"),
-        privacy: followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"),
+        privacy: !this.path.includes("groups") ? 
+        (followersSelected.length > 0 ? "almost private" : formdata.get("radio-status"))
+         : "group",
         followersSelectedID: followersSelected.length > 0 ? followersSelected.map((v) => v.id) : null,
+        groupId: this.path.includes("groups") ? this.path.split('/')[2] : null,
       }
+      console.log(jsonFormObject);
       if (formdata.get('photo').name) {
         let body = new FormData()
         body.append('file', formdata.get('photo'))
@@ -148,11 +178,19 @@ export default {
     resetCheckbox() {
       this.$refs.publicCheck.checked = false
       this.$refs.privateCheck.checked = false
+
     },
     resetSelectMenu() {
       $('.js-example-basic-multiple').val([]).change()
+      this.showSelectUser = false
+      console.log(this.showSelectUser);
     },
-  }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.path = to.path
+    },
+  },
 }
 </script>
 <style>

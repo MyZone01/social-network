@@ -32,15 +32,15 @@
 </template>
 
 <script setup lang="ts">
+
 import usePostStore from "~/stores/usePostStore.js";
 const postStore = usePostStore()
 const currentUser = useAuthUser();
 useHead({
   title: "Home",
 })
-
-onMounted(async () => {
-  await postStore.getUserFeed()
+onMounted(() => {
+  postStore.getUserFeed()
 })
 
 definePageMeta({

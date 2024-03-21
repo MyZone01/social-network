@@ -131,8 +131,9 @@
                   d="M12 2.25A6.75 6.75 0 005.25 9v.75a8.217 8.217 0 01-2.119 5.52.75.75 0 00.298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 107.48 0 24.583 24.583 0 004.83-1.244.75.75 0 00.298-1.205 8.217 8.217 0 01-2.118-5.52V9A6.75 6.75 0 0012 2.25zM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 004.496 0l.002.1a2.25 2.25 0 11-4.5 0z"
                   clip-rule="evenodd" />
               </svg>
-              <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
-                6</div>
+              <div v-if="notifications.length !== 0"
+                class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full">
+                {{ formatFollowersCount(notifications.length) }}</div>
               <i class='bx bx-bell sm:hidden text-2xl'></i>
             </button>
             <div
@@ -142,25 +143,77 @@
               <!-- heading -->
               <div class="flex items-center justify-between gap-2 p-4 pb-2">
                 <h3 class="font-bold text-xl"> Notifications </h3>
+
+                <div class="flex gap-2.5">
+                  <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white"> 
+                    <i class='bx bx-dots-horizontal-rounded'></i> </button>
+                  <div class="w-[280px] group"
+                    uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:5">
+                    <nav class="text-sm">
+                      <a @click="clearNotif(undefined, 'all')" href="#">
+                        <i class='bx bx-check-circle'></i> 
+                           Mark
+                        all as read</a>
+                    </nav>
+                  </div>
+                </div>
               </div>
 
               <div class="text-sm h-[400px] w-full overflow-y-auto pr-2">
 
                 <!-- contents list -->
-                <div class="pl-2 p-1 text-sm font-normal dark:text-white">
-                  <a href="#"
-                    class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10 bg-teal-500/5">
-                    <div class="relative w-12 h-12 shrink-0"> <img src="assets/images/avatars/avatar-3.jpg" alt=""
-                        class="object-cover w-full h-full rounded-full"></div>
-                    <div class="flex-1 ">
-                      <p> <b class="font-bold mr-1"> Alexa Gray</b> started following you.
-                        Welcome him to your profile. 👋 </p>
-                      <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> 4 hours
-                        ago </div>
-                      <div class="w-2.5 h-2.5 bg-teal-600 rounded-full absolute right-3 top-5">
+                <div class="pl-2 p-1 text-sm font-normal dark:text-white" v-for="notification in  notifications "
+                  :key="notification.id">
+
+                  <!-- message for clear -->
+                  <a href="#" v-if="notification.type === 'clear'"
+                    :style="notification.user === 'accepted' ? 'background-color: rgba(0, 250, 0, 0.2);' : 'background-color: rgba(250, 0, 0, 0.2);'"
+                    class="relative flex items-center justify-center gap-3 p-2 duration-200 rounded-xl hover:bg-secondery dark:hover:bg-white/10">
+                    <div class="flex-1 text-center">
+                      <p>
+                        <b class="font-bold mr-1"></b>{{ notification.message }}
+                      </p>
+                    </div>
+                  </a>
+
+                  <!-- message for follow request -->
+                  <a href="#" v-if="notification.type === 'follow_request'"
+                    class="relative flex items-center gap-3 p-2 duration-200 rounded-xl  hover:bg-secondery dark:hover:bg-white/10">
+                    <div class="relative w-12 h-12 shrink-0">
+                      <img :src="'http://localhost:8081/' + notification.user.avatarImage" alt=""
+                        class="object-cover w-full h-full rounded-full">
+                    </div>
+                    <div class="flex-1">
+                      <p>
+                        <b class="font-bold mr-1">{{ notification.user.firstName + " "
+                + notification.user.lastName }}</b>{{ notification.message }}
+                      </p>
+                      <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"
+                        style="display: flex;  align-items: flex-end;justify-content:space-between ;">
+                        {{ formatTimeAgo(notification.created_at) }}
+                        <span style="display: flex;gap: 10px;justify-content: flex-end;">
+                          <button @click="follow(notification.id, 'accept')" type="button"
+                            class="button text-white bg-primary">accepte</button>
+                          <button @click="follow(notification.id, 'decline')" type="button"
+                            class="button text-white bg-secondery"
+                            style="background-color: rgba(250, 0, 0, 0.7);">decline</button>
+                        </span>
                       </div>
                     </div>
                   </a>
+                  <span @click="clearNotif(notification, 'redirect')" href="#"
+                    v-if="notification.type === 'follow_accepted' || notification.type === 'follow_declined' || notification.type === 'unfollow'"
+                    class="relative flex items-center gap-3 p-2 duration-200 rounded-xl pr-10 hover:bg-secondery dark:hover:bg-white/10">
+                    <div class="relative w-12 h-12 shrink-0"> <img
+                        :src="'http://localhost:8081/' + notification.user.avatarImage" alt=""
+                        class="object-cover w-full h-full rounded-full"></div>
+                    <div class="flex-1 ">
+                      <p> <b class="font-bold mr-1">{{ notification.user.firstName + " "
+                + notification.user.lastName }}</b>{{ notification.message }}</p>
+                      <div class="text-xs text-gray-500 mt-1.5 dark:text-white/80"> {{
+                formatTimeAgo(notification.created_at) }}</div>
+                    </div>
+                  </span>
                 </div>
 
               </div>
@@ -293,7 +346,6 @@
             </div>
 
           </div>
-
         </div>
 
       </div>
@@ -305,13 +357,18 @@
 </template>
 
 <script setup lang="ts">
+// import { array, set, string } from 'zod';
+import { clearNotif, notifications } from '../composables/notification/notification';
+import { useAuth } from '../composables/useAuth'
+import { useAuthUser } from '../composables/useAuthUser'
+import { connNotifSocket } from '~/composables/notification/socket';
+
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
-let ws: WebSocket | undefined
-const notifications = useState<{ id: number, user: any, message: string, created_at: string }[]>(() => []);
 
 const onLogoutClick = async () => {
+  // async function onLogoutClick() {
   try {
     loading.value = true;
     await logout();
@@ -323,17 +380,41 @@ const onLogoutClick = async () => {
   }
 }
 
+function formatTimeAgo(date: Date): string {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+
+  if (hours < 1) {
+    return `${minutes} minutes ago`;
+  } else if (hours < 24) {
+    return `${hours} hours ago`;
+  } else {
+    return date.toLocaleString(); // Or any other formatting for older dates
+  }
+}
+
 onMounted(async () => {
   const user = currentUser!.value!.id
-  // console.log('user', );
-  ws = await connNotifSocket(ws, user)
-  ws.addEventListener('message', (event) => {
-    const notif = JSON.parse(event.data)
-    console.log("⛔>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", notif);
-    //    notifications.value.push({
-    //     // id:1,
-    //    })
-  });
-
+  await connNotifSocket(user)
 });
+
+
+const follow = async (id: number, action: string) => {
+  const nickname = notifications.value[id - 1].user.nickname
+  if (action === 'accept' || action === 'decline') {
+    const ok = await useFollow(nickname, action);
+    (action === 'accept') ? action = action + "ed" : action = action + "d"
+    if (ok.ok) {
+      const notif = notifications.value[id - 1]
+      notif.user = action
+      clearNotif(notif, 'clear', `you have ${action} the follow request`)
+    }
+  }
+}
+
 </script>
+<!-- ../composables/notification/notification -->

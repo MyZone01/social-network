@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
-    const body = await readBody(event)
-
+    const data = await readBody(event)
+    // console.log(data);
     const token = event.context.token;
     if (!token) {
         return {
@@ -8,35 +8,18 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    let jsonBody = JSON.stringify(body);
-    console.log("jsonBody", jsonBody)
 
-
-
-    const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insert', {
+    const response = await fetch('http://localhost:8081/clearnotifications', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        body: jsonBody,
+        body: JSON.stringify(data),
     }).then(async (res) => await res.json()).catch((err) => {
-        console.log(err);
         return {
             status: 500,
             body: 'Internal server error',
         };
     });
-
-    if (response.status !== 200) {
-        return {
-            status: response.status,
-            body: response.message,
-        };
-    }
-
-    return {
-        status: 200,
-        body: response
-    };
-
-});
+    return response
+})

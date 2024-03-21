@@ -15,17 +15,19 @@ export default defineStore("feed", {
         .then(async (response) => {
           const data = await response.json()
           this.posts = data.body
-          this.posts.forEach(post => {
-            if (post.userOwnerNickname === useAuthUser().value.nickname) {
-              this.userPosts.push(post);
+          for (let i = 0; i < this.posts.length; i++){
+            if (this.posts[i].userOwnerNickname === useAuthUser().value.nickname) {
+              this.userPosts.push(this.posts[i]);
             }
-          })
+          }
         })
         .catch((error) => console.error(error))
     },
     addComment(comment) {
+      console.log(comment);
       for (let i = 0; i < this.posts.length; i++) {
         if (this.posts[i].id === comment.post_id) {
+          
           this.posts[i].comments.push(comment);
           break
         }
@@ -42,6 +44,10 @@ export default defineStore("feed", {
         }
       }
       return userPosts
+    },
+    flushAllPosts() {
+      this.userPosts = []
+      this.posts = [] 
     }
   }
 }); 

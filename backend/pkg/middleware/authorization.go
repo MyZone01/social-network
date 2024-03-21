@@ -1,4 +1,5 @@
 package middleware
+
 import (
 	octopus "backend/app"
 	"backend/pkg/config"
@@ -13,6 +14,7 @@ import (
 	"time"
 	"github.com/google/uuid"
 )
+
 // HaveGroupAccess is a middleware that checks if the user is authenticated
 func HaveGroupAccess(ctx *octopus.Context) {
 	groupId := ctx.Request.URL.Query().Get("group_id")
@@ -34,6 +36,7 @@ func HaveGroupAccess(ctx *octopus.Context) {
 	ctx.Values["member"] = mg
 	ctx.Next()
 }
+
 func IsGroupAdmin(ctx *octopus.Context) {
 	role := ctx.Values["role"].(models.GroupMemberRole)
 	if role != models.MemberRoleAdmin {
@@ -44,6 +47,7 @@ func IsGroupAdmin(ctx *octopus.Context) {
 	}
 	ctx.Next()
 }
+
 // CheckRole is a middleware that checks if the user have a specific role in the group
 func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
 	_role, ok := ctx.Values["role"].(models.GroupMemberRole)
@@ -61,6 +65,7 @@ func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
 	}
 	ctx.Next()
 }
+
 const DirName = "uploads"
 // ImageUploadMiddleware is a middleware that checks if the file is an image and downloads it
 func ImageUploadMiddleware(c *octopus.Context) {
@@ -108,6 +113,7 @@ func ImageUploadMiddleware(c *octopus.Context) {
 	c.Values["file"] = path
 	c.Next()
 }
+
 func contains(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
@@ -116,6 +122,7 @@ func contains(s []string, e string) bool {
 	}
 	return false
 }
+
 // IsPostValid is a middleware that checks if the data is valid
 func IsPostValid(c *octopus.Context) {
 	var data = map[string]interface{}{}
@@ -143,6 +150,7 @@ func IsPostValid(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 // CreateGroupMiddleware is a middleware that checks if the data is valid
 func CreateGroupMiddleware(c *octopus.Context) {
 	var token string
@@ -174,6 +182,7 @@ func CreateGroupMiddleware(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 // CreateEventMiddleware is a middleware that checks if the data is valid
 func CreateEventMiddleware(c *octopus.Context) {
 	var token string
@@ -206,6 +215,7 @@ func CreateEventMiddleware(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 func IsGroupPostValid(c *octopus.Context) {
 	var data = map[string]interface{}{}
 	if err := c.BodyParser(&data); err != nil {
@@ -224,6 +234,7 @@ func IsGroupPostValid(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 func IsGroupValid(c *octopus.Context) {
 	var data = map[string]interface{}{}
 	if err := c.BodyParser(&data); err != nil {
@@ -242,6 +253,7 @@ func IsGroupValid(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 func IsGroupExist(c *octopus.Context) {
 	_groupId := c.Request.URL.Query().Get("group_id")
 	group := new(models.Group)
@@ -263,6 +275,7 @@ func IsGroupExist(c *octopus.Context) {
 	c.Values["group"] = group
 	c.Next()
 }
+
 func IsInvitedUserExist(c *octopus.Context) {
 	_userId := c.Request.URL.Query().Get("user_id")
 	user := new(models.User)
@@ -290,6 +303,7 @@ func IsInvitedUserExist(c *octopus.Context) {
 	c.Values["invited_user_id"] = userId
 	c.Next()
 }
+
 func NoGroupAccess(c *octopus.Context) {
 	groupId := c.Values["group_id"].(uuid.UUID)
 	userUUID := c.Values["userId"].(uuid.UUID)
@@ -302,6 +316,7 @@ func NoGroupAccess(c *octopus.Context) {
 	}
 	c.Next()
 }
+
 func IsGroupPostExist(c *octopus.Context) {
 	groupId := c.Values["group_id"].(uuid.UUID)
 	_postId := c.Request.URL.Query().Get("post_id")
@@ -329,6 +344,7 @@ func IsGroupPostExist(c *octopus.Context) {
 	c.Values["post_id"] = postId
 	c.Next()
 }
+
 func IsInvitationExist(c *octopus.Context) {
 	_invitationId := c.Request.URL.Query().Get("invitation_id")
 	member := new(models.GroupMember)
@@ -349,6 +365,7 @@ func IsInvitationExist(c *octopus.Context) {
 	c.Values["member"] = member
 	c.Next()
 }
+
 func IsAccessDemandExist(c *octopus.Context) {
 	_requestingId := c.Request.URL.Query().Get("requesting_id")
 	member := new(models.GroupMember)
@@ -369,6 +386,7 @@ func IsAccessDemandExist(c *octopus.Context) {
 	c.Values["member"] = member
 	c.Next()
 }
+
 func IsEventExist(c *octopus.Context) {
 	_eventId := c.Request.URL.Query().Get("event_id")
 	event := new(models.Event)
@@ -395,6 +413,7 @@ func IsEventExist(c *octopus.Context) {
 	c.Values["event"] = event
 	c.Next()
 }
+
 // CreateGroupMessageMiddleware is a middleware that checks if the data is valid
 func CreateGroupMessageMiddleware(c *octopus.Context) {
 	var token string
