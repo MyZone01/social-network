@@ -4,7 +4,6 @@ export default defineStore("feed", {
   state: () => ({
     posts: [],
     userPosts: []
-    
   }),
   actions: {
     addPost(post) {
@@ -45,6 +44,10 @@ export default defineStore("feed", {
         }
       }
       return userPosts
+    },
+    flushAllPosts() {
+      this.userPosts = []
+      this.posts = [] 
     }
   }
 }); 
