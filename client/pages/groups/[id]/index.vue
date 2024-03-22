@@ -220,7 +220,7 @@ const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
 const events = ref<Event[]>([])
-const posts = ref<Map<string,Post>>()
+const posts = ref<Post[]>()
 const title = computed(() => group.value?.Title)
 
 useTitle(title, { titleTemplate: "%s | Social Network" })
@@ -249,7 +249,7 @@ onMounted(async () => {
   }
 
   await postStore.getGroupFeeds(group.value?.ID)
-  posts.value = postStore.groupPosts
+  posts.value = postStore.groupPosts as Post[]
 
   joinRequests.value = await getJoinRequests(id) || []
   console.log("posts /////////// \n", posts.value);

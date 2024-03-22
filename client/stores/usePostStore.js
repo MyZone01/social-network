@@ -5,7 +5,8 @@ export default defineStore("feed", {
   state: () => ({
     posts: [],
     userPosts: [],
-    groupPosts: new Map()
+    groupPosts:[],
+    allPosts: new Map()
   }),
   actions: {
     addPost(post) {
@@ -18,6 +19,8 @@ export default defineStore("feed", {
           const data = await response.json()
           this.posts = data.body
           for (let i = 0; i < this.posts.length; i++) {
+            const p = this.posts[i]
+            this.allPosts[p.id] = p
             if (this.posts[i].userOwnerNickname === useAuthUser().value.nickname) {
               this.userPosts.push(this.posts[i]);
             }
@@ -25,24 +28,29 @@ export default defineStore("feed", {
         })
         .catch((error) => console.error(error))
     },
-    
+
     async getGroupFeeds(groupId) {
-      const posts = await getAllGroupPosts(groupId)
-      posts.forEach(p=>{
-        this.groupPosts[p.id] = p
+      this.groupPosts = await getAllGroupPosts(groupId)
+      this.groupPosts.forEach(p=>{
+        this.allPosts[p.id] = p
       })
     },
 
     addComment(comment) {
       console.log(comment);
-      for (let i = 0; i < this.posts.length; i++) {
-        if (this.posts[i].id === comment.post_id) {
+      // for (let i = 0; i < this.posts.length; i++) {
+      //   if (this.posts[i].id === comment.post_id) {
+      //     this.posts[i].comments.push(comment);
+      //     break
+      //   }
 
-          this.posts[i].comments.push(comment);
-          break
-        }
+      // }
 
-      }
+      this.allPosts[comment.post_id].comments.push(comment)
+
+    },
+    getpostComments(postId){
+      return this.allPosts[postId].comments
     },
     getUserPosts(nickname) {
 
@@ -58,6 +66,8 @@ export default defineStore("feed", {
     flushAllPosts() {
       this.userPosts = []
       this.posts = []
+      this.groupPosts = []
+      this.allPosts = []
     }
   }
 }); 
