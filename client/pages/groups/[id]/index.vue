@@ -110,7 +110,7 @@
       </div>
       <div id="group-menus" class="uk-switcher flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col">
         <!-- post tab-->
-        <div class="w-full">
+        <div class="w-full h-full">
           <div class="tab bg-white  rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
             <div class="flex w-1/2 items-center gap-3">
               <div
@@ -145,6 +145,9 @@
                 </svg>
               </div>
             </div>
+          </div>
+          <div class="posts-container w-full h-full bg-red-500">
+            <PostCardImg v-for="post in posts" :post="post"></PostCardImg>
           </div>
         </div>
         <!-- events tab-->
@@ -196,7 +199,7 @@ li.uk-active {
 </style>
 <script lang="ts" setup>
 import { useTitle } from '@vueuse/core';
-import type { Group, GroupMember, Event } from '~/types';
+import type { Group, GroupMember, Event,Post } from '~/types';
 
 definePageMeta({
   alias: ["/groups/[id]"],
@@ -206,6 +209,7 @@ definePageMeta({
 const { getGroupByID } = useGroups();
 const { getJoinRequests, joinRequest } = useGroupRequest()
 const { getAllEvents } = useEvents()
+const {getAllGroupPosts} = useGroupPost()
 const user = useAuthUser()
 const route = useRoute();
 
@@ -214,6 +218,7 @@ const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
 const events = ref<Event[]>([])
+const posts = ref<Post[]>([])
 const title = computed(() => group.value?.Title)
 
 useTitle(title, { titleTemplate: "%s | Social Network" })
@@ -242,6 +247,8 @@ onMounted(async () => {
   }
 
   joinRequests.value = await getJoinRequests(id) || []
+  posts.value = await getAllGroupPosts(group.value?.ID)
+  console.log("posts /////////// \n", posts.value);
 
   events.value = await getAllEvents(id)
 

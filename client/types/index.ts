@@ -73,4 +73,18 @@ export interface EventParticipant {
   User: UserWithoutPassword
 }
 
+export interface Post {
+  id: string,
+  group_id: string,
+  user_id: string,
+  title: string,
+  content: string,
+  image_url: string,
+  privacy: string,
+  followersSelectedID: string,
+  created_at: string,
+  updated_at: string,
+  deleted_at: Date
+}
+
 export type UserWithoutPassword = Omit<User, "password">;

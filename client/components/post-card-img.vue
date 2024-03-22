@@ -70,6 +70,7 @@ import { passDataOnPostPreviewContent } from '~/composables/postPreview';
 export default {
   mounted() {
     console.log(useAuthUser().value.nickname)
+    // console.log('posssssssst',this.props.post);
   },
   props: {
     post: {

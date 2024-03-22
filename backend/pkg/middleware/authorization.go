@@ -4,6 +4,7 @@ import (
 	octopus "backend/app"
 	"backend/pkg/config"
 	"backend/pkg/models"
+	"github.com/google/uuid"
 	"io"
 	"log"
 	"net/http"
@@ -12,7 +13,6 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-	"github.com/google/uuid"
 )
 
 // HaveGroupAccess is a middleware that checks if the user is authenticated
@@ -67,6 +67,7 @@ func CheckGroupRole(ctx *octopus.Context, role models.GroupMemberRole) {
 }
 
 const DirName = "uploads"
+
 // ImageUploadMiddleware is a middleware that checks if the file is an image and downloads it
 func ImageUploadMiddleware(c *octopus.Context) {
 	// Parse the multipart form in the request
