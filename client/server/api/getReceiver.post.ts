@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
             body: 'Unauthorized',
         };
     }
-    console.log(body)
+    
     const response = await fetch('http://localhost:8081/getMessages', {
         method: 'POST',
         headers: {
@@ -15,10 +15,8 @@ export default defineEventHandler(async (event) => {
         },
         body: JSON.stringify(body),
        
-    }).then(async (res) => {
-        return await res.json()
-    }).catch((err) => {
-        console.log(err, "loololo");
+    }).then(async (res) => await res.json()).catch((err) => {
+        console.log(err);
         return {
             status: 500,
             body: 'Internal server error',

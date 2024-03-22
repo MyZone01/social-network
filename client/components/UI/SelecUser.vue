@@ -7,6 +7,8 @@ export default {
         return { userFollowers }
     },
     async mounted() {
+        this.userFollowers = await GetAllFollower();
+        // Initialisation de Select2 une fois que les données ont été récupérées
         $('.js-example-basic-multiple').select2({
             placeholder: 'Select Followers ..'
         })

@@ -76,7 +76,6 @@ const { groups, getAllGroups } = useGroups();
 const mygroups = ref<Group[]>([])
 const user = useAuthUser()
 onMounted(async () => {
-  console.log(groups);
 
   await getAllGroups();
   mygroups.value = groups.value.filter((group) => group.GroupMembers.some((member) => member.MemberID === user.value?.id))

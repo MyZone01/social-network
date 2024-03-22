@@ -1,7 +1,10 @@
 import { getNotifications } from "./getNotifications";
+import { addMessage, messages } from "./message";
 
-export const useClearNotif = async (id: string, action: string = "clear") => {
-    const data = { type: action, id: id };
+
+
+export const useClearNotif = async (id: string, type: string = "clear", action: string) => {
+    const data = { type: type, id: id, action: action };
     const response = await fetch("/api/notification/clearnotification", {
         method: "POST",
         headers: {
@@ -71,7 +74,7 @@ export const clearNotif = async (notif: Notif | undefined, action: string, messa
     if (action === 'all') {
         type = 'clear_all'
     }
-    const res = await useClearNotif(notifId, type);
+    const res = await useClearNotif(notifId, type, "follow");
 
     if (action === 'redirect') {
         deleteNotif(notif!.notifId)
@@ -100,18 +103,17 @@ export const clearNotif = async (notif: Notif | undefined, action: string, messa
     }
 }
 
-async function fetchNotifications() {
-    const notifs = await getNotifications();
-	return notifs
-}
-
 if (!notifications.value.length) {
-    fetchNotifications().then((notifs) => {
-        if (!notifs.error && Array.isArray(notifs)) {
-            Array.from(notifs).forEach((notif: any) => {
+    const notifs = await getNotifications();
+    if (!notifs.error && Array.isArray(notifs)) {
+        Array.from(notifs).forEach((notif: any) => {
+            if (notif.type === "new_message") {
+                addMessage(notif)
+            } else {
                 addNotif(notif)
-            })
-            notifications.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-        }
-    });
+            }
+        })
+        messages.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+        notifications.value.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+    }
 }

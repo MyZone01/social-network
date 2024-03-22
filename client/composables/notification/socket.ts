@@ -1,3 +1,4 @@
+import { addMessage } from "./message";
 import { addNotif } from "./notification";
 
 export let ws: WebSocket | undefined
@@ -14,7 +15,13 @@ export const connNotifSocket = async (id: string = "") => {
         console.log("Connected to notif socket");
         ws!.addEventListener('message', (event) => {
             const notif = JSON.parse(event.data)
-            addNotif(notif)
+            if (notif.type === "new_message") {
+                addMessage(notif)
+            } else {
+                addNotif(notif)
+            }
         });
     };
 }
+
+// console.log('new_message');

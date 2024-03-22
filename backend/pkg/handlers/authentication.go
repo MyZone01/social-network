@@ -22,11 +22,11 @@ type credentials struct {
 
 func (c *credentials) Validate() error {
 	if _, err := mail.ParseAddress(c.Email); err != nil {
-		return errors.New("Invalid email")
+		return errors.New("invalid email")
 	}
 
 	if c.Password == "" {
-		return errors.New("Password is missing. Please provide it.")
+		return errors.New("password is missing. please provide it")
 	}
 
 	return nil

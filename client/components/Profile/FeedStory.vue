@@ -4,7 +4,7 @@
         <div class="flex-1 xl:space-y-6 space-y-3">
             <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
 
-                <div v-if="!potentialUser"
+                <div v-if="!    potentialUser"
                     class="bg-white rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1 dark:bg-dark2">
 
                     <div class="flex items-center md:gap-3 gap-1">
@@ -52,9 +52,9 @@ let potentialUser = location.pathname.split('/')[2]
 
 const postStore = usePostStore()
 // console.log(Nickname)
-// onMounted(async () => {
-//     await postStore.getUserFeed()
-// });
+onMounted(async () => {
+    await postStore.getUserFeed()
+});
 
 const props = defineProps({
     status: {

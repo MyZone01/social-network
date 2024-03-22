@@ -6,6 +6,7 @@ import (
 	"backend/pkg/middleware"
 	"backend/pkg/models"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 )
@@ -42,8 +43,9 @@ func handlerclearnotifications(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
 
 	type request struct {
-		Type string `json:"type"`
-		Id   string `json:"id"`
+		Type   string `json:"type"`
+		Id     string `json:"id"`
+		Action string `json:"action"`
 	}
 
 	req := new(request)
@@ -87,6 +89,11 @@ func handlerclearnotifications(ctx *octopus.Context) {
 			return
 		}
 		for _, notification := range *notifications {
+			if notification.Type == models.TypeNewMessage && req.Action != "new_message" {
+				continue
+			} else if strings.HasPrefix(string(notification.Type), "follow") && req.Action != "follow" {
+				continue
+			}
 			if err := notification.Delete(ctx.Db.Conn); err != nil {
 				ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 					"error": "something went wrong",

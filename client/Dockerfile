@@ -1,9 +1,6 @@
 # Use the official Node.js image as a base
 # FROM node:latest
-
-# FROM node:20.7.0-alpine
-FROM node:latest
-
+FROM node:20.7.0-alpine
 # Set the working directory inside the container
 WORKDIR /app
 # Copy package.json and package-lock.json to install dependencies
