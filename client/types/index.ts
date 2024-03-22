@@ -84,7 +84,19 @@ export interface Post {
   followersSelectedID: string,
   created_at: string,
   updated_at: string,
-  deleted_at: Date
+  deleted_at: Date,
+  commets: Comment[]
+}
+
+export interface Comment {
+  content: string,
+  createdAt: string,
+  id: string,
+  imageUrl: string,
+  post_id: string,
+  userAvatarImageUrl: string,
+  userCompleteName: string,
+  userOwnerNickname: string
 }
 
 export type UserWithoutPassword = Omit<User, "password">;

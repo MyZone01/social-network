@@ -3,7 +3,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/config"
 	"backend/pkg/models"
-	"github.com/google/uuid"
 	"io"
 	"log"
 	"net/http"

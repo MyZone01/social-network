@@ -146,8 +146,10 @@
               </div>
             </div>
           </div>
-          <div class="posts-container w-full h-full bg-red-500">
-            <PostCardImg v-for="post in posts" :post="post"></PostCardImg>
+          <div class="posts-container w-full h-full bg-red-500 flex flex-col items-center">
+            <div class="w-5/6 flex flex-col justify-center">
+              <PostCardImg v-for="post in posts" :post="post"></PostCardImg>
+            </div>
           </div>
         </div>
         <!-- events tab-->
@@ -209,7 +211,7 @@ definePageMeta({
 const { getGroupByID } = useGroups();
 const { getJoinRequests, joinRequest } = useGroupRequest()
 const { getAllEvents } = useEvents()
-const {getAllGroupPosts} = useGroupPost()
+const postStore = usePostStore()
 const user = useAuthUser()
 const route = useRoute();
 
@@ -218,7 +220,7 @@ const joinRequests = ref<GroupMember[] | null>(null)
 const isMember = ref(false);
 const isRequester = ref(false);
 const events = ref<Event[]>([])
-const posts = ref<Post[]>([])
+const posts = ref<Map<string,Post>>()
 const title = computed(() => group.value?.Title)
 
 useTitle(title, { titleTemplate: "%s | Social Network" })
@@ -246,8 +248,10 @@ onMounted(async () => {
     );
   }
 
+  await postStore.getGroupFeeds(group.value?.ID)
+  posts.value = postStore.groupPosts
+
   joinRequests.value = await getJoinRequests(id) || []
-  posts.value = await getAllGroupPosts(group.value?.ID)
   console.log("posts /////////// \n", posts.value);
 
   events.value = await getAllEvents(id)

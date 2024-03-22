@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
+const { getAllGroupPosts } = useGroupPost()
 
 export default defineStore("feed", {
   state: () => ({
     posts: [],
-    userPosts: []
+    userPosts: [],
+    groupPosts: new Map()
   }),
   actions: {
     addPost(post) {
@@ -15,7 +17,7 @@ export default defineStore("feed", {
         .then(async (response) => {
           const data = await response.json()
           this.posts = data.body
-          for (let i = 0; i < this.posts.length; i++){
+          for (let i = 0; i < this.posts.length; i++) {
             if (this.posts[i].userOwnerNickname === useAuthUser().value.nickname) {
               this.userPosts.push(this.posts[i]);
             }
@@ -23,11 +25,19 @@ export default defineStore("feed", {
         })
         .catch((error) => console.error(error))
     },
+    
+    async getGroupFeeds(groupId) {
+      const posts = await getAllGroupPosts(groupId)
+      posts.forEach(p=>{
+        this.groupPosts[p.id] = p
+      })
+    },
+
     addComment(comment) {
       console.log(comment);
       for (let i = 0; i < this.posts.length; i++) {
         if (this.posts[i].id === comment.post_id) {
-          
+
           this.posts[i].comments.push(comment);
           break
         }
@@ -47,7 +57,7 @@ export default defineStore("feed", {
     },
     flushAllPosts() {
       this.userPosts = []
-      this.posts = [] 
+      this.posts = []
     }
   }
 }); 

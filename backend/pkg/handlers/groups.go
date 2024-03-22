@@ -146,7 +146,7 @@ func getAllGroupPosts(ctx *octopus.Context) {
 	}
 
 	ctx.JSON(map[string]interface{}{
-		"data": posts,
+		"data": posts.ExploitForRendering(ctx.Db.Conn),
 	})
 }
 
