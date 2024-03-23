@@ -41,9 +41,8 @@ const currentUser = useAuthUser();
 useHead({
   title: "Home",
 })
-onMounted(async() => {
-  await postStore.getUserFeed()
-  console.log("**********\n",postStore.posts);
+onMounted(() => {
+  postStore.getUserFeed()
 })
 
 definePageMeta({

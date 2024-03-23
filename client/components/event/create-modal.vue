@@ -54,15 +54,19 @@ onMounted(() => {
 async function submitData(e) {
   e.preventDefault();
   const formData = new FormData(e.target)
-  const data = Object.fromEntries(formData.entries())
-  data.date_time = new Date(data.date_time)
+  const formObj = Object.fromEntries(formData.entries())
+  formObj.date_time = new Date(formObj.date_time)
 
-  const response = await createEvent(data, props.groupId)
+  const { data, error } = await createEvent(formObj, props.groupId)
 
-  
+  console.log(error);
+
+  if (!error) {
+    UIkit.modal("#create-event-overlay").hide()
+  }
 
 }
 </script>
 
-<style lang="">
+<style>
 </style>

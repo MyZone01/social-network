@@ -1,8 +1,8 @@
-import type { Event, EventParticipant } from "~/types";
+import type { Event, EventParticipant, ServerResponse } from "~/types";
 
 export const useEvents = () => {
     async function createEvent(eventDetail: any, groupId: string) {
-        const { data } = await useFetch("/api/groups/events/create", {
+        const { data,error } = await useFetch("/api/groups/events/create", {
             method: "post",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
             body: JSON.stringify(eventDetail),
@@ -10,7 +10,16 @@ export const useEvents = () => {
                 gid: groupId,
             }
         })
-        return JSON.parse(data.value as string)
+
+        if(error.value){
+            return {error}
+        }
+        console.log('created event bbbb\n',data.value);
+
+        const resp = JSON.parse(data.value as string) as ServerResponse<Event>
+        console.log('created event\n',resp,error);
+        
+        return {data:resp.data}
     }
 
     const getAllEvents = async (groupId: string) => {

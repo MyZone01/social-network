@@ -99,10 +99,14 @@ func (user *User) Create(db *sql.DB) error {
 // Get a user by its ID
 func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) error {
 	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id=$1 OR email=$1 OR nickname=$1`
-
+	stmt,err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer stmt.Close()
 	switch identifier.(type) {
 	case string:
-		err := db.QueryRow(query, identifier).Scan(
+		err := stmt.QueryRow(query, identifier).Scan(
 			&user.ID,
 			&user.Email,
 			&user.Password,
@@ -271,4 +275,3 @@ func (users *Users) GetFlow(db *sql.DB, userid uuid.UUID) error {
 
 	return nil
 }
-

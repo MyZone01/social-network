@@ -146,8 +146,8 @@
               </div>
             </div>
           </div>
-          <div class="posts-container w-full h-full bg-red-500 flex flex-col items-center">
-            <div class="w-5/6 flex flex-col justify-center">
+          <div class="posts-container mt-10 w-full h-full bg-red-500 flex flex-col items-center">
+            <div class="w-5/6 flex flex-col justify-center gap-5">
               <PostCardImg v-for="post in posts" :post="post"></PostCardImg>
             </div>
           </div>
