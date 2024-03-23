@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
+  // console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
 
   if (response.status !== "200" || response.data === undefined) {
     return sendError(event, createError({
@@ -45,7 +45,6 @@ export default defineEventHandler(async (event) => {
 
   const { password: _password, ...userWithoutPassword } = userWithPassword;
   const sessionServer = await sessionCreator(response.session, userWithPassword, event)
-  console.log(sessionServer)
   return {
     user: userWithoutPassword,
   };

@@ -11,7 +11,7 @@ export const notifUser = (data: any) => {
     if (user?.onLine) {
       if (data.type === 'new_message') {
         const otherId = messageconns.get(data.concernID)?.otherId
-        console.log(otherId, data.user.ID, "online message");
+        // console.log(otherId, data.user.ID, "online message");
         if (!otherId || otherId !== data.user.ID) {
           user.conn.send(data)
         }

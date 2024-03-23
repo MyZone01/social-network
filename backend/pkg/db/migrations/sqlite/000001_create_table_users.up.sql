@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY,
     email TEXT UNIQUE,
-    pseudo TEXT UNIQUE,
+    -- pseudo TEXT UNIQUE,
     password TEXT,
     first_name TEXT,
     last_name TEXT,

@@ -447,7 +447,7 @@ const onLogoutClick = async () => {
 onMounted(async () => {
   const user = currentUser!.value!.id
   await connNotifSocket(user)
-  console.log(messages.value);
+  // console.log(messages.value);
 
 });
 

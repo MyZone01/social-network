@@ -74,9 +74,9 @@ export const updatePassword = async (password) => {
 function validateUserInfo(userInfo) {
 
   // Validate nickname
-  if (!userInfo.nickname || userInfo.nickname.trim() === "") {
-    return "Nickname is required";
-  }
+  // if (!userInfo.nickname || userInfo.nickname.trim() === "") {
+  //   return "Nickname is required";
+  // }
 
   // Validate firstName
   if (!userInfo.firstName || userInfo.firstName.trim() === "") {

@@ -1,6 +1,7 @@
 import { sendError, getSession, defineEventHandler, useSession } from 'h3'
 import { fetcher } from '../utils/fetcher';
 import { sessionUpdater } from '../utils/sessionHandler'
+import type { ServerResponse, User } from '~/types';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
@@ -19,11 +20,12 @@ export default defineEventHandler(async (event) => {
     } else {
         try {
             body["password"] = sessionServer.data.userInfos.password
-            body["email"] = sessionServer.data.userInfos.email
+            // body["email"] = sessionServer.data.userInfos.email
             const result = await fetcher(`${process.env.BACKEND_URL}`+"/edituser", "PUT", JSON.stringify(body), token)
             await sessionUpdater(token, result.data, event)
-            
-            const { password: _password, ...userWithoutPassword } = result.data;
+            // console.log(result)
+            const userUpdated = result.data
+            const { password: _password, ...userWithoutPassword } = userUpdated;
             const cleanInfos = {
                 message: result.message,
                 user: userWithoutPassword,

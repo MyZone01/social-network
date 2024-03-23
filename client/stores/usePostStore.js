@@ -36,7 +36,7 @@ export default defineStore("feed", {
 
       let userPosts = []
       for (let post of this.posts) {
-        console.log(nickname, post)
+        // console.log(nickname, post)
         if (post.userOwnerNickname === nickname) {
           userPosts.push(post)
         }

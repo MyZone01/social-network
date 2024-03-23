@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  const _response = await fetch(`${process.env.BACKEND_URL}`+"/registration", {
+  const _response = await fetch(`${process.env.BACKEND_URL}` + "/registration", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -51,11 +51,10 @@ export default defineEventHandler(async (event) => {
   });
   const user = response.data;
   const { password: _password, ...userWithoutPassword } = user;
-  
+
   if (!file) {
     // create a server Session
-    await sessionCreator(response.session, user, event)
-    console.log(user)
+    await sessionCreator(response.session, response.data, event)
     return {
       status: 200,
       body: 'No file uploaded',
@@ -68,7 +67,7 @@ export default defineEventHandler(async (event) => {
   const body = new FormData();
   body.append('file', new Blob([file.data]), file.filename);
 
-  const _response2 = await fetch(`${process.env.BACKEND_URL}`+"/upload", {
+  const _response2 = await fetch(`${process.env.BACKEND_URL}` + "/upload", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${response.session}`,
@@ -85,7 +84,7 @@ export default defineEventHandler(async (event) => {
   userWithoutPassword.avatarImage = response2.imageurl;
   register.avatarImage = response2.imageurl;
 
-  const _response3 = await fetch(`${process.env.BACKEND_URL}`+"/updateuser", {
+  const _response3 = await fetch(`${process.env.BACKEND_URL}` + "/updateuser", {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -102,8 +101,19 @@ export default defineEventHandler(async (event) => {
   }
 
   // create a server Session
-  const userWithAvatar = user
-  await sessionCreator(response.session, userWithoutPassword, event)
+  let userWithAvatar =  {
+    id: userWithoutPassword.id,
+    email: userWithoutPassword.email,
+    firstName: userWithoutPassword.firstName,
+    lastName: userWithoutPassword.lastName,
+    dateOfBirth: userWithoutPassword.dateOfBirth,
+    avatarImage: userWithoutPassword.avatarImage,
+    nickname: userWithoutPassword.nickname,
+    aboutMe: userWithoutPassword.aboutMe,
+    isPublic: userWithoutPassword.isPublic,
+    password: response.data?.password
+  }
+  await sessionCreator(response.session, userWithAvatar, event)
   return {
     status: 200,
     body: "User registered successfully",

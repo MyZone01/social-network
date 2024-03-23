@@ -36,5 +36,5 @@ export default defineEventHandler(async (event) => {
         status: 200,
         body: response.data,
     };
-    console.log("ICIII la response",response)
+    // console.log("ICIII la response",response)
 });

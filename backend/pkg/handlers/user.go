@@ -174,6 +174,19 @@ func handleUpdateUserInfos(ctx *octopus.Context) {
 		})
 		return
 	}
+
+	// newUser := models.User{}
+
+	// err := newUser.Get(ctx.Db.Conn, user.Email, true)
+	// if err != nil {
+	// 	ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
+	// 		"session": "",
+	// 		"message": "User not found.",
+	// 		"status":  http.StatusUnauthorized,
+	// 		"data":    nil,
+	// 	})
+	// 	return
+	// }
 	// idSession, err := config.Sess.Start(ctx).Set(user.ID)
 	// // Start a new session for the user and set the user's ID as the session key.
 	// if err != nil {

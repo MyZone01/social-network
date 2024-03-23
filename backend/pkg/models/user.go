@@ -19,7 +19,7 @@ type Users []User
 type User struct {
 	ID          uuid.UUID    `sql:"type:uuid;primary key" json:"id"`
 	Email       string       `sql:"type:varchar(100);unique" json:"email"`
-	Pseudo      string    `sql:"type:uuid;unique" json:"pseudo"`
+	// Pseudo      string    `sql:"type:uuid;unique" json:"pseudo"`
 	Password    string       `sql:"type:varchar(100)" json:"password"`
 	FirstName   string       `sql:"type:varchar(100)" json:"firstName"`
 	LastName    string       `sql:"type:varchar(100)" json:"lastName"`
@@ -69,10 +69,13 @@ func (user *User) Create(db *sql.DB) error {
 
 	// Define the user default properties
 	user.ID = uuid.New()
-	user.Pseudo = uuid.NewString()
+	// user.Pseudo = uuid.NewString()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
-	query := `INSERT INTO users (id, email, pseudo, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`
+	// if user.Nickname == "" {
+	// 	user.Nickname = uuid.NewString()
+	// }
+	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -84,7 +87,7 @@ func (user *User) Create(db *sql.DB) error {
 	_, err = stmt.Exec(
 		user.ID.String(),
 		html.EscapeString(user.Email),
-		user.Pseudo,
+		// user.Pseudo,
 		user.Password,
 		html.EscapeString(user.FirstName),
 		html.EscapeString(user.LastName),
@@ -105,14 +108,14 @@ func (user *User) Create(db *sql.DB) error {
 
 // Get a user by its ID
 func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) error {
-	query := `SELECT id, email, pseudo, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id=$1 OR email=$1 OR nickname=$1`
+	query := `SELECT id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at FROM users WHERE id=$1 OR email=$1 OR nickname=$1`
 
 	switch identifier.(type) {
 	case string:
 		err := db.QueryRow(query, identifier).Scan(
 			&user.ID,
 			&user.Email,
-			&user.Pseudo,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,
@@ -135,7 +138,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 		err := db.QueryRow(query, identifier).Scan(
 			&user.ID,
 			&user.Email,
-			&user.Pseudo,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,
@@ -182,7 +185,7 @@ func (user *User) Update(db *sql.DB) error {
 		user.IsPublic,
 		time.Now(),
 		user.ID,
-		user.Pseudo,
+		// user.Pseudo,
 	)
 
 	if err != nil {
@@ -224,7 +227,7 @@ func (users *Users) GetAll(db *sql.DB) error {
 		err := rows.Scan(
 			&user.ID,
 			&user.Email,
-			&user.Pseudo,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,

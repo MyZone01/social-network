@@ -1,9 +1,16 @@
-INSERT INTO users (id, email, pseudo, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public) VALUES 
-('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
-('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '94493d5c-08f0-4dd6-9d1f-e07e17316294', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
-('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', 'abb8c81e-c771-4d10-9d36-2c20e1faded2', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
-('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '1cca8bec-260e-4241-9306-9c58e161bd4f', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0);
+INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public) VALUES 
+('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
+('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
+('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
+('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0),
+('4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', 'user@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'User FirstName', 'UserName', datetime('2024-03-13'), 'uploads/3248494e-6de7-4de1-895a-1e8e59a03e00.jpeg', 'userNickName', 'Follow me... go on a tour and AMA', 1);
 -- password: 12345678
+-- PSEUDOS
+-- '4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', 
+-- '94493d5c-08f0-4dd6-9d1f-e07e17316294', 
+-- 'abb8c81e-c771-4d10-9d36-2c20e1faded2', 
+-- '1cca8bec-260e-4241-9306-9c58e161bd4f', 
+-- '2d00d01a-1882-41a1-97c0-58492472ea87', 
 
 INSERT INTO followers (id, follower_id, followee_id, status) VALUES 
 ('16e526b0-022a-4dc1-8809-5fac78b5c8ca', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'requested'), 

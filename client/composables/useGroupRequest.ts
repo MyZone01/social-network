@@ -27,7 +27,7 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-        console.log('###################################\n',data,'###################################\n');
+        // console.log('###################################\n',data,'###################################\n');
 
         return data as GroupMember[] 
     }

@@ -11,7 +11,7 @@ export default defineEventHandler(async event => {
             body: JSON.stringify(payload)
 
         })
-        console.log('from api/group/create')
+        // console.log('from api/group/create')
         // event.node.res.writeHead(201, 'ok')
         return response
 

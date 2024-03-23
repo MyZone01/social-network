@@ -9,9 +9,7 @@ export default defineEventHandler(async (event) => {
         };
     }
     let jsonBody = JSON.stringify(body);
-    console.log("jsonBody", jsonBody)
-
-
+    // console.log("jsonBody", jsonBody)
 
     const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insert', {
         method: 'POST',
@@ -26,8 +24,7 @@ export default defineEventHandler(async (event) => {
             body: 'Internal server error',
         };
     });
-
-    console.log("res from server for post insert ", response)
+    
     if (response.status !== 200) {
         return {
             status: response.status,
