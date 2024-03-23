@@ -10,6 +10,7 @@ export interface User {
   password: string;
   dateOfBirth: string;
   aboutMe: string;
+  pseudo: string;
 }
 
 export interface ServerResponse<T> {

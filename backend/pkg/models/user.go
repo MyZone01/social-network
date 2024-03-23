@@ -57,6 +57,10 @@ func (u *User) Validate() error {
 		u.AvatarImage = "uploads/default-avatar.png"
 	}
 
+	if u.Nickname == "" {
+		u.Nickname = uuid.NewString()
+	}
+
 	return nil
 }
 
