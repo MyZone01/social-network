@@ -144,7 +144,7 @@ var registrationHandler = func(ctx *octopus.Context) {
 	if err := newUser.Create(ctx.Db.Conn); err != nil {
 		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
 			"session": "",
-			"message": "Error while creating the user.",
+			"message": "Error while creating the user. User already registered.",
 			"status":  http.StatusInternalServerError,
 			"data":    nil,
 		})

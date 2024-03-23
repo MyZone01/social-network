@@ -1,4 +1,4 @@
-import type { User } from "~/types";
+import type { User, Error } from "~/types";
 
 export const useAuth = () => {
   const authUser = useAuthUser();
@@ -34,15 +34,19 @@ export const useAuth = () => {
     }
     body.append("data", data);
 
-    const response = await $fetch<{ ok: boolean, status: number, user: User }>("/api/auth/register", {
-      method: "POST",
-      body: body,
-    });
+    try {
+      const response = await $fetch<{ ok: boolean, status: number, user: User }>("/api/auth/register", {
+        method: "POST",
+        body: body,
+      });
 
-    if (response.ok === false && response.status == 200) {
+      if (response.ok === false && response.status == 200) {
+      }
+      const user = response.user;
+      setUser({ ...user, isLoggedIn: true });
+    } catch (error) {
+      throw error
     }
-    const user = response.user;
-    setUser({ ...user, isLoggedIn: true });
   }
 
   const logout = async () => {
