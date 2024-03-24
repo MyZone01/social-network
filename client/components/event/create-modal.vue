@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="create-event-overlay" class="hidden lg:p-20 uk- open" uk-modal="">
+    <div id="create-event-overlay" class="hidden lg:p-20 uk-open" uk-modal="">
       <div
         class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2"
       >
@@ -43,13 +43,14 @@
   </template>
 
 <script setup>
+
 const create_event_form = ref(null)
 const { createEvent } = useEvents()
 const props = defineProps({
   groupId: String,
 });
 onMounted(() => {
-  create_event_form.value?.addEventListener("submit", submitData);
+  create_event_form.value?.addEventListener("submit", async (e) => { await submitData(e) });
 });
 async function submitData(e) {
   e.preventDefault();
@@ -58,15 +59,12 @@ async function submitData(e) {
   formObj.date_time = new Date(formObj.date_time)
 
   const { data, error } = await createEvent(formObj, props.groupId)
-
-  console.log(error);
-
-  if (!error) {
+  console.log('\ndata\n', data, '\nerror\n', error);
+  if (error === undefined) {
     UIkit.modal("#create-event-overlay").hide()
+    navigateTo(`/groups/${props.groupId}`)
   }
-
 }
 </script>
 
-<style>
-</style>
+<style></style>

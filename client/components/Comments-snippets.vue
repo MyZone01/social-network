@@ -26,13 +26,13 @@ const props = defineProps(
 )
 
 onMounted(() => {
-  comments.value = store.getpostComments(props.post.id)
+  comments.value = store.getpostComments(props.post?.id)
   
 })
 
 function showMoreHandler() {
-  passDataOnPostPreviewContent(this.post.id)
-  if (this.post.imageUrl) {
+  passDataOnPostPreviewContent(props.post?.id)
+  if (props.post?.imageUrl) {
     UIkit.modal("#preview_modal").show()
     return
   }
