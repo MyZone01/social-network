@@ -11,6 +11,7 @@ import (
 
 func handleMessages(ctx *octopus.Context) {
 }
+
 func GetUsers(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
 
@@ -62,6 +63,7 @@ func handlerGetMessages(ctx *octopus.Context) {
 		"data":   messages,
 	}
 	ctx.JSON(data)
+	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
 }
 
 var messagesRoutes = route{

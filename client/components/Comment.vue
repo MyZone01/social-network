@@ -1,10 +1,16 @@
 <template>
   <div class="flex items-start gap-3 relative">
-    <a> <nuxt-img  :src="'http://localhost:8081/'+  comment.userAvatarImageUrl" alt="" class="w-6 h-6 mt-1 rounded-full"/>
-    </a>
+    <nuxt-link
+      :to="useAuthUser().value.nickname == comment.userOwnerNickname ? `/profile` : `/profile/${comment.userOwnerNickname}`">
+      <nuxt-img :src="'http://localhost:8081/' + comment.userAvatarImageUrl" alt="" class="w-6 h-6 mt-1 rounded-full" />
+    </nuxt-link>
     <div class="flex-1">
-      <a class="text-black font-medium inline-block dark:text-white"> {{ comment.userCompleteName }} </a>
+      <nuxt-link
+        :to="useAuthUser().value.nickname == comment.userOwnerNickname ? `/profile` : `/profile/${comment.userOwnerNickname}`"
+        class="text-black font-medium inline-block dark:text-white">
+        {{ comment.userCompleteName }} </nuxt-link>
       <p class="mt-0.5"> {{ comment.content }} </p>
+      <nuxt-img v-if="comment.imageUrl" class="w-16 h-16 mt-1 " :src="'http://localhost:8081/' + comment.imageUrl" ></nuxt-img>
     </div>
   </div>
 </template>

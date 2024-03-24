@@ -130,7 +130,7 @@ func (follower *Follower) Delete(db *sql.DB) error {
 // Get all followers by followee id
 func (followers *Followers) GetAllByFolloweeID(db *sql.DB, followeeID uuid.UUID) error {
 	// Define the query
-	query := `SELECT id, follower_id, followee_id, status, created_at, updated_at FROM followers WHERE followee_id = $1 AND deleted_at IS NULL`
+	query := `SELECT id, follower_id, followee_id, status, created_at, updated_at FROM followers WHERE followee_id = $1 AND status= "accepted" AND  deleted_at IS NULL`
 
 	// Execute the query
 	rows, err := db.Query(query, followeeID)

@@ -1,4 +1,5 @@
-import type { User, Error } from "~/types";
+import type { User } from "~/types";
+import usePostStore from "~/stores/usePostStore.js";
 
 export const useAuth = () => {
   const authUser = useAuthUser();
@@ -51,7 +52,8 @@ export const useAuth = () => {
 
   const logout = async () => {
     setUser(null);
-
+    const postStore = usePostStore()
+    postStore.flushAllPosts()
     const data = await $fetch<{ user: User }>("/api/auth/logout", {
       method: "DELETE",
       headers: useRequestHeaders(["cookie"]) as HeadersInit,

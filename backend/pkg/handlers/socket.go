@@ -110,8 +110,6 @@ func handleSocket(ctx *octopus.Context) {
 			return
 		}
 
-		log.Println(data)
-
 		if data["type"] == "private_message" {
 			msg, ok := data["message"].(map[string]interface{})
 			if !ok {

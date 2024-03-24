@@ -195,6 +195,7 @@ func (c *Comment) ExploitForRendering(db *sql.DB) map[string]interface{} {
 		"content":            c.Content,
 		"userAvatarImageUrl": user.AvatarImage,
 		"createdAt":          timeAgo(c.CreatedAt),
+		"userOwnerNickname" : user.Nickname,
 	}
 }
 func (comments *Comments) ExploitForRendering(db *sql.DB) []map[string]interface{} {

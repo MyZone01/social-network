@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
     const token = event.context.token;
-    // console.log(token);
     
     if (!token) {
         return {

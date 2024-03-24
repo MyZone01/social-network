@@ -247,3 +247,43 @@ func (users *Users) GetAll(db *sql.DB) error {
 
 	return nil
 }
+func (users *Users) GetFlow(db *sql.DB, userid uuid.UUID) error {
+	query := `
+	SELECT DISTINCT u.*
+	FROM users u
+	JOIN followers f ON (u.id = f.follower_id OR u.id = f.followee_id)
+	WHERE f.status = 'accepted' -- Vous pouvez ajouter des conditions supplémentaires ici si nécessaire
+	AND (f.follower_id = $1 OR f.followee_id = $1);`
+
+	rows, err := db.Query(query,userid)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user User
+		err := rows.Scan(
+			&user.ID,
+			&user.Email,
+			&user.Password,
+			&user.FirstName,
+			&user.LastName,
+			&user.DateOfBirth,
+			&user.AvatarImage,
+			&user.Nickname,
+			&user.AboutMe,
+			&user.IsPublic,
+			&user.CreatedAt,
+			&user.UpdatedAt,
+			&user.DeletedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to execute the query. %v", err)
+		}
+		*users = append(*users, user)
+	}
+
+	return nil
+}
+
