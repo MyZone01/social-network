@@ -57,6 +57,7 @@ export default defineNuxtConfig({
     storesDirs: ['~/stores/**', '#/stores/**', '@/stores/**'],
   },
   runtimeConfig: {
+    domain: process.env.BACKEND_URL || 'http://localhost:8081',
     cookieName: process.env.COOKIE_NAME || "__social_cookie",
     cookieSecret: process.env.COOKIE_SECRET || "secret",
     cookieExpires: parseInt(process.env.COOKIE_REMEMBER_ME_EXPIRES || ONE_DAY.toString(), 10), // 1 day

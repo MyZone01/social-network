@@ -28,6 +28,8 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
+  // response.data.avatarImage = process.env.BACKEND_URL + response.data.avatarImage
+
   const config = useRuntimeConfig();
   const userWithPassword = response.data;
   const session = serialize({ session: response.session });

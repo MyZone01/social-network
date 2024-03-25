@@ -1,7 +1,7 @@
 <template>
     <div class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col" id="js-oversized">
 
-        <div class="flex-1 xl:space-y-6 space-y-3">
+        <div v-if="status == 'posts'" class="flex-1 xl:space-y-6 space-y-3">
             <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
 
                 <div v-if="!potentialUser"
@@ -38,9 +38,13 @@
 
             </div>
         </div>
-        <!-- posts component  -->
 
-        <Detail v-if="status == 'about'" :data="data" />
+        <!-- posts component  -->
+        <div v-if="status == 'about'" class="flex-1 xl:space-y-6 space-y-3">
+            <div class="md:max-w-[580px] mx-auto flex-1 xl:space-y-6 space-y-3">
+                <Detail :status='about' :data="data" />
+            </div>
+        </div>
 
     </div>
 </template>

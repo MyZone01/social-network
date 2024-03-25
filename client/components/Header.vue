@@ -334,8 +334,7 @@
                   <img :src="'http://localhost:8081/' + currentUser?.avatarImage" alt=""
                     class="w-10 h-10 rounded-full shadow">
                   <div class="flex-1">
-                    <h4 class="text-sm font-medium text-black"> {{ currentUser?.firstName }} {{
-                currentUser?.lastName }} </h4>
+                    <h4 class="text-sm font-medium text-black"> {{ currentUser?.firstName }} {{currentUser?.lastName }} </h4>
                     <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
                       @{{ currentUser?.nickname }}</div>
                   </div>
@@ -402,16 +401,18 @@
 
 <script setup lang="ts">
 // import { array, set, string } from 'zod';
+import {ref} from 'vue'
 import { clearNotif, notifications } from '../composables/notification/notification';
 import { clearMessages, messages } from '~/composables/notification/message';
 import { useAuth } from '../composables/useAuth'
 import { useAuthUser } from '../composables/useAuthUser'
 import { connNotifSocket } from '~/composables/notification/socket';
-import { formatTimeAgo } from '@vueuse/core';
+// import { formatTimeAgo } from '@vueuse/core';
 
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
+let domain
 
 const onLogoutClick = async () => {
   // async function onLogoutClick() {
@@ -444,6 +445,7 @@ function formatTimeAgo(date: Date): string {
 }
 
 onMounted(async () => {
+  domain = process.env.BACKEND_URL || 'http://localhost:8081' 
   const user = currentUser!.value!.id
   await connNotifSocket(user)
   // console.log(messages.value);

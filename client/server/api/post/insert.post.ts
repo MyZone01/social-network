@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     let jsonBody = JSON.stringify(body);
     // console.log("jsonBody", jsonBody)
 
-    const response = await fetch(`${process.env.BACKEND_URL}`+'/post/insert', {
+    const response = await fetch(`${process.env.BACKEND_URL}` + '/post/insert', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
