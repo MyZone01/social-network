@@ -1,3 +1,25 @@
+export const changeAvatar = async (file) => {
+  const body = new FormData()
+  body.append("file", )
+  console.log(file)
+  try {
+    const response = await $fetch("/api/settings/updateavatar", {
+      method: "POST",
+      body: body,
+    });
+
+    if (response.ok === false) {
+      return response.message
+    }
+    
+    console.log(response)
+    // return response
+  } catch (error) {
+    throw error.message
+  }
+  console.log("AVATAR CHANGING ... great")
+}
+
 export const editUser = async (user) => {
   const store = useAuth();
   const currentUserInfos = useAuthUser()

@@ -1,11 +1,13 @@
 <script setup>
-import { editUser, updatePassword } from '@/composables/userEditor.js';
+import { editUser, updatePassword, changeAvatar } from '@/composables/userEditor.js';
 const { me } = useAuth()
 
 const data = await me()
 const store = useAuthUser()
 const onDisplay = reactive(data.value)
 const status = ["public", "private"]
+let avatarMessage = ''
+
 const userInfos = reactive({
   email: store.value.email,
   password: store.value.password,
@@ -18,6 +20,26 @@ const userInfos = reactive({
   isPublic: store.value.isPublic ? "public" : "private",
   message: "",
 })
+
+const handleFileChange = async (event) => {
+  avatarMessage = ''
+  const target = event.target;
+  if (target.files && target.files.length > 0) {
+    const file = target.files[0];
+    const tempUrl = URL.createObjectURL(file); // Set the avatarImage to the selected file URL
+    try {
+    const newAvatarUrl = await changeAvatar(tempUrl)
+    // store.value.avatarImage = newAvatarUrl.data
+    avatarMessage = newAvatarUrl.message
+    console.log(newAvatarUrl)
+  } catch (error) {
+    avatarMessage = error
+  } finally {
+    console.log("Avatar Update Processed")
+  }
+    // You can also upload the file to the server here
+  }
+};
 
 function changer(event) {
   const value = event.target.value
@@ -94,10 +116,10 @@ useHead({
                     </label> -->
 
               <label for="file" class="cursor-pointer" v-if="store.avatarImage">
-                <nuxt-img id="img" :src="'http://localhost:8081/' + store.avatarImage"
+                <nuxt-img id="img" :src="'http://localhost:8081' + store.avatarImage"
                   class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                 <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
-                <input type="file" id="file" class="hidden" />
+                <input type="file" id="file" class="hidden" @change="handleFileChange"/>
               </label>
 
               <label for="file"

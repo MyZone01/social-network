@@ -1,6 +1,6 @@
 import { processParts } from "~/server/utils/processParts";
 import { Register } from "~/server/models/register";
-import { ServerResponse, User } from "~/types";
+import type { ServerResponse, User } from "~/types";
 import { sessionCreator } from "~/server/utils/sessionHandler";
 
 export default defineEventHandler(async (event) => {
