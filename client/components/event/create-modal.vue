@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="create-event-overlay" class="hidden lg:p-20 uk-open" uk-modal="">
+    <div id="create-event-overlay" class="hidden lg:p-20" uk-modal="">
       <div
         class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2"
       >
@@ -42,15 +42,21 @@
     </div>
   </template>
 
-<script setup>
+<script setup lang="ts">
+
+const emit = defineEmits(['event-created'])
+
+// const { createEvent } = useEvents()
 
 const create_event_form = ref(null)
-const { createEvent } = useEvents()
 const props = defineProps({
-  groupId: String,
+  groupId: {
+    type:String,
+    required:true
+  },
 });
 onMounted(() => {
-  create_event_form.value?.addEventListener("submit", async (e) => { await submitData(e) });
+  create_event_form.value?.addEventListener("submit", submitData);
 });
 async function submitData(e) {
   e.preventDefault();
@@ -58,12 +64,28 @@ async function submitData(e) {
   const formObj = Object.fromEntries(formData.entries())
   formObj.date_time = new Date(formObj.date_time)
 
-  const { data, error } = await createEvent(formObj, props.groupId)
-  console.log('\ndata\n', data, '\nerror\n', error);
-  if (error === undefined) {
-    UIkit.modal("#create-event-overlay").hide()
-    navigateTo(`/groups/${props.groupId}`)
-  }
+  await useFetch("/api/groups/events/create", {
+    method: "post",
+    headers: useRequestHeaders(["cookie"]) as HeadersInit,
+    body: JSON.stringify(formObj),
+    query: {
+      gid: props.groupId,
+    },
+    onResponse({ response }) {
+      emit('event-created')
+      console.log('logggggg');
+      
+    }
+  })
+
+  // if (data) {
+  //   UIkit.modal("#create-event-overlay").hide()
+  //   // emit('event-created')
+  // }
+
+}
+async function create(eventDetail: any, groupId: string) {
+ 
 }
 </script>
 

@@ -1,0 +1,26 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Backend",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/backend",
+            "output": "debug.bin"
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "server: nuxt",
+          "outputCapture": "std",
+          "program": "${workspaceFolder}/client/node_modules/nuxi/bin/nuxi.mjs",
+          "args": [
+            "dev","--host"
+          ],
+        }
+    ]
+}

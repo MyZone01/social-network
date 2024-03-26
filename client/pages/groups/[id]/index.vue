@@ -189,7 +189,7 @@
         </div>
       </div>
     </div>
-    <EventCreateModal />
+    <EventCreateModal :groupId="group?.ID" @event-created="handleCreation"/>
   </main>
 </template>
 <style scoped>
@@ -208,6 +208,11 @@ definePageMeta({
   middleware: ["auth-only"],
 });
 
+const handleCreation=()=>{
+  console.log('created');
+  
+}
+
 const { getGroupByID } = useGroups();
 const { getJoinRequests, joinRequest } = useGroupRequest()
 const { getAllEvents } = useEvents()
@@ -225,10 +230,10 @@ const title = computed(() => group.value?.Title)
 
 useTitle(title, { titleTemplate: "%s | Social Network" })
 
-definePageMeta({
-  alias: ["/groups/:id"],
-  middleware: ["auth-only"],
-});
+// const handleCreation=()=>{
+//   console.log("event created");
+
+// }
 
 const id = route.params.id as string;
 
@@ -254,11 +259,11 @@ onMounted(async () => {
   joinRequests.value = await getJoinRequests(id) || []
   console.log("posts /////////// \n", posts.value);
 
-  events.value = await getAllEvents(id)
+  const { data, pending, error, refresh } = await getAllEvents(id)
+  
+  events.value = data.value.data
 
   console.log("events /////////// \n", events.value);
-
-
 
   isRequester.value =
     joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;

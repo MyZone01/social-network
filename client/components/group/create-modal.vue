@@ -1,5 +1,5 @@
 <template lang="">
-  <div id="create-group-overlay" class="hidden lg:p-20 uk-open" uk-modal="">
+  <div id="create-group-overlay" class="hidden lg:p-20" uk-modal="">
     <div
       class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2"
     >

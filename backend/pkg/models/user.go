@@ -106,7 +106,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 	defer stmt.Close()
 	switch identifier.(type) {
 	case string:
-		err := stmt.QueryRow(query, identifier).Scan(
+		err := stmt.QueryRow(identifier).Scan(
 			&user.ID,
 			&user.Email,
 			&user.Password,

@@ -52,6 +52,7 @@ var loginHandler = func(ctx *octopus.Context) {
 			"status":  http.StatusBadRequest,
 			"data":    nil,
 		})
+		return
 	}
 
 	newUser := models.User{
