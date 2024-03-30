@@ -6,21 +6,20 @@ export default defineEventHandler(async (event) => {
     const reader = await readMultipartFormData(event);
     if (!reader) return { status: 400, body: 'Bad request', ok: false }
 
-    const { file } = await processParts(reader);
-
     const body = new FormData();
-    body.append('file', new Blob([file.data]), file.filename);
-
-    console.log(body)
+    for await (const part of reader) {
+        if (part.name === "file") {
+            body.append('file', new Blob([part.data]), part.filename);
+        }
+    }
 
     const token = event.context.token
-    
     const session = await getSession(event, {
         password: "5ec0312f-223f-4cc0-aa0f-303ff39fe1b2",
         name: "server-store",
         // generateId: () => { return '' }
     })
-    
+
     if (session.data.sessionToken != token) {
         return sendError(event, createError({
             statusCode: 400,
@@ -34,44 +33,44 @@ export default defineEventHandler(async (event) => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-                body
+                body: body
             });
-            
+
             const response = JSON.parse(await _response.text()) as { imageurl: string };
-            
-            console.log(response)
-            
+
             if (!response.imageurl) {
-                return { status: 200, body: "Error while updating avatar image", session: "", ok: false };
+                return sendError(event, createError({
+                    statusCode: 400,
+                    statusMessage: "Error while updloading avatar image"
+                }))
             }
             
             updateValue.avatarImage = response.imageurl
             const _response2 = await fetch(`${process.env.BACKEND_URL}` + "/updateuser", {
                 method: "PUT",
                 headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(updateValue)
-              });
+            });
 
-              await sessionUpdater(token, _response2, event)
-            return response.imageurl
-    //         body['email'] = session.data.userInfos.email
-    //         const result = await fetcher(`${process.env.BACKEND_URL}`+"/updatepassword", "PUT", JSON.stringify(body), token)
-
-    //         const { password: _password, ...userWithoutPassword } = result.data;
-    //         const cleanInfos = {
-    //             message: result.message,
-    //             user: userWithoutPassword,
-    //         }
-    //         return cleanInfos
+            const response3 = JSON.parse(await _response2.text()) as { status: number, message: string };
+            if (response3.status != 200) {
+                return sendError(event, createError({
+                    statusCode: response3.status,
+                    statusMessage: response3.message
+                }))
+            }
+            
+            await sessionUpdater(token, updateValue, event)
+            return {imageurl: response.imageurl, message: "Avatar update successfully"}
         } catch (err) {
             console.log(err)
             return sendError(event, createError({
                 statusCode: 500,
-                statusMessage: 'Internal server error' + err
+                statusMessage: 'Error: Internal server error'
             }))
         }
     }

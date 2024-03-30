@@ -1,24 +1,26 @@
 export const changeAvatar = async (file) => {
-  const body = new FormData()
-  body.append("file", )
-  console.log(file)
-  try {
-    const response = await $fetch("/api/settings/updateavatar", {
-      method: "POST",
-      body: body,
-    });
+  const store = useAuth();
+  const userInfos = useAuthUser();
+  const body = new FormData();
+  body.append("file", file);
+  
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await $fetch("/api/settings/updateavatar", {
+        method: "PUT",
+        body: body,
+      });
 
-    if (response.ok === false) {
-      return response.message
+      if (response.ok === false) {
+        return response.message;
+      }
+      
+      resolve(response);
+    } catch (error) {
+      reject(error);
     }
-    
-    console.log(response)
-    // return response
-  } catch (error) {
-    throw error.message
-  }
-  console.log("AVATAR CHANGING ... great")
-}
+  });
+};
 
 export const editUser = async (user) => {
   const store = useAuth();

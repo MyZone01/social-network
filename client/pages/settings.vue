@@ -6,7 +6,7 @@ const data = await me()
 const store = useAuthUser()
 const onDisplay = reactive(data.value)
 const status = ["public", "private"]
-let avatarMessage = ''
+let avatarMessage
 
 const userInfos = reactive({
   email: store.value.email,
@@ -23,20 +23,29 @@ const userInfos = reactive({
 
 const handleFileChange = async (event) => {
   avatarMessage = ''
-  const target = event.target;
+  userInfos.message = ''
+  password.message = ''
+  let target = event.target;
   if (target.files && target.files.length > 0) {
-    const file = target.files[0];
+    let file = target.files[0];
     const tempUrl = URL.createObjectURL(file); // Set the avatarImage to the selected file URL
     try {
-    const newAvatarUrl = await changeAvatar(tempUrl)
-    // store.value.avatarImage = newAvatarUrl.data
-    avatarMessage = newAvatarUrl.message
-    console.log(newAvatarUrl)
-  } catch (error) {
-    avatarMessage = error
-  } finally {
-    console.log("Avatar Update Processed")
-  }
+      await changeAvatar(file).then((res) => {
+        store.value.avatarImage = res.imageurl
+        avatarMessage = res.message
+      }).catch((error) => {
+        console.log(error.statusMessage)
+        avatarMessage = error.statusMessage
+      })
+      // store.value.avatarImage = newAvatarUrl.data
+    } catch (error) {
+      console.log(error.statusMessage)
+      avatarMessage = error.statusMessage
+    } finally {
+      target = undefined
+      file = undefined
+      console.log("Avatar Update Processed")
+    }
     // You can also upload the file to the server here
   }
 };
@@ -47,6 +56,7 @@ function changer(event) {
 }
 const saveChanges = async () => {
   userInfos.message = ''
+  avatarMessage = ''
   try {
     const result = await editUser(userInfos)
     if (result) {
@@ -71,6 +81,7 @@ function passwordChanger(event) {
 }
 const changePassword = async () => {
   password.message = ''
+  avatarMessage = ''
   try {
     const result = await updatePassword(password)
     if (result) {
@@ -119,7 +130,7 @@ useHead({
                 <nuxt-img id="img" :src="'http://localhost:8081' + store.avatarImage"
                   class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
                 <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
-                <input type="file" id="file" class="hidden" @change="handleFileChange"/>
+                <input type="file" id="file" class="hidden" @change="handleFileChange" />
               </label>
 
               <label for="file"
@@ -143,6 +154,7 @@ useHead({
               <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{
                 store.firstName }} {{ store.lastName }}</h3>
               <p class="text-sm text-blue-600 mt-1 font-normal">@{{ store.nickname }}</p>
+              <h4 v-if="avatarMessage"> ❗{{ avatarMessage }}</h4>
             </div>
 
             <!-- <button
