@@ -124,8 +124,8 @@ useHead({
                     </label> -->
 
               <label for="file" class="cursor-pointer" v-if="store.avatarImage">
-                <nuxt-img id="img" :src="BACKEND_URL + store.avatarImage"
-                  class="object-cover w-full h-full rounded-full" alt=""></nuxt-img>
+                <img id="img" :src="'http://localhost:8081/' + store.avatarImage"
+                  class="object-cover w-full h-full rounded-full" alt=""></img>
                 <!-- <img id="img" :src=data.avatar class="object-cover w-full h-full rounded-full" alt="" /> -->
                 <input type="file" id="file" class="hidden" @change="handleFileChange" />
               </label>

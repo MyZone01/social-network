@@ -2,7 +2,7 @@
   <form class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40"
     @submit="handleCommentSubmission">
 
-    <nuxt-img :src="'http://localhost:8081/' + useAuthUser().value?.avatarImage" alt="" class="w-6 h-6 rounded-full" />
+    <img :src="'http://localhost:8081/' + useAuthUser().value?.avatarImage" alt="" class="w-6 h-6 rounded-full" />
     <div class="flex-1 relative overflow-hidden h-10">
       <textarea placeholder="Add Comment...." rows="1"
         class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"

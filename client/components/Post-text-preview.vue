@@ -6,7 +6,7 @@
       <div class="p-5 pb-0">
         <!-- story heading -->
         <div class="flex gap-3 text-sm font-medium">
-          <nuxt-img :src="'http://localhost:8081/' + postPreviewContent.userAvatarImageUrl" alt=""
+          <img :src="'http://localhost:8081/' + postPreviewContent.userAvatarImageUrl" alt=""
             class="w-9 h-9 rounded-full" />
           <div class="flex-1">
             <h4 class="text-black font-medium dark:text-white"> {{ postPreviewContent.userCompleteName }} </h4>

@@ -6,7 +6,7 @@
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
       <nuxt-link
         :to="useAuthUser().value.nickname == post.userOwnerNickname ? `/profile` : `/profile/${post.userOwnerNickname}`">
-        <nuxt-img :src="'http://localhost:8081/' + post.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
+        <img :src="'http://localhost:8081/' + post.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
       </nuxt-link>
       <div class="flex-1">
         <nuxt-link
@@ -42,7 +42,7 @@
 
     <a @click="showPostPreview" v-if="post.imageUrl">
       <div class="relative w-full lg:h-96 h-full sm:px-4">
-        <nuxt-img :src="'http://localhost:8081/' + post.imageUrl" class="sm:rounded-lg w-full h-full object-cover" />
+        <img :src="'http://localhost:8081/' + post.imageUrl" class="sm:rounded-lg w-full h-full object-cover" />
       </div>
     </a>
 

@@ -8,7 +8,7 @@
       <div class="lg:h-full lg:w-[calc(100vw-400px)] w-full h-96 flex justify-center items-center relative">
 
         <div class="relative z-10 w-full h-full">
-          <nuxt-img :src="'http://localhost:8081/' + postPreviewContent.imageUrl" alt=""
+          <img :src="'http://localhost:8081/' + postPreviewContent.imageUrl" alt=""
             class="w-full h-full object-cover absolute" />
         </div>
 
@@ -32,7 +32,7 @@
           <!-- story heading -->
           <div class="flex gap-3 text-sm font-medium">
             <nuxt-link @click= "this.$refs.closeModal.click()"  :to="useAuthUser().value.nickname == postPreviewContent.userOwnerNickname ? `/profile` : `/profile/${postPreviewContent.userOwnerNickname}`">
-              <nuxt-img  :src="'http://localhost:8081/' + postPreviewContent.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
+              <img  :src="'http://localhost:8081/' + postPreviewContent.userAvatarImageUrl" alt="" class="w-9 h-9 rounded-full" />
             </nuxt-link>
             <div class="flex-1">
               <nuxt-link @click= "this.$refs.closeModal.click()"
