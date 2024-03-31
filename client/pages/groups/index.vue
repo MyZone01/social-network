@@ -22,6 +22,9 @@
             <li>
               <a href="#" class="inline-block py-3 leading-8 px-3.5">Browse</a>
             </li>
+            <li>
+              <a href="#" class="inline-block py-3 leading-8 px-3.5">Invitations</a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -52,6 +55,12 @@
             </div>
           </div>
         </div>
+        <!-- invitations tab -->
+        <div class="flex flex-row flex-wrap overflow-scroll">
+          <div v-if="groupsInvited.length" class="flex flex-row flex-wrap overflow-scroll gap-2">
+            <GroupInvitationListItem v-bind:key="group.ID" v-for="group in groupsInvited" :group="group" :joined="mygroups.some((g) => g.ID === group.ID)" />
+          </div>
+        </div>
       </div>
     </div>
     <GroupCreateModal />
@@ -73,11 +82,19 @@ definePageMeta({
   middleware: ["auth-only"],
 });
 const { groups, getAllGroups } = useGroups();
+const { getInvitations } = useGroupRequest()
 const mygroups = ref<Group[]>([])
+const groupsInvited = ref<Group[]>([])
 const user = useAuthUser()
 onMounted(async () => {
 
   await getAllGroups();
+  const data = await getInvitations()
+  console.log('invitations\n',data);
+
+  groupsInvited.value = data.data || []
+  console.log('invitations\n',groupsInvited);
+  
   mygroups.value = groups.value.filter((group) => group.GroupMembers.some((member) => member.MemberID === user.value?.id))
 });
 </script>

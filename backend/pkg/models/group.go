@@ -24,6 +24,16 @@ type Group struct {
 	GroupMembers GroupMembers
 }
 
+type GroupInvitation struct {
+	ID             uuid.UUID
+	InvitingUserId uuid.UUID
+	InvitedUserId  uuid.UUID
+	GroupMemberId  uuid.UUID
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      sql.NullTime
+}
+
 type GroupMemberStatus string
 
 const (
@@ -189,7 +199,7 @@ func (gs *Groups) GetAllGroups(db *sql.DB, getmembers, getuser bool) error {
 		}
 
 		if getmembers {
-			err = g.GetMembers(db, GroupMemberStatus(StatusAccepted),getuser)
+			err = g.GetMembers(db, GroupMemberStatus(StatusAccepted), getuser)
 			if err != nil {
 				return fmt.Errorf("unable to get group members. %v", err)
 			}
@@ -367,7 +377,7 @@ func (g *Group) GetMembers(db *sql.DB, status GroupMemberStatus, getusers bool) 
 
 		if getusers {
 			var user = new(User)
-			
+
 			err = user.Get(db, gm.MemberID)
 			if err != nil {
 				return fmt.Errorf("unable to get user. %v", err)
@@ -420,3 +430,67 @@ func (p *Posts) GetGroupPosts(db *sql.DB, groupID uuid.UUID) error {
 
 	return nil
 }
+
+func (inv *GroupInvitation) SaveInvitation(db *sql.DB, gm GroupMember, invitingUserId uuid.UUID, invitedUserId uuid.UUID) error {
+	inv.ID = uuid.New()
+	inv.InvitingUserId = invitingUserId
+	inv.InvitedUserId = invitedUserId
+	inv.GroupMemberId = gm.ID
+	inv.CreatedAt = time.Now()
+	inv.UpdatedAt = time.Now()
+	query := `INSERT INTO invitations (id, inviting_user_id, invited_user_id, group_member_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)`
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+
+	_, err = stmt.Exec(inv.ID, inv.InvitingUserId, inv.InvitedUserId, inv.GroupMemberId, inv.CreatedAt, inv.UpdatedAt)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+
+	return nil
+}
+
+type Invitations []GroupInvitation
+
+func (gs *Groups) GetInvitations(db *sql.DB, userId uuid.UUID) error {
+	fmt.Println(userId.String())
+	query := `SELECT groups.* FROM groups JOIN group_members ON groups.id=group_members.group_id JOIN invitations ON group_members.id = invitations.group_member_id where invitations.invited_user_id=$1;`
+
+	stm, err := db.Prepare(query)
+	if err != nil {
+		return fmt.Errorf("unable to prepare the query. %v", err)
+	}
+	defer stm.Close()
+
+	rows, err := stm.Query(userId)
+	if err != nil {
+		return fmt.Errorf("unable to execute the query. %v", err)
+	}
+	defer rows.Close()
+
+	
+	for rows.Next() {
+		var g Group
+		err = rows.Scan(
+			&g.ID,
+			&g.Title,
+			&g.Description,
+			&g.BannerURL,
+			&g.CreatorID,
+			&g.CreatedAt,
+			&g.UpdatedAt,
+			&g.DeletedAt,
+		)
+		if err != nil {
+			return fmt.Errorf("unable to scan the row. %v", err)
+		}
+
+		*gs = append(*gs, g)
+	}
+
+	return nil
+}
+

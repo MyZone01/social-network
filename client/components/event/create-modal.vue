@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="create-event-overlay" class="hidden lg:p-20" uk-modal="">
+    <div id="create-event-overlay" class="hidden lg:p-20" ref="modal" uk-modal="">
       <div
         class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2"
       >
@@ -45,48 +45,65 @@
 <script setup lang="ts">
 
 const emit = defineEmits(['event-created'])
+const modal = ref()
 
 // const { createEvent } = useEvents()
 
 const create_event_form = ref(null)
 const props = defineProps({
   groupId: {
-    type:String,
-    required:true
+    type: String,
+    required: true
   },
 });
 onMounted(() => {
   create_event_form.value?.addEventListener("submit", submitData);
 });
+// async function submitData(e) {
+//   e.preventDefault();
+//   const formData = new FormData(e.target)
+//   const formObj = Object.fromEntries(formData.entries())
+//   formObj.date_time = new Date(formObj.date_time)
+
+//   await useFetch("/api/groups/events/create", {
+//     method: "post",
+//     headers: useRequestHeaders(["cookie"]) as HeadersInit,
+//     body: JSON.stringify(formObj),
+//     query: {
+//       gid: props.groupId,
+//     },
+//     async onResponse({ response }) {
+//       await UIkit.modal("#create-event-overlay").hide()
+//     }
+//   })
+
+
+// }
+
 async function submitData(e) {
-  e.preventDefault();
+  e.preventDefault()
+
   const formData = new FormData(e.target)
   const formObj = Object.fromEntries(formData.entries())
   formObj.date_time = new Date(formObj.date_time)
 
-  await useFetch("/api/groups/events/create", {
+  const { data, pending, error, refresh } = await useFetch("/api/groups/events/create", {
     method: "post",
     headers: useRequestHeaders(["cookie"]) as HeadersInit,
     body: JSON.stringify(formObj),
     query: {
       gid: props.groupId,
     },
-    onResponse({ response }) {
-      emit('event-created')
-      console.log('logggggg');
+     onResponse({ response }) {
+      const event = JSON.parse(response._data).data;
       
+       emit("event-created",event)
+      modal.value.classList.remove('uk-open')
     }
   })
 
-  // if (data) {
-  //   UIkit.modal("#create-event-overlay").hide()
-  //   // emit('event-created')
-  // }
+}
 
-}
-async function create(eventDetail: any, groupId: string) {
- 
-}
 </script>
 
 <style></style>

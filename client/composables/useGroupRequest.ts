@@ -1,7 +1,7 @@
-import type { GroupMember } from '~/types';
+import type { Group, GroupMember, ServerResponse } from '~/types';
 
 export const useGroupRequest = () => {
-    async function joinRequest(groupId: string | undefined): Promise<{data:any,error:any}> {
+    async function joinRequest(groupId: string | undefined): Promise<{ data: any, error: any }> {
 
         const { data, error } = await useFetch("/api/groups/request/join", {
             method: "POST",
@@ -27,9 +27,9 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-        const data = JSON.parse(response as string).data        
+        const data = JSON.parse(response as string).data
 
-        return data as GroupMember[] 
+        return data as GroupMember[]
     }
 
     async function acceptJoinRequest(
@@ -77,12 +77,70 @@ export const useGroupRequest = () => {
         return response
     }
 
+    async function sendInvitation(groupId: string, userId: string) {
+        const { data, error } = await useFetch("/api/groups/request/sendInvitation", {
+            method: "POST",
+            headers: useRequestHeaders(["cookie"]) as HeadersInit,
+
+            query: {
+                gid: groupId,
+                uid: userId
+            },
+        });
+
+        return { data, error };
+    }
+
+    async function acceptInvitation(groupId: string, userId: string) {
+        const { data, error } = await useFetch("", {
+            method: "POST",
+            headers: useRequestHeaders(["cookie"]) as HeadersInit,
+
+            query: {
+                gid: groupId,
+                uid: userId
+            },
+        });
+
+        return { data, error };
+    }
+
+    async function declineInvitation(groupId: string, userId: string) {
+        const { data, error } = await useFetch("", {
+            method: "POST",
+            headers: useRequestHeaders(["cookie"]) as HeadersInit,
+
+            query: {
+                gid: groupId,
+                uid: userId
+            },
+        });
+
+        return { data, error };
+    }
+
+
+    async function getInvitations() {
+        const response = await $fetch<string>("/api/groups/invitations", {
+            headers: useRequestHeaders(["cookie"]) as HeadersInit,
+        });
+
+        console.log(response);
+        
+
+        return JSON.parse(response) as ServerResponse<Group[]>;
+    }
+
     return {
         joinRequest,
         getUserGroups,
         declineJoinRequest,
         acceptJoinRequest,
-        getJoinRequests
+        getJoinRequests,
+        sendInvitation,
+        acceptInvitation,
+        declineInvitation,
+        getInvitations
     }
 
 }

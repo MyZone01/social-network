@@ -78,19 +78,20 @@
         <div v-if="isMember"
           class="flex items-center justify-between border-t border-gray-100 px-2 dark:border-slate-700">
           <nav>
-            <ul
+            <ul ref="tabSwitcher"
               class="uk-subnav uk-subnav-pill flex gap-0.5 rounded-xl overflow-hidden -mb-px text-gray-500 font-medium text-sm overflow-x-auto dark:text-white"
-              uk-switcher="connect: #group-menus ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
-              <li>
+              data-uk-switcher="connect: #group-menus ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
+              @show="refresh">
+              <li id="posts-tab">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Posts</a>
               </li>
-              <li>
+              <li id="events-tab">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Events</a>
               </li>
-              <li>
+              <li id="members-tab">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Members</a>
               </li>
-              <li v-if="group?.CreatorID === user?.id">
+              <li id="requests-tab" v-if="group?.CreatorID === user?.id">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Requests</a>
               </li>
             </ul>
@@ -179,8 +180,27 @@
             <GroupMemberListItem v-for="member in group?.GroupMembers" :isAdmin="group?.CreatorID === user?.id"
               :member="member" />
           </div>
-          <div id="group-invite-overlay">
+          <div id="group-invite-overlay" class="hidden lg:p-20" ref="modal" uk-modal="">
+            <div
+              class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
+              <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+                <h2 class="text-sm font-medium text-black">
+                  Invite friends
+                </h2>
 
+                <!-- close button -->
+                <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div class="w-4/5 h-96 overflow-scroll ">
+                <div v-if="!followers">No Friends</div>
+                <GroupFollowerListItem v-else-if="group?.GroupMembers.some(member=>member.User.id === user?.id)" v-for="user in followers" :user :group-id="group.ID"/>
+              </div>
+            </div>
           </div>
         </div>
         <!-- request tab-->
@@ -189,7 +209,7 @@
         </div>
       </div>
     </div>
-    <EventCreateModal :groupId="group?.ID" @event-created="handleCreation"/>
+    <EventCreateModal :groupId="group?.ID" @event-created="refresh" />
   </main>
 </template>
 <style scoped>
@@ -201,16 +221,16 @@ li.uk-active {
 </style>
 <script lang="ts" setup>
 import { useTitle } from '@vueuse/core';
-import type { Group, GroupMember, Event,Post } from '~/types';
+import type { Group, GroupMember, Event, Post } from '~/types';
 
 definePageMeta({
   alias: ["/groups/[id]"],
   middleware: ["auth-only"],
 });
 
-const handleCreation=()=>{
+const handleCreation = () => {
   console.log('created');
-  
+
 }
 
 const { getGroupByID } = useGroups();
@@ -228,12 +248,9 @@ const events = ref<Event[]>([])
 const posts = ref<Post[]>()
 const title = computed(() => group.value?.Title)
 
+const followers = ref()
+
 useTitle(title, { titleTemplate: "%s | Social Network" })
-
-// const handleCreation=()=>{
-//   console.log("event created");
-
-// }
 
 const id = route.params.id as string;
 
@@ -244,6 +261,7 @@ async function handleJoin(group: Group | null) {
     }
   });
 }
+const tabSwitcher = ref()
 
 onMounted(async () => {
   group.value = await getGroupByID(id);
@@ -259,13 +277,32 @@ onMounted(async () => {
   joinRequests.value = await getJoinRequests(id) || []
   console.log("posts /////////// \n", posts.value);
 
-  const { data, pending, error, refresh } = await getAllEvents(id)
-  
+  const { data, pending, error } = await getAllEvents(id)
+
   events.value = data.value.data
 
   console.log("events /////////// \n", events.value);
 
   isRequester.value =
     joinRequests.value?.some((member) => member.User.id === user.value?.id) || false;
+
+  followers.value = await getFollowers()
+
+  console.log(followers.value);
+
 })
+
+async function refresh(e) {
+  console.log(e);
+  group.value = await getGroupByID(id)
+  const { data } = await getAllEvents(id)
+  console.log(data);
+
+  events.value = data.value.data
+
+}
+
+
+
+
 </script>

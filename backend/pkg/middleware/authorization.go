@@ -286,6 +286,7 @@ func IsInvitedUserExist(c *octopus.Context) {
 		c.Status(http.StatusConflict).JSON(map[string]string{
 			"error": "User already in the group",
 		})
+		return
 	}
 	c.Values["invited_user_id"] = userId
 	c.Next()

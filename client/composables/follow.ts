@@ -1,3 +1,5 @@
+import { ServerResponse, type UserWithoutPassword } from "~/types";
+
 export const useFollow = async (nickname: string, action: string) => {
 
     const response = await fetch(`/api/follow`, {
@@ -7,7 +9,7 @@ export const useFollow = async (nickname: string, action: string) => {
         },
         body: JSON.stringify({ action: action, nickname: nickname })
     }).then((res) => res.json()).catch((e) => {
-       console.error(e)
+        console.error(e)
     });
     if (response.status !== 200) {
         return {
@@ -18,4 +20,9 @@ export const useFollow = async (nickname: string, action: string) => {
         ok: true,
         action: response.message
     }
+}
+
+export const getFollowers = async () => {
+    const response = await $fetch("/api/getFollowers") as {status:String,body:any}
+    return response.body
 }

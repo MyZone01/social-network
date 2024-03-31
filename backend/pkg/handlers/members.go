@@ -17,9 +17,17 @@ func sendInvitationHandler(ctx *octopus.Context) {
 	}
 
 	groupId := ctx.Values["group_id"].(uuid.UUID)
+	userId := ctx.Values["userId"].(uuid.UUID)
 	invitedUserId := ctx.Values["invited_user_id"].(uuid.UUID)
 	err := newMember.CreateMember(ctx.Db.Conn, invitedUserId, groupId)
 	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	var invitation models.GroupInvitation
+
+	if err := invitation.SaveInvitation(ctx.Db.Conn, newMember, userId, invitedUserId); err != nil {
 		ctx.Status(http.StatusInternalServerError)
 		log.Println(err)
 		return
@@ -208,6 +216,31 @@ var declineAccessDemandRoute = route{
 	},
 }
 
+func getAllInvitations(ctx *octopus.Context) {
+	var groups  models.Groups
+	err := groups.GetInvitations(ctx.Db.Conn,ctx.Values["userId"].(uuid.UUID))
+	if err != nil {
+		ctx.Status(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "All access demand",
+		"data":    groups,
+	})
+}
+
+var getAllInvitationsRoute = route{
+	path:   "/get-all-invitations",
+	method: http.MethodGet,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		getAllInvitations,
+	},
+}
+
+
 func init() {
 	AllHandler[sendInvitationRoute.path] = sendInvitationRoute
 	AllHandler[acceptIntegrationRoute.path] = acceptIntegrationRoute
@@ -216,4 +249,5 @@ func init() {
 	AllHandler[getAllAccessDemandRoute.path] = getAllAccessDemandRoute
 	AllHandler[acceptAccessDemandRoute.path] = acceptAccessDemandRoute
 	AllHandler[declineAccessDemandRoute.path] = declineAccessDemandRoute
+	AllHandler[getAllInvitationsRoute.path] = getAllInvitationsRoute
 }
