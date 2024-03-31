@@ -57,9 +57,14 @@
         </div>
         <!-- invitations tab -->
         <div class="flex flex-row flex-wrap overflow-scroll">
-          <div v-if="groupsInvited.length" class="flex flex-row flex-wrap overflow-scroll gap-2">
-            <GroupInvitationListItem v-bind:key="group.ID" v-for="group in groupsInvited" :group="group" :joined="mygroups.some((g) => g.ID === group.ID)" />
+          <div v-if="invitations.length" class="flex flex-row flex-wrap overflow-scroll gap-2">
+            <GroupInvitationListItem v-bind:key="inv.Group.ID" v-for="inv in invitations" :group="inv.Group" :memberId="inv.MemberId" :joined="mygroups.some((g) => g.ID === inv.Group.ID)" />
           </div>
+          <div v-else class="flex w-full flex-row justify-center align-middle">
+          <div class="flex flex-col justify-center">
+            <p class="text-base text-lg">you have no invitation at the moment</p>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -74,7 +79,7 @@ li.uk-active {
 }
 </style>
 <script setup lang="ts">
-import type { Group } from '~/types';
+import type { Group, Invitation } from '~/types';
 
 
 definePageMeta({
@@ -84,7 +89,7 @@ definePageMeta({
 const { groups, getAllGroups } = useGroups();
 const { getInvitations } = useGroupRequest()
 const mygroups = ref<Group[]>([])
-const groupsInvited = ref<Group[]>([])
+const invitations = ref<Invitation[]>([])
 const user = useAuthUser()
 onMounted(async () => {
 
@@ -92,8 +97,8 @@ onMounted(async () => {
   const data = await getInvitations()
   console.log('invitations\n',data);
 
-  groupsInvited.value = data.data || []
-  console.log('invitations\n',groupsInvited);
+  invitations.value = data.data || []
+  console.log('invitations\n',invitations);
   
   mygroups.value = groups.value.filter((group) => group.GroupMembers.some((member) => member.MemberID === user.value?.id))
 });

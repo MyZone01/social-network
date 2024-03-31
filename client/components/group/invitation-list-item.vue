@@ -1,9 +1,11 @@
 <script setup lang="ts">
-const { joinRequest } = useGroupRequest();
-
 const props = defineProps({
     group: {
         type: Object,
+        required: true
+    },
+    memberId: {
+        type: String,
         required: true
     },
     joined: {
@@ -11,6 +13,35 @@ const props = defineProps({
         default: false
     }
 });
+
+const status = ref("invited")
+
+const { acceptInvitation, declineInvitation } = useGroupRequest()
+
+
+const handleAccept = async () => {
+    const response = await acceptInvitation(props.memberId)
+
+    console.log(response);
+
+    if (response.data) {
+        status.value = 'accepted'
+    }
+
+}
+
+const handleReject = async () => {
+    const response = await declineInvitation(props.memberId)
+
+    console.log(response);
+
+    if (response.data) {
+        status.value = 'rejected'
+    }
+
+}
+
+
 </script>
 
 <template>
@@ -31,15 +62,21 @@ const props = defineProps({
                 <div class="md:block hidden" />
                 <div>16k members</div>
             </div>
-            <div v-if="!joined">
-                <UButton @click="joinRequest(props.group.ID)"
+            <div class="flex-row flex gap-2" v-if="!joined">
+                <UButton v-if="status ==='invited'" @click="handleAccept"
                     class="items-center bg-blue-500 justify-center flex-1 w-full">
                     accept
                 </UButton>
-                <UButton @click="joinRequest(props.group.ID)"
+                <UButton v-if="status ==='invited'" @click="handleReject"
                     class="items-center bg-blue-500 justify-center flex-1 w-full">
                     reject
                 </UButton>
+                <div v-if="status ==='accepted'">
+                    Accepted
+                </div>
+                <div v-if="status ==='rejected'">
+                    Rejected
+                </div>
             </div>
             <NuxtLink v-else :href="'/groups/' + props.group.ID">
                 <UButton class="items-center bg-blue-500 justify-center w-full">

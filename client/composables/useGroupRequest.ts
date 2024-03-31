@@ -1,4 +1,4 @@
-import type { Group, GroupMember, ServerResponse } from '~/types';
+import type { Group, GroupMember, Invitation, ServerResponse } from '~/types';
 
 export const useGroupRequest = () => {
     async function joinRequest(groupId: string | undefined): Promise<{ data: any, error: any }> {
@@ -91,28 +91,26 @@ export const useGroupRequest = () => {
         return { data, error };
     }
 
-    async function acceptInvitation(groupId: string, userId: string) {
-        const { data, error } = await useFetch("", {
+    async function acceptInvitation(memberId: string) {
+        const { data, error } = await useFetch("/api/groups/invitations/accept", {
             method: "POST",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
             query: {
-                gid: groupId,
-                uid: userId
+                iId: memberId
             },
         });
 
         return { data, error };
     }
 
-    async function declineInvitation(groupId: string, userId: string) {
-        const { data, error } = await useFetch("", {
+    async function declineInvitation(memberId: string) {
+        const { data, error } = await useFetch("/api/groups/invitations/reject", {
             method: "POST",
             headers: useRequestHeaders(["cookie"]) as HeadersInit,
 
             query: {
-                gid: groupId,
-                uid: userId
+                iId: memberId
             },
         });
 
@@ -128,7 +126,7 @@ export const useGroupRequest = () => {
         console.log(response);
         
 
-        return JSON.parse(response) as ServerResponse<Group[]>;
+        return JSON.parse(response) as ServerResponse<Invitation[]>;
     }
 
     return {

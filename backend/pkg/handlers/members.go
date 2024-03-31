@@ -217,8 +217,8 @@ var declineAccessDemandRoute = route{
 }
 
 func getAllInvitations(ctx *octopus.Context) {
-	var groups  models.Groups
-	err := groups.GetInvitations(ctx.Db.Conn,ctx.Values["userId"].(uuid.UUID))
+	var inv  models.Invitations
+	err := inv.GetInvitations(ctx.Db.Conn,ctx.Values["userId"].(uuid.UUID))
 	if err != nil {
 		ctx.Status(http.StatusInternalServerError)
 		log.Println(err)
@@ -227,7 +227,7 @@ func getAllInvitations(ctx *octopus.Context) {
 
 	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
 		"message": "All access demand",
-		"data":    groups,
+		"data":    inv,
 	})
 }
 

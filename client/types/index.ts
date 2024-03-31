@@ -99,4 +99,9 @@ export interface Comment {
   userOwnerNickname: string
 }
 
+export interface Invitation {
+  Group: Group,
+  MemberId: string
+}
+
 export type UserWithoutPassword = Omit<User, "password">;

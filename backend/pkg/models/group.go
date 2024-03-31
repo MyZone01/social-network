@@ -453,12 +453,15 @@ func (inv *GroupInvitation) SaveInvitation(db *sql.DB, gm GroupMember, invitingU
 	return nil
 }
 
-type Invitations []GroupInvitation
+type Invitations []struct{
+	Group Group
+	MemberId uuid.UUID
+}
 
-func (gs *Groups) GetInvitations(db *sql.DB, userId uuid.UUID) error {
+func (inv *Invitations) GetInvitations(db *sql.DB, userId uuid.UUID) error {
 	fmt.Println(userId.String())
-	query := `SELECT groups.* FROM groups JOIN group_members ON groups.id=group_members.group_id JOIN invitations ON group_members.id = invitations.group_member_id where invitations.invited_user_id=$1;`
-
+	query := `SELECT groups.*, group_members.id FROM groups JOIN group_members ON groups.id=group_members.group_id JOIN invitations ON group_members.id = invitations.group_member_id where group_members.status="invited" AND invitations.invited_user_id=$1;`
+	var memberId uuid.UUID
 	stm, err := db.Prepare(query)
 	if err != nil {
 		return fmt.Errorf("unable to prepare the query. %v", err)
@@ -483,12 +486,13 @@ func (gs *Groups) GetInvitations(db *sql.DB, userId uuid.UUID) error {
 			&g.CreatedAt,
 			&g.UpdatedAt,
 			&g.DeletedAt,
+			&memberId,
 		)
 		if err != nil {
 			return fmt.Errorf("unable to scan the row. %v", err)
 		}
 
-		*gs = append(*gs, g)
+		*inv = append(*inv, struct{Group Group; MemberId uuid.UUID}{Group: g,MemberId: memberId})
 	}
 
 	return nil
