@@ -26,7 +26,6 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'No user session available'
         }))
     } else {
-        const updateValue = session.data.userInfos
         try {
             const _response = await fetch(`${process.env.BACKEND_URL}` + "/upload", {
                 method: "POST",
@@ -37,7 +36,7 @@ export default defineEventHandler(async (event) => {
             });
 
             const response = JSON.parse(await _response.text()) as { imageurl: string };
-
+            
             if (!response.imageurl) {
                 return sendError(event, createError({
                     statusCode: 400,
@@ -45,8 +44,12 @@ export default defineEventHandler(async (event) => {
                 }))
             }
             
-            updateValue.avatarImage = response.imageurl
-            const _response2 = await fetch(`${process.env.BACKEND_URL}` + "/updateuser", {
+            const updateValue = {
+                email: session.data.userInfos.email,
+                avatarImage: response.imageurl
+            }
+            console.log(updateValue)
+            const _response2 = await fetch(`${process.env.BACKEND_URL}` + "/updateavatar", {
                 method: "PUT",
                 headers: {
                     Accept: "application/json",
@@ -63,8 +66,9 @@ export default defineEventHandler(async (event) => {
                     statusMessage: response3.message
                 }))
             }
-            
-            await sessionUpdater(token, updateValue, event)
+            const newUserAvatar = session.data.userInfos
+            newUserAvatar.avatarImage = response.imageurl
+            await sessionUpdater(token, newUserAvatar, event)
             return {imageurl: response.imageurl, message: "Avatar update successfully"}
         } catch (err) {
             console.log(err)

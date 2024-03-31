@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
     } else {
         try {
             body["password"] = sessionServer.data.userInfos.password
+            body["avatarImage"] = sessionServer.data.userInfos.avatarImage
             const result = await fetcher(`${process.env.BACKEND_URL}`+"/edituser", "PUT", JSON.stringify(body), token)
             await sessionUpdater(token, result.data, event)
             // console.log(result)
