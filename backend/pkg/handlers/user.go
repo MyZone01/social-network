@@ -16,6 +16,11 @@ type updateValues struct {
 	NewPassword string `json:"newpassword"`
 }
 
+type avatarUpdate struct {
+	AvatarImage string `json:"avatarImage"`
+	Email       string `json:"email"`
+}
+
 func handleUpdateUser(ctx *octopus.Context) {
 	userId := ctx.Values["userId"].(uuid.UUID)
 	user := new(models.User)
@@ -290,6 +295,44 @@ func handleUpdateUserPassword(ctx *octopus.Context) {
 	})
 }
 
+func handleUpdateAvatar(ctx *octopus.Context) {
+	userId := ctx.Values["userId"].(uuid.UUID)
+	user := new(avatarUpdate)
+	if err := ctx.BodyParser(user); err != nil {
+		ctx.Status(http.StatusBadRequest).JSON(map[string]interface{}{
+			"message": "Error while parsing the form data.",
+			"status":  http.StatusBadRequest,
+		})
+		return
+	}
+
+	currentUser := new(models.User)
+	currentUser.ID = userId
+	err := currentUser.Get(ctx.Db.Conn, user.Email, true)
+	if err != nil {
+		ctx.Status(http.StatusUnauthorized).JSON(map[string]interface{}{
+			"session": "",
+			"message": "invalid email.",
+			"status":  http.StatusUnauthorized,
+		})
+		return
+	}
+
+	currentUser.AvatarImage = user.AvatarImage
+	if err := currentUser.Update(ctx.Db.Conn); err != nil {
+		ctx.Status(http.StatusInternalServerError).JSON(map[string]interface{}{
+			"message": err.Error(),
+			"status":  http.StatusInternalServerError,
+		})
+		return
+	}
+	ctx.Status(http.StatusOK).JSON(map[string]interface{}{
+		"message": "User Avatar updated successfully",
+		"status":  http.StatusOK,
+	})
+
+}
+
 // AuthenticationHandler defines the structure for handling authentication requests.
 // It specifies the HTTP method (POST), the path for the endpoint, and the sequence of middleware and handler functions to execute.
 var updateUserRoute = route{
@@ -328,9 +371,19 @@ var updateUserPasswordRoute = route{
 	},
 }
 
+var updateAvatarRoute = route{
+	path:   "/updateavatar",
+	method: http.MethodPut,
+	middlewareAndHandler: []octopus.HandlerFunc{
+		middleware.AuthRequired,
+		handleUpdateAvatar,
+	},
+}
+
 func init() {
 	AllHandler[updateUserRoute.path] = updateUserRoute
 	AllHandler[getUserRoute.path] = getUserRoute
 	AllHandler[updateUserInfosRoute.path] = updateUserInfosRoute
 	AllHandler[updateUserPasswordRoute.path] = updateUserPasswordRoute
+	AllHandler[updateAvatarRoute.path] = updateAvatarRoute
 }
