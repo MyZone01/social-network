@@ -29,7 +29,7 @@ const props = defineProps({
       </NuxtLink>
       <div class="flex mb-4 text-sm mt-2">
         <div class="md:block hidden" />
-        <div>16k members</div>
+        <div>{{ props.group.GroupMembers.length }} member(s)</div>
       </div>
       <UButton v-if="!joined" @click="joinRequest(props.group.ID)"
         class="items-center bg-blue-500 justify-center flex-1 w-full">

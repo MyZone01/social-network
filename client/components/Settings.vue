@@ -259,7 +259,7 @@ useHead({
                         <!-- <option :selected="userInfos.isPublic === 'public'" value="public" >Public</option>
                                         <option :selected="!userInfos.isPublic === 'private'" value="private" >Private</option> -->
                         <option v-for="(account, index) in status" :key="index" :value="account"
-                          :selected="userInfos.isPublic && account === 'public' ? true : false">
+                          :selected="userInfos?.isPublic === account">
                           {{ account }}
                         </option>
                       </select>

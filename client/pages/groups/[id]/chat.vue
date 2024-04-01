@@ -5,10 +5,9 @@
       <div class="page-heading">
         <h1>🗨️Group Chat: </h1>
         <div class="flex flex-col" v-if="group">
-          {{ group.Title }}
-          {{ group.Description }}
+          {{ group.Title }} : {{ group.Description }}
           <div v-if="messagesList">
-            <div v-for="message in messagesList" :key="message.ID">
+            <div v-for="message in messagesList" :key="message.ID" class="text-sm font-medium space-y-6">
               <div>
                 <div v-if="message.SenderID === currentUser?.id" class="flex gap-2 flex-row-reverse items-end">
                   <img v-if="currentUser && currentUser.avatarImage"
@@ -19,13 +18,12 @@
                   </div>
                 </div>
                 <div v-else class="flex gap-3">
-                      <img 
-                       :src="'http://localhost:8081/' + message.Sender.avatarImage"
-                        class="w-9 h-9 rounded-full shadow" />
-                      <div class="px-4 py-2 rounded-[20px] max-w-sm bg-secondery">
-                        {{ message.Content }}
-                      </div>
-                    </div>
+                  <img :src="'http://localhost:8081/' + message.Sender.avatarImage"
+                    class="w-9 h-9 rounded-full shadow" />
+                  <div class="px-4 py-2 rounded-[20px] max-w-sm bg-secondery">
+                    {{ message.Content }}
+                  </div>
+                </div>
                 <div class="bg-red-400">{{ message.Sender.nickname }}</div>
                 <div>{{ message.CreatedAt }}</div>
               </div>
@@ -33,8 +31,8 @@
           </div>
         </div>
         <u-input v-model="message" placeholder="Type your message..." @keydown.enter="send" />
-        <u-button @click="send">Send</u-button>
-        <nuxt-link :to="`/groups/${groupId}`">Back Group</nuxt-link>
+        <u-button @click="send" class="bg-blue-500">Send</u-button>
+        <nuxt-link :to="`/groups/${groupId}`" class="bg-red-500">Back Group</nuxt-link>
       </div>
     </div>
   </main>

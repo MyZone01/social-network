@@ -31,7 +31,7 @@
                     <b class="font-medium text-black dark:text-white">{{
                 group?.GroupMembers.length
               }}</b>
-                    members
+                    member(s)
                   </span>
                 </p>
               </div>

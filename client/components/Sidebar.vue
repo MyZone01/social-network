@@ -21,12 +21,12 @@
                 <span> messages </span>
               </nuxt-link>
             </li>
-            <li :class="{ active: $route.path === '/events' }">
+            <!-- <li :class="{ active: $route.path === '/events' }">
               <nuxt-link to="/events">
                 <img src="assets/images/icons/event.png" alt="messages" class="w-6">
                 <span> events </span>
               </nuxt-link>
-            </li>
+            </li> -->
             <li :class="{ active: $route.path === '/groups' }">
               <nuxt-link to="/groups">
                 <img src="assets/images/icons/group.png" alt="groups" class="w-6">
