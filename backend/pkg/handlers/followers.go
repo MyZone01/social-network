@@ -4,7 +4,6 @@ import (
 	octopus "backend/app"
 	"backend/pkg/middleware"
 	"backend/pkg/models"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -248,7 +247,6 @@ func handleGetAllFollowersRequest(ctx *octopus.Context) {
 			},
 		)
 	}
-	fmt.Println(userFollowersJson)
 	// fmt.Println(userFollowersJson)
 	ctx.JSON(map[string]interface{}{
 		"status": http.StatusOK,

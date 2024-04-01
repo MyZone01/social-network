@@ -27,7 +27,7 @@ export const useGroupRequest = () => {
                 gid: groupId,
             },
         });
-        const data = JSON.parse(response as string).data
+        // console.log('###################################\n',data,'###################################\n');
 
         return data as GroupMember[]
     }

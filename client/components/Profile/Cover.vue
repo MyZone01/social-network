@@ -14,7 +14,7 @@
                 <div
                     class="relative overflow-hidden rounded-full md:border-[2px] border-gray-100 shrink-0 dark:border-slate-900 shadow">
 
-                    <nuxt-img :src="'http://localhost:8081/'+data.avatar" class="h-full w-full object-cover inset-0" />
+                    <img :src="'http://localhost:8081/'+data.avatar" class="h-full w-full object-cover inset-0" />
                 </div>
             </div>
 

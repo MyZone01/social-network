@@ -10,8 +10,8 @@
           <div v-if="messagesList">
             <div v-for="message in messagesList" :key="message.ID">
               <div>
-                <div v-if="message.SenderID === currentUser.id" class="flex gap-2 flex-row-reverse items-end">
-                  <nuxt-img v-if="currentUser && currentUser.avatarImage"
+                <div v-if="message.SenderID === currentUser?.id" class="flex gap-2 flex-row-reverse items-end">
+                  <img v-if="currentUser && currentUser.avatarImage"
                     :src="'http://localhost:8081/' + currentUser.avatarImage" class="w-9 h-9 rounded-full shadow" />
                   <div
                     class="px-4 py-2 rounded-[20px] max-w-sm bg-gradient-to-tr from-sky-500 to-blue-500 text-white shadow">
@@ -19,7 +19,7 @@
                   </div>
                 </div>
                 <div v-else class="flex gap-3">
-                      <nuxt-img 
+                      <img 
                        :src="'http://localhost:8081/' + message.Sender.avatarImage"
                         class="w-9 h-9 rounded-full shadow" />
                       <div class="px-4 py-2 rounded-[20px] max-w-sm bg-secondery">
@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 const currentUser = useAuthUser();
-const userId = currentUser.value.id
+const userId = currentUser.value?.id
 import type { Group, GroupMessage } from '~/types';
 
 const { getGroupByID, getAllMessagesByGroup } = useGroups();

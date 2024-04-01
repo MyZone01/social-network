@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
+  // console.log(">>>>>>>>>>>>>>>>>>>>>>>", response);
 
   if (response.status !== "200" || response.data === undefined) {
     return sendError(event, createError({
@@ -27,6 +27,8 @@ export default defineEventHandler(async (event) => {
       statusMessage: response.message
     }))
   }
+
+  // response.data.avatarImage = process.env.BACKEND_URL + response.data.avatarImage
 
   const config = useRuntimeConfig();
   const userWithPassword = response.data;

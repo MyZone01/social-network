@@ -19,6 +19,7 @@ type Users []User
 type User struct {
 	ID          uuid.UUID    `sql:"type:uuid;primary key" json:"id"`
 	Email       string       `sql:"type:varchar(100);unique" json:"email"`
+	// Pseudo      string    `sql:"type:uuid;unique" json:"pseudo"`
 	Password    string       `sql:"type:varchar(100)" json:"password"`
 	FirstName   string       `sql:"type:varchar(100)" json:"firstName"`
 	LastName    string       `sql:"type:varchar(100)" json:"lastName"`
@@ -33,7 +34,7 @@ type User struct {
 }
 
 func (u *User) Validate() error {
-	requiredFields := []string{"Email", "Password", "FirstName", "LastName", "DateOfBirth", "Nickname"}
+	requiredFields := []string{"Email", "Password", "FirstName", "LastName", "DateOfBirth"}
 
 	v := reflect.ValueOf(u).Elem()
 
@@ -56,6 +57,10 @@ func (u *User) Validate() error {
 		u.AvatarImage = "uploads/default-avatar.png"
 	}
 
+	if u.Nickname == "" {
+		u.Nickname = uuid.NewString()
+	}
+
 	return nil
 }
 
@@ -64,8 +69,12 @@ func (user *User) Create(db *sql.DB) error {
 
 	// Define the user default properties
 	user.ID = uuid.New()
+	// user.Pseudo = uuid.NewString()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
+	// if user.Nickname == "" {
+	// 	user.Nickname = uuid.NewString()
+	// }
 	query := `INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
 
 	stmt, err := db.Prepare(query)
@@ -78,6 +87,7 @@ func (user *User) Create(db *sql.DB) error {
 	_, err = stmt.Exec(
 		user.ID.String(),
 		html.EscapeString(user.Email),
+		// user.Pseudo,
 		user.Password,
 		html.EscapeString(user.FirstName),
 		html.EscapeString(user.LastName),
@@ -109,6 +119,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 		err := stmt.QueryRow(identifier).Scan(
 			&user.ID,
 			&user.Email,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,
@@ -120,7 +131,8 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 			&user.CreatedAt,
 			&user.UpdatedAt,
 		)
-		if err != nil && err != sql.ErrNoRows {
+		if err != nil {
+			fmt.Println(err)
 			return fmt.Errorf("unable to execute the query. %v", err)
 		}
 		if (len(password) > 0 && password[0] == false) || len(password) == 0 {
@@ -130,6 +142,7 @@ func (user *User) Get(db *sql.DB, identifier interface{}, password ...bool) erro
 		err := db.QueryRow(query, identifier).Scan(
 			&user.ID,
 			&user.Email,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,
@@ -176,6 +189,7 @@ func (user *User) Update(db *sql.DB) error {
 		user.IsPublic,
 		time.Now(),
 		user.ID,
+		// user.Pseudo,
 	)
 
 	if err != nil {
@@ -217,6 +231,7 @@ func (users *Users) GetAll(db *sql.DB) error {
 		err := rows.Scan(
 			&user.ID,
 			&user.Email,
+			// &user.Pseudo,
 			&user.Password,
 			&user.FirstName,
 			&user.LastName,

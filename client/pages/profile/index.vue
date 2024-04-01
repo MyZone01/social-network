@@ -36,12 +36,16 @@
       <div class="flex 2xl:gap-12 gap-10 mb-8 max-lg:flex-col" id="js-oversized">
 
         <!-- feed story -->
-        <FeedStory :status="status" :data="data" />
+        <div v-if="status === 'posts'">
+          <FeedStory :status="status" :data="data" />
+        </div>
         <!-- <post-input idUIselect="select1" /> -->
-
+        <!-- <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2"> -->
+        <div v-if="status === 'about'">
+          <Detail :status="about" :data="data"/>
+        </div>
+        <!-- </div> -->
       </div>
-
-
     </div>
 
   </main>
@@ -49,12 +53,14 @@
 
 <script>
 import Cover from '~/components/Profile/Cover.vue';
+import Detail from '~/components/Profile/Detail.vue';
 import FeedStory from '~/components/Profile/FeedStory.vue';
 
 export default {
   components: {
     Cover,
-    FeedStory
+    FeedStory,
+    Detail
   },
   data() {
     return {

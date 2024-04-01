@@ -1,4 +1,4 @@
-import { ServerResponse } from "~/types";
+import type { ServerResponse } from "~/types";
 import { sessionDeleter } from "~/server/utils/sessionHandler";
 
 export default defineEventHandler(async (event) => {
@@ -30,6 +30,6 @@ export default defineEventHandler(async (event) => {
   await sessionDeleter(event)
 
   return {
-    user: null,
+    user: {},
   };
 });

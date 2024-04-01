@@ -63,6 +63,7 @@ func handlerGetMessages(ctx *octopus.Context) {
 		"data":   messages,
 	}
 	ctx.JSON(data)
+	// HandleError(ctx.ResponseWriter, http.StatusUnauthorized, "No active session")
 }
 
 var messagesRoutes = route{

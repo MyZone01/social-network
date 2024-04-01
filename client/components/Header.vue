@@ -323,7 +323,7 @@
 
             <!-- profile -->
             <div class="rounded-full relative bg-secondery cursor-pointer shrink-0">
-              <img :src="'http://localhost:8081/' + currentUser!.avatarImage" alt=""
+              <img :src="'http://localhost:8081/' + currentUser?.avatarImage" alt=""
                 class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
             </div>
             <div class="hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
@@ -331,13 +331,12 @@
 
               <nuxt-link to="/profile">
                 <div class="p-4 py-5 flex items-center gap-4">
-                  <img :src="'http://localhost:8081/' + currentUser!.avatarImage" alt=""
+                  <img :src="'http://localhost:8081/' + currentUser?.avatarImage" alt=""
                     class="w-10 h-10 rounded-full shadow">
                   <div class="flex-1">
-                    <h4 class="text-sm font-medium text-black"> {{ currentUser!.firstName }} {{
-                currentUser!.lastName }} </h4>
+                    <h4 class="text-sm font-medium text-black"> {{ currentUser?.firstName }} {{currentUser?.lastName }} </h4>
                     <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">
-                      @{{ currentUser!.nickname }}</div>
+                      @{{ currentUser?.nickname }}</div>
                   </div>
                 </div>
               </nuxt-link>
@@ -402,16 +401,18 @@
 
 <script setup lang="ts">
 // import { array, set, string } from 'zod';
+import {ref} from 'vue'
 import { clearNotif, notifications } from '../composables/notification/notification';
 import { clearMessages, messages } from '~/composables/notification/message';
 import { useAuth } from '../composables/useAuth'
 import { useAuthUser } from '../composables/useAuthUser'
 import { connNotifSocket } from '~/composables/notification/socket';
-import { formatTimeAgo } from '@vueuse/core';
+// import { formatTimeAgo } from '@vueuse/core';
 
 const currentUser = useAuthUser();
 const loading = ref(false);
 const { logout, me } = useAuth();
+let domain
 
 const onLogoutClick = async () => {
   // async function onLogoutClick() {
@@ -426,27 +427,28 @@ const onLogoutClick = async () => {
   }
 }
 
-//  function formatTimeAgo(date: Date): string {
-//   const now = new Date();
-//   const diff = now.getTime() - date.getTime();
+function formatTimeAgo(date: Date): string {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
 
-//   const seconds = Math.floor(diff / 1000);
-//   const minutes = Math.floor(seconds / 60);
-//   const hours = Math.floor(minutes / 60);
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
 
-//   if (hours < 1) {
-//     return `${minutes} minutes ago`;
-//   } else if (hours < 24) {
-//     return `${hours} hours ago`;
-//   } else {
-//     return date.toLocaleString(); // Or any other formatting for older dates
-//   }
-// }
+  if (hours < 1) {
+    return `${minutes} minutes ago`;
+  } else if (hours < 24) {
+    return `${hours} hours ago`;
+  } else {
+    return date.toLocaleString(); // Or any other formatting for older dates
+  }
+}
 
 onMounted(async () => {
+  domain = process.env.BACKEND_URL || 'http://localhost:8081' 
   const user = currentUser!.value!.id
   await connNotifSocket(user)
-  console.log(messages.value);
+  // console.log(messages.value);
 
 });
 

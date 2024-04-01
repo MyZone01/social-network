@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    console.log(JSON.stringify(body));
+    // console.log(JSON.stringify(body));
     const token = event.context.token;
     if (!token) {
         return {

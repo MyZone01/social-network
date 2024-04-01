@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
             body: 'Internal server error',
         };
     });
-
+    
     if (response.status !== 200) {
         return {
             status: response.status,

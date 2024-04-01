@@ -1,10 +1,16 @@
 INSERT INTO users (id, email, password, first_name, last_name, date_of_birth, avatar_image, nickname, about_me, is_public) VALUES 
-('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
-('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
-('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
-('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', 2024-03-13, 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0);
+('a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'tester1@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing1', 'not sure but think its the about me', 1),
+('c035df0d-8699-4880-a79e-1291915f70a9', 'tester2@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing2', 'not sure but think its the about me', 0),
+('498e640d-78d2-4171-b060-369d75c380ed', 'tester3@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing3', 'not sure but think its the about me', 1),
+('36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'tester4@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'Tester', 'Tested', datetime('2024-03-13'), 'uploads/default-avatar.png', 'testing4', 'not sure but think its the about me', 0),
+('4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', 'user@gmail.com', '$2a$10$H7v5cgz/oYCbJqskAg9bGukU6fAPAAi672Ki3W3u8OuNhhgESIL1e', 'User FirstName', 'UserName', datetime('2024-03-13'), 'uploads/3248494e-6de7-4de1-895a-1e8e59a03e00.jpeg', 'userNickName', 'Follow me... go on a tour and AMA', 1);
 -- password: 12345678
-
+-- PSEUDOS
+-- '4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', 
+-- '94493d5c-08f0-4dd6-9d1f-e07e17316294', 
+-- 'abb8c81e-c771-4d10-9d36-2c20e1faded2', 
+-- '1cca8bec-260e-4241-9306-9c58e161bd4f', 
+-- '2d00d01a-1882-41a1-97c0-58492472ea87', 
 
 INSERT INTO followers (id, follower_id, followee_id, status) VALUES 
 ('16e526b0-022a-4dc1-8809-5fac78b5c8ca', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'requested'), 
@@ -93,8 +99,8 @@ INSERT INTO group_members (id, group_id, member_id, status, role) VALUES
 ('f748b8d5-2f9e-4b5e-a272-9e47c3ecec73', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'accepted', 'admin'),
 ('56832149-f056-4f34-afb4-4b4ab134dbe9', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'accepted', 'user'),
 ('8fd09b61-1152-4f05-a6a5-2ec538ae394e', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'c035df0d-8699-4880-a79e-1291915f70a9', 'invited', 'user'),
-('cc541aa3-99dd-48d1-acd4-864c6716abfd', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'declined', 'user'),
-('2f724f35-3648-4fea-84df-be12999ca83b', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'accepted', 'admin');
+('2f724f35-3648-4fea-84df-be12999ca83b', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'accepted', 'admin'),
+('cc541aa3-99dd-48d1-acd4-864c6716abfd', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'declined', 'user');
 
 
 INSERT INTO posts (id, group_id, user_id, title, content, image_url, privacy) VALUES
@@ -147,7 +153,61 @@ INSERT INTO group_messages (id, group_id, sender_id, content) VALUES
 ('6fc22ba9-22ed-41d5-b697-4850715df1f0', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Hello There ...');
 
 INSERT INTO comments (id, user_id, post_id, content, image_url) VALUES
-('98cb3c47-056a-4b15-8a89-8fc89c547aae', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '9b77a08a-ff18-4022-97c7-4dc8f1a53230', 'Great Man, keep doing the good job!', '');
+('98cb3c47-056a-4b15-8a89-8fc89c547aae', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '3e8958e6-b6ac-4eea-ab67-2fe811211978', 'Great Man, keep doing the good job!', 'uploads/default-avatar.png'),
+('a018d89f-9a89-4f8e-8b42-8ad861e42664', 'c035df0d-8699-4880-a79e-1291915f70a9', 'aec2952f-fa1c-4065-9e23-f660819ac4ff', 'Great Man, keep doing the good job!', ''),
+('e5aaa81b-33ae-4e8d-bf04-daf9687440ff', '498e640d-78d2-4171-b060-369d75c380ed', '3e8958e6-b6ac-4eea-ab67-2fe811211978', 'Great Man, keep doing the good job!', 'uploads/default-avatar.png'),
+('8fd66b1a-53fd-4204-aeb4-dced6439ce71', '498e640d-78d2-4171-b060-369d75c380ed', 'cead0563-0215-427f-aca3-fea64be1130a', 'Great Man, keep doing the good job!', ''),
+('c80f2e97-0368-42ba-a6ab-b850f041f1bc', '4f6f09ab-a290-4a38-9f70-9f61c2fd6e75', '163fd188-e128-41f2-b3d7-0a3e95cb8dae', 'Great Man, keep doing the good job!', 'uploads/default-avatar.png');
 
 INSERT INTO selected_users (id, user_id, post_id) VALUES
-('2d00d01a-1882-41a1-97c0-58492472ea87', '498e640d-78d2-4171-b060-369d75c380ed', '9b77a08a-ff18-4022-97c7-4dc8f1a53230');
+('2d00d01a-1882-41a1-97c0-58492472ea87', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '9b77a08a-ff18-4022-97c7-4dc8f1a53230');
+
+INSERT INTO notifications (id, user_id, concern_id, type) VALUES
+('f5b43f4b-bdc6-4539-a0dd-d7ac218cc6a7', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'follow_request'),
+('5255e83c-4bfe-4933-8fb6-781bae6fd335', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '498e640d-78d2-4171-b060-369d75c380ed', 'follow_accepted'),
+('ce86e08a-4fdd-4a05-bfde-16acf40360c8', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'follow_declined'),
+('0ebc6e97-98f7-47b0-8754-750f7efe5d73', '498e640d-78d2-4171-b060-369d75c380ed', 'c035df0d-8699-4880-a79e-1291915f70a9', 'follow_request'),
+('52806c1c-b194-4bef-a9cb-ce988e45820b', '498e640d-78d2-4171-b060-369d75c380ed', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'follow_accepted'),
+('db7a144b-c6c2-49c6-bdcf-cd5044a983fe', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'new_event'),
+('d38a4335-fa20-4f32-b0b6-83db702ad747', '498e640d-78d2-4171-b060-369d75c380ed', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'new_event'),
+('a018d89f-9a89-4f8e-8b42-8ad861e42664', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'new_event'),
+('e5aaa81b-33ae-4e8d-bf04-daf9687440ff', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'c035df0d-8699-4880-a79e-1291915f70a9', 'new_message'),
+('8fd66b1a-53fd-4204-aeb4-dced6439ce71', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'new_message'),
+('c80f2e97-0368-42ba-a6ab-b850f041f1bc', 'c035df0d-8699-4880-a79e-1291915f70a9', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'new_message'),
+('d28212f7-bb4b-48d5-a719-d786963affb2', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '498e640d-78d2-4171-b060-369d75c380ed', 'new_message'),
+('517a1a87-15b1-4202-8711-c44aae95cf37', '498e640d-78d2-4171-b060-369d75c380ed', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'new_message'),
+('2030d28a-8b3f-42ed-a8d8-b4d10445c683', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', '498e640d-78d2-4171-b060-369d75c380ed', 'new_message');
+-- (),
+-- (),
+-- (),
+-- (),
+-- (),
+-- ();
+-- type TEXT CHECK(type = 'follow_request'OR type = 'follow_accepted' OR type = 'follow_declined' OR type = 'unfollow' OR type = 'group_invitation' OR type = 'new_message' OR type = 'new_event'),
+
+-- INSERT INTO group_messages (id, group_id, sender_id, content) VALUES
+-- ('aaae83f2-3095-4e1c-b537-73bc36c94ae1', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Welcome to the Group. Do a brief presentation and what make you joined the group.'),
+-- ('d365cd27-ff23-4c3f-ba4f-173d7ad35b22', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Hi im tester2 i think, and i am here as a tester for social network feature. lol'),
+-- ('dc660cca-ca64-4829-ba92-7eca94a9a966', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'This is the group official chat'),
+-- ('fabb94b7-87a4-464e-8913-c220130349d1', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'welcome onboard ...'),
+-- ('b19bcc7c-8288-4362-b729-e80903adb783', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'Thank for the introcduction'),
+-- ('2896d78f-61ea-414c-9329-412971d0663e', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'c035df0d-8699-4880-a79e-1291915f70a9', 'Glad to be here'),
+-- ('fbd251b8-4091-416d-9e28-cd915e215d08', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'Great guys, lets do it'),
+-- ('6fc22ba9-22ed-41d5-b697-4850715df1f0', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'Hello There ...');
+
+-- INSERT INTO group_members (id, group_id, member_id, status, role) VALUES
+-- ('b6ca25c0-5bb7-43eb-b1dd-1be075afe6e2', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'accepted', 'admin'),
+-- ('26e64b28-0497-4f08-b3cf-db625a37b729', 'aa518af7-d623-4f5b-8bb6-bd7405862110', 'c035df0d-8699-4880-a79e-1291915f70a9', 'requesting', 'user'),
+-- ('f748b8d5-2f9e-4b5e-a272-9e47c3ecec73', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '498e640d-78d2-4171-b060-369d75c380ed', 'accepted', 'admin'),
+-- ('56832149-f056-4f34-afb4-4b4ab134dbe9', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'accepted', 'user'),
+-- ('8fd09b61-1152-4f05-a6a5-2ec538ae394e', '4c2c37cf-1d5a-4077-adc3-1687d852a570', 'c035df0d-8699-4880-a79e-1291915f70a9', 'invited', 'user'),
+-- ('2f724f35-3648-4fea-84df-be12999ca83b', '9c206815-391a-434b-8d36-15fb3df4dffd', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'accepted', 'admin'),
+-- ('cc541aa3-99dd-48d1-acd4-864c6716abfd', '4c2c37cf-1d5a-4077-adc3-1687d852a570', '36db745b-c07c-492c-bfd8-aaec63aa6fd7', 'declined', 'user');
+
+-- INSERT INTO events_participants (id, event_id, member_id, response) VALUES
+-- ('0d1ad730-ef02-4ecb-9e4d-2c070183f26f', '6e07c132-6490-4c20-a5eb-87bec6717732', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'going'),
+-- ('077e4b39-94b9-4daa-ac67-4ffe6fb2950c', '6e07c132-6490-4c20-a5eb-87bec6717732', 'c035df0d-8699-4880-a79e-1291915f70a9', 'not_going'),
+-- ('90042b0a-2310-4931-b35d-594e244f3c9c', 'a4515c02-8a5e-450a-adf5-83562eeef13c', '498e640d-78d2-4171-b060-369d75c380ed', 'going'),
+-- ('c76d37b7-a46f-4fcf-8696-319c4fa41e01', 'a4515c02-8a5e-450a-adf5-83562eeef13c', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going'),
+-- ('24108e9f-9dee-48fd-abe8-86c58b9a3ea1', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'c035df0d-8699-4880-a79e-1291915f70a9', 'going'),
+-- ('85374be0-f0b4-4213-8b4f-2b445f7a2424', '5bc4cc82-9713-4b9c-b31a-34505a218a7e', 'a7ce8bfb-d026-4d5b-9c99-0d4c736c1232', 'not_going');

@@ -52,7 +52,7 @@ export class WebSocketClient {
         this.seters[type] = seter
     }
     public send(data: any) {
-        console.log(data);
+        // console.log(data);
         
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
             this.socket.send(JSON.stringify(data));

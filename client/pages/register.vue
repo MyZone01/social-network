@@ -73,6 +73,7 @@
               <UTextarea size="lg" v-model="state.aboutMe" placeholder="Short introduction about yourself ..." />
             </UFormGroup>
 
+            {{ state.registerError }}
             <UButton type="submit" size="lg" class="button bg-primary text-white w-full cursor-pointer" block>
               Register
             </UButton>
@@ -121,12 +122,12 @@ const schema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
-  nickname: z.string().min(1, 'Nickname is required'),
+  nickname: z.string().optional(), //min(1, 'Nickname is required'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string(),
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
-  aboutMe: z.string().min(1, 'About me is required'),
-  avatarImg: z.any(),
+  aboutMe: z.string().optional(), //.min(1, 'About me is required'),
+  avatarImg: z.any().optional(),
 }).refine((data) => data.confirmPassword === data.password, {
   message: 'Passwords do not match',
 })
@@ -162,6 +163,7 @@ const handleImageSelected = (event: Event) => {
 
 async function handleRegister(event: FormSubmitEvent<Schema>) {
   state.loading = true
+  state.registerError = ""
   try {
     const fomData = JSON.stringify({
       firstName: state.firstName.trim(),

@@ -1,66 +1,56 @@
 <template>
-  <!-- main contents -->
   <main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
-
+    <nuxt-child />
     <div class="relative overflow-hidden border -m-2.5 dark:border-slate-700">
-
       <div class="flex bg-white dark:bg-dark2">
-
         <!-- sidebar -->
         <div class="md:w-[360px] relative border-r dark:border-slate-700">
-
           <div id="side-chat"
             class="top-0 left-0 max-md:fixed max-md:w-5/6 max-md:h-screen bg-white z-50 max-md:shadow max-md:-translate-x-full dark:bg-dark2">
-
             <!-- heading title -->
             <div class="p-4 border-b dark:border-slate-700">
-
               <div class="flex mt-2 items-center justify-between">
-
-                <h2 class="text-2xl font-bold text-black ml-1 dark:text-white"> Chats </h2>
+                <h2 class="text-2xl font-bold text-black ml-1 dark:text-white">
+                  Chats
+                </h2>
 
                 <!-- right action buttons -->
                 <div class="flex items-center gap-2.5">
-
-
                   <button class="group">
-                    <ion-icon name="settings-outline" class="text-2xl flex group-aria-expanded:rotate-180"></ion-icon>
+                    <i class='bx bx-cog text-2xl flex group-aria-expanded:rotate-180'></i>
                   </button>
                   <div class="md:w-[270px] w-full"
                     uk-dropdown="pos: bottom-left; offset:10; animation: uk-animation-slide-bottom-small">
                     <nav>
-                      <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" name="checkmark-outline"></ion-icon>
+                      <a href="#"> <i class='bx bx-check text-2xl shrink-0 -ml-1'></i>
                         Mark all as read </a>
-                      <a href="#"> <ion-icon class="text-2xl shrink-0 -ml-1" name="notifications-outline"></ion-icon>
+                      <a href="#"> <i class='bx bx-bell text-2xl shrink-0 -ml-1'></i>
                         notifications setting </a>
-                      <a href="#"> <ion-icon class="text-xl shrink-0 -ml-1" name="volume-mute-outline"></ion-icon>
+                      <a href="#"> <i class='bx bx-volume-mute text-xl shrink-0 -ml-1'></i>
                         Mute notifications </a>
                     </nav>
                   </div>
 
                   <button class="">
-                    <ion-icon name="checkmark-circle-outline" class="text-2xl flex"></ion-icon>
+                    <i class='bx bx-check-circle text-2xl flex'></i>
                   </button>
 
                   <!-- mobile toggle menu -->
                   <button type="button" class="md:hidden"
                     uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
-                    <ion-icon name="chevron-down-outline"></ion-icon>
+                    <i class='bx bx-chevron-down'></i>
                   </button>
                 </div>
               </div>
 
+              <!-- search -->
+              <div class="relative mt-4">
+                <div class="absolute left-3 bottom-1/2 translate-y-1/2 flex">
+                  <i class='bx bx-search text-xl'></i>
+                </div>
+                <input type="text" placeholder="Search" class="w-full !pl-10 !py-2 !rounded-lg">
+              </div>
             </div>
-
-          </div>
-
-          <!-- search -->
-          <div class="relative mt-4">
-            <div class="absolute left-3 bottom-1/2 translate-y-1/2 flex"><i class='bx bx-search'></i></div>
-            <input type="text" placeholder="Search" class="w-full !pl-10 !py-2 !rounded-lg">
-          </div>
-
-        </div>
 
 
         <!-- users list -->
@@ -86,7 +76,7 @@
             </div>
           </a>
 
-        </div>
+            </div>
 
       </div>
 
@@ -97,19 +87,18 @@
 
     </div>
 
-    <!-- message center -->
-    <div class="flex-1">
+        <!-- message center -->
+        <div class="flex-1">
 
       <!-- chat heading -->
       <div
         class="flex items-center justify-between gap-2 w- px-6 py-3.5 z-10 border-b dark:border-slate-700 uk-animation-slide-top-medium">
 
-        <div class="flex items-center sm:gap-4 gap-2">
-
-          <!-- toggle for mobile -->
-          <button type="button" class="md:hidden" uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
-            <ion-icon name="chevron-back-outline" class="text-2xl -ml-4"></ion-icon>
-          </button>
+              <div class="flex items-center sm:gap-4 gap-2">
+                <!-- toggle for mobile -->
+                <button type="button" class="md:hidden" uk-toggle="target: #side-chat ; cls: max-md:-translate-x-full">
+                  <i class='bx bx-chevron-left text-2xl -ml-4'></i>
+                </button>
 
           <div class="relative cursor-pointer max-md:hidden" uk-toggle="target: .rightt ; cls: hidden">
             <img :src="'http://localhost:8081/' + selectedUser.avatar" alt="" class="w-8 h-8 rounded-full shadow">
@@ -328,6 +317,7 @@
       </div>
 
     </div>
+
   </main>
 </template>
 

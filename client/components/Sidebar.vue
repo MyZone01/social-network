@@ -38,7 +38,7 @@
         <nav>
 
 
-          <div class="font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800">
+          <!-- <div class="font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800">
             <div class="px-3 pb-2 text-sm font-medium">
               <div class="text-black dark:text-white">Shortcut</div>
             </div>
@@ -60,11 +60,11 @@
                 <div> Sarah Ali</div>
               </div>
             </a>
-          </div>
+          </div> -->
 
           <br>
           <br>
-          <div v-if="currentUser.avatarImage == 'uploads/default-avatar.png'" id="toast-warning"
+          <div v-if="currentUser?.avatarImage == 'uploads/default-avatar.png'" id="toast-warning"
             class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 space-x-3"
             role="alert">
             <div

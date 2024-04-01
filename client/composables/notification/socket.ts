@@ -12,7 +12,7 @@ export const connNotifSocket = async (id: string = "") => {
 
     ws = new WebSocket(url);
     ws!.onopen = () => {
-        console.log("Connected to notif socket");
+        // console.log("Connected to notif socket");
         ws!.addEventListener('message', (event) => {
             const notif = JSON.parse(event.data)
             if (notif.type === "new_message") {

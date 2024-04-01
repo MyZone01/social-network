@@ -14,6 +14,6 @@ export default defineEventHandler(async (event) => {
             Authorization: `Bearer ${token}`,
         }
     });
-    console.log(response);
+    // console.log(response);
     return response
 })

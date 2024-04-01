@@ -1,3 +1,27 @@
+export const changeAvatar = async (file) => {
+  const store = useAuth();
+  const userInfos = useAuthUser();
+  const body = new FormData();
+  body.append("file", file);
+  
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await $fetch("/api/settings/updateavatar", {
+        method: "PUT",
+        body: body,
+      });
+
+      if (response.ok === false) {
+        return response.message;
+      }
+      
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const editUser = async (user) => {
   const store = useAuth();
   const currentUserInfos = useAuthUser()
@@ -74,9 +98,9 @@ export const updatePassword = async (password) => {
 function validateUserInfo(userInfo) {
 
   // Validate nickname
-  if (!userInfo.nickname || userInfo.nickname.trim() === "") {
-    return "Nickname is required";
-  }
+  // if (!userInfo.nickname || userInfo.nickname.trim() === "") {
+  //   return "Nickname is required";
+  // }
 
   // Validate firstName
   if (!userInfo.firstName || userInfo.firstName.trim() === "") {
