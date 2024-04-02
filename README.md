@@ -1,4 +1,4 @@
-# Social Network
+# 👋 Social Network
 
 ## Description
 This project consist of creating a facebook like web application by using any of existing js framework for the frontend and golang for the backend.
